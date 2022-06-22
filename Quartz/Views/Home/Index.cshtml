@@ -1,0 +1,574 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/ol.css" rel="stylesheet" />
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2">
+                <div style="border: 2px solid skyblue;height: 80vh;">
+                    <div class="row text-center">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-10">
+                            <div class="form text-center">
+                                <label for="type">Choose:</label>
+                                <select class="form-control" id="type">
+                                    <option value="None">Move (ctrl + left click to drag)</option>
+                                    <option value="PolygonItem">Polygon Item</option>
+                                    <option value="BoxItem">Box Item</option>
+                                    <option value="PolygonLink">Polygon Link</option>
+                                    <option value="BoxLink">Box Link</option>
+                                    <option value="Delete">Delete</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-1"></div>
+                    </div>
+
+                    <br><br><br><br>
+
+                    <div class="row text-center">
+                        <div class="col-lg-12">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-10">
+                                <p>Shapes</p>
+                                <div id="shapeArea" class="text-center"></div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row">
+                    <div id="map" class="map" style="border: 2px solid skyblue;"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div style="border: 2px solid skyblue; height: 80vh;">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @*Link Modal*@
+    <div class="modal fade" id="linkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content" style="height: 47vh;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="linkModalName">Link Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+
+                        <div class="card-body" style="display: block;">
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Tag No</span>
+                                    <input type="text" id="addLinkTagNo" class="form-control" style="border-radius: 0px;">
+                                </div>
+
+                                <div class="col-lg-6">
+
+                                </div>
+                            </div>
+
+                            <br>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-lg-5 text-center">
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                    <button id="addLinkSelectDrawing" type="button" class="btn btn-dark"
+                                            style="border: none; border-radius: 0px; width:150px;">
+                                        Existing Drawing
+                                    </button>
+                                </div>
+
+                                <div class="col-lg-2 text-center">
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">OR</span>
+                                </div>
+
+                                <div class="col-lg-5 text-center">
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                    <button id="btnAddLinkNewDrawing" type="button" class="btn btn-dark"
+                                            style="border: none; border-radius: 0px; width:150px;">
+                                        New Drawing
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div id="selectExistingDrawing" class="col-lg-5" hidden>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
+                                            <select class="form-control select2bs4 select2-hidden-accessible" id="addLinkSelectDrawing"
+                                                    style="border-radius: 0px;">
+                                                <option>Select</option>
+                                                <option>image-1</option>
+                                                <option>image-2</option>
+                                                <option>image-3</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <br>
+                                            <button type="button" id="goExistingDrawing" class="btn btn-info"
+                                                    style="border-radius: 0px; color: white;">
+                                                GO
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-7" hidden id="linkModalPlaceholder"></div>
+
+                                <div class="col-lg-5">
+                                    <br>
+                                    <div id="uploadLinkFile" class="row" hidden>
+                                        <div class="col-lg-3">
+                                            <label for="file-upload" style="border-radius: 0px; color: white;" class="btn btn-info">
+                                                Choose
+                                            </label>
+                                            <input id="file-upload" type="file" name="files" hidden>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" style="border-radius: 0px;" type="text" autocomplete="off"
+                                                   placeholder="Description..." name="description" required />
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <button type="button" class="btn btn-info" style="border-radius:0px; color: white;">Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
+                    <input id="showLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
+                            style="border:none;border-radius:0px">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-danger" style="border:none;border-radius:0px">Delete</button>
+                    <button type="button" class="btn btn-primary" style="border:none;border-radius:0px">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Item Modal*@
+    <div class="modal fade" id="itemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itemModalName">Item Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ratione repellat officia ullam possimus
+                    pariatur atque sed iusto minus illo, facere placeat nisi. Officiis veniam nesciunt tenetur blanditiis ratione
+                    laboriosam?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" style="border:none;border-radius:0px">Delete</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*New Project Modal*@
+    <div class="modal fade" id="newProjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <br /><br />
+                    @*<form method="post" enctype="multipart/form-data">
+                        <div id="uploadProjectFile" class="row">
+                            <div class="col-lg-6">
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Project Name</span>
+                                <input type="text" id="newProjectName" class="form-control" style="border-radius: 0px;">
+                                <br />
+                                <label for="file-upload" style="border-radius: 0px; color: white;" class="btn btn-info">
+                                    Choose New Drawing
+                                </label>
+                                <input id="file-upload" type="file" name="files" hidden>
+
+                                <button type="submit" class="btn btn-info" style="border-radius: 0px;" asp-controller="Document" asp-action="AddDocument">Upload</button>
+                                <button type="button" class="btn btn-info" id="clickMe">Clike me!</button>
+                            </div>
+                        </div>
+                    </form>*@
+                    @await Html.PartialAsync("UploadDrawingPartial")
+                    <br /><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" style="border:none;border-radius:0px" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnCreateNewProject" class="btn btn-primary" style="border:none;border-radius:0px">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+@section Scripts {
+    <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+    <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
+    <!-- The lines below are only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,TextDecoder"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.18.3/minified.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+    <script src="~/js/ol.js"></script>
+    @*<script type="module" src="~/js/index.js"></script>*@
+
+    <script>
+        // NEW PROJECT MODAL: Create Button
+        $("#btnCreateNewProject").on('click', function () {
+            alert($("#newProjectName").val());
+            let model = {
+                Name: $("#newProjectName").val(),
+                Creater: "Görkem",
+                CreatedDate: "21.06.2022 12:00"
+            };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CreateNewProjectJSON", "Quartz")',
+                data: { model: model },
+                success: function (data) {
+                    rModel = jQuery.parseJSON(data);
+                },
+                error: function (error) {
+                    console.log("Proje oluşturulurken bir hata oluştu!: " + error.responseText);
+                }
+            });
+        });
+
+        $("#clickMe").on('click', function () {
+            if (window.FormData !== undefined) {
+                var fileUpload = $("#file-upload").get(0);
+                var files = fileUpload.files;
+                console.log(files);
+
+                // Create FormData object
+                var fileData = new FormData();
+                fileData.append(files[0].name, files[0]);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddDocument", "Document")',
+                    data: { model: fileData },
+                    success: function (data) {
+                        alert("success!");
+                    },
+                    error: function (error) {
+                        alert("error!");
+                    }
+                });
+            }
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //////////////////////////////////////////////////////////////////////////////////////////////// [Variables]
+        const typeSelect = document.getElementById('type');
+        var allShapes = [];
+        let draw; // global so we can remove it later                                                 
+        var isValueDelete = false;
+        var shapeId = "";
+        var itemIdCount = 0;
+        var itemId = "item" + itemIdCount;
+        var linkIdCount = 0;
+        var linkId = "link" + linkIdCount;
+
+        const extent = [0, 0, 1024, 968];
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        const select = new ol.interaction.Select();
+
+        const translate = new ol.interaction.Translate({
+            features: select.getFeatures(),
+            condition: ol.events.condition.platformModifierKeyOnly
+        });
+
+        const projection = new ol.proj.Projection({
+            code: 'xkcd-image',
+            units: 'pixels',
+            extent: extent,
+        });
+
+        const rasterLayer = new ol.layer.Tile({
+            source: new ol.source.OSM(),
+        });
+
+        const source = new ol.source.Vector({ wrapX: false });
+
+        const vectorLayer = new ol.layer.Vector({
+            source: source,
+        });
+
+        const view = new ol.View({
+            projection: projection,
+            center: ol.extent.getCenter(extent),
+            zoom: 0,
+            maxZoom: 4,
+            extent: [-500, -300, 1524, 1268]
+        });
+
+        const map = new ol.Map({
+            interactions: ol.interaction.defaults().extend([select, translate]),
+            layers: [
+                new ol.layer.Image({
+                    source: new ol.source.ImageStatic({
+                        url: 'https://imgs.xkcd.com/comics/online_communities.png',
+                        projection: projection,
+                        imageExtent: extent,
+                    }),
+                }),
+                rasterLayer, vectorLayer
+            ],
+            target: 'map',
+            view: view
+        });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [FUNCTIONS]
+
+        function addInteraction() {
+            if (typeSelect.value !== 'None') {
+                if (typeSelect.value === 'BoxItem' || typeSelect.value === 'BoxLink') {
+                    draw = new ol.interaction.Draw({
+                        source: source,
+                        type: 'Circle',
+                        geometryFunction: ol.interaction.Draw.createBox()
+                    });
+                    map.addInteraction(draw);
+                }
+                if (typeSelect.value === 'PolygonItem' || typeSelect.value === 'PolygonLink') {
+                    draw = new ol.interaction.Draw({
+                        source: source,
+                        type: 'Polygon'
+                    });
+                    map.addInteraction(draw);
+                }
+
+                draw.on("drawend", function () {
+                    function timeOut() {                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                   
+                        typeSelect.value = 'None';      //                                                                                                                       //
+                        map.removeInteraction(draw);    // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için //                   
+                    }                                   //                                                                                                                       //                   
+                    setTimeout(timeOut, 1 / 1000);      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+                    if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
+                        var itemModel = {
+                            MemberId: 1,
+                            MemberOf: "main",
+                            Creator: "Görkem",
+                            TagName: shapeId,
+                            ShowLabel: true,
+                            SelectDrawing: "",
+                            CreatedDate: ""
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("AddItemJSON", "Quartz")',
+                            data: { model: itemModel },
+                            success: function (data) {
+                                alert("success!");
+                                rModel = jQuery.parseJSON(data);
+                                $("#addLinkTagNo").val(rModel.TagName);
+                            },
+                            error: function (error) {
+                                alert("error!");
+                            }
+                        });
+                        $("#linkModal").modal('show');
+                    }
+                    if (typeSelect.value == 'BoxItem' || typeSelect.value == 'PolygonItem') {
+                        $("#itemModal").modal('show');
+                    }
+                });
+
+                //else if (typeSelect.value == 'PolygonItem' || typeSelect.value == 'PolygonLink') {
+                //    draw = new ol.interaction.Draw({
+                //        source: source,
+                //        type: 'Polygon',
+                //    });
+                //    map.addInteraction(draw);
+
+                //    draw.on("drawend", function () {
+                //        function timeOut() {                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                  
+                //            typeSelect.value = 'None';       //                                                                                                                       //                  
+                //            map.removeInteraction(draw);     // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için //                  
+                //        }                                    //                                                                                                                       //                  
+                //        setTimeout(timeOut, 1 / 1000);       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+                //        if (typeSelect.value == 'PolygonLink')
+                //            $("#linkModal").modal('show');
+                //        if (typeSelect.value == 'PolygonItem')
+                //            $("#itemModal").modal('show');
+                //    });
+                //}
+            }
+        }
+        //                                                                                                                                                                                                
+        // Çizim tamamlandıktan sonra çalışan fonksiyon                                                                                                                                                   
+        source.on('addfeature', function (evt) {
+            if (typeSelect.value === 'PolygonItem' || typeSelect.value === 'BoxItem') {
+                itemIdCount++;
+                itemId = "item" + itemIdCount;
+                shapeId = itemId;
+            }
+            else if (typeSelect.value === 'PolygonLink' || typeSelect.value === 'BoxLink') {
+                linkIdCount++;
+                linkId = "link" + linkIdCount;
+                shapeId = linkId;
+            }
+
+            // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim                                                                                                                                
+            var style = new ol.style.Style({
+                stroke: new ol.style.Stroke({ color: '#000' }),
+                text: new ol.style.Text({
+                    text: shapeId,
+                    font: '20px Calibri,sans-serif',
+                    fill: new ol.style.Fill({
+                        color: '#000',
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: '#fff', width: 2,
+                    })
+                })
+            });
+
+            console.log(evt);
+            // Çizilen Box/Polygon'a ID tanımladım                                                                                                                                                        
+            evt.feature.setId(shapeId);
+            // Çizilen Box/Polygon'a text tanımladım                                                                                                                                                      
+            evt.feature.setStyle(style);
+            // Çizilen Box/Polygon'u tüm Çizimlerin olduğu listeye ekledim                                                                                                                                
+            allShapes.push(evt.feature);
+            // console.log(allShapes);                                                                                                                                                                    
+
+            // Çizilen Box/Polygon'un butonunu oluşturdum.                                                                                                                                                
+            var shapeButton = document.createElement('button');
+
+            // Butonun Attr'larını ekledim                                                                                                                                                                
+            shapeButton.setAttribute('id', shapeId);
+            shapeButton.setAttribute('type', 'button');
+            shapeButton.setAttribute('style', 'border:none; border-radius: 0px; width: 80%;');
+            shapeButton.setAttribute('data-bs-toggle', 'modal');
+            shapeButton.setAttribute('class', 'btn btn-primary mb-1');
+            if (typeSelect.value === 'BoxItem' || typeSelect.value === 'PolygonItem')
+                shapeButton.setAttribute('data-bs-target', '#itemModal');
+            else if (typeSelect.value === 'BoxLink' || typeSelect.value === 'PolygonLink')
+                shapeButton.setAttribute('data-bs-target', '#linkModal');
+
+            // Butonun text'ini ekledim                                                                                                                                                                   
+            shapeButton.textContent = shapeId;
+
+            // Butonu sayfaya ekledim                                                                                                                                                                     
+            var shapeArea = document.getElementById('shapeArea');
+            shapeArea.appendChild(shapeButton);
+        });
+
+        // Handle change event                                                                                                                                                                            
+        typeSelect.onchange = function () {
+            isValueDelete = false;
+            if (typeSelect.value === 'Delete') {
+                isValueDelete = true;
+                map.on('click', function (evt) {
+                    this.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+                        console.log(feature, layer);
+                        if (isValueDelete) {
+                            if (confirm("Are you sure?") == true) {
+                                var deleteElement = document.getElementById(feature.getId());
+                                deleteElement.remove();
+                                layer.getSource().removeFeature(feature);
+                            }
+                            else typeSelect.value = 'None';
+                        }
+                    });
+                });
+                map.removeInteraction(draw);
+            }
+            else addInteraction();
+        };
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [MODALS]
+
+        // LINK MODAL: Select Existing Drawing                                                              
+        var linkModalSelectExistingDrawingMode = false;
+        $("#addLinkSelectDrawing").on("click", function () {
+            if (linkModalSelectExistingDrawingMode == false) {
+                document.getElementById("selectExistingDrawing").removeAttribute("hidden");
+                document.getElementById("btnAddLinkNewDrawing").setAttribute("disabled", "");
+                $("#addLinkSelectDrawing").removeClass("btn-dark");
+                $("#addLinkSelectDrawing").addClass("btn-danger");
+                $("#addLinkSelectDrawing").text("Discard");
+                linkModalSelectExistingDrawingMode = true;
+                return -1;
+            }
+            if (linkModalSelectExistingDrawingMode == true) {
+                document.getElementById("selectExistingDrawing").setAttribute("hidden", "");
+                document.getElementById("btnAddLinkNewDrawing").removeAttribute("disabled");
+                $("#addLinkSelectDrawing").removeClass("btn-danger");
+                $("#addLinkSelectDrawing").addClass("btn-dark");
+                $("#addLinkSelectDrawing").text("Existing Drawing");
+                linkModalSelectExistingDrawingMode = false;
+                return -1;
+            }
+        });
+
+        // LINK MODAL: Add New Drawing                                                                      
+        var linkModalUploadFileMode = false;
+        $("#btnAddLinkNewDrawing").on("click", function () {
+            if (linkModalUploadFileMode == false) {
+                document.getElementById("uploadLinkFile").removeAttribute("hidden");
+                document.getElementById("linkModalPlaceholder").removeAttribute("hidden");
+                document.getElementById("addLinkSelectDrawing").setAttribute("disabled", "");
+                $("#btnAddLinkNewDrawing").removeClass("btn-dark");
+                $("#btnAddLinkNewDrawing").addClass("btn-danger");
+                $("#btnAddLinkNewDrawing").text("Discard");
+                linkModalUploadFileMode = true;
+                return -1;
+            }
+            if (linkModalUploadFileMode == true) {
+                document.getElementById("uploadLinkFile").setAttribute("hidden", "");
+                document.getElementById("linkModalPlaceholder").setAttribute("hidden", "");
+                document.getElementById("addLinkSelectDrawing").removeAttribute("disabled");
+                $("#btnAddLinkNewDrawing").removeClass("btn-danger");
+                $("#btnAddLinkNewDrawing").addClass("btn-dark");
+                $("#btnAddLinkNewDrawing").text("New Drawing");
+                linkModalUploadFileMode = false;
+                return -1;
+            }
+        });
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    </script>
+}
