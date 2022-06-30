@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Quartz.Entities.Concrete.Documents;
-using Quartz.Entities.Concrete.Projects;
-using Quartz.Entities.Concrete.Projects.Items;
+using Quartz.Entities.Concrete.FileUploads;
+using Quartz.Entities.Concrete.LookUpItems;
+using Quartz.Entities.Concrete.Project.Item;
+using Quartz.Entities.Concrete.Project.Link;
+using Quartz.Entities.Concrete.Projects.Item;
 using Quartz.Entities.Concrete.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
 {
@@ -19,18 +16,33 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz;uid=umutd;pwd=Ud4583!");
             base.OnConfiguring(optionsBuilder);
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
         }
+
         public DbSet<AppUser> AspNetUsers { get; set; }
         public DbSet<AppRole> AspNetRoles { get; set; }
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<Entities.Concrete.Projects.Quartz> Quartzes { get; set; }
-        public DbSet<Link> Links { get; set; }
-        public DbSet<Item> Items { get; set; }
-        public DbSet<Information> Informations { get; set; }
-        public DbSet<Inspection> Inspections { get; set; }
+        public DbSet<FileUpload> FileUploads { get; set; }
+        public DbSet<QuartzLink> QuartzLinks { get; set; }
+        public DbSet<QuartzLinksDrawingFeatures> QuartzLinksDrawingFeatures { get; set; }
+        public DbSet<QuartzLinksDrawingSettings> QuartzLinksDrawingSettings { get; set; }
+        public DbSet<QuartzItem> QuartzItems { get; set; }
+        public DbSet<QuartzItemsInformation> QuartzItemsInformations { get; set; }
+        public DbSet<QuartzItemsInspection> QuartzItemsInspections { get; set; }
+        public DbSet<LookUpItemsComponentType> LookupItemsComponentTypes { get; set; }
+        public DbSet<LookUpItemsFittingType> LookupItemsFittingTypes { get; set; }
+        public DbSet<LookUpItemsMethod> LookupItemsMethods { get; set; }
+        public DbSet<LookUpItemsOperator> LookupItemsOperators { get; set; }
+        public DbSet<LookUpItemsPlantArea> LookupItemsPlantAreas { get; set; }
+        public DbSet<LookUpItemsPlantSystem> LookupItemsPlantSystems { get; set; }
+        public DbSet<LookUpItemsProcedure> LookupItemsProcedures { get; set; }
+        public DbSet<LookUpItemsSpecification> LookupItemsSpecifications { get; set; }
+        public DbSet<LookUpItemsStandardStatement> LookupItemsStandardStatements { get; set; }
+        public DbSet<LookUpItemsStatus> LookupItemsStatuses { get; set; }
+        public DbSet<LookUpItemsTechnique> LookupItemsTechniques { get; set; }
+        public DbSet<LookUpItemsWeldType> LookupItemsWeldTypes { get; set; }
 
     }
 }

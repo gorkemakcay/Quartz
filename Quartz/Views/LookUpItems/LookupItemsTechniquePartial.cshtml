@@ -1,0 +1,30 @@
+﻿<table id="techniqueTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Procedure</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.Techniques != null)
+        {
+            foreach (var technique in ViewBag.Techniques)
+            {
+                <tr>
+                    <td>@technique.Name</td>
+                    <td>@technique.LookUpItemsProcedure</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limTechniqueAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>
+

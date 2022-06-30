@@ -1,0 +1,27 @@
+﻿<table id="fittingTypeTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.FittingTypes != null)
+        {
+            foreach (var fittingType in ViewBag.FittingTypes)
+            {
+                <tr>
+                    <td>@fittingType.Name</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limFittingTypeAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>

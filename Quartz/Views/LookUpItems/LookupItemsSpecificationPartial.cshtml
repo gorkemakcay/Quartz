@@ -1,0 +1,27 @@
+﻿<table id="specificationTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.Specifications != null)
+        {
+            foreach (var specification in ViewBag.Specifications)
+            {
+                <tr>
+                    <td>@specification.Name</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limSpecificationAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>

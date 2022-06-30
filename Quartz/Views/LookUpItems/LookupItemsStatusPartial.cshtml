@@ -1,0 +1,28 @@
+﻿<table id="statusTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.Statuses != null)
+        {
+            foreach (var status in ViewBag.Statuses)
+            {
+                <tr>
+                    <td>@status.Name</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limStatusAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>
+

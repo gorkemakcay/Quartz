@@ -1,243 +1,678 @@
-﻿@{
+﻿@model QuartzLink
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <link href="~/css/site.css" rel="stylesheet" />
 <link href="~/css/ol.css" rel="stylesheet" />
 
-<body>
+<!-- #region Styles -->
+<style>
+    .dropdown-menu > li > a:hover,
+    .dropdown-menu > li > a:focus {
+        text-decoration: none;
+        color: #ff6a00;
+        background-color: #ff0000;
+    }
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-2">
-                <div style="border: 2px solid skyblue;height: 80vh;">
-                    <div class="row text-center">
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-10">
-                            <div class="form text-center">
-                                <label for="type">Choose:</label>
-                                <select class="form-control" id="type">
-                                    <option value="None">Move (ctrl + left click to drag)</option>
-                                    <option value="PolygonItem">Polygon Item</option>
-                                    <option value="BoxItem">Box Item</option>
-                                    <option value="PolygonLink">Polygon Link</option>
-                                    <option value="BoxLink">Box Link</option>
-                                    <option value="Delete">Delete</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-1"></div>
-                    </div>
+    .limListA {
+        width: 100%;
+        border: none;
+        background: #dadcde;
+        color: black;
+    }
 
-                    <br><br><br><br>
+        .limListA:hover {
+            background: #c2c4c5;
+        }
 
-                    <div class="row text-center">
-                        <div class="col-lg-12">
-                            <div class="col-lg-1"></div>
-                            <div class="col-lg-10">
-                                <p>Shapes</p>
-                                <div id="shapeArea" class="text-center"></div>
-                            </div>
-                            <div class="col-lg-1"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        .limListA a {
+            color: black;
+            text-align: center;
+        }
 
-            <div class="col-lg-8">
-                <div class="row">
-                    <div id="map" class="map" style="border: 2px solid skyblue;"></div>
-                </div>
-            </div>
 
-            <div class="col-lg-2">
-                <div style="border: 2px solid skyblue; height: 80vh;">
+    .limListB {
+        width: 100%;
+        border: none;
+        background: #f3f5f7;
+    }
 
-                </div>
-            </div>
+        .limListB:hover {
+            background: #c2c4c5;
+        }
+
+        .limListB a {
+            color: black;
+            text-align: center;
+        }
+</style>
+<!-- #endregion -->
+<!-- #region Home Page -->
+
+<div class="container-fluid">
+    <!-- #region Breadcrumbs -->
+    <div class="row text-light text-center" style="background: #373a3e; height: 25px;">
+        <div class="col-lg-2" style="border-right: 1px solid #212529;">
+            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
         </div>
 
-    </div>
+        <div class="col-lg-8" style="border-right: 1px solid #212529; height: 25px;">
+            <span>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ratione repellat officia ullam possimus
+                pariatur atque sed iusto minus illo, facere placeat nisi. Officiis veniam
+            </span>
 
-    @*Link Modal*@
-    <div class="modal fade" id="linkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content" style="height: 47vh;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="linkModalName">Link Modal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
+        </div>
 
-                        <div class="card-body" style="display: block;">
+        <div class="col-lg-2">
+            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
 
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Tag No</span>
-                                    <input type="text" id="addLinkTagNo" class="form-control" style="border-radius: 0px;">
-                                </div>
-
-                                <div class="col-lg-6">
-
-                                </div>
-                            </div>
-
-                            <br>
-                            <hr>
-
-                            <div class="row">
-                                <div class="col-lg-5 text-center">
-                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
-                                    <button id="addLinkSelectDrawing" type="button" class="btn btn-dark"
-                                            style="border: none; border-radius: 0px; width:150px;">
-                                        Existing Drawing
-                                    </button>
-                                </div>
-
-                                <div class="col-lg-2 text-center">
-                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
-                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">OR</span>
-                                </div>
-
-                                <div class="col-lg-5 text-center">
-                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
-                                    <button id="btnAddLinkNewDrawing" type="button" class="btn btn-dark"
-                                            style="border: none; border-radius: 0px; width:150px;">
-                                        New Drawing
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div id="selectExistingDrawing" class="col-lg-5" hidden>
-                                    <div class="row">
-                                        <div class="col-lg-10">
-                                            <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
-                                            <select class="form-control select2bs4 select2-hidden-accessible" id="addLinkSelectDrawing"
-                                                    style="border-radius: 0px;">
-                                                <option>Select</option>
-                                                <option>image-1</option>
-                                                <option>image-2</option>
-                                                <option>image-3</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <br>
-                                            <button type="button" id="goExistingDrawing" class="btn btn-info"
-                                                    style="border-radius: 0px; color: white;">
-                                                GO
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-7" hidden id="linkModalPlaceholder"></div>
-
-                                <div class="col-lg-5">
-                                    <br>
-                                    <div id="uploadLinkFile" class="row" hidden>
-                                        <div class="col-lg-3">
-                                            <label for="file-upload" style="border-radius: 0px; color: white;" class="btn btn-info">
-                                                Choose
-                                            </label>
-                                            <input id="file-upload" type="file" name="files" hidden>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input class="form-control" style="border-radius: 0px;" type="text" autocomplete="off"
-                                                   placeholder="Description..." name="description" required />
-                                        </div>
-
-                                        <div class="col-lg-3">
-                                            <button type="button" class="btn btn-info" style="border-radius:0px; color: white;">Upload</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
-                    <input id="showLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
-                            style="border:none;border-radius:0px">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-danger" style="border:none;border-radius:0px">Delete</button>
-                    <button type="button" class="btn btn-primary" style="border:none;border-radius:0px">Save changes</button>
-                </div>
-            </div>
         </div>
     </div>
+    <!-- #endregion -->
+    <!-- #region List Panel | Quartz Panel | Search Panel -->
+    <div class="row">
+        <div class="col-lg-2 px-0" id="listPanel" style="border: none;">
+            @await Html.PartialAsync("/Views/Shared/Partial/HomePage/ListPanelPartial.cshtml")
+        </div>
 
-    @*Item Modal*@
-    <div class="modal fade" id="itemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="itemModalName">Item Modal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ratione repellat officia ullam possimus
-                    pariatur atque sed iusto minus illo, facere placeat nisi. Officiis veniam nesciunt tenetur blanditiis ratione
-                    laboriosam?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" style="border:none;border-radius:0px">Delete</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
+        <div class="col-lg-8 px-0" id="main">
+            @await Html.PartialAsync("/Views/Shared/Partial/HomePage/QuartzPartial.cshtml")
+        </div>
+
+        <div class="col-lg-2 px-0">
+            @await Html.PartialAsync("/Views/Shared/Partial/HomePage/SearchPanelPartial.cshtml")
         </div>
     </div>
+    <!-- #endregion -->
+</div>
+<!-- #endregion -->
+<!-- #region Modals -->
+<!-- #region Link Modal -->
+<div class="modal fade" id="linkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="height: 47vh;">
+            <div class="modal-header" style="background-color: #F3F5F7;">
+                <h5 class="modal-title" id="linkModalName">Link Modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
 
-    @*New Project Modal*@
-    <div class="modal fade" id="newProjectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">New Project</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <br /><br />
-                    @*<form method="post" enctype="multipart/form-data">
-                        <div id="uploadProjectFile" class="row">
+                    <div class="card-body" style="display: block;">
+
+                        <div class="row">
                             <div class="col-lg-6">
-                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Project Name</span>
-                                <input type="text" id="newProjectName" class="form-control" style="border-radius: 0px;">
-                                <br />
-                                <label for="file-upload" style="border-radius: 0px; color: white;" class="btn btn-info">
-                                    Choose New Drawing
-                                </label>
-                                <input id="file-upload" type="file" name="files" hidden>
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Tag No</span>
+                                <input type="text" id="addLinkTagNo" class="form-control">
+                            </div>
 
-                                <button type="submit" class="btn btn-info" style="border-radius: 0px;" asp-controller="Document" asp-action="AddDocument">Upload</button>
-                                <button type="button" class="btn btn-info" id="clickMe">Clike me!</button>
+                            <div class="col-lg-6">
+
                             </div>
                         </div>
-                    </form>*@
-                    @await Html.PartialAsync("UploadDrawingPartial")
-                    <br /><br />
+
+                        <br>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-lg-5 text-center">
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                <button id="addLinkSelectDrawing" type="button" class="btn btn-dark" style="border: none; width:150px;">Existing Drawing</button>
+                            </div>
+
+                            <div class="col-lg-2 text-center">
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">OR</span>
+                            </div>
+
+                            <div class="col-lg-5 text-center">
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                <button id="btnAddLinkNewDrawing" type="button" class="btn btn-dark" style="border: none; width:150px;">New Drawing</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div id="selectExistingDrawing" class="col-lg-5" hidden>
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
+                                        <select class="form-control select2bs4 select2-hidden-accessible" id="addLinkSelectDrawing"
+                                                style="border-radius: 0px;">
+                                            <option>Select</option>
+                                            <option>image-1</option>
+                                            <option>image-2</option>
+                                            <option>image-3</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <br>
+                                        <button type="button" id="goExistingDrawing" class="btn btn-info"
+                                                style="border-radius: 0px; color: white;">
+                                            GO
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-7" hidden id="linkModalPlaceholder"></div>
+
+                            <div class="col-lg-5">
+                                <br>
+                                <div id="uploadLinkFile" class="row" hidden>
+                                    <div class="col-lg-3">
+                                        <label for="file-upload" style="border-radius: 0px; color: white;" class="btn btn-info">
+                                            Choose
+                                        </label>
+                                        <input id="file-upload" type="file" name="files" hidden>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" style="border-radius: 0px;" type="text" autocomplete="off"
+                                               placeholder="Description..." name="description" required />
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <button type="button" class="btn btn-info" style="border-radius:0px; color: white;">Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="background-color: #F3F5F7;">
+                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
+                <input id="showLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
+                        style="border:none;border-radius:0px">
+                    Close
+                </button>
+                <button type="button" class="btn btn-danger" style="border:none;border-radius:0px">Delete</button>
+                <button type="button" class="btn btn-primary" style="border:none;border-radius:0px">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Item Modal -->
+<div class="modal fade" id="itemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #F3F5F7;">
+                <h5 class="modal-title" id="itemModalName">Item Modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ratione repellat officia ullam possimus
+                pariatur atque sed iusto minus illo, facere placeat nisi. Officiis veniam nesciunt tenetur blanditiis ratione
+                laboriosam?
+            </div>
+            <div class="modal-footer" style="background-color: #F3F5F7;">
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal" style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;">Close</button>
+                <button type="button" class="btn btn-info" style="border:none;">Delete</button>
+                <button type="button" class="btn btn-info" style="border-top-right-radius: 20px; border-bottom-right-radius: 20px;">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Drawing Settings Modal (#DSM) -->
+<div class="modal fade" id="drawingSettingsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" , aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #F3F5F7;">
+                <h5 class="modal-title" id="drawingSettingsModalName">Drawing [LinkName]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing No</span>
+                        <input type="text" id="dsmDrawingNo" class="form-control">
+                    </div>
+
+                    <div class="col-lg-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing Description</span>
+                        <input type="text" id="dsmDrawingNo" class="form-control">
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" style="border:none;border-radius:0px" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="btnCreateNewProject" class="btn btn-primary" style="border:none;border-radius:0px">Create</button>
+
+                <br /><br />
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing No</span>
+                        <select class="form-select" id="dsmPlantArea">
+                            <option value="value" disabled selected>Select</option>
+                            <option value="value">text1</option>
+                            <option value="value">text2</option>
+                            <option value="value">text3</option>
+                            <option value="value">text4</option>
+                            <option value="value">text5</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing Description</span>
+                        <select class="form-select" id="dsmPlantSystem">
+                            <option value="value" disabled selected>Select</option>
+                            <option value="value">text1</option>
+                            <option value="value">text2</option>
+                            <option value="value">text3</option>
+                            <option value="value">text4</option>
+                            <option value="value">text5</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500">Drawing File: </span>
+                        <input type="text" id="dsmFile" class="" style="border: none; background-color: white;" disabled value="grkmgrkmgrkmgrkm.jpg">
+                    </div>
+
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+
+                <br />
+
+                <!-- #region Upload Drawing Button -->
+                <div class="row">
+                    <div class="text-center">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                        <button id="btnDsmUploadDrawing" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
+                    </div>
+                </div>
+                <!-- #endregion -->
+                <!-- #region Upload Drawing Area -->
+                <div class="row">
+                    <div class="text-center">
+                        <br>
+                        <div id="dsmUploadDrawingArea" class="row" hidden>
+                            <div class="col-lg-12">
+                                <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
+                                <input id="dsmUploadDrawing" type="file" name="files" hidden>
+                                <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;">Upload</button>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <!-- #endregion -->
+
+            </div>
+
+            <!-- #region Footer -->
+            <div class="modal-footer" style="background-color: #F3F5F7;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            <!-- #endregion -->
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Lookup Items Modal Modal (#LIM) -->
+<!-- #region General Modal -->
+<div class="modal fade" id="lookupItemsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #F3F5F7; border-bottom: 2px solid #dadcde">
+                <h5 id="limTitle" class="modal-title">Lookup Items</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <ul class="spec nav" role="tablist" id="limNav">
+                        <li class="active nav-item limListA"><a class="nav-link" href="#limStatus" data-toggle="tab">Status</a></li>
+                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limPlantArea" data-toggle="tab">Plant Area</a></li>
+                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limPlantSystem" data-toggle="tab">Plant System</a></li>
+                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limOperator" data-toggle="tab">Operator</a></li>
+                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limMethod" data-toggle="tab">Method</a></li>
+                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limProcedure" data-toggle="tab">Procedure</a></li>
+                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limTechnique" data-toggle="tab">Technique</a></li>
+                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limComponentType" data-toggle="tab">Component Type</a></li>
+                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limStandardStatement" data-toggle="tab">Stand. Statement</a></li>
+                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limSpecification" data-toggle="tab">Specification</a></li>
+                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limFittingType" data-toggle="tab">Fitting Type</a></li>
+                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limWeldType" data-toggle="tab">Weld Type</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-10" id="limPartialArea">
+
                 </div>
             </div>
         </div>
     </div>
+</div>
+<!-- #endregion -->
+<!-- #region Component Type Add Modal -->
+<div class="modal fade" id="limComponentTypeAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
 
-</body>
+            <div class="modal-body">
+                <input id="limComponentTypeAddModalName" type="text" class="form-control" placeholder="Enter New Component Type" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addComponentType()" data-bs-dismiss="modal">Save</button>
+                    </div>
 
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Fitting Type Add Modal -->
+<div class="modal fade" id="limFittingTypeAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limFittingTypeAddModalName" type="text" class="form-control" placeholder="Enter New Fitting Type" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addFittingType()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Method Add Modal -->
+<div class="modal fade" id="limMethodAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limMethodAddModalName" type="text" class="form-control" placeholder="Enter New Method Name" style="border: none; background: #f3f5f7;">
+                <br />
+                <input id="limMethodAddModalCode" type="text" class="form-control" placeholder="Enter New Method Code" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addMethod()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Operator Add Modal -->
+<div class="modal fade" id="limOperatorAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limOperatorAddModalName" type="text" class="form-control" placeholder="Enter New Operator" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addOperator()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Plant Area Add Modal -->
+<div class="modal fade" id="limPlantAreaAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limPlantAreaAddModalName" type="text" class="form-control" placeholder="Enter New Plant Area Name" style="border: none; background: #f3f5f7;">
+                <br />
+                <input id="limPlantAreaAddModalCode" type="text" class="form-control" placeholder="Enter New Plant Area Code" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantArea()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Plant System Add Modal -->
+<div class="modal fade" id="limPlantSystemAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limPlantSystemAddModalName" type="text" class="form-control" placeholder="Enter New Plant System " style="border: none; background: #f3f5f7;">
+                <br />
+                <select id="limPlantSystemAddModalLookUpItemsPlantAreas" class="form-select">
+                    <option hidden value="select">Select Plant Area(s)</option>
+                    @*@if (ViewBag.GetPlantAreas != null)
+                    {
+                        foreach (var plantArea in ViewBag.GetPlantAreas)
+                        {
+                            <option value="@plantArea.Name">@plantArea.Name</option>
+                        }
+                    }*@
+                </select>
+
+                @*<select id="limPlantSystemAddModalLookUpItemsPlantAreas" asp-items="ViewBag.GetPlantAreasList" class="form-select">
+                        <option hidden value="select">Select Plant Area(s)</option>
+                    </select>*@
+
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantSystem()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Procedure Add Modal -->
+<div class="modal fade" id="limProcedureAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limProcedureAddModalName" type="text" class="form-control" placeholder="Enter New Procedure" style="border: none; background: #f3f5f7;">
+                <br />
+                <select id="limProcedureAddModalLookUpItemsMethod" class="form-select">
+                    <option selected disabled value="select">Select Method</option>
+                    <option value="">Method 1</option>
+                    <option value="">Method 2</option>
+                    <option value="">Method 3</option>
+                </select>
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addMethod()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Specification Add Modal -->
+<div class="modal fade" id="limSpecificationAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limSpecificationAddModalName" type="text" class="form-control" placeholder="Enter New Specification" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addSpecification()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Standard Statement Add Modal -->
+<div class="modal fade" id="limStandardStatementAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limStandardStatementAddModalName" type="text" class="form-control" placeholder="Enter New Standard Statement" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStandardStatement()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Status Add Modal -->
+<div class="modal fade" id="limStatusAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limStatusAddModalName" type="text" class="form-control" placeholder="Enter New Status" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStatus()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Technique Add Modal -->
+<div class="modal fade" id="limTechniqueAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limTechniqueAddModalName" type="text" class="form-control" placeholder="Enter New Technique" style="border: none; background: #f3f5f7;">
+                <br />
+                <select id="limTechniqueAddModalLookUpItemsProcedure" class="form-select">
+                    <option selected disabled value="select">Select Procedure</option>
+                    <option value="">Procedure 1</option>
+                    <option value="">Procedure 2</option>
+                    <option value="">Procedure 3</option>
+                </select>
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addTechnique()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Weld Type Add Modal -->
+<div class="modal fade" id="limWeldTypeAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <input id="limWeldTypeAddModalName" type="text" class="form-control" placeholder="Enter New Weld" style="border: none; background: #f3f5f7;">
+                <br />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addWeldType()" data-bs-dismiss="modal">Save</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #endregion -->
+<!-- #endregion -->
+<!-- #region Scripts -->
 @section Scripts {
     <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
     <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
@@ -248,27 +683,726 @@
     <script src="~/js/ol.js"></script>
     @*<script type="module" src="~/js/index.js"></script>*@
 
-    <script>
-        // NEW PROJECT MODAL: Create Button
-        $("#btnCreateNewProject").on('click', function () {
-            alert($("#newProjectName").val());
-            let model = {
-                Name: $("#newProjectName").val(),
-                Creater: "Görkem",
-                CreatedDate: "21.06.2022 12:00"
-            };
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("CreateNewProjectJSON", "Quartz")',
-                data: { model: model },
-                success: function (data) {
-                    rModel = jQuery.parseJSON(data);
-                },
-                error: function (error) {
-                    console.log("Proje oluşturulurken bir hata oluştu!: " + error.responseText);
-                }
-            });
+
+
+<script>
+        $(function () {
+
         });
+
+        // #region onClick() Functions
+
+        // #region Lookup Item Modal
+
+        // #region General
+        // #endregion
+
+        // #region Component Type
+        function addComponentType() {
+            if ($("#limComponentTypeAddModalName").val() != null && $("#limComponentTypeAddModalName").val() != " ") {
+                var componentTypeModel = {
+                    Name: $("#limComponentTypeAddModalName").val()
+                }
+
+                $("#limComponentTypeAddModalName").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddComponentTypeJSON", "LookupItems")',
+                    data: { model: componentTypeModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllComponentTypesJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#componentTypeTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Fitting Type
+        function addFittingType() {
+            if ($("#limFittingTypeAddModalName").val() != null && $("#limFittingTypeAddModalName").val() != " ") {
+                var fittingTypeModel = {
+                    Name: $("#limFittingTypeAddModalName").val()
+                }
+
+                $("#limFittingTypeAddModalName").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddFittingTypeJSON", "LookupItems")',
+                    data: { model: fittingTypeModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllFittingTypesJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#fittingTypeTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Method
+        function addMethod() {
+            if (($("#limMethodAddModalName").val() != null && $("#limMethodAddModalName").val() != " ") &&
+                ($("#limMethodAddModalCode").val() != null && $("#limMethodAddModalCode").val() != " ")) {
+                var methodModel = {
+                    Name: $("#limMethodAddModalName").val(),
+                    Code: $("#limMethodAddModalCode").val
+                }
+
+                $("#limMethodAddModalName").val("");
+                $("#limMethodAddModalCode").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddMethodJSON", "LookupItems")',
+                    data: { model: methodModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllMethodsJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#methodTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Operator
+        function addOperator() {
+            if ($("#limOperatorAddModalName").val() != null && $("#limOperatorAddModalName").val() != " ") {
+                var operatorModel = {
+                    Name: $("#limOperatorAddModalName").val()
+                }
+
+                $("#limOperatorAddModalName").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddOperatorJSON", "LookupItems")',
+                    data: { model: operatorModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllOperatorsJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#operatorTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Plant Area
+        function addPlantArea() {
+            if (($("#limPlantAreaAddModalName").val() != null && $("#limPlantAreaAddModalName").val() != " ") &&
+                ($("#limPlantAreaAddModalCode").val() != null && $("#limPlantAreaAddModalCode").val() != " ")) {
+                var plantAreaModel = {
+                    Name: $("#limPlantAreaAddModalName").val(),
+                    Code: $("#limPlantAreaAddModalCode").val()
+                }
+
+                $("#limPlantAreaAddModalName").val("");
+                $("#limPlantAreaAddModalCode").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddPlantAreaJSON", "LookupItems")',
+                    data: { model: plantAreaModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllPlantAreasJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#plantAreaTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Plant System
+        function addPlantSystem() {
+            if ($("#limPlantSystemAddModalName").val() != null && $("#limPlantSystemAddModalName").val() != " ") {
+                var plantSystemModel = {
+                    Name: $("#limPlantSystemAddModalName").val(),
+                    LookUpItemsPlantAreas: $("#limPlantSystemAddModalLookUpItemsPlantAreas").val()
+                }
+
+                $("#limPlantSystemAddModalName").val("");
+                $("#limPlantSystemAddModalLookUpItemsPlantAreas").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddPlantSystemJSON", "LookupItems")',
+                    data: { model: plantSystemModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllPlantSystemsJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#plantSystemTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Procedure
+        function addProcedure() {
+            if ($("#limProcedureAddModalName").val() != null && $("#limProcedureAddModalName").val() != " ") {
+                var procedureModel = {
+                    Name: $("#limProcedureAddModalName").val(),
+                    LookUpItemsMethod: $("#limProcedureAddModalLookUpItemsMethod").val()
+                }
+
+                $("#limProcedureAddModalName").val("");
+                $("#limProcedureAddModalLookUpItemsMethod").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddProcedureJSON", "LookupItems")',
+                    data: { model: procedureModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllProceduresJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#procedureTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Specification
+        function addSpecification() {
+            if ($("#limSpecificationAddModalName").val() != null && $("#limSpecificationAddModalName").val() != " ") {
+                var specificationModel = {
+                    Name: $("#limSpecificationAddModalName").val()
+                }
+
+                $("#limSpecificationAddModalName").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddSpecificationJSON", "LookupItems")',
+                    data: { model: specificationModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllSpecificationsJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#specificationTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Standard Statement
+        function addStandardStatement() {
+            if ($("#limStandardStatementAddModalName").val() != null && $("#limStandardStatementAddModalName").val() != " ") {
+                var standardStatementModel = {
+                    Name: $("#limStandardStatementAddModalName").val()
+                }
+
+                $("#limStandardStatementAddModalName").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddStandardStatementJSON", "LookupItems")',
+                    data: { model: standardStatementModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllStandardStatementsJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#standardStatementTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Status
+        function addStatus() {
+            if ($("#limStatusAddModalName").val() != null && $("#limStatusAddModalName").val() != " ") {
+                var statusModel = {
+                    Name: $("#limStatusAddModalName").val()
+                }
+
+                $("#limStatusAddModalName").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddStatusJSON", "LookupItems")',
+                    data: { model: statusModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllStatusesJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#statusTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Technique
+        function addTechnique() {
+            if ($("#limTechniqueAddModalName").val() != null && $("#limTechniqueAddModalName").val() != " ") {
+                var techniqueModel = {
+                    Name: $("#limTechniqueAddModalName").val(),
+                    LookUpItemsProcedure: $("#limTechniqueAddModalLookUpItemsProcedure").val()
+                }
+
+                $("#limTechniqueAddModalName").val("");
+                $("#limTechniqueAddModalLookUpItemsProcedure").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddTechniqueJSON", "LookupItems")',
+                    data: { model: techniqueModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllTechniquesJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#techniqueTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #region Weld Type
+        function addWeldType() {
+            if ($("#limWeldTypeAddModalName").val() != null && $("#limWeldTypeAddModalName").val() != " ") {
+                var weldTypeModel = {
+                    Name: $("#limWeldTypeAddModalName").val()
+                }
+
+                $("#limWeldTypeAddModalName").val("");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AddWeldTypeJSON", "LookupItems")',
+                    data: { model: weldTypeModel },
+                    success: function (data) {
+                        rModel = jQuery.parseJSON(data);
+
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetAllWeldTypesJSON", "LookUpItems")',
+                            success: function (result) {
+                                $("#limPartialArea").html(result);
+                                $('#weldTypeTable').DataTable();
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        }
+        // #endregion
+
+        // #endregion
+
+        // #endregion
+
+        $("#limNav a").on('click', function () {
+            var info = $(this).html();
+            info = info.replace(/\s+/g, '');
+            switch (info) {
+                case 'ComponentType':
+                    $("#limTitle").html("Lookup Items | Component Type");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllComponentTypesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#componentTypeTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'FittingType':
+                   $("#limTitle").html("Lookup Items | FittingType");
+
+                   $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllFittingTypesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#fittingTypeTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Method':
+                    $("#limTitle").html("Lookup Items | Method");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllMethodsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#methodTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Operator':
+                    $("#limTitle").html("Lookup Items | Operator");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllOperatorsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#operatorTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'PlantArea':
+                    $("#limTitle").html("Lookup Items | Plant Area");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllPlantAreasJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#plantAreaTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'PlantSystem':
+                    $("#limTitle").html("Lookup Items | Plant System");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllPlantSystemsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#plantSystemTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetPlantAreaForOption", "LookUpItems")',
+                        success: function (result) {
+                            rModel = jQuery.parseJSON(result);
+                            $("#limPlantSystemAddModalLookUpItemsPlantAreas").children().remove();
+                            for (var i = 0; i < rModel.length; i++) {
+                                $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
+                                    $('<option>', {
+                                        value: rModel[i].Name,
+                                        text: rModel[i].Name
+                                    })
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+
+                    break;
+
+                case 'Procedure':
+                    $("#limTitle").html("Lookup Items | Procedure");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllProceduresJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#procedureTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Specification':
+                    $("#limTitle").html("Lookup Items | Specification");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllSpecificationsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#specificationTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Stand.Statement':
+                    $("#limTitle").html("Lookup Items | Standart Statement");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllStandardStatementsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#standardStatementTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Status':
+                    $("#limTitle").html("Lookup Items | Status");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllStatusesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#statusTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Technique':
+                    $("#limTitle").html("Lookup Items | Technique");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllTechniquesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#techniqueTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'WeldType':
+                    $("#limTitle").html("Lookup Items | Weld Type");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllWeldTypesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#weldTypeTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+        })
 
         $("#clickMe").on('click', function () {
             if (window.FormData !== undefined) {
@@ -288,18 +1422,18 @@
                         alert("success!");
                     },
                     error: function (error) {
-                        alert("error!");
+                        alert("errorrrr!");
                     }
                 });
             }
         });
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //////////////////////////////////////////////////////////////////////////////////////////////// [Variables]
         const typeSelect = document.getElementById('type');
         var allShapes = [];
-        let draw; // global so we can remove it later                                                 
+        let draw; // global so we can remove it later
         var isValueDelete = false;
         var shapeId = "";
         var itemIdCount = 0;
@@ -357,7 +1491,7 @@
             view: view
         });
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [FUNCTIONS]
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [FUNCTIONS]
 
         function addInteraction() {
             if (typeSelect.value !== 'None') {
@@ -378,32 +1512,36 @@
                 }
 
                 draw.on("drawend", function () {
-                    function timeOut() {                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                   
-                        typeSelect.value = 'None';      //                                                                                                                       //
-                        map.removeInteraction(draw);    // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için //                   
-                    }                                   //                                                                                                                       //                   
-                    setTimeout(timeOut, 1 / 1000);      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+                    function timeOut() {
+                        typeSelect.value = 'None';
+                        map.removeInteraction(draw);    // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için
+                    }
+                    setTimeout(timeOut, 1 / 1000);
+
+                    // #region DateTime Now
+                    var dt = new Date();
+                    var fromDateTime = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + dt.getDate()).slice(-2) + "T" + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2);
+                    // #endregion
+
                     if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
                         var itemModel = {
-                            MemberId: 1,
-                            MemberOf: "main",
-                            Creator: "Görkem",
-                            TagName: shapeId,
+                            TagNo: shapeId,
                             ShowLabel: true,
-                            SelectDrawing: "",
-                            CreatedDate: ""
+                            CreatedDate: fromDateTime,
+                            CreatedBy: "Görkem",
+                            MainQuartzLinkId: @Model.Id,
+                            CurrentDrawingId: 0
                         };
                         $.ajax({
                             type: "POST",
-                            url: '@Url.Action("AddItemJSON", "Quartz")',
+                            url: '@Url.Action("AddLinkJSON", "QuartzLink")',
                             data: { model: itemModel },
                             success: function (data) {
                                 alert("success!");
                                 rModel = jQuery.parseJSON(data);
-                                $("#addLinkTagNo").val(rModel.TagName);
                             },
                             error: function (error) {
-                                alert("error!");
+                                alert("error: item doesn't saved!");
                             }
                         });
                         $("#linkModal").modal('show');
@@ -421,11 +1559,11 @@
                 //    map.addInteraction(draw);
 
                 //    draw.on("drawend", function () {
-                //        function timeOut() {                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                  
-                //            typeSelect.value = 'None';       //                                                                                                                       //                  
-                //            map.removeInteraction(draw);     // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için //                  
-                //        }                                    //                                                                                                                       //                  
-                //        setTimeout(timeOut, 1 / 1000);       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+                //        function timeOut() {
+                //            typeSelect.value = 'None';
+                //            map.removeInteraction(draw);     // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için
+                //        }
+                //        setTimeout(timeOut, 1 / 1000);
                 //        if (typeSelect.value == 'PolygonLink')
                 //            $("#linkModal").modal('show');
                 //        if (typeSelect.value == 'PolygonItem')
@@ -434,8 +1572,8 @@
                 //}
             }
         }
-        //                                                                                                                                                                                                
-        // Çizim tamamlandıktan sonra çalışan fonksiyon                                                                                                                                                   
+        //
+        // Çizim tamamlandıktan sonra çalışan fonksiyon
         source.on('addfeature', function (evt) {
             if (typeSelect.value === 'PolygonItem' || typeSelect.value === 'BoxItem') {
                 itemIdCount++;
@@ -448,7 +1586,7 @@
                 shapeId = linkId;
             }
 
-            // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim                                                                                                                                
+            // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim
             var style = new ol.style.Style({
                 stroke: new ol.style.Stroke({ color: '#000' }),
                 text: new ol.style.Text({
@@ -464,37 +1602,37 @@
             });
 
             console.log(evt);
-            // Çizilen Box/Polygon'a ID tanımladım                                                                                                                                                        
+            // Çizilen Box/Polygon'a ID tanımladım
             evt.feature.setId(shapeId);
-            // Çizilen Box/Polygon'a text tanımladım                                                                                                                                                      
+            // Çizilen Box/Polygon'a text tanımladım
             evt.feature.setStyle(style);
-            // Çizilen Box/Polygon'u tüm Çizimlerin olduğu listeye ekledim                                                                                                                                
+            // Çizilen Box/Polygon'u tüm Çizimlerin olduğu listeye ekledim
             allShapes.push(evt.feature);
-            // console.log(allShapes);                                                                                                                                                                    
+            // console.log(allShapes);
 
-            // Çizilen Box/Polygon'un butonunu oluşturdum.                                                                                                                                                
+            // Çizilen Box/Polygon'un butonunu oluşturdum.
             var shapeButton = document.createElement('button');
 
-            // Butonun Attr'larını ekledim                                                                                                                                                                
+            // Butonun Attr'larını ekledim
             shapeButton.setAttribute('id', shapeId);
             shapeButton.setAttribute('type', 'button');
-            shapeButton.setAttribute('style', 'border:none; border-radius: 0px; width: 80%;');
+            shapeButton.setAttribute('style', 'border: none; border-radius: 0px;width: 100%; background: #dadcde');
             shapeButton.setAttribute('data-bs-toggle', 'modal');
-            shapeButton.setAttribute('class', 'btn btn-primary mb-1');
+            shapeButton.setAttribute('class', 'btn btn-primary');
             if (typeSelect.value === 'BoxItem' || typeSelect.value === 'PolygonItem')
                 shapeButton.setAttribute('data-bs-target', '#itemModal');
             else if (typeSelect.value === 'BoxLink' || typeSelect.value === 'PolygonLink')
                 shapeButton.setAttribute('data-bs-target', '#linkModal');
 
-            // Butonun text'ini ekledim                                                                                                                                                                   
+            // Butonun text'ini ekledim
             shapeButton.textContent = shapeId;
 
-            // Butonu sayfaya ekledim                                                                                                                                                                     
+            // Butonu sayfaya ekledim
             var shapeArea = document.getElementById('shapeArea');
             shapeArea.appendChild(shapeButton);
         });
 
-        // Handle change event                                                                                                                                                                            
+        // Handle change event
         typeSelect.onchange = function () {
             isValueDelete = false;
             if (typeSelect.value === 'Delete') {
@@ -516,12 +1654,12 @@
             }
             else addInteraction();
         };
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [MODALS]
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [MODALS]
 
-        // LINK MODAL: Select Existing Drawing                                                              
+        // LINK MODAL: Select Existing Drawing
         var linkModalSelectExistingDrawingMode = false;
         $("#addLinkSelectDrawing").on("click", function () {
             if (linkModalSelectExistingDrawingMode == false) {
@@ -544,7 +1682,7 @@
             }
         });
 
-        // LINK MODAL: Add New Drawing                                                                      
+        // LINK MODAL: Add New Drawing
         var linkModalUploadFileMode = false;
         $("#btnAddLinkNewDrawing").on("click", function () {
             if (linkModalUploadFileMode == false) {
@@ -568,7 +1706,22 @@
                 return -1;
             }
         });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    </script>
+        // DRAWING SETTINGS MODAL: Upload New Drawing
+        var drawingSettingsModalUploadDrawingArea = false;
+        $("#btnDsmUploadDrawing").on("click", function () {
+            if (drawingSettingsModalUploadDrawingArea == false) {
+                document.getElementById("dsmUploadDrawingArea").removeAttribute("hidden");
+                drawingSettingsModalUploadDrawingArea = true;
+                return -1;
+            }
+            if (drawingSettingsModalUploadDrawingArea == true) {
+                document.getElementById("dsmUploadDrawingArea").setAttribute("hidden", "");
+                drawingSettingsModalUploadDrawingArea = false;
+                return -1;
+            }
+        });
+
+</script>
 }
+<!-- #endregion -->

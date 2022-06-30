@@ -1,0 +1,29 @@
+﻿<table id="methodTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.Methods != null)
+        {
+            foreach (var method in ViewBag.Methods)
+            {
+                <tr>
+                    <td>@method.Name</td>
+                    <td>@method.Code</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limMethodAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>

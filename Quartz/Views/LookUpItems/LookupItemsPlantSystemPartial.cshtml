@@ -1,0 +1,29 @@
+﻿<table id="plantSystemTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Plant Area(s)</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.PlantSystems != null)
+        {
+            foreach (var plantSystem in ViewBag.PlantSystems)
+            {
+                <tr>
+                    <td>@plantSystem.Name</td>
+                    <td>@plantSystem.LookUpItemsPlantAreas</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limPlantSystemAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>

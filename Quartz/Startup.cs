@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz.BusinessLogic.DIContainer;
@@ -11,9 +10,6 @@ using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 using Quartz.DataAccess.DIContainer;
 using Quartz.Entities.Concrete.Users;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Quartz
 {

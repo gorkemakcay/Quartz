@@ -1,0 +1,29 @@
+﻿<table id="plantAreaTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.PlantAreas != null)
+        {
+            foreach (var plantArea in ViewBag.PlantAreas)
+            {
+                <tr>
+                    <td>@plantArea.Name</td>
+                    <td>@plantArea.Code</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limPlantAreaAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>

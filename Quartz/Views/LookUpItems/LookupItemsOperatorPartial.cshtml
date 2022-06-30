@@ -1,0 +1,27 @@
+﻿<table id="operatorTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.Operators != null)
+        {
+            foreach (var opr in ViewBag.Operators)
+            {
+                <tr>
+                    <td>@opr.Name</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limOperatorAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>

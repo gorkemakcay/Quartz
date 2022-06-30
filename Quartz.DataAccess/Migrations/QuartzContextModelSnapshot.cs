@@ -120,7 +120,320 @@ namespace Quartz.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Quartz.Entities.Concrete.Documents.Document", b =>
+            modelBuilder.Entity("Quartz.Entities.Concrete.FileUploads.FileUpload", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MainId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MainType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UploadedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileUploads");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsComponentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsComponentTypes");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsFittingType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsFittingTypes");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsMethods");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsOperator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsOperators");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsPlantArea", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsPlantAreas");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsPlantSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LookUpItemsPlantAreas")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsPlantSystems");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsProcedure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LookUpItemsMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsProcedures");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsSpecification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsSpecifications");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsStandardStatement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsStandardStatements");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsStatuses");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsTechnique", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LookUpItemsProcedure")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsTechniques");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsWeldType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LookupItemsWeldTypes");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Item.QuartzItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuartzLinkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuartzLinkId");
+
+                    b.ToTable("QuartzItems");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLink", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentDrawingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MainQuartzLinkId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ShowLabel")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuartzLinks");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLinksDrawingFeatures", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Coords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuartzLinkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuartzLinkId");
+
+                    b.ToTable("QuartzLinksDrawingFeatures");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLinksDrawingSettings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,36 +443,30 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DocumentPath")
+                    b.Property<string>("DrawingNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DocumentType")
+                    b.Property<string>("File")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Extension")
+                    b.Property<string>("PlantArea")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MemberId")
+                    b.Property<string>("PlantSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuartzLinkId")
                         .HasColumnType("int");
-
-                    b.Property<string>("MemberOf")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UploadedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UploadedDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Documents");
+                    b.HasIndex("QuartzLinkId")
+                        .IsUnique();
+
+                    b.ToTable("QuartzLinksDrawingSettings");
                 });
 
-            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Items.Information", b =>
+            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Item.QuartzItemsInformation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,23 +482,20 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<string>("FittingType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MemberId")
+                    b.Property<float>("OperatingPressureBar")
+                        .HasColumnType("real");
+
+                    b.Property<float>("OperatingTempC")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PipeOdIn")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PipeThicknessMm")
+                        .HasColumnType("real");
+
+                    b.Property<int>("QuartzItemId")
                         .HasColumnType("int");
-
-                    b.Property<string>("MemberOf")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OperatingPressute")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OperatingTemp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PipeOd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PipeThickness")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SerialNo")
                         .HasColumnType("nvarchar(max)");
@@ -202,35 +506,38 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<string>("Specification")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TagName")
+                    b.Property<string>("TagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeldType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Informations");
+                    b.HasIndex("QuartzItemId")
+                        .IsUnique();
+
+                    b.ToTable("QuartzItemsInformations");
                 });
 
-            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Items.Inspection", b =>
+            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Item.QuartzItemsInspection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Deatils")
+                    b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MemberOf")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Method")
                         .HasColumnType("nvarchar(max)");
@@ -238,8 +545,11 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<string>("Procedure")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReportNo")
+                    b.Property<int>("QuartzItemId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReportNo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -249,88 +559,10 @@ namespace Quartz.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Inspections");
-                });
+                    b.HasIndex("QuartzItemId")
+                        .IsUnique();
 
-            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Items.Item", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Creator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MemberOf")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Link", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Creator")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MemberOf")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SelectDrawing")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ShowLabel")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("TagName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Links");
-                });
-
-            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Quartz", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Creater")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Quartzes");
+                    b.ToTable("QuartzItemsInspections");
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.Users.AppRole", b =>
@@ -487,6 +719,77 @@ namespace Quartz.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Item.QuartzItem", b =>
+                {
+                    b.HasOne("Quartz.Entities.Concrete.Project.Link.QuartzLink", "QuartzLink")
+                        .WithMany("Items")
+                        .HasForeignKey("QuartzLinkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuartzLink");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLinksDrawingFeatures", b =>
+                {
+                    b.HasOne("Quartz.Entities.Concrete.Project.Link.QuartzLink", "QuartzLink")
+                        .WithMany("DrawingFeatures")
+                        .HasForeignKey("QuartzLinkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuartzLink");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLinksDrawingSettings", b =>
+                {
+                    b.HasOne("Quartz.Entities.Concrete.Project.Link.QuartzLink", "QuartzLink")
+                        .WithOne("DrawingSettings")
+                        .HasForeignKey("Quartz.Entities.Concrete.Project.Link.QuartzLinksDrawingSettings", "QuartzLinkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuartzLink");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Item.QuartzItemsInformation", b =>
+                {
+                    b.HasOne("Quartz.Entities.Concrete.Project.Item.QuartzItem", "QuartzItem")
+                        .WithOne("Information")
+                        .HasForeignKey("Quartz.Entities.Concrete.Projects.Item.QuartzItemsInformation", "QuartzItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuartzItem");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Item.QuartzItemsInspection", b =>
+                {
+                    b.HasOne("Quartz.Entities.Concrete.Project.Item.QuartzItem", "QuartzItem")
+                        .WithOne("Inspection")
+                        .HasForeignKey("Quartz.Entities.Concrete.Projects.Item.QuartzItemsInspection", "QuartzItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuartzItem");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Item.QuartzItem", b =>
+                {
+                    b.Navigation("Information");
+
+                    b.Navigation("Inspection");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLink", b =>
+                {
+                    b.Navigation("DrawingFeatures");
+
+                    b.Navigation("DrawingSettings");
+
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

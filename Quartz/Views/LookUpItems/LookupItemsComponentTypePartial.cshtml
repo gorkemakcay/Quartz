@@ -1,0 +1,28 @@
+﻿<table id="componentTypeTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (ViewBag.ComponentTypes != null)
+        {
+            foreach (var componentType in ViewBag.ComponentTypes)
+            {
+                <tr>
+                    <td>@componentType.Name</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<div class="modal-footer">
+    <br />
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limComponentTypeAddModal">+ Add</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+</div>
+

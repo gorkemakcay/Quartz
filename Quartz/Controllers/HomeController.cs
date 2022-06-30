@@ -1,26 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Quartz.BusinessLogic.Interface.ILookUpItemsService;
+using Quartz.BusinessLogic.Interface.IProjectService.ILinkService;
 using Quartz.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Quartz.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IQuartzLinkService _linkService;
+        private readonly ILookUpItemsPlantAreaService _plantAreaService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, 
+                              IQuartzLinkService linkService,
+                              ILookUpItemsPlantAreaService plantAreaService)
         {
             _logger = logger;
+            _linkService = linkService;
+            _plantAreaService = plantAreaService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            //ViewBag.GetPlantAreas = _plantAreaService.GetAllPlantAreas();
+
+            return View(_linkService.GetById(1));
         }
 
         public IActionResult Privacy()

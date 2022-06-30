@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Quartz.BusinessLogic\Quartz.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Modals\" />
+  </ItemGroup>
+
 </Project>

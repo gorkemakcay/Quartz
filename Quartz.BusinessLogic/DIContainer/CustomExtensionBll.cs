@@ -1,19 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Quartz.BusinessLogic.Concrete;
-using Quartz.BusinessLogic.Concrete.Documents;
-using Quartz.BusinessLogic.Concrete.Projects;
-using Quartz.BusinessLogic.Concrete.Projects.Items;
+using Quartz.BusinessLogic.Concrete.FileUploadManager;
+using Quartz.BusinessLogic.Concrete.LookUpItemsManager;
+using Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager;
+using Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager;
 using Quartz.BusinessLogic.Concrete.Users;
 using Quartz.BusinessLogic.Interface;
-using Quartz.BusinessLogic.Interface.Documents;
-using Quartz.BusinessLogic.Interface.Projects;
-using Quartz.BusinessLogic.Interface.Projects.Items;
+using Quartz.BusinessLogic.Interface.IFileUploadService;
+using Quartz.BusinessLogic.Interface.ILookUpItemsService;
+using Quartz.BusinessLogic.Interface.IProjectService.IItemService;
+using Quartz.BusinessLogic.Interface.IProjectService.ILinkService;
 using Quartz.BusinessLogic.Interface.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quartz.BusinessLogic.DIContainer
 {
@@ -23,16 +20,26 @@ namespace Quartz.BusinessLogic.DIContainer
         {
             services.AddScoped<IAppUserService, AppUserManager>()
                     .AddScoped<IAppRoleService, AppRoleManager>()
-
-                    .AddScoped<IDocumentService, DocumentManager>()
-
-                    .AddScoped<IQuartzService, QuartzManager>()
-                    .AddScoped<ILinkService, LinkManager>()
-                    .AddScoped<IItemService, ItemManager>()
-                    .AddScoped<IInformationService, InformationManager>()
-                    .AddScoped<IInspectionService, InspectionManager>()
-
-                    .AddScoped<IFileService, FileManager>();
+                    .AddScoped<IFileUploadService, FileUploadManager>()
+                    .AddScoped<IQuartzItemService, QuartzItemManager>()
+                    .AddScoped<IQuartzItemsInformationService, QuartzItemsInformationManager>()
+                    .AddScoped<IQuartzItemsInspectionService, QuartzItemsInspectionManager>()
+                    .AddScoped<IQuartzLinkService, QuartzLinkManager>()
+                    .AddScoped<IQuartzLinksDrawingFeaturesService, QuartzLinksDrawingFeaturesManager>()
+                    .AddScoped<IQuartzLinksDrawingSettingsService, QuartzLinksDrawingSettingsManager>()
+                    .AddScoped<ILookUpItemsComponentTypeService, LookUpItemsComponentTypeManager>()
+                    .AddScoped<ILookUpItemsFittingTypeService, LookUpItemsFittingTypeManager>()
+                    .AddScoped<ILookUpItemsMethodService, LookUpItemsMethodManager>()
+                    .AddScoped<ILookUpItemsOperatorService, LookUpItemsOperatorManager>()
+                    .AddScoped<ILookUpItemsPlantAreaService, LookUpItemsPlantAreaManager>()
+                    .AddScoped<ILookUpItemsPlantSystemService, LookUpItemsPlantSystemManager>()
+                    .AddScoped<ILookUpItemsProcedureService, LookUpItemsProcedureManager>()
+                    .AddScoped<ILookUpItemsSpecificationService, LookUpItemsSpecificationManager>()
+                    .AddScoped<ILookUpItemsStandardStatementService, LookUpItemsStandardStatementManager>()
+                    .AddScoped<ILookUpItemsStatusService, LookUpItemsStatusManager>()
+                    .AddScoped<ILookUpItemsTechniqueService, LookUpItemsTechniqueManager>()
+                    .AddScoped<ILookUpItemsWeldTypeService, LookUpItemsWeldTypeManager>();
+                    
 
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
         }

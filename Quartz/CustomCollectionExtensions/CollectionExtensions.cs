@@ -4,9 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 using Quartz.Entities.Concrete.Users;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Quartz.CustomCollectionExtensions
 {

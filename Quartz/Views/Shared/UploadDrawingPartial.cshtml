@@ -1,0 +1,19 @@
+﻿<form method="post" enctype="multipart/form-data">
+
+    <div class="card-body" style="display:block;">
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <input class="form-control form-control-border" style="height:45px" type="file" name="files" multiple required />
+                <br />
+                <input class="form-control form-control-border" type="text" autocomplete="off" placeholder="Açıklama ekle" name="description" required />
+                <br />
+                <input type="hidden" value="123" name="formId" />
+                <input type="hidden" value="deneme" name="formType" />
+                <input type="hidden" value="update" name="addOrUpdate" />
+
+                <button type="submit" class="btn btn-primary" style="border: none; border-radius:0px;width:100px" asp-controller="Document" asp-action="UploadDocument"><i class="fas fa-upload mr-2"></i>&nbsp;Yükle</button>
+            </div>
+        </div>
+    </div>
+
+</form>

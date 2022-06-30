@@ -1,19 +1,32 @@
 ﻿using AutoMapper;
-using Quartz.Common.ViewModels.Documents.DocumentViewModels;
-using Quartz.Common.ViewModels.Projects.Items.ItemViewModels;
-using Quartz.Common.ViewModels.Projects.LinkViewModels;
-using Quartz.Common.ViewModels.Projects.QuartzViewModels;
+using Quartz.Common.ViewModels.FileUpload.FileUploadViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsComponentTypeViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsFittingTypeViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsMethodViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsOperatorViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsPlantAreaViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsPlantSystemViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsProcedureViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsSpecificationViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsStandardStatementViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsStatusViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsTechniqueViewModels;
+using Quartz.Common.ViewModels.LookUpItems.LookUpItemsWeldTypeViewModels;
+using Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels;
+using Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels;
+using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
+using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingFeaturesViewModels;
+using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingSettingsViewModels;
+using Quartz.Common.ViewModels.Project.Link.QuartzLinkViewModels;
+using Quartz.Common.ViewModels.Project.QuartzItem.QuartzItemsInspectionViewModels;
 using Quartz.Common.ViewModels.Users.AppRoleViewModels;
 using Quartz.Common.ViewModels.Users.AppUserViewModels;
-using Quartz.Entities.Concrete.Documents;
-using Quartz.Entities.Concrete.Projects;
-using Quartz.Entities.Concrete.Projects.Items;
+using Quartz.Entities.Concrete.FileUploads;
+using Quartz.Entities.Concrete.LookUpItems;
+using Quartz.Entities.Concrete.Project.Item;
+using Quartz.Entities.Concrete.Project.Link;
+using Quartz.Entities.Concrete.Projects.Item;
 using Quartz.Entities.Concrete.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quartz.Common.Mapping.AutoMapperProfile
 {
@@ -40,42 +53,130 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
 
             #region Project
 
-            #region Quartz
-            CreateMap<Entities.Concrete.Projects.Quartz, QuartzAddViewModel>().ReverseMap();
-            CreateMap<Entities.Concrete.Projects.Quartz, QuartzListViewModel>().ReverseMap();
-            CreateMap<Entities.Concrete.Projects.Quartz, QuartzUpdateViewModel>().ReverseMap();
-            #endregion
-
             #region Link
-            CreateMap<Link, LinkAddViewModel>().ReverseMap();
-            CreateMap<Link, LinkListViewModel>().ReverseMap();
-            CreateMap<Link, LinkUpdateViewModel>().ReverseMap();
+
+            #region QuartzLink
+            CreateMap<QuartzLink, QuartzLinkAddViewModel>().ReverseMap();
+            CreateMap<QuartzLink, QuartzLinkListViewModel>().ReverseMap();
+            CreateMap<QuartzLink, QuartzLinkUpdateViewModel>().ReverseMap();
             #endregion
 
-            #region Items
-            CreateMap<Item, ItemAddViewModel>().ReverseMap();
-            CreateMap<Item, ItemListViewModel>().ReverseMap();
-            CreateMap<Item, ItemUpdateViewModel>().ReverseMap();
+            #region QuartzLinksDrawingFeatures
+            CreateMap<QuartzLinksDrawingFeatures, QuartzLinksDrawingFeaturesAddViewModel>().ReverseMap();
+            CreateMap<QuartzLinksDrawingFeatures, QuartzLinksDrawingFeaturesUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region QuartzLinksDrawingSettings
+            CreateMap<QuartzLinksDrawingSettings, QuartzLinksDrawingSettingsAddViewModel>().ReverseMap();
+            CreateMap<QuartzLinksDrawingSettings, QuartzLinksDrawingSettingsUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #endregion
+
             #region Item
 
+            #region QuartzItem
+            CreateMap<QuartzItem, QuartzItemAddViewModel>().ReverseMap();
+            CreateMap<QuartzItem, QuartzItemListViewModel>().ReverseMap();
+            CreateMap<QuartzItem, QuartzItemUpdateViewModel>().ReverseMap();
             #endregion
 
-            #region Information
+            #region QuartzItemsInformation
+            CreateMap<QuartzItemsInformation, QuartzItemsInformationAddViewModel>().ReverseMap();
+            CreateMap<QuartzItemsInformation, QuartzItemsInformationUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region QuartzItemsInspection
+            CreateMap<QuartzItemsInspection, QuartzItemsInspectionAddViewModel>().ReverseMap();
+            CreateMap<QuartzItemsInspection, QuartzItemsInspectionUpdateViewModel>().ReverseMap();
+            #endregion
 
             #endregion
 
-            #region Inspection
+            #region LookUpItems
 
+            #region LookUpItemsComponentType
+            CreateMap<LookUpItemsComponentType, LookUpItemsComponentTypeAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsComponentType, LookUpItemsComponentTypeListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsComponentType, LookUpItemsComponentTypeUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsFittingType
+            CreateMap<LookUpItemsFittingType, LookUpItemsFittingTypeAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsFittingType, LookUpItemsFittingTypeListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsFittingType, LookUpItemsFittingTypeUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsMethod
+            CreateMap<LookUpItemsMethod, LookUpItemsMethodAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsMethod, LookUpItemsMethodListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsMethod, LookUpItemsMethodUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsOperator
+            CreateMap<LookUpItemsOperator, LookUpItemsOperatorAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsOperator, LookUpItemsOperatorListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsOperator, LookUpItemsOperatorUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsPlantArea
+            CreateMap<LookUpItemsPlantArea, LookUpItemsPlantAreaAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsPlantArea, LookUpItemsPlantAreaListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsPlantArea, LookUpItemsPlantAreaUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsPlantSystem
+            CreateMap<LookUpItemsPlantSystem, LookUpItemsPlantSystemAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsPlantSystem, LookUpItemsPlantSystemListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsPlantSystem, LookUpItemsPlantSystemUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsProcedure
+            CreateMap<LookUpItemsProcedure, LookUpItemsProcedureAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsProcedure, LookUpItemsProcedureListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsProcedure, LookUpItemsProcedureUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsSpecification
+            CreateMap<LookUpItemsSpecification, LookUpItemsSpecificationAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsSpecification, LookUpItemsSpecificationListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsSpecification, LookUpItemsSpecificationUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsStandardStatement
+            CreateMap<LookUpItemsStandardStatement, LookUpItemsStandardStatementAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsStandardStatement, LookUpItemsStandardStatementListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsStandardStatement, LookUpItemsStandardStatementUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsStatus
+            CreateMap<LookUpItemsStatus, LookUpItemsStatusAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsStatus, LookUpItemsStatusListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsStatus, LookUpItemsStatusUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsTechnique
+            CreateMap<LookUpItemsTechnique, LookUpItemsTechniqueAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsTechnique, LookUpItemsTechniqueListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsTechnique, LookUpItemsTechniqueUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region LookUpItemsWeldType
+            CreateMap<LookUpItemsWeldType, LookUpItemsWeldTypeAddViewModel>().ReverseMap();
+            CreateMap<LookUpItemsWeldType, LookUpItemsWeldTypeListViewModel>().ReverseMap();
+            CreateMap<LookUpItemsWeldType, LookUpItemsWeldTypeUpdateViewModel>().ReverseMap();
             #endregion
 
             #endregion
 
             #endregion
 
-            #region Document
-            CreateMap<Document, DocumentAddViewModel>().ReverseMap();
-            CreateMap<Document, DocumentListViewModel>().ReverseMap();
+            #region FileUpload
+            CreateMap<FileUpload, FileUploadAddViewModel>().ReverseMap();
+            CreateMap<FileUpload, FileUploadListViewModel>().ReverseMap();
+            CreateMap<FileUpload, FileUploadDeleteViewModel>().ReverseMap();
             #endregion
+
         }
     }
 }
