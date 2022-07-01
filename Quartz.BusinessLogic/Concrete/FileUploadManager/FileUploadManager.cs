@@ -26,16 +26,16 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
             return _mapper.Map<List<FileUploadListViewModel>>(GetAll(I => I.MainId == mainId && I.MainType == mainType));
         }
 
-        public async Task<FileUpload> UploadFile(List<IFormFile> files, int mainId, string mainType)
+        public async Task<FileUpload> UploadFile(IList<IFormFile> files, int mainId, string mainType)
         {
-            foreach (var file in files)
+            foreach (IFormFile file in files)
             {
                 var basePath = $"wwwroot/Files";
                 bool basePathIsExists = Directory.Exists(basePath);
                 if (!basePathIsExists)
                     Directory.CreateDirectory(basePath);
                 var fileName = Path.GetFileNameWithoutExtension(mainType + mainId + "_" + file.FileName);
-                var filePath = Path.Combine(basePath, fileName);
+                var filePath = Path.Combine(basePath, mainType + mainId + "_" + file.FileName);
                 var extension = Path.GetExtension(file.FileName);
                 if (!File.Exists(filePath))
                 {

@@ -154,9 +154,9 @@ namespace Quartz.Controllers.Project.Link
         }
 
         [HttpGet]
-        public IActionResult GetDrawingSettingsDetailJSON(int drawingSettingsId)
+        public IActionResult GetDrawingSettingsDetailJSON(int quartzLinkId)
         {
-            var model = _drawingSettings.GetDrawingSettingsDetail(drawingSettingsId);
+            var model = _drawingSettings.GetDrawingSettingsDetail(quartzLinkId);
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore

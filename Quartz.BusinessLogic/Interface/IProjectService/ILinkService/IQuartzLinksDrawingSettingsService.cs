@@ -7,6 +7,6 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.ILinkService
     {
         void AddDrawingSettings(QuartzLinksDrawingSettingsAddViewModel model);
         void UpdateDrawingSettings(QuartzLinksDrawingSettingsUpdateViewModel model);
-        QuartzLinksDrawingSettingsUpdateViewModel GetDrawingSettingsDetail(int drawingSettingsId);
+        QuartzLinksDrawingSettingsUpdateViewModel GetDrawingSettingsDetail(int quartzLinkId);
     }
 }

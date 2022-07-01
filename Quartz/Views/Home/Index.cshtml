@@ -118,70 +118,93 @@
                         <br>
                         <hr>
 
+                        @*<div class="row">
+                                <div class="col-lg-5 text-center">
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                    <button id="addLinkSelectDrawing" type="button" class="btn btn-dark" style="border: none; width:150px;">Existing Drawing</button>
+                                </div>
+
+                                <div class="col-lg-2 text-center">
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">OR</span>
+                                </div>
+
+                                <div class="col-lg-5 text-center">
+                                    <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                    <button id="btnAddLinkNewDrawing" type="button" class="btn btn-dark" style="border: none; width:150px;">New Drawing</button>
+                                </div>
+                            </div>*@
+
+                        <!-- #region Upload Drawing Button -->
                         <div class="row">
-                            <div class="col-lg-5 text-center">
+                            <div class="text-center">
                                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
-                                <button id="addLinkSelectDrawing" type="button" class="btn btn-dark" style="border: none; width:150px;">Existing Drawing</button>
-                            </div>
-
-                            <div class="col-lg-2 text-center">
-                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
-                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">OR</span>
-                            </div>
-
-                            <div class="col-lg-5 text-center">
-                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
-                                <button id="btnAddLinkNewDrawing" type="button" class="btn btn-dark" style="border: none; width:150px;">New Drawing</button>
+                                <button id="btnAddLinkUploadDrawing" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
                             </div>
                         </div>
-
+                        <!-- #endregion -->
+                        <!-- #region Upload Drawing Area -->
                         <div class="row">
-
-                            <div id="selectExistingDrawing" class="col-lg-5" hidden>
-                                <div class="row">
-                                    <div class="col-lg-10">
-                                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
-                                        <select class="form-control select2bs4 select2-hidden-accessible" id="addLinkSelectDrawing"
-                                                style="border-radius: 0px;">
-                                            <option>Select</option>
-                                            <option>image-1</option>
-                                            <option>image-2</option>
-                                            <option>image-3</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <br>
-                                        <button type="button" id="goExistingDrawing" class="btn btn-info"
-                                                style="border-radius: 0px; color: white;">
-                                            GO
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-7" hidden id="linkModalPlaceholder"></div>
-
-                            <div class="col-lg-5">
+                            <div class="text-center">
                                 <br>
-                                <div id="uploadLinkFile" class="row" hidden>
-                                    <div class="col-lg-3">
-                                        <label for="file-upload" style="border-radius: 0px; color: white;" class="btn btn-info">
-                                            Choose
-                                        </label>
-                                        <input id="file-upload" type="file" name="files" hidden>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" style="border-radius: 0px;" type="text" autocomplete="off"
-                                               placeholder="Description..." name="description" required />
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <button type="button" class="btn btn-info" style="border-radius:0px; color: white;">Upload</button>
+                                <div id="AddLinkUploadDrawingArea" class="row" hidden>
+                                    <div class="col-lg-12">
+                                        <label for="AddLinkUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
+                                        <input id="AddLinkUploadDrawing" type="file" name="files" hidden>
+                                        <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;">Upload</button> @* [TAMAMLANMADI] *@
                                     </div>
                                 </div>
+                                <br />
                             </div>
-
                         </div>
+                        <!-- #endregion -->
+                        @*<div class="row">
+
+                                <div id="selectExistingDrawing" class="col-lg-5" hidden>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
+                                            <select class="form-control select2bs4 select2-hidden-accessible" id="addLinkSelectDrawing"
+                                                    style="border-radius: 0px;">
+                                                <option>Select</option>
+                                                <option>image-1</option>
+                                                <option>image-2</option>
+                                                <option>image-3</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <br>
+                                            <button type="button" id="goExistingDrawing" class="btn btn-info"
+                                                    style="border-radius: 0px; color: white;">
+                                                GO
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-7" hidden id="linkModalPlaceholder"></div>
+
+                                <div class="col-lg-5">
+                                    <br>
+                                    <div id="uploadLinkFile" class="row" hidden>
+                                        <div class="col-lg-3">
+                                            <label for="file-upload" style="border-radius: 0px; color: white;" class="btn btn-info">
+                                                Choose
+                                            </label>
+                                            <input id="file-upload" type="file" name="files" hidden>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input class="form-control" style="border-radius: 0px;" type="text" autocomplete="off"
+                                                   placeholder="Description..." name="description" required />
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <button type="button" class="btn btn-info" style="border-radius:0px; color: white;">Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>*@
 
                     </div>
                 </form>
@@ -227,8 +250,13 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #F3F5F7;">
-                <h5 class="modal-title" id="drawingSettingsModalName">Drawing [LinkName]</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="col-lg-6">
+                    <input class="modal-title" id="dsmName" value="asdas" disabled style="border: none; font-weight: 500; font-size: large;" />
+                </div>
+
+                <div class="col-lg-6">
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
 
             <div class="modal-body">
@@ -240,7 +268,7 @@
 
                     <div class="col-lg-6">
                         <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing Description</span>
-                        <input type="text" id="dsmDrawingNo" class="form-control">
+                        <input type="text" id="dsmDrawingDescription" class="form-control">
                     </div>
                 </div>
 
@@ -248,26 +276,14 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing No</span>
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Plant Area</span>
                         <select class="form-select" id="dsmPlantArea">
-                            <option value="value" disabled selected>Select</option>
-                            <option value="value">text1</option>
-                            <option value="value">text2</option>
-                            <option value="value">text3</option>
-                            <option value="value">text4</option>
-                            <option value="value">text5</option>
                         </select>
                     </div>
 
                     <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing Description</span>
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Plant System</span>
                         <select class="form-select" id="dsmPlantSystem">
-                            <option value="value" disabled selected>Select</option>
-                            <option value="value">text1</option>
-                            <option value="value">text2</option>
-                            <option value="value">text3</option>
-                            <option value="value">text4</option>
-                            <option value="value">text5</option>
                         </select>
                     </div>
                 </div>
@@ -301,23 +317,25 @@
                         <br>
                         <div id="dsmUploadDrawingArea" class="row" hidden>
                             <div class="col-lg-12">
-                                <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
-                                <input id="dsmUploadDrawing" type="file" name="files" hidden>
-                                <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;">Upload</button>
+                                <form method="post" enctype="multipart/form-data" onsubmit="return false">
+                                    <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
+                                    <input id="dsmUploadDrawing" type="file" name="files" hidden>
+                                    <button asp-controller="FileUpload" asp-action="UploadFile" asp-route-mainId="1" asp-route-mainType="1" type="button" class="btn btn-success" style="border-radius: 20px; color: white;" id="fff">Upload</button>
+                                    <button class="btn btn-dark" style="border-radius: 20px;" id="gondersss" onclick="uploadFile()">göndersss</button>
+                                </form>
                             </div>
                         </div>
                         <br />
                     </div>
                 </div>
                 <!-- #endregion -->
-
             </div>
 
             <!-- #region Footer -->
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger">Delete</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="btnDsmSave">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
             <!-- #endregion -->
 
@@ -488,19 +506,7 @@
                 <input id="limPlantSystemAddModalName" type="text" class="form-control" placeholder="Enter New Plant System " style="border: none; background: #f3f5f7;">
                 <br />
                 <select id="limPlantSystemAddModalLookUpItemsPlantAreas" class="form-select">
-                    <option hidden value="select">Select Plant Area(s)</option>
-                    @*@if (ViewBag.GetPlantAreas != null)
-                    {
-                        foreach (var plantArea in ViewBag.GetPlantAreas)
-                        {
-                            <option value="@plantArea.Name">@plantArea.Name</option>
-                        }
-                    }*@
                 </select>
-
-                @*<select id="limPlantSystemAddModalLookUpItemsPlantAreas" asp-items="ViewBag.GetPlantAreasList" class="form-select">
-                        <option hidden value="select">Select Plant Area(s)</option>
-                    </select>*@
 
                 <br />
                 <div class="row">
@@ -527,15 +533,11 @@
                 <input id="limProcedureAddModalName" type="text" class="form-control" placeholder="Enter New Procedure" style="border: none; background: #f3f5f7;">
                 <br />
                 <select id="limProcedureAddModalLookUpItemsMethod" class="form-select">
-                    <option selected disabled value="select">Select Method</option>
-                    <option value="">Method 1</option>
-                    <option value="">Method 2</option>
-                    <option value="">Method 3</option>
                 </select>
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addMethod()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addProcedure()" data-bs-dismiss="modal">Save</button>
                     </div>
 
                     <div class="col-lg-6">
@@ -626,10 +628,6 @@
                 <input id="limTechniqueAddModalName" type="text" class="form-control" placeholder="Enter New Technique" style="border: none; background: #f3f5f7;">
                 <br />
                 <select id="limTechniqueAddModalLookUpItemsProcedure" class="form-select">
-                    <option selected disabled value="select">Select Procedure</option>
-                    <option value="">Procedure 1</option>
-                    <option value="">Procedure 2</option>
-                    <option value="">Procedure 3</option>
                 </select>
                 <br />
                 <div class="row">
@@ -672,6 +670,7 @@
 <!-- #endregion -->
 <!-- #endregion -->
 <!-- #endregion -->
+@*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*@
 <!-- #region Scripts -->
 @section Scripts {
     <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
@@ -686,9 +685,139 @@
 
 
 <script>
-        $(function () {
+        //$(function () {
 
+        //});
+
+
+
+        var modelId = '@Model.Id';
+
+        // #region $("#...").on('click', function ({}))'s:
+
+        // #region Lookup Item Modal
+
+        // #region Technique Add Button
+
+
+
+        // #endregion
+
+        // #endregion
+
+
+        $("#btnDsmSave").on('click', function () {
+            @*var drawingSettingsModel = {
+                DrawingNo: "x",
+                Description: "x",
+                File: "x",
+                PlantArea: "x",
+                PlantSystem: "x",
+                QuartzLinkId: modelId
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateDrawingSettingsJSON", "QuartzLink")',
+                data: { model: drawingSettingsModel },
+                success: function (data) {
+                    rModel = jQuery.parseJSON(data);
+                    alert("success!");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });*@
+
+            alert("hi!");
         });
+
+        $("#btnDrawingSettings").on('click', function () {
+            $("#dsmName").val("Drawing" + " " + "[" + '@Model.TagNo' + "]");
+            //$("#dsmDrawingNo").val('@Model.TagNo');
+
+            $.ajax({ // [TAMAMLANMADI]
+                type: "GET",
+                url: '@Url.Action("GetDrawingSettingsDetailJSON", "QuartzLink")',
+                data: {quartzLinkId: "1"},
+                success: function (result) {
+                    rModel = jQuery.parseJSON(result);
+                    $("#dsmDrawingNo").val(rModel.DrawingNo);
+                    $("#dsmDrawingDescription").val(rModel.Description);
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetPlantAreaForOption", "LookUpItems")',
+                success: function (result) {
+                    rModel = jQuery.parseJSON(result);
+
+                    $("#dsmPlantArea").children().remove();
+
+                    $("#dsmPlantArea").append(
+                        $('<option>', {
+                            value: "select",
+                            text: "Select Plant Area",
+                            id: "selectDsmPlantArea"
+                        })
+                    );
+                    $("#selectDsmPlantArea").attr("hidden", "");
+
+                    for (var i = 0; i < rModel.length; i++) {
+                        $("#dsmPlantArea").append(
+                            $('<option>', {
+                                value: rModel[i].Name,
+                                text: rModel[i].Name
+                            })
+                        );
+                    }
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetPlantSystemForOption", "LookUpItems")',
+                success: function (result) {
+                    rModel = jQuery.parseJSON(result);
+
+                    $("#dsmPlantSystem").children().remove();
+
+                    $("#dsmPlantSystem").append(
+                        $('<option>', {
+                            value: "select",
+                            text: "Select Plant System",
+                            id: "selectDsmPlantSystem"
+                        })
+                    );
+                    $("#selectDsmPlantSystem").attr("hidden", "");
+
+                    for (var i = 0; i < rModel.length; i++) {
+                        $("#dsmPlantSystem").append(
+                            $('<option>', {
+                                value: rModel[i].Name,
+                                text: rModel[i].Name
+                            })
+                        );
+                    }
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        });
+
+        // #endregion
 
         // #region onClick() Functions
 
@@ -774,12 +903,12 @@
         // #endregion
 
         // #region Method
-        function addMethod() {
+    function addMethod() {
             if (($("#limMethodAddModalName").val() != null && $("#limMethodAddModalName").val() != " ") &&
                 ($("#limMethodAddModalCode").val() != null && $("#limMethodAddModalCode").val() != " ")) {
                 var methodModel = {
                     Name: $("#limMethodAddModalName").val(),
-                    Code: $("#limMethodAddModalCode").val
+                    Code: $("#limMethodAddModalCode").val()
                 }
 
                 $("#limMethodAddModalName").val("");
@@ -787,7 +916,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("AddMethodJSON", "LookupItems")',
+                    url: '@Url.Action("AddMethodJSON", "LookUpItems")',
                     data: { model: methodModel },
                     success: function (data) {
                         rModel = jQuery.parseJSON(data);
@@ -825,7 +954,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("AddOperatorJSON", "LookupItems")',
+                    url: '@Url.Action("AddOperatorJSON", "LookUpItems")',
                     data: { model: operatorModel },
                     success: function (data) {
                         rModel = jQuery.parseJSON(data);
@@ -940,13 +1069,12 @@
                     Name: $("#limProcedureAddModalName").val(),
                     LookUpItemsMethod: $("#limProcedureAddModalLookUpItemsMethod").val()
                 }
-
                 $("#limProcedureAddModalName").val("");
                 $("#limProcedureAddModalLookUpItemsMethod").val("");
 
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("AddProcedureJSON", "LookupItems")',
+                    url: '@Url.Action("AddProcedureJSON", "LookUpItems")',
                     data: { model: procedureModel },
                     success: function (data) {
                         rModel = jQuery.parseJSON(data);
@@ -1167,6 +1295,47 @@
 
         // #endregion
 
+        function uploadFile() {
+            @*var fd = new FormData();
+            var files = $('#dsmUploadDrawing')[0].files;
+
+            if (files.length > 0) {
+                fd.append('file', files[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("UploadFile" ,"FileUpload")',
+                    data: { files: fd },
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        console.log(response);
+                    },
+                });
+            } else {
+                alert("Please select a file.");
+            }*@
+
+            var formData = new FormData();
+            formData.append('file', $('#dsmUploadDrawing')[0].files[0]); // myFile is the input type="file" control
+
+            var _url = '@Url.Action("UploadFile", "MyController")';
+
+            $.ajax({
+                url: '@Url.Action("UploadFile" ,"FileUpload")',
+                type: 'POST',
+                data: { model: formData },
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (result) {
+                },
+                error: function (jqXHR) {
+                },
+                complete: function (jqXHR, status) {
+                }
+            });
+
+        };
+
         // #endregion
 
         $("#limNav a").on('click', function () {
@@ -1273,28 +1442,6 @@
                             console.log(error.responseText);
                         }
                     });
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetPlantAreaForOption", "LookUpItems")',
-                        success: function (result) {
-                            rModel = jQuery.parseJSON(result);
-                            $("#limPlantSystemAddModalLookUpItemsPlantAreas").children().remove();
-                            for (var i = 0; i < rModel.length; i++) {
-                                $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
-                                    $('<option>', {
-                                        value: rModel[i].Name,
-                                        text: rModel[i].Name
-                                    })
-                                );
-                            }
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-
                     break;
 
                 case 'Procedure':
@@ -1312,6 +1459,38 @@
                             console.log(error.responseText);
                         }
                     });
+
+                     $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetMethodForOption", "LookUpItems")',
+                        success: function (result) {
+                            rModel = jQuery.parseJSON(result);
+
+                            $("#limProcedureAddModalLookUpItemsMethod").children().remove();
+
+                            $("#limProcedureAddModalLookUpItemsMethod").append(
+                                $('<option>', {
+                                    value: "select",
+                                    text: "Select Method",
+                                    id: "selectMethod"
+                                })
+                            );
+                            $("#selectMethod").attr("hidden", "");
+
+                            for (var i = 0; i < rModel.length; i++) {
+                                $("#limProcedureAddModalLookUpItemsMethod").append(
+                                    $('<option>', {
+                                        value: rModel[i].Name,
+                                        text: rModel[i].Name
+                                    })
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                     });
                     break;
 
                 case 'Specification':
@@ -1404,6 +1583,7 @@
             }
         })
 
+        // [OLD CODE SNIPPET]
         $("#clickMe").on('click', function () {
             if (window.FormData !== undefined) {
                 var fileUpload = $("#file-upload").get(0);
@@ -1683,29 +1863,43 @@
         });
 
         // LINK MODAL: Add New Drawing
-        var linkModalUploadFileMode = false;
-        $("#btnAddLinkNewDrawing").on("click", function () {
-            if (linkModalUploadFileMode == false) {
-                document.getElementById("uploadLinkFile").removeAttribute("hidden");
-                document.getElementById("linkModalPlaceholder").removeAttribute("hidden");
-                document.getElementById("addLinkSelectDrawing").setAttribute("disabled", "");
-                $("#btnAddLinkNewDrawing").removeClass("btn-dark");
-                $("#btnAddLinkNewDrawing").addClass("btn-danger");
-                $("#btnAddLinkNewDrawing").text("Discard");
-                linkModalUploadFileMode = true;
+        var addLinkUploadDrawingArea = false;
+        $("#btnAddLinkUploadDrawing").on("click", function () {
+            if (addLinkUploadDrawingArea == false) {
+                document.getElementById("AddLinkUploadDrawingArea").removeAttribute("hidden");
+                addLinkUploadDrawingArea = true;
                 return -1;
             }
-            if (linkModalUploadFileMode == true) {
-                document.getElementById("uploadLinkFile").setAttribute("hidden", "");
-                document.getElementById("linkModalPlaceholder").setAttribute("hidden", "");
-                document.getElementById("addLinkSelectDrawing").removeAttribute("disabled");
-                $("#btnAddLinkNewDrawing").removeClass("btn-danger");
-                $("#btnAddLinkNewDrawing").addClass("btn-dark");
-                $("#btnAddLinkNewDrawing").text("New Drawing");
-                linkModalUploadFileMode = false;
+            if (addLinkUploadDrawingArea == true) {
+                document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
+                addLinkUploadDrawingArea = false;
                 return -1;
             }
         });
+
+        //var linkModalUploadFileMode = false;
+        //$("#btnAddLinkNewDrawing").on("click", function () {
+        //    if (linkModalUploadFileMode == false) {
+        //        document.getElementById("uploadLinkFile").removeAttribute("hidden");
+        //        document.getElementById("linkModalPlaceholder").removeAttribute("hidden");
+        //        document.getElementById("addLinkSelectDrawing").setAttribute("disabled", "");
+        //        $("#btnAddLinkNewDrawing").removeClass("btn-dark");
+        //        $("#btnAddLinkNewDrawing").addClass("btn-danger");
+        //        $("#btnAddLinkNewDrawing").text("Discard");
+        //        linkModalUploadFileMode = true;
+        //        return -1;
+        //    }
+        //    if (linkModalUploadFileMode == true) {
+        //        document.getElementById("uploadLinkFile").setAttribute("hidden", "");
+        //        document.getElementById("linkModalPlaceholder").setAttribute("hidden", "");
+        //        document.getElementById("addLinkSelectDrawing").removeAttribute("disabled");
+        //        $("#btnAddLinkNewDrawing").removeClass("btn-danger");
+        //        $("#btnAddLinkNewDrawing").addClass("btn-dark");
+        //        $("#btnAddLinkNewDrawing").text("New Drawing");
+        //        linkModalUploadFileMode = false;
+        //        return -1;
+        //    }
+        //});
 
         // DRAWING SETTINGS MODAL: Upload New Drawing
         var drawingSettingsModalUploadDrawingArea = false;

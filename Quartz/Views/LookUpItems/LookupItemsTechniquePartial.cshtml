@@ -24,7 +24,42 @@
 
 <div class="modal-footer">
     <br />
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limTechniqueAddModal">+ Add</button>
+    <button id="btnLimAddTechnique" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limTechniqueAddModal">+ Add</button>
     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 </div>
 
+<script>
+     $("#btnLimAddTechnique").on('click', function () {
+            $.ajax({
+               type: "GET",
+               url: '@Url.Action("GetProcedureForOption", "LookUpItems")',
+               success: function (result) {
+                   rModel = jQuery.parseJSON(result);
+
+                   $("#limTechniqueAddModalLookUpItemsProcedure").children().remove();
+
+                   $("#limTechniqueAddModalLookUpItemsProcedure").append(
+                       $('<option>', {
+                           value: "select",
+                           text: "Select Procedure",
+                           id: "selectProcedure"
+                       })
+                   );
+                   $("#selectProcedure").attr("hidden", "");
+
+                   for (var i = 0; i < rModel.length; i++) {
+                       $("#limTechniqueAddModalLookUpItemsProcedure").append(
+                           $('<option>', {
+                               value: rModel[i].Name,
+                               text: rModel[i].Name
+                           })
+                       );
+                   }
+               },
+               error: function (error) {
+                   alert("error!");
+                   console.log(error.responseText);
+               }
+            });
+        });
+</script>

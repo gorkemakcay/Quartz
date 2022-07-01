@@ -27,3 +27,37 @@
     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limPlantSystemAddModal">+ Add</button>
     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 </div>
+
+<script>
+     $.ajax({
+         type: "GET",
+         url: '@Url.Action("GetPlantAreaForOption", "LookUpItems")',
+         success: function (result) {
+             rModel = jQuery.parseJSON(result);
+
+             $("#limPlantSystemAddModalLookUpItemsPlantAreas").children().remove();
+
+             $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
+                 $('<option>', {
+                     value: "select",
+                     text: "Select Plant Area(s)",
+                     id: "selectLimPlantAreas"
+                 })
+             );
+             $("#selectLimPlantAreas").attr("hidden", "");
+
+             for (var i = 0; i < rModel.length; i++) {
+                 $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
+                     $('<option>', {
+                         value: rModel[i].Name,
+                         text: rModel[i].Name
+                     })
+                 );
+             }
+         },
+         error: function (error) {
+             alert("error!");
+             console.log(error.responseText);
+         }
+     });
+</script>

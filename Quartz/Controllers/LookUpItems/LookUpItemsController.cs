@@ -179,8 +179,8 @@ namespace Quartz.Controllers.LookUpItems
             }
             return Json(null);
         }
-        [HttpGet]
 
+        [HttpGet]
         public IActionResult GetAllMethodsJSON()
         {
             ViewBag.Methods = _methodService.GetAllMethods();
@@ -595,6 +595,39 @@ namespace Quartz.Controllers.LookUpItems
         public IActionResult GetPlantAreaForOption()
         {
             var model = _plantAreaService.GetAllPlantAreas();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetMethodForOption()
+        {
+            var model = _methodService.GetAllMethods();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetProcedureForOption()
+        {
+            var model = _procedureService.GetAllProcedures();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetPlantSystemForOption()
+        {
+            var model = _plantSystemService.GetAllPlantSystems();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore

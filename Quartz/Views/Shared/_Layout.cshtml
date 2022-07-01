@@ -11,7 +11,7 @@
 
 </head>
 <body>
-    <header>
+    <div class="">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark">
             <div class="container-fluid my-1">
                 <div class="col-lg-2 px-0">
@@ -32,7 +32,7 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <button type="button" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#drawingSettingsModal" style="border: none; border-radius: 20px;"><strong>Drawing Settings</strong></button>
+                                <button type="button" id="btnDrawingSettings" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#drawingSettingsModal" style="border: none; border-radius: 20px;"><strong>Drawing Settings</strong></button>
                             </li>
                             <li class="nav-item">
                                 <button type="button" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#lookupItemsModal" style="border: none; border-radius: 20px;"><strong>Lookup Items</strong></button>
@@ -49,11 +49,10 @@
             </div>
 
         </nav>
-    </header>
-    <div class="">
-        <main role="main">
+
+        <div>
             @RenderBody()
-        </main>
+        </div>
     </div>
 
     <footer class="bg-dark footer py-3 text-light" style="border: none;">

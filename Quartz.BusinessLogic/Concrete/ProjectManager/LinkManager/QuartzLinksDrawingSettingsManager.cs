@@ -22,9 +22,9 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
             _uow.SaveChange();
         }
 
-        public QuartzLinksDrawingSettingsUpdateViewModel GetDrawingSettingsDetail(int drawingSettingsId)
+        public QuartzLinksDrawingSettingsUpdateViewModel GetDrawingSettingsDetail(int quartzLinkId)
         {
-            return _mapper.Map<QuartzLinksDrawingSettingsUpdateViewModel>(GetFirstOrDefult(I => I.Id == drawingSettingsId));
+            return _mapper.Map<QuartzLinksDrawingSettingsUpdateViewModel>(GetFirstOrDefult(I => I.QuartzLinkId == quartzLinkId));
         }
 
         public void UpdateDrawingSettings(QuartzLinksDrawingSettingsUpdateViewModel model)
