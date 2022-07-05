@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Quartz.BusinessLogic.Interface.IFileUploadService;
+using Quartz.Common.ViewModels.FileUpload.FileUploadViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Quartz.Controllers.FileUpload
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        var rModel =  _fileUploadService.UploadFile(files, mainId, mainType);
+        //        var rModel = _fileUploadService.UploadFile(files, mainId, mainType);
 
         //        var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
         //        {
@@ -35,10 +36,28 @@ namespace Quartz.Controllers.FileUpload
         //}
 
         [HttpPost]
-        public IActionResult UploadFile(IFormFile file)
+        public async Task<IActionResult> UploadFile()
         {
-            
-            return Json(null);
+            var files = Request.Form.Files;
+            var fileModel = _fileUploadService.UploadFile(files);
+
+            var jSonModel = JsonConvert.SerializeObject(fileModel, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateFile(FileUploadUpdateViewModel model)
+        {
+            _fileUploadService.UpdateFile(model);
+
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]

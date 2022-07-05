@@ -38,5 +38,10 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
             Update(_mapper.Map<QuartzLink>(model));
             _uow.SaveChange();
         }
+
+        public void UpdateLinksTagNo(string tagNo)
+        {
+
+        }
     }
 }

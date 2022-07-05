@@ -56,6 +56,14 @@ namespace Quartz.Controllers.Project.Link
             return Json(null);
         }
 
+        [HttpPost]
+        public IActionResult UpdateLinksTagNo(string tagNo)
+        {
+
+
+            return Json(tagNo);
+        }
+
         [HttpGet]
         public IActionResult GetAllLinksJSON(int mainLinkId)
         {

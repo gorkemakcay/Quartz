@@ -26,7 +26,21 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
             return _mapper.Map<List<FileUploadListViewModel>>(GetAll(I => I.MainId == mainId && I.MainType == mainType));
         }
 
-        public async Task<FileUpload> UploadFile(IList<IFormFile> files, int mainId, string mainType)
+        public void UpdateFile(FileUploadUpdateViewModel model)
+        {
+            //var file = _mapper.Map<FileUploadUpdateViewModel>(GetById(fileId));
+            //file.MainId = mainId;
+            //file.MainType = mainType;
+            //Update(_mapper.Map<FileUpload>(file));
+            //_uow.SaveChange();
+
+            //return file;
+
+            Update(_mapper.Map<FileUpload>(model));
+            _uow.SaveChange();
+        }
+
+        public async Task<FileUpload> UploadFile(IFormFileCollection files)
         {
             foreach (IFormFile file in files)
             {
@@ -34,8 +48,8 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
                 bool basePathIsExists = Directory.Exists(basePath);
                 if (!basePathIsExists)
                     Directory.CreateDirectory(basePath);
-                var fileName = Path.GetFileNameWithoutExtension(mainType + mainId + "_" + file.FileName);
-                var filePath = Path.Combine(basePath, mainType + mainId + "_" + file.FileName);
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                var filePath = Path.Combine(basePath, file.FileName);
                 var extension = Path.GetExtension(file.FileName);
                 if (!File.Exists(filePath))
                 {
@@ -48,12 +62,12 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
                     {
                         CreatedDate = DateTime.Now,
                         Extension = extension,
-                        MainId = mainId,
-                        MainType = mainType,
+                        //MainId = mainId,
+                        //MainType = mainType,
                         Path = filePath,
                         Type = file.ContentType,
-                        Name = fileName
-                        //UploadedBy = ViewBag.LoginUserFullname
+                        Name = fileName,
+                        UploadedBy = "Görkem"
                     };
 
                     Add(_mapper.Map<FileUpload>(fileModel));

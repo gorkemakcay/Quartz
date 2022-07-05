@@ -175,6 +175,7 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             CreateMap<FileUpload, FileUploadAddViewModel>().ReverseMap();
             CreateMap<FileUpload, FileUploadListViewModel>().ReverseMap();
             CreateMap<FileUpload, FileUploadDeleteViewModel>().ReverseMap();
+            CreateMap<FileUpload, FileUploadUpdateViewModel>().ReverseMap();
             #endregion
 
         }

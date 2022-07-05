@@ -79,6 +79,7 @@
         </div>
 
         <div class="col-lg-8 px-0" id="main">
+            <input id="linkId" value="" hidden />
             @await Html.PartialAsync("/Views/Shared/Partial/HomePage/QuartzPartial.cshtml")
         </div>
 
@@ -246,6 +247,7 @@
 </div>
 <!-- #endregion -->
 <!-- #region Drawing Settings Modal (#DSM) -->
+<input id="dsmId" value="" hidden />
 <div class="modal fade" id="drawingSettingsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" , aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
@@ -317,12 +319,9 @@
                         <br>
                         <div id="dsmUploadDrawingArea" class="row" hidden>
                             <div class="col-lg-12">
-                                <form method="post" enctype="multipart/form-data" onsubmit="return false">
-                                    <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
-                                    <input id="dsmUploadDrawing" type="file" name="files" hidden>
-                                    <button asp-controller="FileUpload" asp-action="UploadFile" asp-route-mainId="1" asp-route-mainType="1" type="button" class="btn btn-success" style="border-radius: 20px; color: white;" id="fff">Upload</button>
-                                    <button class="btn btn-dark" style="border-radius: 20px;" id="gondersss" onclick="uploadFile()">göndersss</button>
-                                </form>
+                                <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
+                                <input id="dsmUploadDrawing" type="file" hidden>
+                                <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" id="gorkem" onclick="uploadFile(dsmId, 'drawingSettings')">Upload</button>
                             </div>
                         </div>
                         <br />
@@ -684,16 +683,28 @@
 
 
 
-<script>
-        //$(function () {
+    <script>
+        var dsmId = 0;
+        var quartzLinkId = 0;
 
-        //});
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetLinkDetailJSON", "QuartzLink")',
+                data: { linkId: 1 },
+                success: function (result) {
+                    rModel = jQuery.parseJSON(result);
+                    $("#linkId").val(rModel.Id);
+                    quartzLinkId = $("#linkId").val();
+                },
+                error: function (error) {
+                    alert("error");
+                    console.log(error.responseText);
+                }
+            });
+        });
 
-
-
-        var modelId = '@Model.Id';
-
-        // #region $("#...").on('click', function ({}))'s:
+        // #region jQuery On Click Functions
 
         // #region Lookup Item Modal
 
@@ -705,15 +716,17 @@
 
         // #endregion
 
+        // #region Drawing Settings Modal
 
         $("#btnDsmSave").on('click', function () {
-            @*var drawingSettingsModel = {
-                DrawingNo: "x",
-                Description: "x",
-                File: "x",
-                PlantArea: "x",
-                PlantSystem: "x",
-                QuartzLinkId: modelId
+            var drawingSettingsModel = {
+                Id: dsmId,
+                DrawingNo: $("#dsmDrawingNo").val(),
+                Description: $("#dsmDrawingDescription").val(),
+                File: "x", // [TAMAMLANMADI]
+                PlantArea: $("#dsmPlantArea").val(),
+                PlantSystem: $("#dsmPlantSystem").val(),
+                QuartzLinkId: 1 // [TAMAMLANMADI]
             }
 
             $.ajax({
@@ -722,15 +735,17 @@
                 data: { model: drawingSettingsModel },
                 success: function (data) {
                     rModel = jQuery.parseJSON(data);
-                    alert("success!");
                 },
                 error: function (error) {
                     alert("error!");
                     console.log(error.responseText);
                 }
-            });*@
+            });
 
-            alert("hi!");
+            $.ajax({ // [TAMAMLANMADI]
+                type: "POST",
+                url: '@Url.Action("UpdateLinksTagNo" ,"QuartzLink")'
+            });
         });
 
         $("#btnDrawingSettings").on('click', function () {
@@ -745,6 +760,8 @@
                     rModel = jQuery.parseJSON(result);
                     $("#dsmDrawingNo").val(rModel.DrawingNo);
                     $("#dsmDrawingDescription").val(rModel.Description);
+                    $("#dsmId").val(rModel.Id);
+                    dsmId = $("#dsmId").val();
                 },
                 error: function (error) {
                     alert("error!");
@@ -819,11 +836,257 @@
 
         // #endregion
 
-        // #region onClick() Functions
+        // #endregion
+
+        // #region HTML Tag's onClick() Functions
 
         // #region Lookup Item Modal
 
         // #region General
+                $("#limNav a").on('click', function () {
+            var info = $(this).html();
+            info = info.replace(/\s+/g, '');
+            switch (info) {
+                case 'ComponentType':
+                    $("#limTitle").html("Lookup Items | Component Type");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllComponentTypesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#componentTypeTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'FittingType':
+                   $("#limTitle").html("Lookup Items | FittingType");
+
+                   $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllFittingTypesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#fittingTypeTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Method':
+                    $("#limTitle").html("Lookup Items | Method");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllMethodsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#methodTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Operator':
+                    $("#limTitle").html("Lookup Items | Operator");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllOperatorsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#operatorTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'PlantArea':
+                    $("#limTitle").html("Lookup Items | Plant Area");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllPlantAreasJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#plantAreaTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'PlantSystem':
+                    $("#limTitle").html("Lookup Items | Plant System");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllPlantSystemsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#plantSystemTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Procedure':
+                    $("#limTitle").html("Lookup Items | Procedure");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllProceduresJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#procedureTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+
+                     $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetMethodForOption", "LookUpItems")',
+                        success: function (result) {
+                            rModel = jQuery.parseJSON(result);
+
+                            $("#limProcedureAddModalLookUpItemsMethod").children().remove();
+
+                            $("#limProcedureAddModalLookUpItemsMethod").append(
+                                $('<option>', {
+                                    value: "select",
+                                    text: "Select Method",
+                                    id: "selectMethod"
+                                })
+                            );
+                            $("#selectMethod").attr("hidden", "");
+
+                            for (var i = 0; i < rModel.length; i++) {
+                                $("#limProcedureAddModalLookUpItemsMethod").append(
+                                    $('<option>', {
+                                        value: rModel[i].Name,
+                                        text: rModel[i].Name
+                                    })
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                     });
+                    break;
+
+                case 'Specification':
+                    $("#limTitle").html("Lookup Items | Specification");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllSpecificationsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#specificationTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Stand.Statement':
+                    $("#limTitle").html("Lookup Items | Standart Statement");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllStandardStatementsJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#standardStatementTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Status':
+                    $("#limTitle").html("Lookup Items | Status");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllStatusesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#statusTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'Technique':
+                    $("#limTitle").html("Lookup Items | Technique");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllTechniquesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#techniqueTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case 'WeldType':
+                    $("#limTitle").html("Lookup Items | Weld Type");
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetAllWeldTypesJSON", "LookUpItems")',
+                        success: function (result) {
+                            $("#limPartialArea").html(result);
+                            $('#weldTypeTable').DataTable();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+        })
         // #endregion
 
         // #region Component Type
@@ -1295,322 +1558,61 @@
 
         // #endregion
 
-        function uploadFile() {
-            @*var fd = new FormData();
-            var files = $('#dsmUploadDrawing')[0].files;
-
-            if (files.length > 0) {
-                fd.append('file', files[0]);
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("UploadFile" ,"FileUpload")',
-                    data: { files: fd },
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-                        console.log(response);
-                    },
-                });
-            } else {
-                alert("Please select a file.");
-            }*@
-
-            var formData = new FormData();
-            formData.append('file', $('#dsmUploadDrawing')[0].files[0]); // myFile is the input type="file" control
-
-            var _url = '@Url.Action("UploadFile", "MyController")';
+        // #region Drawing Settings Modal
+        function uploadFile(mainId, mainType) {
+            var imageUpload = $("#dsmUploadDrawing").get(0);
+            var files = imageUpload.files;
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append('', files[i]);
+            }
 
             $.ajax({
-                url: '@Url.Action("UploadFile" ,"FileUpload")',
+                url: '@Url.Action("UploadFile", "FileUpload")',
                 type: 'POST',
-                data: { model: formData },
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
+                data: fileData,
+                processData: false,
+                contentType: false,
                 success: function (result) {
+
+                    rModel = jQuery.parseJSON(result);
+                    var fileUpdate = rModel.Result;
+                    fileUpdate.MainId = mainId;
+
+                    switch (mainType) {
+                        case "drawingSettings":
+                            fileUpdate.MainType = "DrawingSettings";
+                            break;
+                        default:
+                            alert("default");
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("UpdateFile", "FileUpload")',
+                        data: fileUpdate,
+                        success: function (result) {
+                            rModel = jQuery.parseJSON(result);
+                        },
+                        error: function (error) {
+                            alert("error");
+                            console.log(error.responseText);
+                        }
+                    });
                 },
-                error: function (jqXHR) {
-                },
-                complete: function (jqXHR, status) {
+                error: function (error) {
+                    alert("error");
+                    console.log(error.responseText);
                 }
             });
-
-        };
+        }
+        // #endregion
 
         // #endregion
 
-        $("#limNav a").on('click', function () {
-            var info = $(this).html();
-            info = info.replace(/\s+/g, '');
-            switch (info) {
-                case 'ComponentType':
-                    $("#limTitle").html("Lookup Items | Component Type");
 
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllComponentTypesJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#componentTypeTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
 
-                case 'FittingType':
-                   $("#limTitle").html("Lookup Items | FittingType");
-
-                   $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllFittingTypesJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#fittingTypeTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'Method':
-                    $("#limTitle").html("Lookup Items | Method");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllMethodsJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#methodTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'Operator':
-                    $("#limTitle").html("Lookup Items | Operator");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllOperatorsJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#operatorTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'PlantArea':
-                    $("#limTitle").html("Lookup Items | Plant Area");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllPlantAreasJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#plantAreaTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'PlantSystem':
-                    $("#limTitle").html("Lookup Items | Plant System");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllPlantSystemsJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#plantSystemTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'Procedure':
-                    $("#limTitle").html("Lookup Items | Procedure");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllProceduresJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#procedureTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-
-                     $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetMethodForOption", "LookUpItems")',
-                        success: function (result) {
-                            rModel = jQuery.parseJSON(result);
-
-                            $("#limProcedureAddModalLookUpItemsMethod").children().remove();
-
-                            $("#limProcedureAddModalLookUpItemsMethod").append(
-                                $('<option>', {
-                                    value: "select",
-                                    text: "Select Method",
-                                    id: "selectMethod"
-                                })
-                            );
-                            $("#selectMethod").attr("hidden", "");
-
-                            for (var i = 0; i < rModel.length; i++) {
-                                $("#limProcedureAddModalLookUpItemsMethod").append(
-                                    $('<option>', {
-                                        value: rModel[i].Name,
-                                        text: rModel[i].Name
-                                    })
-                                );
-                            }
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                     });
-                    break;
-
-                case 'Specification':
-                    $("#limTitle").html("Lookup Items | Specification");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllSpecificationsJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#specificationTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'Stand.Statement':
-                    $("#limTitle").html("Lookup Items | Standart Statement");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllStandardStatementsJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#standardStatementTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'Status':
-                    $("#limTitle").html("Lookup Items | Status");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllStatusesJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#statusTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'Technique':
-                    $("#limTitle").html("Lookup Items | Technique");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllTechniquesJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#techniqueTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case 'WeldType':
-                    $("#limTitle").html("Lookup Items | Weld Type");
-
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetAllWeldTypesJSON", "LookUpItems")',
-                        success: function (result) {
-                            $("#limPartialArea").html(result);
-                            $('#weldTypeTable').DataTable();
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                default:
-                    break;
-            }
-        })
-
-        // [OLD CODE SNIPPET]
-        $("#clickMe").on('click', function () {
-            if (window.FormData !== undefined) {
-                var fileUpload = $("#file-upload").get(0);
-                var files = fileUpload.files;
-                console.log(files);
-
-                // Create FormData object
-                var fileData = new FormData();
-                fileData.append(files[0].name, files[0]);
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("AddDocument", "Document")',
-                    data: { model: fileData },
-                    success: function (data) {
-                        alert("success!");
-                    },
-                    error: function (error) {
-                        alert("errorrrr!");
-                    }
-                });
-            }
-        });
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //////////////////////////////////////////////////////////////////////////////////////////////// [Variables]
+        //////////////////////////////////////////////////////////////////////////////////////////////// [OL - Variables]
         const typeSelect = document.getElementById('type');
         var allShapes = [];
         let draw; // global so we can remove it later
@@ -1621,33 +1623,35 @@
         var linkIdCount = 0;
         var linkId = "link" + linkIdCount;
 
-        const extent = [0, 0, 1024, 968];
+        var extent = [0, 0, 1024, 968];
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        const select = new ol.interaction.Select();
+        var format = new ol.format.GeoJSON({ featureProjection: 'EPSG:3857' });
 
-        const translate = new ol.interaction.Translate({
+        var select = new ol.interaction.Select();
+
+        var translate = new ol.interaction.Translate({
             features: select.getFeatures(),
             condition: ol.events.condition.platformModifierKeyOnly
         });
 
-        const projection = new ol.proj.Projection({
+        var projection = new ol.proj.Projection({
             code: 'xkcd-image',
             units: 'pixels',
             extent: extent,
         });
 
-        const rasterLayer = new ol.layer.Tile({
+        var rasterLayer = new ol.layer.Tile({
             source: new ol.source.OSM(),
         });
 
-        const source = new ol.source.Vector({ wrapX: false });
+        var source = new ol.source.Vector({ wrapX: false });
 
-        const vectorLayer = new ol.layer.Vector({
+        var vectorLayer = new ol.layer.Vector({
             source: source,
         });
 
-        const view = new ol.View({
+        var view = new ol.View({
             projection: projection,
             center: ol.extent.getCenter(extent),
             zoom: 0,
@@ -1655,7 +1659,7 @@
             extent: [-500, -300, 1524, 1268]
         });
 
-        const map = new ol.Map({
+        var map = new ol.Map({
             interactions: ol.interaction.defaults().extend([select, translate]),
             layers: [
                 new ol.layer.Image({
@@ -1670,6 +1674,20 @@
             target: 'map',
             view: view
         });
+
+        //map.on('dblclick', function (evt) {
+        //    this.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+        //        console.log(feature.pixel, layer);
+        //        console.log(feature.getGeometry().getCoordinates()[0]);
+        //        alert("click!");
+        //    });
+        //});
+
+        //source.on('addfeature', function (evt) {
+        //    var feature = evt.feature;
+        //    var coords = feature.getGeometry().getCoordinates()[0];
+        //    console.log(coords);
+        //});
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [FUNCTIONS]
 
@@ -1691,7 +1709,11 @@
                     map.addInteraction(draw);
                 }
 
-                draw.on("drawend", function () {
+                draw.on("drawend", function (evt) {
+                    var feature = evt.feature;
+                    var coords = feature.getGeometry().getCoordinates()[0];
+                    coords = coords.toString();
+
                     function timeOut() {
                         typeSelect.value = 'None';
                         map.removeInteraction(draw);    // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için
@@ -1704,20 +1726,23 @@
                     // #endregion
 
                     if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
-                        var itemModel = {
+                        linkIdCount++;
+                        linkId = "link" + linkIdCount;
+                        shapeId = linkId;
+
+                        var linkModel = {
                             TagNo: shapeId,
                             ShowLabel: true,
                             CreatedDate: fromDateTime,
-                            CreatedBy: "Görkem",
-                            MainQuartzLinkId: @Model.Id,
+                            CreatedBy: "Görkem", // [TAMAMLANMADI]
+                            MainQuartzLinkId: quartzLinkId,
                             CurrentDrawingId: 0
                         };
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("AddLinkJSON", "QuartzLink")',
-                            data: { model: itemModel },
+                            data: { model: linkModel },
                             success: function (data) {
-                                alert("success!");
                                 rModel = jQuery.parseJSON(data);
                             },
                             error: function (error) {
@@ -1725,8 +1750,41 @@
                             }
                         });
                         $("#linkModal").modal('show');
+
+                        var featureType = "any";
+
+                        if (typeSelect.value == 'BoxLink')
+                            featureType = "Box";
+                        else if (typeSelect.value == 'PolygonLink')
+                            featureType = "Polygon";
+
+                        var features = source.getFeatures();
+                        var geoJson = format.writeFeatures(features);
+                        console.log(geoJson);
+
+                        var linkDrawingFeaturesModel = {
+                            Name: shapeId,
+                            Type: featureType,
+                            Coords: coords,
+                            QuartzLinkId: quartzLinkId
+                        };
+                        $.ajax({ // [TAMAMLANMADI]
+                            type: "POST",
+                            url: '@Url.Action("AddDrawingFeaturesJSON", "QuartzLink")',
+                            data: { model: linkDrawingFeaturesModel },
+                            success: function (result) {
+                                rModel = jQuery.parseJSON(result);
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
                     }
                     if (typeSelect.value == 'BoxItem' || typeSelect.value == 'PolygonItem') {
+                        itemIdCount++;
+                        itemId = "item" + itemIdCount;
+                        shapeId = itemId;
                         $("#itemModal").modal('show');
                     }
                 });
@@ -1755,16 +1813,16 @@
         //
         // Çizim tamamlandıktan sonra çalışan fonksiyon
         source.on('addfeature', function (evt) {
-            if (typeSelect.value === 'PolygonItem' || typeSelect.value === 'BoxItem') {
-                itemIdCount++;
-                itemId = "item" + itemIdCount;
-                shapeId = itemId;
-            }
-            else if (typeSelect.value === 'PolygonLink' || typeSelect.value === 'BoxLink') {
-                linkIdCount++;
-                linkId = "link" + linkIdCount;
-                shapeId = linkId;
-            }
+            //if (typeSelect.value === 'PolygonItem' || typeSelect.value === 'BoxItem') {
+            //    itemIdCount++;
+            //    itemId = "item" + itemIdCount;
+            //    shapeId = itemId;
+            //}
+            //else if (typeSelect.value === 'PolygonLink' || typeSelect.value === 'BoxLink') {
+            //    linkIdCount++;
+            //    linkId = "link" + linkIdCount;
+            //    shapeId = linkId;
+            //}
 
             // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim
             var style = new ol.style.Style({
@@ -1781,14 +1839,15 @@
                 })
             });
 
-            console.log(evt);
+            //console.log(evt);
+
             // Çizilen Box/Polygon'a ID tanımladım
             evt.feature.setId(shapeId);
             // Çizilen Box/Polygon'a text tanımladım
             evt.feature.setStyle(style);
             // Çizilen Box/Polygon'u tüm Çizimlerin olduğu listeye ekledim
             allShapes.push(evt.feature);
-            // console.log(allShapes);
+             //console.log(allShapes);
 
             // Çizilen Box/Polygon'un butonunu oluşturdum.
             var shapeButton = document.createElement('button');
@@ -1834,6 +1893,7 @@
             }
             else addInteraction();
         };
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1916,6 +1976,6 @@
             }
         });
 
-</script>
+    </script>
 }
 <!-- #endregion -->
