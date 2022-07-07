@@ -4,10 +4,6 @@ using Quartz.BusinessLogic.Interface.IProjectService.ILinkService;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingFeaturesViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingSettingsViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinkViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Quartz.Controllers.Project.Link
 {
@@ -172,5 +168,11 @@ namespace Quartz.Controllers.Project.Link
             return Json(jSonModel);
         }
         #endregion
+
+        [HttpGet]
+        public IActionResult GetQuartz()
+        {
+            return PartialView("/Views/Shared/Partial/HomePage/QuartzPartial.cshtml");
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Quartz.BusinessLogic.Interface.IFileUploadService
         Task<FileUpload> UploadFile(IFormFileCollection files);
         List<FileUploadListViewModel> GetAllFiles(int mainId, string mainType);
         void UpdateFile(FileUploadUpdateViewModel model);
+        FileUploadUpdateViewModel GetFileDetail(int fileId);
     }
 }

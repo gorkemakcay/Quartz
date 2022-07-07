@@ -29,9 +29,12 @@ namespace Quartz.Controllers
             return View(_linkService.GetById(1));
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Get(string path)
         {
-            return View();
+            //var path = @"wwwroot\Files\arlentus.png";
+            var image = System.IO.File.OpenRead(path);
+            return File(image, "image/jpeg");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
