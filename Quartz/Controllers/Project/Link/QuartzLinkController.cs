@@ -127,6 +127,16 @@ namespace Quartz.Controllers.Project.Link
         }
         #endregion
 
+        [HttpGet]
+        public IActionResult GetVectorSource(int quartzLinkId)
+        {
+            var model = _drawingFeatureService.GetVectorSource(quartzLinkId);
+            if (model == null)
+                return Ok(0);
+            else
+            return Ok(model.Features);
+        }
+
         #region Drawing Settings
         [HttpPost]
         public IActionResult AddDrawingSettingsJSON(QuartzLinksDrawingSettingsAddViewModel model)

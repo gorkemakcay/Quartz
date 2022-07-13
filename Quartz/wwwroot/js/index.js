@@ -3,6 +3,7 @@ var currentDrawingSettings;
 var currentQuartzLink;
 var currentDrawing;
 var lastCreatedLink;
+var rFeatureCollection;
 // #endregion
 
 $(function () {
@@ -22,6 +23,21 @@ $(function () {
         data: { linkId: 1 },
         success: function (response) {
             currentQuartzLink = jQuery.parseJSON(response);
+
+            $.get({
+                url: 'QuartzLink/GetVectorSource',
+                data: { quartzLinkId: 1 },
+                success: function (response) {
+                    if (response != 0)
+                        rFeatureCollection = jQuery.parseJSON(response);
+                    else
+                        rFeatureCollection = 0;
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
 
             function timeOut() {
                 $.ajax({

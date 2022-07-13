@@ -11,6 +11,8 @@
     var linkIdCount = 0;
     var linkId = "link" + linkIdCount;
 
+    var featureCollection = [];
+
     var extent = [0, 0, 1920, 1356];
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,17 +35,26 @@
         source: new ol.source.OSM(),
     });
 
-
-   //var vectorSourceUrl = "http://localhost:5001/home/get?path="; [TAMAMLANMADI]
     // [TAMAMLANMADI] url'ye yalnızca websitesi adresi verilince çalışıyor
     var source = new ol.source.Vector({
-        /*wrapX: false*/
-        //url: 'https://openlayers.org/data/vector/ecoregions.json',
-        format: new ol.format.GeoJSON({
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-        }),
+        //format: new ol.format.GeoJSON({
+        //    dataProjection: 'EPSG:4326',
+        //    featureProjection: 'EPSG:3857'
+        //}),
+        format: new ol.format.GeoJSON()
     });
+
+    // db'deki "QuartzLinkDrawingFeature" tablosunun "Features" sütununun değerlerini aldım ve bu bilgilerle feature'ları oluşturdum
+    if (rFeatureCollection != 0) {
+        featureCollection[''] = rFeatureCollection;
+        featureCollection[''].features.forEach(function (featureJson) {
+            var feature = new ol.Feature({
+                geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857')
+            });
+            // Add feature to the vector source
+            source.addFeature(feature);
+        });
+    }
 
     var vectorLayer = new ol.layer.Vector({
         source: source
@@ -150,37 +161,51 @@
                     else if (typeSelect.value == 'PolygonLink')
                         featureType = "Polygon";
 
-                    // list all current features's coordinates (geoJSON format)
-                    var features = source.getFeatures();
-                    var geoJson = format.writeFeatures(features);
-                    //console.log(geoJson);
-
                     function timeOut() {
                         // list all current features's details (geoJSON format)
                         var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
                             dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
                         });
-                        console.log("Features: " + json);
 
-                        var linkDrawingFeaturesModel = {
-                            Name: shapeId,
-                            Type: featureType,
-                            Coords: json,
-                            QuartzLinkId: currentQuartzLink.Id
-                        };
-                        $.ajax({ // [TAMAMLANMADI]
-                            type: "POST",
-                            url: "QuartzLink/AddDrawingFeaturesJSON",
-                            data: { model: linkDrawingFeaturesModel },
-                            success: function (result) {
-                                rModel = jQuery.parseJSON(result);
-                                console.log("Vector Layer: " + JSON.stringify(vectorLayer.getSource().getFeatures()));
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
+                        
+                        if (rFeatureCollection = 0) {
+                            var linkDrawingFeaturesModel = {
+                                Features: json,
+                                QuartzLinkId: currentQuartzLink.Id
+                            };
+
+                            $.ajax({ // [TAMAMLANMADI]
+                                type: "POST",
+                                url: "QuartzLink/AddDrawingFeaturesJSON",
+                                data: { model: linkDrawingFeaturesModel },
+                                success: function (response) {
+                                    rModel = jQuery.parseJSON(response);
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        }
+                        else {
+                            var linkDrawingFeaturesModel = {
+                                Features: json,
+                                QuartzLinkId: currentQuartzLink.Id
+                            };
+                            $.ajax({ // [TAMAMLANMADI]
+                                type: "POST",
+                                url: "QuartzLink/UpdateDrawingFeaturesJSON",
+                                data: { model: linkDrawingFeaturesModel },
+                                success: function (response) {
+                                    rModel = jQuery.parseJSON(response);
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        }
+                        
                     }
                     setTimeout(timeOut, 100);
 
