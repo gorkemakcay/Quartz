@@ -4,10 +4,6 @@ using Quartz.BusinessLogic.Interface.IProjectService.ILinkService;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingFeaturesViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingSettingsViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinkViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Quartz.Controllers.Project.Link
 {
@@ -31,8 +27,9 @@ namespace Quartz.Controllers.Project.Link
         {
             if (ModelState.IsValid)
             {
-                _linkService.AddLink(model);
-                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+                var id = _linkService.AddLink(model);
+                var responseModel = _linkService.GetLinkDetail(id);
+                var jSonModel = JsonConvert.SerializeObject(responseModel, new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
@@ -57,11 +54,11 @@ namespace Quartz.Controllers.Project.Link
         }
 
         [HttpPost]
-        public IActionResult UpdateLinksTagNo(string tagNo)
+        public IActionResult UpdateLinksTagNo(int linkId, string tagNo)
         {
+            _linkService.UpdateLinksTagNo(linkId, tagNo);
 
-
-            return Json(tagNo);
+            return Ok();
         }
 
         [HttpGet]
@@ -172,5 +169,11 @@ namespace Quartz.Controllers.Project.Link
             return Json(jSonModel);
         }
         #endregion
+
+        [HttpGet]
+        public IActionResult GetQuartz()
+        {
+            return PartialView("/Views/Shared/Partial/HomePage/QuartzPartial.cshtml");
+        }
     }
 }

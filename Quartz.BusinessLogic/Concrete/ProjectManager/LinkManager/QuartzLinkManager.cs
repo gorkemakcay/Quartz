@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Quartz.BusinessLogic.Interface.IProjectService.ILinkService;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinkViewModels;
+using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.Project.Link;
 using System.Collections.Generic;
@@ -17,10 +18,25 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
             _mapper = mapper;
         }
 
-        public void AddLink(QuartzLinkAddViewModel model)
+        public int AddLink(QuartzLinkAddViewModel model)
         {
-            Add(_mapper.Map<QuartzLink>(model));
-            _uow.SaveChange();
+            using (var context = new QuartzContext())
+            {
+                var link = new QuartzLink()
+                {
+                    TagNo = model.TagNo,
+                    ShowLabel = model.ShowLabel,
+                    CreatedDate = model.CreatedDate,
+                    CreatedBy = model.CreatedBy,
+                    MainQuartzLinkId = model.MainQuartzLinkId,
+                    CurrentDrawingId = model.CurrentDrawingId
+                };
+
+                context.QuartzLinks.Add(link);
+                context.SaveChanges();
+
+                return link.Id;
+            }
         }
 
         public List<QuartzLinkListViewModel> GetAllLinks(int mainLinkId)
@@ -39,9 +55,12 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
             _uow.SaveChange();
         }
 
-        public void UpdateLinksTagNo(string tagNo)
+        public void UpdateLinksTagNo(int linkId, string tagNo)
         {
-
+            var model = _mapper.Map<QuartzLinkUpdateViewModel>(GetById(linkId));
+            model.TagNo = tagNo;
+            Update(_mapper.Map<QuartzLink>(model));
+            _uow.SaveChange();
         }
     }
 }

@@ -44,7 +44,8 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
         {
             foreach (IFormFile file in files)
             {
-                var basePath = $"wwwroot/Files";
+                // eski hali: var basePath = $"wwwroot/Files";
+                var basePath = @"wwwroot\\Files\\";
                 bool basePathIsExists = Directory.Exists(basePath);
                 if (!basePathIsExists)
                     Directory.CreateDirectory(basePath);
@@ -77,6 +78,11 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
                 }
             }
             return null;
+        }
+
+        public FileUploadUpdateViewModel GetFileDetail(int fileId)
+        {
+            return _mapper.Map<FileUploadUpdateViewModel>(GetById(fileId));
         }
     }
 }

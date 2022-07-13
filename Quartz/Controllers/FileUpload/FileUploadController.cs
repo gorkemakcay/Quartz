@@ -70,5 +70,16 @@ namespace Quartz.Controllers.FileUpload
             });
             return Json(jSonModel);
         }
+
+        [HttpGet]
+        public IActionResult GetFileDetail(int fileId)
+        {
+            var model = _fileUploadService.GetFileDetail(fileId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
     }
 }

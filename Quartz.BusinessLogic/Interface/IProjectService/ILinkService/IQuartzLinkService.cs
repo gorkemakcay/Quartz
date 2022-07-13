@@ -8,8 +8,8 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.ILinkService
     {
         List<QuartzLinkListViewModel> GetAllLinks(int mainLinkId);
         QuartzLinkUpdateViewModel GetLinkDetail(int linkId);
-        void AddLink(QuartzLinkAddViewModel model);
+        int AddLink(QuartzLinkAddViewModel model);
         void UpdateLink(QuartzLinkUpdateViewModel model);
-        void UpdateLinksTagNo(string tagNo);
+        void UpdateLinksTagNo(int linkId, string tagNo);
     }
 }

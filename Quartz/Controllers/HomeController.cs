@@ -10,15 +10,12 @@ namespace Quartz.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IQuartzLinkService _linkService;
         private readonly ILookUpItemsPlantAreaService _plantAreaService;
 
-        public HomeController(ILogger<HomeController> logger, 
-                              IQuartzLinkService linkService,
+        public HomeController(ILogger<HomeController> logger,
                               ILookUpItemsPlantAreaService plantAreaService)
         {
             _logger = logger;
-            _linkService = linkService;
             _plantAreaService = plantAreaService;
         }
 
@@ -26,12 +23,15 @@ namespace Quartz.Controllers
         {
             //ViewBag.GetPlantAreas = _plantAreaService.GetAllPlantAreas();
 
-            return View(_linkService.GetById(1));
+            return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Get(string path)
         {
-            return View();
+            //var path = @"wwwroot\Files\arlentus.png";
+            var image = System.IO.File.OpenRead(path);
+            return File(image, "image/jpeg");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -6,6 +6,7 @@ using Quartz.Entities.Concrete.Project.Item;
 using Quartz.Entities.Concrete.Project.Link;
 using Quartz.Entities.Concrete.Projects.Item;
 using Quartz.Entities.Concrete.Users;
+using System;
 
 namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
 {
@@ -13,6 +14,7 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.LogTo(Console.WriteLine).EnableSensitiveDataLogging();
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz;uid=umutd;pwd=Ud4583!");
             base.OnConfiguring(optionsBuilder);
         }
