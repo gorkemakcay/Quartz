@@ -5,6 +5,7 @@ using Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
 using Quartz.Common.ViewModels.Project.QuartzItem.QuartzItemsInspectionViewModels;
+using System.Linq;
 
 namespace Quartz.Controllers.Project.Item
 {
@@ -89,7 +90,11 @@ namespace Quartz.Controllers.Project.Item
                 });
                 return Json(jSonModel);
             }
-            return Json(null);
+            else {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                return Ok(errors);
+            }
+            //return Json(null);
         }
 
         [HttpPost]
@@ -105,6 +110,18 @@ namespace Quartz.Controllers.Project.Item
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetInformationDetailJSON(int quartzItemId)
+        {
+            ViewBag.Information = _informationService.GetInformationDetail(quartzItemId);
+            var model = _informationService.GetInformationDetail(quartzItemId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return PartialView("QuartzItemsInformationPartial", Json(jSonModel));
         }
         #endregion
 
@@ -137,6 +154,18 @@ namespace Quartz.Controllers.Project.Item
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetInspectionDetailJSON(int quartzItemId)
+        {
+            ViewBag.Inspection = _inspectionService.GetInspectionDetail(quartzItemId);
+            var model = _inspectionService.GetInspectionDetail(quartzItemId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return PartialView("QuartzItemsInspectionPartial", Json(jSonModel));
         }
         #endregion
 

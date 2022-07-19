@@ -591,6 +591,8 @@ namespace Quartz.Controllers.LookUpItems
         }
         #endregion
 
+        #region Get All Lookup Items For Select > Option
+
         [HttpGet]
         public IActionResult GetPlantAreaForOption()
         {
@@ -634,5 +636,95 @@ namespace Quartz.Controllers.LookUpItems
             });
             return Json(jSonModel);
         }
+
+        [HttpGet]
+        public IActionResult GetComponentTypeForOption()
+        {
+            var model = _componentTypeService.GetAllComponentTypes();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetSpecificationForOption()
+        {
+            var model = _specificationService.GetAllSpecifications();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetFittingTypeForOption()
+        {
+            var model = _fittingTypeService.GetAllFittingTypes();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetOperatorForOption()
+        {
+            var model = _operatorService.GetAllOperators();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetStandardStatementForOption()
+        {
+            var model = _standardStatementService.GetAllStandardStatements();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetStatusForOption()
+        {
+            var model = _statusService.GetAllStatuses();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetTechniqueForOption()
+        {
+            var model = _techniqueService.GetAllTechniques();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            { 
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetWeldTypeForOption()
+        {
+            var model = _weldTypeService.GetAllWeldTypes();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings() 
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        #endregion
     }
 }

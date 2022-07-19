@@ -23,9 +23,9 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             _uow.SaveChange();
         }
 
-        public QuartzItemsInspectionUpdateViewModel GetInspectionDetail(int inspectionId)
+        public QuartzItemsInspectionUpdateViewModel GetInspectionDetail(int quartzItemId)
         {
-            return _mapper.Map<QuartzItemsInspectionUpdateViewModel>(GetFirstOrDefult(I => I.Id == inspectionId));
+            return _mapper.Map<QuartzItemsInspectionUpdateViewModel>(GetFirstOrDefult(I => I.QuartzItemId == quartzItemId));
         }
 
         public void UpdateInspection(QuartzItemsInspectionUpdateViewModel model)

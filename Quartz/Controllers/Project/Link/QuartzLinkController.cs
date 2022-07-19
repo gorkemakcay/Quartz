@@ -131,10 +131,16 @@ namespace Quartz.Controllers.Project.Link
         public IActionResult GetVectorSource(int quartzLinkId)
         {
             var model = _drawingFeatureService.GetVectorSource(quartzLinkId);
-            if (model == null)
+            if (model == null || model.Features == null || model.Features == "")
                 return Ok(0);
             else
-            return Ok(model.Features);
+            {
+                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                return Json(jSonModel);
+            }
         }
 
         #region Drawing Settings

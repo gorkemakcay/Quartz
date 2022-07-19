@@ -2,8 +2,10 @@
 var currentDrawingSettings;
 var currentQuartzLink;
 var currentDrawing;
+var currentDrawingFeatures;
 var lastCreatedLink;
 var rFeatureCollection;
+var itemModalActivePartial = "null";
 // #endregion
 
 $(function () {
@@ -26,12 +28,12 @@ $(function () {
 
             $.get({
                 url: 'QuartzLink/GetVectorSource',
-                data: { quartzLinkId: 1 },
+                data: { quartzLinkId: currentQuartzLink.Id },
                 success: function (response) {
                     if (response != 0)
-                        rFeatureCollection = jQuery.parseJSON(response);
+                        currentDrawingFeatures = jQuery.parseJSON(response);
                     else
-                        rFeatureCollection = 0;
+                        currentDrawingFeatures = 0;
                 },
                 error: function (error) {
                     alert("error!");

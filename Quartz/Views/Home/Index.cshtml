@@ -100,10 +100,7 @@
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="showLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
-                        style="border:none;border-radius:0px">
-                    Close
-                </button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none;border-radius:0px">Close</button>
                 <button type="button" class="btn btn-danger" style="border:none;border-radius:0px">Delete</button>
                 <button type="button" class="btn btn-primary" style="border:none;border-radius:0px">Save changes</button>
             </div>
@@ -116,22 +113,127 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #F3F5F7;">
-                <h5 class="modal-title" id="itemModalName">Item Modal</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="col-lg-3">
+                    <h5 class="modal-title" id="itemModalTitle">Item Modal</h5>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="spec nav bg-white" style="border-radius: 20px;" role="tablist" id="itemModalNav">
+                        <li class="active nav-item"><a class="nav-link text-dark" href="#itemModalInformations" data-toggle="tab">Informations</a></li>
+                        <li class="nav-item disabled"><a class="nav-link" href="#" data-toggle="tab" style="color: gray;">|</a></li>
+                        <li class="nav-item"><a role="tab" class="nav-link text-dark" href="#itemModalInspections" data-toggle="tab">Inspections</a></li>
+                        <li class="nav-item disabled"><a class="nav-link" href="#" data-toggle="tab" style="color: gray;">|</a></li>
+                        <li class="nav-item"><a role="tab" class="nav-link text-dark" href="#itemModalAttachments" data-toggle="tab">Attachments</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
             </div>
             <div class="modal-body">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ratione repellat officia ullam possimus
-                pariatur atque sed iusto minus illo, facere placeat nisi. Officiis veniam nesciunt tenetur blanditiis ratione
-                laboriosam?
+                <div class="row">
+
+                </div>
+
+                <div class="row" id="itemModalPartialArea">
+
+                </div>
             </div>
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <button type="button" class="btn btn-info" data-bs-dismiss="modal" style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;">Close</button>
-                <button type="button" class="btn btn-info" style="border:none;">Delete</button>
-                <button type="button" class="btn btn-info" style="border-top-right-radius: 20px; border-bottom-right-radius: 20px;">Save changes</button>
+                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
+                <input id="itemShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
+                <button type="button" class="btn btn-danger" style="border:none; border-radius:0px;">Delete</button>
+                <button type="button" class="btn btn-primary" style="border:none; border-radius:0px;" onclick="itemModalSaveButton(itemModalActivePartial)">Save</button>
             </div>
         </div>
     </div>
 </div>
+<!-- #region Inspection Add (Button) Modal -->
+<div class="modal fade" id="AddInspectionData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-header" style="background-color: #F3F5F7;">
+                <h2 class="modal-title">Inspection Data</h2>
+                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Report No</span>
+                        <input type="text" id="inspectionReportNo" class="form-control">
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Date</span>
+                        <input type="text" id="inspectionDate" class="form-control">
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Date Due</span>
+                        <input type="text" id="inspectionDateDue" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Method</span>
+                        <select class="form-select" id="inspectionMethod">
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Procedure</span>
+                        <select class="form-select" id="inspectionProcedure">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Technique</span>
+                        <select class="form-select" id="inspectionTechnique">
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Status</span>
+                        <select class="form-select" id="inspectionStatus">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Comments</span>
+                        <textarea id="inspectionComments" class="form-control" style="min-height: 40px; width: 100%; max-height: 350px" maxlength="1000" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-2">
+                        <label for="inspectionFileUpload" style="color: gray; font-weight: 400; border: 1px solid black; padding: 5px;" class="custom-file-upload">
+                            <i style="color:#364F6B;" class="fa fa-cloud-upload"></i> Choose File
+                        </label>
+                        <input id="inspectionFileUpload" type="file" name="files" hidden />
+                    </div>
+                    <div class="col-sm-10">
+                        <input class="form-control" style="width: 100%; border: 1px solid black; border-radius: 0px; padding: 5px;" type="text" autocomplete="off" placeholder="Description..." name="description" required />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer" style="background-color: #F3F5F7;">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none;border-radius:0px">Close</button>
+                <button type="button" class="btn btn-primary" style="border:none;border-radius:0px">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
 <!-- #endregion -->
 <!-- #region Drawing Settings Modal (#DSM) -->
 <div class="modal fade" id="drawingSettingsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" , aria-hidden="true">
@@ -228,7 +330,7 @@
     </div>
 </div>
 <!-- #endregion -->
-<!-- #region Lookup Items Modal Modal (#LIM) -->
+<!-- #region Lookup Items Modal (#LIM) -->
 <!-- #region General Modal -->
 <div class="modal fade" id="lookupItemsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">

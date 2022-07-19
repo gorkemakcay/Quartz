@@ -247,6 +247,8 @@ $("#limNav a").on('click', function () {
 })
 // #endregion
 
+// #region Add Functions
+
 // #region Component Type
 function addComponentType() {
     if ($("#limComponentTypeAddModalName").val() != null && $("#limComponentTypeAddModalName").val() != " ") {
@@ -713,5 +715,7 @@ function addWeldType() {
     }
 }
         // #endregion
+
+// #endregion
 
 // #endregion

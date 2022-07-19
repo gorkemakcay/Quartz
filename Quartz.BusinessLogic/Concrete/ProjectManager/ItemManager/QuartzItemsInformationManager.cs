@@ -22,9 +22,9 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             _uow.SaveChange();
         }
 
-        public QuartzItemsInformationUpdateViewModel GetInformationDetail(int informationId)
+        public QuartzItemsInformationUpdateViewModel GetInformationDetail(int quartzItemId)
         {
-            return _mapper.Map<QuartzItemsInformationUpdateViewModel>(GetFirstOrDefult(I => I.Id == informationId));
+            return _mapper.Map<QuartzItemsInformationUpdateViewModel>(GetFirstOrDefult(I => I.QuartzItemId == quartzItemId));
         }
 
         public void UpdateInformation(QuartzItemsInformationUpdateViewModel model)

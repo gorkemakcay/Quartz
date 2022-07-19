@@ -24,25 +24,10 @@ $("#btnDsmSave").on('click', function () {
             console.log(error.responseText);
         }
     });
-
-    //if (currentDrawingSettings.DrawingNo != $("#dsmDrawingNo").val()) {
-    //    $.ajax({ // [TAMAMLANMADI]
-    //        type: "POST",
-    //        url: "QuartzLink/UpdateLinksTagNo",
-    //        data: { linkId: currentQuartzLink.Id, tagNo: drawingSettingsModel.DrawingNo },
-    //        success: function () {
-
-    //        },
-    //        error: function (error) {
-    //            alert("error!");
-    //            console.log(error.responseText);
-    //        }
-    //    });
-    //}
 });
 // #endregion
 
-// #region DSM - When Click DSM Button
+// #region DSM - Works when DSM Button is clicked
 $("#btnDrawingSettings").on('click', function () {
     //$("#dsmName").val("Drawing" + " " + "[" + '@Model.TagNo' + "]"); // [TAMAMLANMADI]
 
@@ -58,14 +43,14 @@ $("#btnDrawingSettings").on('click', function () {
             $("#dsmDrawingDescription").val(currentDrawingSettings.Description);
             $("#dsmFile").val(currentDrawing.Name + currentDrawing.Extension); // [TAMAMLANMADI]
 
-            // #region DSM - Get Plant Areas For Select>Options
+            // #region DSM - Get Plant Areas For Select > Options
             $.ajax({
                 type: "GET",
                 url: "LookUpItems/GetPlantAreaForOption",
                 success: function (result) {
                     rModel = jQuery.parseJSON(result);
 
-                    // #region DSM - Create & Configure Select>Options
+                    // #region DSM - Create & Configure Select > Options
                     $("#dsmPlantArea").children().remove();
                     if (currentDrawingSettings.PlantArea == "select") {
                         $("#dsmPlantArea").append(
@@ -105,7 +90,7 @@ $("#btnDrawingSettings").on('click', function () {
             });
             // #endregion
 
-            // [TAMAMLANMADI] : Şu anda Plany System, Plant Area success'in içinde çalışıyor ama bunlar bağımsız olay. Düzelt!
+            // [TAMAMLANMADI] : Şu anda Plant System, Plant Area success'in içinde çalışıyor ama bunlar bağımsız olay. Düzelt!
             // #region DSM - Get Plant Systems For Select>Options
             $.ajax({
                 type: "GET",
@@ -164,7 +149,7 @@ $("#btnDrawingSettings").on('click', function () {
 });
 // #endregion
 
-// #region DSM - Upload New Drawing
+    // #region DSM - Upload New Drawing
 var drawingSettingsModalUploadDrawingArea = false;
 $("#btnDsmUploadDrawing").on("click", function () {
     if (drawingSettingsModalUploadDrawingArea == false) {
@@ -178,6 +163,8 @@ $("#btnDsmUploadDrawing").on("click", function () {
         return -1;
     }
 });
+// #endregion
+
 // #endregion
 
 // #endregion
