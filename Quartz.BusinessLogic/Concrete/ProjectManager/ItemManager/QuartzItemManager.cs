@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Quartz.BusinessLogic.Interface.IProjectService.IItemService;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
+using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.Project.Item;
 using System.Collections.Generic;
@@ -17,10 +18,23 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             _mapper = mapper;
         }
 
-        public void AddItem(QuartzItemAddViewModel model)
+        public int AddItem(QuartzItemAddViewModel model)
         {
-            Add(_mapper.Map<QuartzItem>(model));
-            _uow.SaveChange();
+            using (var context = new QuartzContext())
+            {
+                var item = new QuartzItem()
+                {
+                    TagNo = model.TagNo,
+                    CreatedDate = model.CreatedDate,
+                    CreatedBy = model.CreatedBy,
+                    QuartzLinkId = model.QuartzLinkId
+                };
+
+                context.QuartzItems.Add(item);
+                context.SaveChanges();
+
+                return item.Id;
+            }
         }
 
         public List<QuartzItemListViewModel> GetAllItems(int linkId)

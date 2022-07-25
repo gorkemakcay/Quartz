@@ -6,6 +6,41 @@ var currentDrawingFeatures;
 var lastCreatedLink;
 var rFeatureCollection;
 var itemModalActivePartial = "null";
+var lastClickedLinkButtonId = 0;
+var lastClickedItemButtonId = 0;
+var isInformationCreated = false;
+var lastInformationsResponseModel;
+var isInspectionExist = false;
+var currentInspection;
+
+// #region Quartz Variables
+var typeSelect = document.getElementById('type');
+var allShapes = [];
+let draw; // global so we can remove it later
+var isValueDelete = false;
+var shapeId = "";
+var itemIdCount = 0;
+var itemId = "item" + itemIdCount;
+var linkIdCount = 0;
+var linkId = "link" + linkIdCount;
+var featureCollection = [];
+var extent = [0, 0, 1920, 1356];
+
+// #region Open Layers Variables
+var select;
+var translate;
+var projection;
+var rasterLayer;
+var source;
+var vectorLayer;
+var view;
+var imageUrl;
+var imageLayer;
+var map;
+// #endregion
+
+// #endregion
+
 // #endregion
 
 $(function () {
@@ -41,7 +76,7 @@ $(function () {
                 }
             });
 
-            function timeOut() {
+            function getFileDetailTimeOut() {
                 $.ajax({
                     type: "GET",
                     url: "FileUpload/GetFileDetail",
@@ -54,7 +89,7 @@ $(function () {
                     }
                 });
             }
-            setTimeout(timeOut, 100);
+            setTimeout(getFileDetailTimeOut, 100);
         },
         error: function (error) {
             alert("error");
@@ -63,3 +98,8 @@ $(function () {
     });
     // #endregion
 });
+
+function getDate() {
+    var dt = new Date();
+    return fromDateTime = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + dt.getDate()).slice(-2) + "T" + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2);
+};

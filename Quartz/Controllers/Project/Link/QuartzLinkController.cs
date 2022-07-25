@@ -127,22 +127,6 @@ namespace Quartz.Controllers.Project.Link
         }
         #endregion
 
-        [HttpGet]
-        public IActionResult GetVectorSource(int quartzLinkId)
-        {
-            var model = _drawingFeatureService.GetVectorSource(quartzLinkId);
-            if (model == null || model.Features == null || model.Features == "")
-                return Ok(0);
-            else
-            {
-                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                });
-                return Json(jSonModel);
-            }
-        }
-
         #region Drawing Settings
         [HttpPost]
         public IActionResult AddDrawingSettingsJSON(QuartzLinksDrawingSettingsAddViewModel model)
@@ -185,6 +169,22 @@ namespace Quartz.Controllers.Project.Link
             return Json(jSonModel);
         }
         #endregion
+
+        [HttpGet]
+        public IActionResult GetVectorSource(int quartzLinkId)
+        {
+            var model = _drawingFeatureService.GetVectorSource(quartzLinkId);
+            if (model == null || model.Features == null || model.Features == "")
+                return Ok(0);
+            else
+            {
+                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                return Json(jSonModel);
+            }
+        }
 
         [HttpGet]
         public IActionResult GetQuartz()

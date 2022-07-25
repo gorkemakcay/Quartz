@@ -2,6 +2,7 @@
 using Quartz.Entities.Concrete.Projects.Item;
 using Quartz.Entities.Interface;
 using System;
+using System.Collections.Generic;
 
 namespace Quartz.Entities.Concrete.Project.Item
 {
@@ -13,7 +14,7 @@ namespace Quartz.Entities.Concrete.Project.Item
         public string CreatedBy { get; set; }
         public int QuartzLinkId { get; set; } // Item'ın ait olduğu Link'in Id'si (Foreign Key)
         public QuartzLink QuartzLink { get; set; } // Item'ın ait olduğu Link (One-to-Many Relationship)
-        public QuartzItemsInspection Inspection { get; set; } // Item'a ait Inspection (One-to-One Relationship)
+        public List<QuartzItemsInspection> Inspections { get; set; } // Item'a ait Inspection (One-to-One Relationship)
         public QuartzItemsInformation Information { get; set; } // Item'a ait Information (One-to-One Relationship)
     }
 }

@@ -4,6 +4,7 @@ using Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels;
 using Quartz.Common.ViewModels.Project.QuartzItem.QuartzItemsInspectionViewModels;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.Projects.Item;
+using System.Collections.Generic;
 
 namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
 {
@@ -23,9 +24,14 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             _uow.SaveChange();
         }
 
-        public QuartzItemsInspectionUpdateViewModel GetInspectionDetail(int quartzItemId)
+        public List<QuartzItemsInspectionUpdateViewModel> GetAllInspections(int quartzItemId)
         {
-            return _mapper.Map<QuartzItemsInspectionUpdateViewModel>(GetFirstOrDefult(I => I.QuartzItemId == quartzItemId));
+            return _mapper.Map<List<QuartzItemsInspectionUpdateViewModel>>(GetAll(I => I.QuartzItemId == quartzItemId));
+        }
+
+        public QuartzItemsInspectionUpdateViewModel GetInspectionDetail(int inspectionId)
+        {
+            return _mapper.Map<QuartzItemsInspectionUpdateViewModel>(GetFirstOrDefult(I => I.Id == inspectionId));
         }
 
         public void UpdateInspection(QuartzItemsInspectionUpdateViewModel model)

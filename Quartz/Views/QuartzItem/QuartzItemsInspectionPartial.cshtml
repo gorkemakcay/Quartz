@@ -1,35 +1,21 @@
 ﻿<div class="card-body" style="display:block;">
 
-    <table id="dataTableStyleDoc" class="table table-hover text-sm table-responsive-sm table-sm">
+    <table id="inspectionTable" class="table table-hover text-sm table-responsive-sm table-sm">
         <thead class="no-border" style="background-color:#C9D6DF;color:#1B262C;font-weight:600">
             <tr>
-                <th class="text-sm" style="font-weight:500">Report No</th>
-                <th class="text-sm" style="font-weight:500">Date</th>
-                <th class="text-sm" style="font-weight:500">Method</th>
-                <th class="text-sm" style="font-weight:500">Status</th>
-                <th class="text-sm" style="font-weight:500">Emergent</th>
+                <th class="text-sm text-center" style="font-weight:500">Report No</th>
+                <th class="text-sm text-center" style="font-weight:500">Date (yyyy/MM/DD)</th>
+                <th class="text-sm text-center" style="font-weight:500">Method</th>
+                <th class="text-sm text-center" style="font-weight:500">Status</th>
+                <th class="text-sm text-center" style="font-weight:500">Edit</th>
+                @*<th class="text-sm" style="font-weight:500">Emergent</th>*@
             </tr>
         </thead>
 
         <tbody>
-            @if (ViewBag.FinalQualityDocumentList != null)
-            {
-                foreach (var document in ViewBag.FinalQualityDocumentList)
-                {
-                    <tr>
-                        <td class="text-sm" style="font-weight:400">@document.Name</td>
-                        <td class="text-sm" style="font-weight:400">@document.Description</td>
-                        <td class="text-sm" style="font-weight:400">@document.UploadedBy</td>
-                        <td class="text-sm" style="font-weight:400">@document.FileType</td>
-                        <td class="text-sm" style="font-weight:400">@document.CreatedOn</td>
-                        <td>
-                        </td>
-                    </tr>
-                }
-            }
+
         </tbody>
     </table>
 
-    @*<a data-toggle="modal" data-target="#AddInspectionData" data-backdrop="static" data-keyboard="false" class="btn btn-sm float-right" style="border:none; background-color:darkslateblue ;color:#ffffff;border-radius:0px">Add</a>*@
-    <button type="button" id="addInspectionData" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AddInspectionData">+ Add</button>
+    <button type="button" id="addInspectionDataButton" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AddInspectionData" style="border: 0px; border-radius: 0px;">+ Add</button>
 </div>

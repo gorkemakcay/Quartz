@@ -1,45 +1,49 @@
 ﻿function loadQuartz() {
     // #region Variables
-    const typeSelect = document.getElementById('type');
-    var allShapes = [];
-    let draw; // global so we can remove it later
-    var isValueDelete = false;
-    var shapeId = "";
-    var itemIdCount = 0;
-    var itemId = "item" + itemIdCount;
-    var linkIdCount = 0;
-    var linkId = "link" + linkIdCount;
-    var featureCollection = [];
-    var extent = [0, 0, 1920, 1356];
+
     // #endregion
 
     // #region Elements of Quartz
-    var select = new ol.interaction.Select();
+    select = new ol.interaction.Select();
 
-    var translate = new ol.interaction.Translate({
+    translate = new ol.interaction.Translate({
         features: select.getFeatures(),
         condition: ol.events.condition.platformModifierKeyOnly
     });
 
-    var projection = new ol.proj.Projection({
+    projection = new ol.proj.Projection({
         code: 'xkcd-image',
         units: 'pixels',
         extent: extent,
     });
 
-    var rasterLayer = new ol.layer.Tile({
+    rasterLayer = new ol.layer.Tile({
         source: new ol.source.OSM(),
     });
 
-    var source = new ol.source.Vector({
+    source = new ol.source.Vector({
         format: new ol.format.GeoJSON()
     });
+    ////////////////////////////////////////////////// trial area
+    // #region selectInteraction usage:
+    // selectInteraction.getFeatures().clear();
+    // selectInteraction.getFeatures().push(feature);
+    //function highlightFeature(feat) {
+    //    selectInteraction.getFeatures().push(feat);
+    //    selectInteraction.dispatchEvent({
+    //        type: 'select',
+    //        selected: [feat],
+    //        deselected: []
+    //    });
+    //}
+    // #endregion
+    ////////////////////////////////////////////////// trial area
 
-    var vectorLayer = new ol.layer.Vector({
+    vectorLayer = new ol.layer.Vector({
         source: source
     });
 
-    var view = new ol.View({
+    view = new ol.View({
         projection: projection,
         center: ol.extent.getCenter(extent),
         zoom: 0,
@@ -47,10 +51,10 @@
         extent: [0, 0, 1920, 1356]
     });
 
-    var imageUrl = "http://localhost:5001/home/get?path="; // [TAMAMLANMADI]
+    imageUrl = "http://localhost:5001/home/get?path="; // [TAMAMLANMADI]
     imageUrl = imageUrl + currentDrawing.Path;
 
-    var imageLayer = new ol.layer.Image({
+    imageLayer = new ol.layer.Image({
         source: new ol.source.ImageStatic({
             url: imageUrl,
             projection: projection,
@@ -58,17 +62,21 @@
         }),
     });
 
-    var map = new ol.Map({
+    map = new ol.Map({
         interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([select, translate]),
         layers: [imageLayer, rasterLayer, vectorLayer],
         target: 'map',
         view: view
     });
 
-    var translate = new ol.interaction.Translate({
-        features: select.getFeatures()
-    });
-    map.addInteraction(translate);
+    // Bunlar gerekli değil sanırım!
+    //map.addInteraction(translate);
+    //map.addInteraction(select);
+
+    //var translate = new ol.interaction.Translate({
+    //    features: select.getFeatures()
+    //});
+
     // #endregion
 
     // #region Loading Spinner
@@ -83,15 +91,15 @@
     // #region Get Features From Db & Print Screen
     // db'deki "QuartzLinkDrawingFeature" tablosunun "Features" sütununun değerlerini aldım ve bu bilgilerle feature'ları oluşturdum
     if (currentDrawingFeatures != 0) {
-        var currentFeatureCount = 0;
+        //var currentFeatureCount = 0;
         var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
         featureCollection[''] = featuresFromDb;
         featureCollection[''].features.forEach(function (featureJson) {
-            currentFeatureCount++;
+            //currentFeatureCount++;
 
             var feature = new ol.Feature({
                 geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857'),
-                gorkem: currentFeatureCount // [TAMAMLANMADI]
+                //id: currentFeatureCount // [TAMAMLANMADI] Properties tanımlama
             });
 
             // Add feature to the vector source
@@ -99,7 +107,71 @@
         });
     }
     // #endregion
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [FUNCTIONS]
+
+    createList();
+    // Load Spinner Yap! [TAMAMLANMADI]
+    function waitCreateListFunc() {
+        $(".linkButton").on('click', function () {
+            lastClickedLinkButtonId = $(this).attr('id');
+        });
+
+        $(".itemButton").on('click', function () {
+            lastClickedItemButtonId = $(this).attr('id');
+
+            loadInformationPage();
+            //$("#itemModalTitle").html("Item Modal | Informations");
+            //itemModalActivePartial = "Informations";
+
+            //$.ajax({
+            //    type: "GET",
+            //    url: "QuartzItem/GetInformationPartialView",
+            //    success: function (response) {
+            //        $("#itemModalPartialArea").html(response);
+
+            //        // #region Get Information Details
+            //        $.ajax({
+            //            type: "GET",
+            //            url: "QuartzItem/GetInformationDetailJSON",
+            //            data: { quartzItemId: lastClickedItemButtonId },
+            //            success: function (response) {
+            //                lastInformationsResponseModel = jQuery.parseJSON(response);
+            //                if (lastInformationsResponseModel != null) {
+            //                    isInformationCreated = true;
+
+            //                    $("#informationTagNo").val(lastInformationsResponseModel.TagNo);
+            //                    $("#informationSerialNo").val(lastInformationsResponseModel.SerialNo);
+            //                    $("#informationComponentType").val(lastInformationsResponseModel.ComponentType);
+            //                    $("#informationComments").val(lastInformationsResponseModel.Comments);
+            //                    $("#informationSpecification").val(lastInformationsResponseModel.Specification);
+            //                    $("#informationFittingType").val(lastInformationsResponseModel.FittingType);
+            //                    $("#informationWeldType").val(lastInformationsResponseModel.WeldType);
+            //                    $("#informationPipeOD").val(lastInformationsResponseModel.PipeOdIn);
+            //                    $("#informationPipeThickness").val(lastInformationsResponseModel.PipeThicknessMm);
+            //                    $("#informationOperatingTemp").val(lastInformationsResponseModel.OperatingTempC);
+            //                    $("#informationOperatingPressute").val(lastInformationsResponseModel.OperatingPressureBar);
+            //                    $("#itemShowLabel").val(lastInformationsResponseModel.ShowLabel);
+            //                }
+            //                else isInformationCreated = false;
+            //            },
+            //            error: function (error) {
+            //                alert("error!");
+            //                console.log(error.responseText);
+            //            }
+            //        });
+            //        // #endregion
+
+            //        setTimeout(getInformationSelectOptions, 100);
+            //    },
+            //    error: function (error) {
+            //        alert("error!");
+            //        console.log(error.responseText);
+            //    }
+            //});
+        });
+    }
+    setTimeout(waitCreateListFunc, 100);
 
     function addInteraction() {
         if (typeSelect.value !== 'None') {
@@ -119,34 +191,30 @@
                 map.addInteraction(draw);
             }
 
-            // çizim bittiğinde çalışan fonksiyon
+            // #region Feature "drawend" Function
             draw.on("drawend", function (evt) {
-                // çizimin koordinatlarını "coords" değişkeninde tutuyorum
+                // çizimin koordinatlarını "coords" değişkeninde tutuyorum (bu kısım kullanılmadı!)
                 var feature = evt.feature;
                 var coords = feature.getGeometry().getCoordinates()[0];
                 coords = coords.toString();
 
+                // Button'a shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra "typeSelect.value" atanaması için
                 function timeOut() {
                     typeSelect.value = 'None';
-                    map.removeInteraction(draw);    // shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra typeSelect.value atanaması için
+                    map.removeInteraction(draw);    
                 }
                 setTimeout(timeOut, 1 / 1000);
 
-                // #region DateTime Now
-                var dt = new Date();
-                var fromDateTime = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + dt.getDate()).slice(-2) + "T" + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2);
-                // #endregion
-
-                // add link
+                // #region Add QuartzLink to DB
                 if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
                     linkIdCount++;
-                    linkId = "link" + linkIdCount;
+                    linkId = "LINK" + Math.floor(Math.random() * 1000);
                     shapeId = linkId;
 
                     var linkModel = {
                         TagNo: shapeId,
                         ShowLabel: true, // [TAMAMLANMADI]
-                        CreatedDate: fromDateTime,
+                        CreatedDate: getDate(),
                         CreatedBy: "Görkem", // [TAMAMLANMADI]
                         MainQuartzLinkId: currentQuartzLink.Id,
                         CurrentDrawingId: 0
@@ -157,6 +225,7 @@
                         data: { model: linkModel },
                         success: function (response) {
                             lastCreatedLink = jQuery.parseJSON(response);
+                            lastClickedLinkButtonId = lastCreatedLink.Id;
                             // [TAMAMLANMADI]
                         },
                         error: function (error) {
@@ -165,16 +234,17 @@
                     });
                     $("#linkModal").modal('show');
                 }
+                // #endregion
 
-                // add item
+                // #region Add QuartzItem to DB
                 if (typeSelect.value == 'BoxItem' || typeSelect.value == 'PolygonItem') {
                     itemIdCount++;
-                    itemId = "item" + itemIdCount;
+                    itemId = "ITEM" + Math.floor(Math.random() * 1000);
                     shapeId = itemId;
 
                     var itemModel = {
                         TagNo: shapeId,
-                        CreatedDate: fromDateTime,
+                        CreatedDate: getDate(),
                         CreatedBy: "Görkem", // [TAMAMLANMADI]
                         QuartzLinkId: currentQuartzLink.Id
                     };
@@ -185,6 +255,7 @@
                         data: { model: itemModel },
                         success: function (response) {
                             lastCreatedItem = jQuery.parseJSON(response);
+                            lastClickedItemButtonId = lastCreatedItem.Id;
                             // [TAMAMLANMADI]
                         },
                         error: function (error) {
@@ -192,11 +263,19 @@
                         }
                     });
                     $("#itemModal").modal('show');
+                    loadInformationPage();
                 }
+                // #endregion
 
+                setTimeout(addDrawingFeaturesJSON, 100); // düzgün çalışıyor mu dene [TAMAMLANMADI]
+
+                //function addDrawingFeaturesTimeOut() {
+                //    addDrawingFeaturesJSON()
+                //}
+                //setTimeout(addDrawingFeaturesTimeOut, 100);
             });
+            // #endregion
 
-            setTimeout(addDrawingFeaturesJSON, 100);
         }
     }
 
@@ -275,51 +354,38 @@
             text: new ol.style.Text({
                 text: shapeId,
                 font: '20px Calibri,sans-serif',
-                fill: new ol.style.Fill({
-                    color: '#000',
-                }),
+                //fill: new ol.style.Fill({
+                //    color: '#000',
+                //}),
                 stroke: new ol.style.Stroke({
                     color: '#fff',
                     width: 2
                 })
             })
         });
-        evt.feature.setProperties({ 'deneme': "123" }); // [TAMAMLANMADI]
+        //evt.feature.setProperties({ 'id': "1" }); // [TAMAMLANMADI]
         // Çizilen Box/Polygon'a ID tanımladım
-        //evt.feature.setId(shapeId);
-
+        evt.feature.setId(Math.floor(Math.random() * 1000));
+        //console.log(evt.feature.getId());
+        //console.log(evt.feature.get('id'));
+        console.log(evt.feature);
         // Çizilen Box/Polygon'a text tanımladım
         evt.feature.setStyle(style);
 
         // Çizilen Box/Polygon'u tüm Çizimlerin olduğu listeye ekledim
         allShapes.push(evt.feature);
 
-        // Çizilen Box/Polygon'un butonunu oluşturdum.
-        var shapeButton = document.createElement('button');
-
-        // Butonun Attr'larını ekledim
-        shapeButton.setAttribute('id', shapeId);
-        shapeButton.setAttribute('type', 'button');
-        shapeButton.setAttribute('style', 'border: none; border-radius: 0px;width: 100%; background: #dadcde');
-        shapeButton.setAttribute('data-bs-toggle', 'modal');
-        shapeButton.setAttribute('class', 'btn btn-primary');
-
-        if (typeSelect.value === 'BoxItem' || typeSelect.value === 'PolygonItem')
-            shapeButton.setAttribute('data-bs-target', '#itemModal');
-        else if (typeSelect.value === 'BoxLink' || typeSelect.value === 'PolygonLink')
-            shapeButton.setAttribute('data-bs-target', '#linkModal');
-
-        // Butonun text'ini ekledim
-        shapeButton.textContent = shapeId;
-
-        // Butonu sayfaya ekledim
-        var shapeArea = document.getElementById('shapeArea');
-        shapeArea.appendChild(shapeButton);
+        function waitFunc() {
+            $("#shapeArea").children().remove();
+            createList();
+            // Load Spinner Yap! [TAMAMLANMADI]
+        }
+        setTimeout(waitFunc, 100);
 
     });
     // #endregion
 
-    // #region Handle Tpye Select Change Event
+    // #region Handle tpyeSelect Change Event
     typeSelect.onchange = function () {
         isValueDelete = false;
         if (typeSelect.value === 'Delete') {

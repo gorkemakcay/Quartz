@@ -130,7 +130,7 @@ $("#limNav a").on('click', function () {
                     rModel = jQuery.parseJSON(result);
 
                     $("#limProcedureAddModalLookUpItemsMethod").children().remove();
-
+                    // [TAMAMLANMADI]
                     $("#limProcedureAddModalLookUpItemsMethod").append(
                         $('<option>', {
                             value: "select",

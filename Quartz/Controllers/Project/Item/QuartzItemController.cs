@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Quartz.BusinessLogic.Interface.IProjectService.IItemService;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels;
@@ -29,8 +30,9 @@ namespace Quartz.Controllers.Project.Item
         {
             if (ModelState.IsValid)
             {
-                _itemService.AddItem(model);
-                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+                var id = _itemService.AddItem(model);
+                var responseModel = _itemService.GetItemDetail(id);
+                var jSonModel = JsonConvert.SerializeObject(responseModel, new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
@@ -76,7 +78,7 @@ namespace Quartz.Controllers.Project.Item
             return Json(jSonModel);
         }
         #endregion
-
+         
         #region Information
         [HttpPost]
         public IActionResult AddInformationJSON(QuartzItemsInformationAddViewModel model)
@@ -121,7 +123,13 @@ namespace Quartz.Controllers.Project.Item
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("QuartzItemsInformationPartial", Json(jSonModel));
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetInformationPartialView()
+        {
+            return PartialView("QuartzItemsInformationPartial");
         }
         #endregion
 
@@ -157,15 +165,32 @@ namespace Quartz.Controllers.Project.Item
         }
 
         [HttpGet]
-        public IActionResult GetInspectionDetailJSON(int quartzItemId)
+        public IActionResult GetInspectionDetailJSON(int inspectionId)
         {
-            ViewBag.Inspection = _inspectionService.GetInspectionDetail(quartzItemId);
-            var model = _inspectionService.GetInspectionDetail(quartzItemId);
+            var model = _inspectionService.GetInspectionDetail(inspectionId);
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("QuartzItemsInspectionPartial", Json(jSonModel));
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetInspectionPartialView()
+        {
+            return PartialView("QuartzItemsInspectionPartial");
+        }
+
+        [HttpGet]
+        public IActionResult GetAllInspections(int quartzItemId)
+        {
+            ViewBag.Inspection = _inspectionService.GetAllInspections(quartzItemId);
+            var model = _inspectionService.GetAllInspections(quartzItemId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
         #endregion
 
