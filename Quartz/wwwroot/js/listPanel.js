@@ -16,13 +16,14 @@
                 linkButton.setAttribute('id', link.Id);
                 linkButton.setAttribute('type', 'button');
                 linkButton.setAttribute('data-bs-toggle', 'modal');
-                linkButton.setAttribute('class', 'btn btn-primary listPanelButtons linkButton');
+                linkButton.setAttribute('class', 'btn text-white listPanelButtons linkButton');
                 linkButton.textContent = link.TagNo;
                 linkButton.setAttribute('data-bs-target', '#linkModal');
                 var shapeArea = document.getElementById('shapeArea');
                 shapeArea.appendChild(linkButton);
             })
             // #endregion
+
         },
         error: function (error) {
             alert("error!");
@@ -43,7 +44,7 @@
                 itemButton.setAttribute('id', item.Id);
                 itemButton.setAttribute('type', 'button');
                 itemButton.setAttribute('data-bs-toggle', 'modal');
-                itemButton.setAttribute('class', 'btn btn-primary listPanelButtons itemButton');
+                itemButton.setAttribute('class', 'btn text-white listPanelButtons itemButton');
                 itemButton.textContent = item.TagNo;
                 itemButton.setAttribute('data-bs-target', '#itemModal');
                 var shapeArea = document.getElementById('shapeArea');
@@ -58,7 +59,18 @@
         }
     });
 
-    function listPanelButtonOnClick(whichFeature) { // [TAMAMLANMADI]
+    function waitCreateList2() {
+        $(".linkButton").on('click', function () {
+            lastClickedLinkButtonId = $(this).attr('id');
+            clickedOrCreated = "clicked";
+            loadLinkModal();
+        });
 
+        $(".itemButton").on('click', function () {
+            lastClickedItemButtonId = $(this).attr('id');
+            clickedOrCreated = "clicked";
+            loadInformationPage();
+        });
     }
+    setTimeout(waitCreateList2, 100);
 }

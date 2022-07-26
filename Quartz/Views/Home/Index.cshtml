@@ -54,11 +54,10 @@
         <div class="modal-content" style="height: 40vh;">
             <div class="modal-header" style="background-color: #F3F5F7;">
                 <h5 class="modal-title" id="linkModalName">Link Modal</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close closeButton" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form>
-
                     <div class="card-body" style="display: block;">
 
                         <div class="row">
@@ -68,12 +67,12 @@
                             </div>
 
                             <div class="col-lg-6">
-
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Current Drawing</span>
+                                <input type="text" id="addLinkCurrentDrawing" class="form-control" value="Drawing doesn't exist!" disabled style="background-color: white; border:1px dashed gray;">
                             </div>
                         </div>
 
                         <br>
-                        <input type="text" id="smsm" value="" disabled class="form-control"/>
                         <hr>
 
                         <div class="row">
@@ -82,6 +81,7 @@
                                 <button id="btnAddLinkUploadDrawing" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="text-center">
                                 <br>
@@ -89,7 +89,7 @@
                                     <div class="col-lg-12">
                                         <label for="addLinkUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
                                         <input id="addLinkUploadDrawing" type="file" hidden>
-                                        <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile(lastCreatedLink.Id, 'link')">Upload</button>
+                                        <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile(lastClickedLinkButtonId, 'link')">Upload</button>
                                     </div>
                                 </div>
                                 <br />
@@ -98,12 +98,13 @@
                     </div>
                 </form>
             </div>
+
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
-                <input id="showLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none;border-radius:0px">Close</button>
-                <button type="button" class="btn btn-danger" style="border:none;border-radius:0px">Delete</button>
-                <button type="button" class="btn btn-primary" style="border:none;border-radius:0px">Save changes</button>
+                <input id="linkShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
+                <button type="button" class="btn btn-dark closeButton" data-bs-dismiss="modal" style="border: none; border-radius: 0px;">Close</button>
+                <button type="button" class="btn btn-danger" style="border:none; border-radius: 0px;">Delete</button>
+                <button type="button" class="btn btn-primary" style="border: none; border-radius: 0px;" onclick="linkModalSaveButton()" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -127,7 +128,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-3">
-                    <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close float-end mx-1 closeButton" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
             </div>
@@ -144,7 +145,7 @@
                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="itemShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
                 <button type="button" class="btn btn-danger" style="border:none; border-radius:0px;">Delete</button>
-                <button type="button" class="btn btn-primary" style="border:none; border-radius:0px;" onclick="itemModalSaveButton(itemModalActivePartial)">Save</button>
+                <button type="button" class="btn btn-primary" style="border:none; border-radius:0px;" onclick="itemModalSaveButton(itemModalActivePartial)" data-bs-dismiss="modal" aria-label="Close">Save</button>
             </div>
         </div>
     </div>

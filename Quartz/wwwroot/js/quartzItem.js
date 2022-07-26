@@ -419,6 +419,8 @@ function loadInspectionPage() {
                         $("#inspectionDateDue").val('');
                         $("#inspectionDetails").val('');
 
+                        isInspectionExist = false;
+
                         // #region Get Methods for Select > Option
                         $.ajax({
                             type: "GET",
@@ -588,7 +590,7 @@ function loadInformationPage() {
                     lastInformationsResponseModel = jQuery.parseJSON(response);
                     if (lastInformationsResponseModel != null) {
                         isInformationCreated = true;
-
+                        alert("q!");
                         $("#informationTagNo").val(lastInformationsResponseModel.TagNo);
                         $("#informationSerialNo").val(lastInformationsResponseModel.SerialNo);
                         $("#informationComponentType").val(lastInformationsResponseModel.ComponentType);
@@ -830,6 +832,7 @@ $("#inspectionAddSaveButton").on('click', function () {
         });
 
         loadInspectionPage();
+
     }
     else {
         var itemInspectionAddModel = {

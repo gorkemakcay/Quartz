@@ -8,10 +8,12 @@ var rFeatureCollection;
 var itemModalActivePartial = "null";
 var lastClickedLinkButtonId = 0;
 var lastClickedItemButtonId = 0;
+var lastClickedLink;
 var isInformationCreated = false;
 var lastInformationsResponseModel;
 var isInspectionExist = false;
 var currentInspection;
+var clickedOrCreated = "null"; // "clicked/created"
 
 // #region Quartz Variables
 var typeSelect = document.getElementById('type');
@@ -99,7 +101,13 @@ $(function () {
     // #endregion
 });
 
+// #region getDate()
 function getDate() {
     var dt = new Date();
     return fromDateTime = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + dt.getDate()).slice(-2) + "T" + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2);
 };
+// #endregion
+
+$(".closeButton").on('click', function () {
+    clickedOrCreated = "null";
+});

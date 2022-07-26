@@ -112,66 +112,20 @@
 
     createList();
     // Load Spinner Yap! [TAMAMLANMADI]
-    function waitCreateListFunc() {
+    function waitCreateList() {
         $(".linkButton").on('click', function () {
             lastClickedLinkButtonId = $(this).attr('id');
+            clickedOrCreated = "clicked";
+            loadLinkModal();
         });
 
         $(".itemButton").on('click', function () {
             lastClickedItemButtonId = $(this).attr('id');
-
+            clickedOrCreated = "clicked";
             loadInformationPage();
-            //$("#itemModalTitle").html("Item Modal | Informations");
-            //itemModalActivePartial = "Informations";
-
-            //$.ajax({
-            //    type: "GET",
-            //    url: "QuartzItem/GetInformationPartialView",
-            //    success: function (response) {
-            //        $("#itemModalPartialArea").html(response);
-
-            //        // #region Get Information Details
-            //        $.ajax({
-            //            type: "GET",
-            //            url: "QuartzItem/GetInformationDetailJSON",
-            //            data: { quartzItemId: lastClickedItemButtonId },
-            //            success: function (response) {
-            //                lastInformationsResponseModel = jQuery.parseJSON(response);
-            //                if (lastInformationsResponseModel != null) {
-            //                    isInformationCreated = true;
-
-            //                    $("#informationTagNo").val(lastInformationsResponseModel.TagNo);
-            //                    $("#informationSerialNo").val(lastInformationsResponseModel.SerialNo);
-            //                    $("#informationComponentType").val(lastInformationsResponseModel.ComponentType);
-            //                    $("#informationComments").val(lastInformationsResponseModel.Comments);
-            //                    $("#informationSpecification").val(lastInformationsResponseModel.Specification);
-            //                    $("#informationFittingType").val(lastInformationsResponseModel.FittingType);
-            //                    $("#informationWeldType").val(lastInformationsResponseModel.WeldType);
-            //                    $("#informationPipeOD").val(lastInformationsResponseModel.PipeOdIn);
-            //                    $("#informationPipeThickness").val(lastInformationsResponseModel.PipeThicknessMm);
-            //                    $("#informationOperatingTemp").val(lastInformationsResponseModel.OperatingTempC);
-            //                    $("#informationOperatingPressute").val(lastInformationsResponseModel.OperatingPressureBar);
-            //                    $("#itemShowLabel").val(lastInformationsResponseModel.ShowLabel);
-            //                }
-            //                else isInformationCreated = false;
-            //            },
-            //            error: function (error) {
-            //                alert("error!");
-            //                console.log(error.responseText);
-            //            }
-            //        });
-            //        // #endregion
-
-            //        setTimeout(getInformationSelectOptions, 100);
-            //    },
-            //    error: function (error) {
-            //        alert("error!");
-            //        console.log(error.responseText);
-            //    }
-            //});
         });
     }
-    setTimeout(waitCreateListFunc, 100);
+    setTimeout(waitCreateList, 100);
 
     function addInteraction() {
         if (typeSelect.value !== 'None') {
@@ -201,7 +155,7 @@
                 // Button'a shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra "typeSelect.value" atanaması için
                 function timeOut() {
                     typeSelect.value = 'None';
-                    map.removeInteraction(draw);    
+                    map.removeInteraction(draw);
                 }
                 setTimeout(timeOut, 1 / 1000);
 
@@ -213,26 +167,32 @@
 
                     var linkModel = {
                         TagNo: shapeId,
-                        ShowLabel: true, // [TAMAMLANMADI]
+                        ShowLabel: true,
                         CreatedDate: getDate(),
                         CreatedBy: "Görkem", // [TAMAMLANMADI]
                         MainQuartzLinkId: currentQuartzLink.Id,
                         CurrentDrawingId: 0
                     };
+
                     $.ajax({
                         type: "POST",
                         url: "QuartzLink/AddLinkJSON",
                         data: { model: linkModel },
                         success: function (response) {
                             lastCreatedLink = jQuery.parseJSON(response);
-                            lastClickedLinkButtonId = lastCreatedLink.Id;
-                            // [TAMAMLANMADI]
+                            clickedOrCreated = "created";
+
+                            //lastClickedLinkButtonId = lastCreatedLink.Id;
+                            $("#linkModal").modal('show');
+                            $("#addLinkTagNo").val(lastCreatedLink.TagNo);
+                            $("#linkShowLabel").prop('checked', true);
+                            $("#addLinkCurrentDrawing").val("Drawing doesn't exist!");
+
                         },
                         error: function (error) {
                             alert("error: link doesn't saved!");
                         }
                     });
-                    $("#linkModal").modal('show');
                 }
                 // #endregion
 
@@ -255,24 +215,20 @@
                         data: { model: itemModel },
                         success: function (response) {
                             lastCreatedItem = jQuery.parseJSON(response);
-                            lastClickedItemButtonId = lastCreatedItem.Id;
-                            // [TAMAMLANMADI]
+                            clickedOrCreated = "created";
+
+                            //lastClickedItemButtonId = lastCreatedItem.Id;
+                            $("#itemModal").modal('show');
+                            loadInformationPage();
                         },
                         error: function (error) {
                             alert("error: item doesn't saved!");
                         }
                     });
-                    $("#itemModal").modal('show');
-                    loadInformationPage();
                 }
                 // #endregion
 
-                setTimeout(addDrawingFeaturesJSON, 100); // düzgün çalışıyor mu dene [TAMAMLANMADI]
-
-                //function addDrawingFeaturesTimeOut() {
-                //    addDrawingFeaturesJSON()
-                //}
-                //setTimeout(addDrawingFeaturesTimeOut, 100);
+                setTimeout(addDrawingFeaturesJSON, 100);
             });
             // #endregion
 

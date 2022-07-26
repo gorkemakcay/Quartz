@@ -70,3 +70,8 @@
     width: 100%;
     background: #dadcde
 }
+
+.listPanelButtons:hover {
+    background: gray;
+    border: 3px solid black;
+}

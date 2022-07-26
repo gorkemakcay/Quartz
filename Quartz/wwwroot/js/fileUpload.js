@@ -21,15 +21,14 @@
 
     // ajax post ile dosyaları controller'a gönderdim
     $.ajax({
-        url: "FileUpload/UploadFile",
         type: 'POST',
+        url: "FileUpload/UploadFile",
         data: fileData,
         processData: false,
         contentType: false,
         success: function (response) {
             rModel = jQuery.parseJSON(response);
             var fileUpdate = rModel.Result;
-            console.log(fileUpdate);
             fileUpdate.MainId = mainId;
             fileUpdate.CreatedDate = getDate();
 
@@ -44,51 +43,103 @@
                     currentDrawing = fileUpdate;
                     $.get({
                         url: "QuartzLink/GetQuartz",
-                        success: function (result) {
+                        success: function (response) {
                             $("#main").children().remove();
-                            $("#main").html(result);
+                            $("#main").html(response);
                             loadQuartz();
                         }
                     });
                     break;
+
                 default:
-                    alert("default");
             }
 
             $.ajax({
                 type: "POST",
                 url: "FileUpload/UpdateFile",
                 data: fileUpdate,
-                success: function (result) {
-                    rModel = jQuery.parseJSON(result);
+                success: function (response) {
+                    rModel = jQuery.parseJSON(response);
 
-                    switch (mainType) {
-                        case "link":
-                            lastCreatedLink.CurrentDrawingId = rModel.Id;
-                            $.post({
-                                url: "QuartzLink/UpdateLinkJSON",
-                                data: lastCreatedLink,
-                                error: function (error) {
-                                    alert("error!");
-                                    console.log(error.responseText);
-                                }
-                            });
+                    switch (clickedOrCreated) {
+                        case "clicked":
+                            switch (mainType) {
+                                case "link":
+                                    lastClickedLink.CurrentDrawingId = rModel.Id;
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "QuartzLink/UpdateLinkJSON",
+                                        data: { model: lastClickedLink },
+                                        success: function (response) {
+                                            updatedLink = jQuery.parseJSON(response);
+                                            loadLinkModal();
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                    break;
+
+                                case "drawingSettings":
+                                    currentQuartzLink.CurrentDrawingId = rModel.Id;
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "QuartzLink/UpdateLinkJSON",
+                                        data: currentQuartzLink,
+                                        success: function (response) {
+                                            rModel = jQuery.parseJSON(response);
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                    break;
+                                default:
+                            }
                             break;
 
-                        case "drawingSettings":
-                            currentQuartzLink.CurrentDrawingId = rModel.Id;
-                            $.post({
-                                url: "QuartzLink/UpdateLinkJSON",
-                                data: currentQuartzLink,
-                                error: function (error) {
-                                    alert("error!");
-                                    console.log(error.responseText);
-                                }
-                            });
+                        case "created":
+                            switch (mainType) {
+                                case "link":
+                                    lastCreatedLink.CurrentDrawingId = rModel.Id;
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "QuartzLink/UpdateLinkJSON",
+                                        data: { model: lastCreatedLink },
+                                        success: function (response) {
+                                            updatedLink = jQuery.parseJSON(response);
+                                            loadLinkModal();
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                    break;
+
+                                case "drawingSettings":
+                                    currentQuartzLink.CurrentDrawingId = rModel.Id;
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "QuartzLink/UpdateLinkJSON",
+                                        data: currentQuartzLink,
+                                        success: function (response) {
+                                            rModel = jQuery.parseJSON(response);
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                    break;
+                                default:
+                            }
                             break;
+
                         default:
-                    }
-                    
+                    }                    
                 },
                 error: function (error) {
                     alert("error");
