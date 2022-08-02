@@ -3,22 +3,24 @@ var currentDrawingSettings;
 var currentQuartzLink;
 var currentDrawing;
 var currentDrawingFeatures;
+var currentInspection;
 var lastCreatedLink;
-var rFeatureCollection;
-var itemModalActivePartial = "null";
+var lastCreatedItem;
 var lastClickedLinkButtonId = 0;
 var lastClickedItemButtonId = 0;
 var lastClickedLink;
-var isInformationCreated = false;
+var lastClickedItem;
 var lastInformationsResponseModel;
+var isInformationCreated = false;
 var isInspectionExist = false;
-var currentInspection;
 var clickedOrCreated = "null"; // "clicked/created"
+var rFeatureCollection;
+var itemModalActivePartial = "Informations";
 
 // #region Quartz Variables
 var typeSelect = document.getElementById('type');
 var allShapes = [];
-let draw; // global so we can remove it later
+var draw; // global so we can remove it later
 var isValueDelete = false;
 var shapeId = "";
 var itemIdCount = 0;
@@ -99,6 +101,7 @@ $(function () {
         }
     });
     // #endregion
+
 });
 
 // #region getDate()
@@ -111,3 +114,5 @@ function getDate() {
 $(".closeButton").on('click', function () {
     clickedOrCreated = "null";
 });
+
+

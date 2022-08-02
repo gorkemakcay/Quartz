@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Quartz.BusinessLogic.Interface.IFileUploadService;
 using Quartz.Common.ViewModels.FileUpload.FileUploadViewModels;
 using Quartz.DataAccess.UnitOfWorks.Interface;
@@ -21,21 +22,13 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
             _mapper = mapper;
         }
 
-        public List<FileUploadListViewModel> GetAllFiles(int mainId, string mainType)
+        public List<FileUploadListViewModel> GetAllFiles()
         {
-            return _mapper.Map<List<FileUploadListViewModel>>(GetAll(I => I.MainId == mainId && I.MainType == mainType));
+            return _mapper.Map<List<FileUploadListViewModel>>(GetAll());
         }
 
         public void UpdateFile(FileUploadUpdateViewModel model)
         {
-            //var file = _mapper.Map<FileUploadUpdateViewModel>(GetById(fileId));
-            //file.MainId = mainId;
-            //file.MainType = mainType;
-            //Update(_mapper.Map<FileUpload>(file));
-            //_uow.SaveChange();
-
-            //return file;
-
             Update(_mapper.Map<FileUpload>(model));
             _uow.SaveChange();
         }
@@ -63,8 +56,6 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
                     {
                         CreatedDate = DateTime.Now,
                         Extension = extension,
-                        //MainId = mainId,
-                        //MainType = mainType,
                         Path = filePath,
                         Type = file.ContentType,
                         Name = fileName,

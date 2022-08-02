@@ -1,14 +1,24 @@
-﻿function uploadFile(mainId, mainType) {
+﻿function uploadFile(mainType) {
     switch (mainType) {
         case "link":
             // yüklenen dosyayı input'tan değişkene atadım
             var imageUpload = $("#addLinkUploadDrawing").get(0);
             break;
 
+        case "item":
+            // yüklenen dosyayı input'tan değişkene atadım
+            var imageUpload = $("#itemModalUploadFile").get(0);
+            break;
+
+        case "inspection":
+            var imageUpload = $("#inspectionAddUploadFile").get(0);
+            break;
+
         case "drawingSettings":
             // yüklenen dosyayı input'tan değişkene atadım
             var imageUpload = $("#dsmUploadDrawing").get(0);
             break;
+
         default:
     }
 
@@ -27,26 +37,34 @@
         processData: false,
         contentType: false,
         success: function (response) {
-            rModel = jQuery.parseJSON(response);
-            var fileUpdate = rModel.Result;
-            fileUpdate.MainId = mainId;
+            uploadedFile = jQuery.parseJSON(response);
+            var fileUpdate = uploadedFile.Result;
             fileUpdate.CreatedDate = getDate();
 
             switch (mainType) {
                 case "link":
-                    fileUpdate.MainType = "Link";
+                    break;
+
+                case "item":
+                    break;
+
+                case "inspection":
                     break;
 
                 case "drawingSettings":
-                    fileUpdate.MainType = "DrawingSettings";
                     $("#dsmFile").val(fileUpdate.Name + fileUpdate.Extension);
                     currentDrawing = fileUpdate;
-                    $.get({
+                    $.ajax({
+                        type: "GET",
                         url: "QuartzLink/GetQuartz",
                         success: function (response) {
                             $("#main").children().remove();
                             $("#main").html(response);
                             loadQuartz();
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
                         }
                     });
                     break;
@@ -59,13 +77,13 @@
                 url: "FileUpload/UpdateFile",
                 data: fileUpdate,
                 success: function (response) {
-                    rModel = jQuery.parseJSON(response);
+                    var updatedFile = jQuery.parseJSON(response);
 
                     switch (clickedOrCreated) {
                         case "clicked":
                             switch (mainType) {
                                 case "link":
-                                    lastClickedLink.CurrentDrawingId = rModel.Id;
+                                    lastClickedLink.CurrentDrawingId = updatedFile.Id;
                                     $.ajax({
                                         type: "POST",
                                         url: "QuartzLink/UpdateLinkJSON",
@@ -73,6 +91,7 @@
                                         success: function (response) {
                                             updatedLink = jQuery.parseJSON(response);
                                             loadLinkModal();
+                                            toast("Drawing Upload Successful!");
                                         },
                                         error: function (error) {
                                             alert("error!");
@@ -81,14 +100,60 @@
                                     });
                                     break;
 
+                                case "item":
+                                    if (lastClickedItem.AttachmentIds == null || lastClickedItem.AttachmentIds == "")
+                                        lastClickedItem.AttachmentIds = updatedFile.Id;
+                                    else
+                                        lastClickedItem.AttachmentIds = lastClickedItem.AttachmentIds + "," + updatedFile.Id;
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "QuartzItem/UpdateItemJSON",
+                                        data: { model: lastClickedItem },
+                                        success: function (response) {
+                                            lastClickedItem = jQuery.parseJSON(response);
+                                            loadAttachmentPage();
+                                            toast("Attachment Upload Successful!");
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                    break;
+
+                                case "inspection":
+                                    if (currentInspection != null) {
+                                        if (currentInspection.AttachmentIds == null || currentInspection.AttachmentIds == "")
+                                            currentInspection.AttachmentIds = updatedFile.Id;
+                                        else
+                                            currentInspection.AttachmentIds = currentInspection.AttachmentIds + "," + updatedFile.Id;
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "QuartzItem/UpdateInspectionJSON",
+                                            data: { model: currentInspection },
+                                            success: function (response) {
+                                                currentInspection = jQuery.parseJSON(response);
+                                                toast("Attachment Upload Successful!");
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
+                                    }
+                                    break;
+
                                 case "drawingSettings":
-                                    currentQuartzLink.CurrentDrawingId = rModel.Id;
+                                    currentQuartzLink.CurrentDrawingId = updatedFile.Id;
                                     $.ajax({
                                         type: "POST",
                                         url: "QuartzLink/UpdateLinkJSON",
                                         data: currentQuartzLink,
                                         success: function (response) {
                                             rModel = jQuery.parseJSON(response);
+                                            toast("Drawing Upload Successful!");
                                         },
                                         error: function (error) {
                                             alert("error!");
@@ -103,7 +168,7 @@
                         case "created":
                             switch (mainType) {
                                 case "link":
-                                    lastCreatedLink.CurrentDrawingId = rModel.Id;
+                                    lastCreatedLink.CurrentDrawingId = updatedFile.Id;
                                     $.ajax({
                                         type: "POST",
                                         url: "QuartzLink/UpdateLinkJSON",
@@ -111,6 +176,41 @@
                                         success: function (response) {
                                             updatedLink = jQuery.parseJSON(response);
                                             loadLinkModal();
+                                            toast("Drawing Upload Successful!");
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                    break;
+
+                                case "item":
+                                    if (lastCreatedItem.AttachmentIds == null || lastCreatedItem.AttachmentIds == "") {
+                                        lastCreatedItem.AttachmentIds = updatedFile.Id;
+                                    }
+                                    else {
+                                        lastCreatedItem.AttachmentIds = lastCreatedItem.AttachmentIds + "," + updatedFile.Id;
+                                    }
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "QuartzItem/UpdateItemJSON",
+                                        data: { model: lastCreatedItem },
+                                        success: function (response) {
+                                            rModel = jQuery.parseJSON(response);
+                                            lastCreatedItem = rModel;
+                                            switch (itemModalActivePartial) {
+                                                case "Attachments":
+                                                    loadAttachmentPage();
+                                                    break;
+                                                case "Inspection":
+                                                    loadInspectionPage();
+                                                    break;
+                                                default:
+                                            }
+
+                                            toast("Attachment Upload Successful!");
                                         },
                                         error: function (error) {
                                             alert("error!");
@@ -120,13 +220,14 @@
                                     break;
 
                                 case "drawingSettings":
-                                    currentQuartzLink.CurrentDrawingId = rModel.Id;
+                                    currentQuartzLink.CurrentDrawingId = updatedFile.Id;
                                     $.ajax({
                                         type: "POST",
                                         url: "QuartzLink/UpdateLinkJSON",
                                         data: currentQuartzLink,
                                         success: function (response) {
                                             rModel = jQuery.parseJSON(response);
+                                            toast("Drawing Upload Successful!");
                                         },
                                         error: function (error) {
                                             alert("error!");
@@ -139,7 +240,7 @@
                             break;
 
                         default:
-                    }                    
+                    }
                 },
                 error: function (error) {
                     alert("error");

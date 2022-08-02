@@ -7,7 +7,7 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.IItemService
 {
     public interface IQuartzItemsInspectionService : IGenericService<QuartzItemsInspection>
     {
-        void AddInspection(QuartzItemsInspectionAddViewModel model);
+        int AddInspection(QuartzItemsInspectionAddViewModel model);
         void UpdateInspection(QuartzItemsInspectionUpdateViewModel model);
         QuartzItemsInspectionUpdateViewModel GetInspectionDetail(int inspectionId);
         List<QuartzItemsInspectionUpdateViewModel> GetAllInspections(int quartzItemId);

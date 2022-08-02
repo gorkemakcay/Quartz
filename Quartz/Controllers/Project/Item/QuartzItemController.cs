@@ -139,8 +139,9 @@ namespace Quartz.Controllers.Project.Item
         {
             if (ModelState.IsValid)
             {
-                _inspectionService.AddInspection(model);
-                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+                var id = _inspectionService.AddInspection(model);
+                var responseModel = _inspectionService.GetInspectionDetail(id);
+                var jSonModel = JsonConvert.SerializeObject(responseModel, new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
@@ -176,12 +177,6 @@ namespace Quartz.Controllers.Project.Item
         }
 
         [HttpGet]
-        public IActionResult GetInspectionPartialView()
-        {
-            return PartialView("QuartzItemsInspectionPartial");
-        }
-
-        [HttpGet]
         public IActionResult GetAllInspections(int quartzItemId)
         {
             ViewBag.Inspection = _inspectionService.GetAllInspections(quartzItemId);
@@ -191,6 +186,31 @@ namespace Quartz.Controllers.Project.Item
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetInspectionPartialView()
+        {
+            return PartialView("QuartzItemsInspectionPartial");
+        }
+
+        [HttpGet]
+        public IActionResult GetInspectionsDataPartialView()
+        {
+            return PartialView("QuartzItemsInspectionsDataPartial");
+        }
+        
+        [HttpGet]
+        public IActionResult GetInspectionsAttachmentPartialView()
+        {
+            return PartialView("QuartzItemsInspectionsAttachmentPartial");
+        }
+        #endregion
+
+        #region Attachment
+        public IActionResult GetAttachmentPartialView()
+        {
+            return PartialView("QuartzItemsAttachmentPartial");
         }
         #endregion
 

@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Quartz.BusinessLogic.Interface.IFileUploadService;
 using Quartz.Common.ViewModels.FileUpload.FileUploadViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Quartz.Controllers.FileUpload
@@ -17,23 +14,6 @@ namespace Quartz.Controllers.FileUpload
         {
             _fileUploadService = fileUploadService;
         }
-
-        //[HttpPost]
-        //public IActionResult UploadFile(IList<IFormFile> files, int mainId, string mainType)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var rModel = _fileUploadService.UploadFile(files, mainId, mainType);
-
-        //        var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
-        //        {
-        //            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        //        });
-        //        ViewBag.FileUpload = jSonModel;
-        //        return Json(null);
-        //    }
-        //    return Json(null);
-        //}
 
         [HttpPost]
         public async Task<IActionResult> UploadFile()
@@ -61,9 +41,9 @@ namespace Quartz.Controllers.FileUpload
         }
 
         [HttpGet]
-        public IActionResult GetAllFiles(int mainId, string mainType)
+        public IActionResult GetAllFiles()
         {
-            var model = _fileUploadService.GetAllFiles(mainId, mainType);
+            var model = _fileUploadService.GetAllFiles();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -80,6 +60,19 @@ namespace Quartz.Controllers.FileUpload
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return Json(jSonModel);
+        }
+
+    
+        public async Task<IActionResult> DownloadFile(int fileId)
+        {
+            var file = _fileUploadService.GetFileDetail(fileId);
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(file.Path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, file.Type, file.Name + file.Extension);
         }
     }
 }

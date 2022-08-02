@@ -9,7 +9,7 @@ namespace Quartz.BusinessLogic.Interface.IFileUploadService
     public interface IFileUploadService : IGenericService<FileUpload>
     {
         Task<FileUpload> UploadFile(IFormFileCollection files);
-        List<FileUploadListViewModel> GetAllFiles(int mainId, string mainType);
+        List<FileUploadListViewModel> GetAllFiles();
         void UpdateFile(FileUploadUpdateViewModel model);
         FileUploadUpdateViewModel GetFileDetail(int fileId);
     }

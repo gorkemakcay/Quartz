@@ -18,6 +18,7 @@ $("#btnDsmSave").on('click', function () {
         data: { model: drawingSettingsModel },
         success: function (response) {
             currentDrawingSettings = jQuery.parseJSON(response);
+            toast("Drawing Settings Updated!");
         },
         error: function (error) {
             alert("error!");

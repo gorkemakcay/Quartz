@@ -16,22 +16,32 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark">
 
 
-            <div class="toast bg-success text-white" id="linkModalToast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 10px; right: 10px;">
-                <div class="toast-body">
-                    <i class="bi bi-check-circle"></i>&nbsp; Successful!
+            <div class="toast bg-success text-white" id="toastId" role="alert" aria-live="assertive" aria-atomic="true">
+                <div id="toastTextContext" class="toast-body" style="height: 45px;">
+
                 </div>
             </div>
 
             <script>
-                var linkModalToastOption = {
+                var toastOption = {
                     animation: true,
                     delay: 2000
                 };
 
-                function linkModalToastFunc() {
-                    var toast = $("#linkModalToast");
-                    var toastElement = new bootstrap.Toast(toast, linkModalToastOption);
+                function toast(toastContext) {
+                    var toastId = $("#toastId");
+                    var toastElement = new bootstrap.Toast(toastId, toastOption);
+                    $("#toastContext").text(toastContext);
+
+                    $("#toastTextContext").append(
+                        "<p id='toastContext'><i class='bi bi-check-circle'></i>&nbsp;" + toastContext + "</p>"
+                    );
+
                     toastElement.show();
+                    function delay() {
+                        $("#toastTextContext").children().remove();
+                    }
+                    setTimeout(delay, 2300);
                 }
             </script>
 

@@ -12,7 +12,7 @@
     <!-- #region Breadcrumbs -->
     <div class="row text-light text-center" style="background: #373a3e; height: 25px;">
         <div class="col-lg-2" style="border-right: 1px solid #212529;">
-            <p> Lorem ipsum dolor, sit amet consectetur</p>
+            <p>Lorem ipsum dolor, sit amet consectetur</p>
         </div>
 
         <div class="col-lg-8" style="border-right: 1px solid #212529; height: 25px;">
@@ -31,7 +31,7 @@
     <!-- #endregion -->
     <!-- #region List Panel | Quartz Panel | Search Panel -->
     <div class="row">
-        <div class="col-lg-2 px-0" id="listPanel" style="border: none;">
+        <div class="col-lg-2 px-0" id="listPanel" style="border: none; max-height: 85vh; overflow-x: hidden;">
             @await Html.PartialAsync("/Views/Shared/Partial/HomePage/ListPanelPartial.cshtml")
         </div>
 
@@ -89,7 +89,7 @@
                                     <div class="col-lg-12">
                                         <label for="addLinkUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
                                         <input id="addLinkUploadDrawing" type="file" hidden>
-                                        <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile(lastClickedLinkButtonId, 'link')">Upload</button>
+                                        <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile('link')">Upload</button>
                                     </div>
                                 </div>
                                 <br />
@@ -134,7 +134,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-
+                    
                 </div>
 
                 <div class="row" id="itemModalPartialArea">
@@ -142,10 +142,10 @@
                 </div>
             </div>
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
+                <span id="showlabelSpan" style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="itemShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
-                <button type="button" class="btn btn-danger" style="border:none; border-radius:0px;">Delete</button>
-                <button type="button" class="btn btn-primary" style="border:none; border-radius:0px;" onclick="itemModalSaveButton(itemModalActivePartial)" data-bs-dismiss="modal" aria-label="Close">Save</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
+                <button type="button" class="btn btn-primary" id="itemModalSaveButton" style="border:none; border-radius:0px;" onclick="itemModalSaveButton(itemModalActivePartial)" data-bs-dismiss="modal" aria-label="Close">Save</button>
             </div>
         </div>
     </div>
@@ -156,84 +156,34 @@
         <div class="modal-content">
 
             <div class="modal-header" style="background-color: #F3F5F7;">
-                <h2 class="modal-title">Inspection Data</h2>
+                <h2 class="modal-title" id="InspectionAddModalTitle">Inspection</h2>
+
+                <div class="col-lg-6">
+                    <ul class="spec nav bg-white" style="border-radius: 20px; width: 220px;" role="tablist" id="inspectionModalNav" hidden>
+                        <li class="active nav-item"><a class="nav-link text-dark" href="#inspectionModalDatas" data-toggle="tab">Data</a></li>
+                        <li class="nav-item disabled"><a class="nav-link" href="#" data-toggle="tab" style="color: gray;">|</a></li>
+                        <li class="nav-item"><a role="tab" class="nav-link text-dark" href="#inspectionModalAttachments" data-toggle="tab">Attachment</a></li>
+                    </ul>
+                </div>
+
                 <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
+                <div class="row">
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Report No</span>
-                        <input type="text" id="inspectionReportNo" class="form-control" placeholder="Enter Report No" style="background-color: #F3F5F7;">
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Date</span>
-                        <input type="date" id="inspectionDate" class="form-control" style="background-color: #F3F5F7;">
-                    </div>
-
-                    <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Due Date</span>
-                        <input type="date" id="inspectionDateDue" class="form-control" style="background-color: #F3F5F7;">
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Method</span>
-                        <select class="form-select" id="inspectionMethod" style="background-color: #F3F5F7;">
-                        </select>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Procedure</span>
-                        <select class="form-select" id="inspectionProcedure" style="background-color: #F3F5F7;">
-                        </select>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Technique</span>
-                        <select class="form-select" id="inspectionTechnique" style="background-color: #F3F5F7;">
-                        </select>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Status</span>
-                        <select class="form-select" id="inspectionStatus" style="background-color: #F3F5F7;">
-                        </select>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-lg-12">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Details</span>
-                        <textarea id="inspectionDetails" class="form-control" style="min-height: 40px; width: 100%; max-height: 250px;background-color: #F3F5F7;" maxlength="1000" rows="2" placeholder="Enter Detail"></textarea>
-                    </div>
-                </div>
-                <br />
-                <div class="form-row">
-                    <div class="form-group col-sm-2">
-                        <label for="inspectionFileUpload" style="color: gray; font-weight: 400; border: 1px solid black; padding: 5px;" class="custom-file-upload">
-                            <i style="color:#364F6B;" class="fa fa-cloud-upload"></i> Choose File
-                        </label>
-                        <input id="inspectionFileUpload" type="file" name="files" hidden />
-                    </div>
-                    <div class="col-sm-10">
-                        <input class="form-control" style="width: 100%; border: 1px solid black; border-radius: 0px; padding: 5px;" type="text" autocomplete="off" placeholder="Description..." name="description" required />
-                    </div>
                 </div>
 
+                <div class="row" id="inspectionAddModalPartialArea">
+
+                </div>
             </div>
 
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
                 <button type="button" class="btn btn-primary" style="border:none; border-radius: 0px;" id="inspectionAddSaveButton" data-bs-dismiss="modal">Save</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -313,7 +263,7 @@
                             <div class="col-lg-12">
                                 <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
                                 <input id="dsmUploadDrawing" type="file" hidden>
-                                <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile(currentDrawingSettings.Id, 'drawingSettings')">Upload</button>
+                                <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile('drawingSettings')">Upload</button>
                             </div>
                         </div>
                         <br />
@@ -325,8 +275,8 @@
             <!-- #region Footer -->
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <button type="button" class="btn btn-danger">Delete</button>
-                <button type="button" class="btn btn-primary" id="btnDsmSave">Save</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnDsmSave" data-bs-dismiss="modal">Save</button>
             </div>
             <!-- #endregion -->
 

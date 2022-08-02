@@ -50,6 +50,7 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
         public void UpdateItem(QuartzItemUpdateViewModel model)
         {
             Update(_mapper.Map<QuartzItem>(model));
+            _uow.SaveChange();
         }
     }
 }

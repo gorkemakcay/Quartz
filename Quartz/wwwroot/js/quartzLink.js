@@ -49,7 +49,24 @@
 
                     $("#addLinkTagNo").val(lastCreatedLink.TagNo);
                     $('#linkShowLabel').prop('checked', true);
-                    $("#addLinkCurrentDrawing").val("Drawing doesn't exist!");
+
+                    if (lastCreatedLink.CurrentDrawingId != 0) {
+                        $.ajax({
+                            type: "GET",
+                            url: "FileUpload/GetFileDetail",
+                            data: { fileId: lastCreatedLink.CurrentDrawingId },
+                            success: function (response) {
+                                rModel = jQuery.parseJSON(response);
+
+                                $("#addLinkCurrentDrawing").val(rModel.Name);
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
+                    else $("#addLinkCurrentDrawing").val("Drawing doesn't exist!");
                 },
                 error: function (error) {
                     alert("error!");
@@ -101,9 +118,7 @@ function linkModalSaveButton() {
                 // Load Spinner Yap! [TAMAMLANMADI]
             }
             setTimeout(waitFunc, 100);
-            //alert("Update Successful!");
-            //$("#myToast").toast("show");
-            linkModalToastFunc();
+            toast("Link Update Successful!");
         },
         error: function (error) {
             alert("error!");

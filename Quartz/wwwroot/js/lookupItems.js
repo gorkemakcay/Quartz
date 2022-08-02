@@ -23,7 +23,7 @@ $("#limNav a").on('click', function () {
             break;
 
         case 'FittingType':
-            $("#limTitle").html("Lookup Items | FittingType");
+            $("#limTitle").html("Lookup Items | Fitting Type");
 
             $.ajax({
                 type: "GET",
