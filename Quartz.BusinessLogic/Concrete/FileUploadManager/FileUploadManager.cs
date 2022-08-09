@@ -75,5 +75,10 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
         {
             return _mapper.Map<FileUploadUpdateViewModel>(GetById(fileId));
         }
+
+        public List<FileUploadListViewModel> GetAllDrawings()
+        {
+            return _mapper.Map<List<FileUploadListViewModel>>(GetAll(I => I.Type == "image/jpeg" || I.Type == "image/png"));
+        }
     }
 }

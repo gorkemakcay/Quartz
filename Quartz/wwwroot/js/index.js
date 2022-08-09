@@ -1,21 +1,300 @@
 ﻿// #region General Variables
+
+// #region currentDrawingSettings
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS CURRENT DRAWING SETTINGS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [drawingSettings.js]
+//                  * [DSM MODAL]   : When "Save Button (#btnDsmSave)" is clicked.
+//                  * [INDEX]       : When "Drawing Settings Button (#btnDrawingSettings)" is clicked.
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~
 var currentDrawingSettings;
+//~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// #endregion
+
+// #region currentQuartzLink
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS CURRENT QUARTZ LINK
+//~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [index.js]
+//                  * [INDEX]       : When website is starting.
+//
+//          ---> [fileUpload.js]
+//                  * [DSM MODAL]   : When "Upload Button" is clicked. (onclick="uploadFile('drawingSettings')")
+//
+//~~~~~~~~~~~~~~~~~~~~
 var currentQuartzLink;
+//~~~~~~~~~~~~~~~~~~~~
+//
+// #endregion
+
+// #region currentDrawing
+//
+//~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS CURRENT DRAWING
+//~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [index.js]
+//                  * [INDEX]       : When website is starting.
+//
+//          ---> [fileUpload.js]
+//                  * [DSM MODAL]   : When "Upload Button" is clicked (onclick="uploadFile('drawingSettings')")
+//
+//~~~~~~~~~~~~~~~~~
 var currentDrawing;
+//~~~~~~~~~~~~~~~~~
+//
+// #endregion
+
+// #region currentDrawingFeatures
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS CURRENT DRAWING FEATURES
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [index.js]
+//                  * [INDEX]   : When website is starting.
+//
+//          ---> [quartz.js]
+//                  * [INDEX]   : When feature translate end. (getVectorSource();)
+//                  * [INDEX]   : When drawing is finished. (addDrawingFeaturesJSON();)
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~
 var currentDrawingFeatures;
+//~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region currentInspection
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS CURRENT INSPECTION
+//~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartzItem.js]
+//                  * [Inspection Edit Modal]   : When "Edit Button" is clicked. (onclick='openEditInspectionModal(" + inspection.Id + ")')
+//                  * [Inspection Add Modal]    : When "Save Button" is clicked. (#inspectionAddSaveButton)
+//
+//          ---> [fileUpload.js]
+//                  * [Inspection Edit Modal]    : When "Upload Button" is clicked. (onclick="uploadFile('inspection')")
+//
+//~~~~~~~~~~~~~~~~~~~~
 var currentInspection;
+//~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region lastCreatedLink
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS LAST CREATED LINK
+//~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartz.js]
+//                  * [INDEX]       : When drawing is finished . (draw.on("drawend", function (evt))
+//
+//          ---> [quartzLink.js]
+//                  * [LINK MODAL]  : When "Save Button" is clicked . (onclick="linkModalSaveButton()")
+//
+//          ---> [fileUpload.js]
+//                  * [LINK MODAL]  : When "Upload Button" is clicked . (onclick="uploadFile('link')")
+//~~~~~~~~~~~~~~~~~~
 var lastCreatedLink;
+//~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region lastCreatedItem
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS LAST CREATED ITEM
+//~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartz.js]
+//                  * [INDEX]       : When drawing is finished. (draw.on("drawend", function (evt))
+//
+//          ---> [quartzItem.js]
+//                  * [ITEM MODAL]  : When "Save Button" is clicked. (onclick="itemModalSaveButton(itemModalActivePartial)")
+//
+//          ---> [fileUpload.js]
+//                  * [ITEM MODAL]  : When  . (When "Upload Button" is clicked. (onclick="uploadFile('item')"))
+//~~~~~~~~~~~~~~~~~~
 var lastCreatedItem;
+//~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region lastClickedLinkButtonId
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS LAST CLICKED LINK BUTTON'S ID
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [listPanel.js]
+//                  * [INDEX]   : When any "Link Button" is clicked. (".linkButton")
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var lastClickedLinkButtonId = 0;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region lastClickedItemButtonId
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS LAST CLICKED ITEM BUTTON'S ID
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [listPanel.js]
+//                  * [INDEX]   : When any "Item Button" is clicked. (".itemButton")
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var lastClickedItemButtonId = 0;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region lastClickedLink
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS LAST CLICKED LİNK
+//~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartzLink.js]
+//                  * [LINK MODAL]   : When "Save Button" is clicked. (onclick="linkModalSaveButton()")
+//
+//          ---> [listPanel.js]
+//                  * [INDEX]        : When any "Link Button" is clicked. (".linkButton")
+//
+//          ---> [fileUpload.js]
+//                  * [LINK MODAL]   : When "Upload Button" is clicked . (onclick="uploadFile('link')")
+//
+//~~~~~~~~~~~~~~~~~~
 var lastClickedLink;
+//~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region lastClickedItem
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS LAST CLICKED ITEM
+//~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartzItem.js]
+//                  * [ITEM MODAL]   : When "Save Button" is clicked. (onclick="itemModalSaveButton(itemModalActivePartial)")
+//
+//          ---> [listPanel.js]
+//                  * [INDEX]        : When any "ıTEM Button" is clicked. (".itemButton")
+//
+//          ---> [fileUpload.js]
+//                  * [ITEM MODAL]   : When "Upload Button" is clicked . (onclick="uploadFile('item')")
+//
+//~~~~~~~~~~~~~~~~~~
 var lastClickedItem;
+//~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region lastInformationsResponseModel
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS INFORMATIONS RESPONSE MODEL
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartzItem.js]
+//                  * [ITEM MODAL]   : When "Information Tab" is clicked. (#itemModalNav a ---> loadInformationPage();)
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var lastInformationsResponseModel;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region isInformationCreated
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// CHECKING IF INFORMATION HAS BEEN CREATED
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartzItem.js]
+//                  * [ITEM MODAL]   : When "Information Tab" is clicked. (#itemModalNav a ---> loadInformationPage();)
+//                  * [ITEM MODAL]   : When "Save Button" is clicked. (onclick="itemModalSaveButton(itemModalActivePartial)")
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var isInformationCreated = false;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region isInspectionExist [TAMAMLANMADI]
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// CHECKİNG IF INSPECTION EXISTS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartzItem.js]
+//                  * [INSPECTION ADD MODAL]      : When "Add Inspection Data Button" is clicked. (#addInspectionDataButton" ---> loadInspectionsDataPage();)
+//                  * [INSPECTION UPDATE MODAL]   : When "Data Tab" is clicked. ("#inspectionModalNav a" --->)
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var isInspectionExist = false;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region clickedOrCreated
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// IS THE FEATURE BEING INTERACTED WITH CREATED OR CLICKED ?
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [index.js]
+//                  * [WEBSITE]      : When "Close Button" is clicked. (.closeButton)
+//
+//          ---> [listPanel.js]
+//                  * [INDEX]        : When any "Link Button" is clicked. (.linkButton)
+//                  * [INDEX]        : When any "Item Button" is clicked. (.itemButton)
+//
+//          ---> [quartz.js]
+//                  * [INDEX]        : When drawing is finished. (draw.on("drawend", function (evt))
+//
+//          ---> [quartzLink.js]
+//                  * [LINK MODAL]   : When "Save Button" is clicked. (onclick="linkModalSaveButton()")
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var clickedOrCreated = "null"; // "clicked/created"
-var rFeatureCollection;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+// #region itemModalActivePartial
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HOSTS THE ACTIVE PARTIAL OF ITEM MODAL
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//      WHERE IT IS UPDATING:
+//          ---> [quartzItem.js]
+//                  * [ITEM MODAL]   : When any "Navbar Tab" is clicked. (#itemModalNav a)
+//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var itemModalActivePartial = "Informations";
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// #endregion
+
+var crumbCount = 1;
+
+// #endregion
 
 // #region Quartz Variables
 var typeSelect = document.getElementById('type');
@@ -64,6 +343,7 @@ $(function () {
         data: { linkId: 1 },
         success: function (response) {
             currentQuartzLink = jQuery.parseJSON(response);
+            breadCrumb();
 
             $.get({
                 url: 'QuartzLink/GetVectorSource',
@@ -80,20 +360,18 @@ $(function () {
                 }
             });
 
-            function getFileDetailTimeOut() {
+            function wait() {
                 $.ajax({
                     type: "GET",
                     url: "FileUpload/GetFileDetail",
                     data: { fileId: currentQuartzLink.CurrentDrawingId },
                     success: function (result) {
-                        rModel = jQuery.parseJSON(result);
-                        //currentDrawingPath = rModel.Path;
-                        currentDrawing = rModel;
+                        currentDrawing = jQuery.parseJSON(result);
                         loadQuartz();
                     }
                 });
             }
-            setTimeout(getFileDetailTimeOut, 100);
+            setTimeout(wait, 100);
         },
         error: function (error) {
             alert("error");
@@ -102,6 +380,13 @@ $(function () {
     });
     // #endregion
 
+    // [CODE SNIPPET TRIAL AREA]
+    //$(".exportBtn").click(function () {
+    //    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+    //        dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+    //    });
+    //    console.log(json);
+    //});
 });
 
 // #region getDate()
@@ -111,8 +396,97 @@ function getDate() {
 };
 // #endregion
 
+function breadCrumb() {
+    $(".breadCrumb").children().remove();
+    $(".breadCrumb").append(
+        $('<li>', {
+            text: " " + currentQuartzLink.TagNo,
+            value: crumbCount,
+            onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " , " + crumbCount + ")",
+            class: "crumb"
+        }).prepend(
+            $('<i>', {
+                class: "bi bi-house"
+            })
+        )
+    );
+}
+
 $(".closeButton").on('click', function () {
     clickedOrCreated = "null";
+    createList();
+
+    addLinkUploadDrawingArea = false;
+    document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
+    document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
+    $("#addLinkSelectDrawing").removeAttr("disabled");
+    $("#dsmSelectDrawing").removeAttr("disabled");
 });
 
+function goDrawing(linkId, drawingId, thisValue) {
+    //alert(" you clicked breadcrumb, gorkem() function is working ^.^ | id: " + id);
+    //alert("link ID: " + linkId + " - " + "link's current drawing ID: " + drawingId);
 
+    $.ajax({
+        type: "GET",
+        url: "QuartzLink/GetLinkDetailJSON",
+        data: { linkId: linkId },
+        success: function (response) {
+            currentQuartzLink = jQuery.parseJSON(response);
+
+            $.ajax({
+                type: "GET",
+                url: "QuartzLink/GetVectorSource",
+                data: { quartzLinkId: linkId },
+                success: function (response) {
+                    currentDrawingFeatures = jQuery.parseJSON(response);
+
+                    $.ajax({
+                        type: "GET",
+                        url: "FileUpload/GetFileDetail",
+                        data: { fileId: drawingId },
+                        success: function (response) {
+                            currentDrawing = jQuery.parseJSON(response);
+                            $.ajax({
+                                type: "GET",
+                                url: "QuartzLink/GetQuartz",
+                                success: function (html) {
+                                    $("#main").children().remove();
+                                    $("#main").html(html);
+
+                                    $($(".crumb").get().reverse()).each(function () {
+                                        if ($(this).val() == thisValue) {
+                                            crumbCount = $(this).val();
+                                            return false;
+                                        }
+                                        else $(this).remove();
+                                    });
+
+                                    loadQuartz();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+
+}

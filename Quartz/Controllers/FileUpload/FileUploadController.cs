@@ -52,6 +52,17 @@ namespace Quartz.Controllers.FileUpload
         }
 
         [HttpGet]
+        public IActionResult GetAllDrawings()
+        {
+            var model = _fileUploadService.GetAllDrawings();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
         public IActionResult GetFileDetail(int fileId)
         {
             var model = _fileUploadService.GetFileDetail(fileId);
@@ -62,7 +73,7 @@ namespace Quartz.Controllers.FileUpload
             return Json(jSonModel);
         }
 
-    
+
         public async Task<IActionResult> DownloadFile(int fileId)
         {
             var file = _fileUploadService.GetFileDetail(fileId);

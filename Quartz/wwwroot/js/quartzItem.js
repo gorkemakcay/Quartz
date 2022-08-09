@@ -3,157 +3,146 @@
 // #region Item Modal
 
 // Save Button > [Click Function]
-function itemModalSaveButton(itemModalActivePartial) { // [TAMAMLANMADI]
-    switch (itemModalActivePartial) {
-        case 'Informations':
-            if (isInformationCreated == true) {
-                var itemInformationUpdateModel = {
-                    Id: lastInformationsResponseModel.Id,
-                    TagNo: $("#informationTagNo").val(),
-                    SerialNo: $("#informationSerialNo").val(),
-                    ComponentType: $("#informationComponentType").val(),
-                    Comments: $("#informationComments").val(),
-                    Specification: $("#informationSpecification").val(),
-                    FittingType: $("#informationFittingType").val(),
-                    WeldType: $("#informationWeldType").val(),
-                    ShowLabel: true, // [TAMAMLANMADI]
-                    PipeOdIn: $("#informationPipeOD").val(),
-                    PipeThicknessMm: $("#informationPipeThickness").val(),
-                    OperatingTempC: $("#informationOperatingTemp").val(),
-                    OperatingPressureBar: $("#informationOperatingPressute").val(),
-                    QuartzItemId: lastClickedItemButtonId
-                }
+function itemModalSaveButton() { // [TAMAMLANMADI]
+    var item;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
 
-                $.ajax({
-                    type: "POST",
-                    url: "QuartzItem/UpdateInformationJSON",
-                    data: { model: itemInformationUpdateModel },
+    if (isInformationCreated == true) {
+        var itemInformationUpdateModel = {
+            Id: lastInformationsResponseModel.Id,
+            TagNo: $("#informationTagNo").val(),
+            SerialNo: $("#informationSerialNo").val(),
+            ComponentType: $("#informationComponentType").val(),
+            Comments: $("#informationComments").val(),
+            Specification: $("#informationSpecification").val(),
+            FittingType: $("#informationFittingType").val(),
+            WeldType: $("#informationWeldType").val(),
+            ShowLabel: true, // [TAMAMLANMADI]
+            PipeOdIn: $("#informationPipeOD").val(),
+            PipeThicknessMm: $("#informationPipeThickness").val(),
+            OperatingTempC: $("#informationOperatingTemp").val(),
+            OperatingPressureBar: $("#informationOperatingPressute").val(),
+            QuartzItemId: item.Id
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "QuartzItem/UpdateInformationJSON",
+            data: { model: itemInformationUpdateModel },
+            success: function (response) {
+                rModel = jQuery.parseJSON(response);
+
+                $.get({
+                    url: "QuartzItem/GetItemDetailJSON",
+                    data: { itemId: item.Id },
                     success: function (response) {
-                        rModel = jQuery.parseJSON(response);
+                        var model = jQuery.parseJSON(response);
+                        model.TagNo = $("#informationTagNo").val();
 
-                        $.get({
-                            url: "QuartzItem/GetItemDetailJSON",
-                            data: { itemId: lastClickedItemButtonId },
-                            success: function (response) {
-                                var model = jQuery.parseJSON(response);
-                                model.TagNo = $("#informationTagNo").val();
+                        if (clickedOrCreated == "created") {
+                            lastCreatedItem = model;
+                            item = lastCreatedItem;
+                        }
+                        if (clickedOrCreated == "clicked") {
+                            lastClickedItem = model;
+                            item = lastClickedItem;
+                        }
 
-                                $.post({
-                                    url: "QuartzItem/UpdateItemJSON",
-                                    data: { model: model },
-                                    success: function () {
-                                        function waitFunc() {
-                                            $("#shapeArea").children().remove();
-                                            createList();
-                                            // Load Spinner Yap! [TAMAMLANMADI]
-                                        }
-                                        setTimeout(waitFunc, 100);
-                                        toast("Item Update Successful!");
-                                    },
-                                    error: function (error) {
-                                        alert("error!");
-                                        console.log(error.responseText);
-                                    }
-                                });
+                        $.post({
+                            url: "QuartzItem/UpdateItemJSON",
+                            data: { model: item },
+                            success: function () {
+                                function waitFunc() {
+                                    $("#shapeArea").children().remove();
+                                    createList();
+                                    // Load Spinner Yap! [TAMAMLANMADI]
+                                }
+                                setTimeout(waitFunc, 100);
+                                toast("Item Update Successful!");
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
                             }
                         });
-                    },
-                    error: function (error) {
-                        alert("error!");
-                        console.log(error.responseText);
                     }
                 });
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
             }
-            else {
-                if (clickedOrCreated == "created") {
-                    var itemInformationAddModel = {
-                        TagNo: $("#informationTagNo").val(),
-                        SerialNo: $("#informationSerialNo").val(),
-                        ComponentType: $("#informationComponentType").val(),
-                        Comments: $("#informationComments").val(),
-                        Specification: $("#informationSpecification").val(),
-                        FittingType: $("#informationFittingType").val(),
-                        WeldType: $("#informationWeldType").val(),
-                        ShowLabel: true, // [TAMAMLANMADI]
-                        PipeOdIn: $("#informationPipeOD").val(),
-                        PipeThicknessMm: $("#informationPipeThickness").val(),
-                        OperatingTempC: $("#informationOperatingTemp").val(),
-                        OperatingPressureBar: $("#informationOperatingPressute").val(),
-                        QuartzItemId: lastCreatedItem.Id
-                    }
-                }
-                else if (clickedOrCreated == "clicked") {
-                    var itemInformationAddModel = {
-                        TagNo: $("#informationTagNo").val(),
-                        SerialNo: $("#informationSerialNo").val(),
-                        ComponentType: $("#informationComponentType").val(),
-                        Comments: $("#informationComments").val(),
-                        Specification: $("#informationSpecification").val(),
-                        FittingType: $("#informationFittingType").val(),
-                        WeldType: $("#informationWeldType").val(),
-                        ShowLabel: true, // [TAMAMLANMADI]
-                        PipeOdIn: $("#informationPipeOD").val(),
-                        PipeThicknessMm: $("#informationPipeThickness").val(),
-                        OperatingTempC: $("#informationOperatingTemp").val(),
-                        OperatingPressureBar: $("#informationOperatingPressute").val(),
-                        QuartzItemId: lastClickedItem.Id
-                    }
-                }
+        });
+    }
+    else {
+        var itemInformationAddModel = {
+            TagNo: $("#informationTagNo").val(),
+            SerialNo: $("#informationSerialNo").val(),
+            ComponentType: $("#informationComponentType").val(),
+            Comments: $("#informationComments").val(),
+            Specification: $("#informationSpecification").val(),
+            FittingType: $("#informationFittingType").val(),
+            WeldType: $("#informationWeldType").val(),
+            ShowLabel: true, // [TAMAMLANMADI]
+            PipeOdIn: $("#informationPipeOD").val(),
+            PipeThicknessMm: $("#informationPipeThickness").val(),
+            OperatingTempC: $("#informationOperatingTemp").val(),
+            OperatingPressureBar: $("#informationOperatingPressute").val(),
+            QuartzItemId: item.Id
+        }
 
-                $.ajax({
-                    type: "POST",
-                    url: "QuartzItem/AddInformationJSON",
-                    data: { model: itemInformationAddModel },
+        $.ajax({
+            type: "POST",
+            url: "QuartzItem/AddInformationJSON",
+            data: { model: itemInformationAddModel },
+            success: function (response) {
+                rModel = jQuery.parseJSON(response);
+
+                $.get({
+                    url: "QuartzItem/GetItemDetailJSON",
+                    data: { itemId: item.Id },
                     success: function (response) {
-                        rModel = jQuery.parseJSON(response);
-                        var itemId;
-                        if (clickedOrCreated == "clicked")
-                            itemId = lastClickedItem.Id;
-                        else itemId = lastCreatedItem.Id;
+                        var model = jQuery.parseJSON(response);
+                        model.TagNo = $("#informationTagNo").val();
 
-                        $.get({
-                            url: "QuartzItem/GetItemDetailJSON",
-                            data: { itemId: itemId },
-                            success: function (response) {
-                                var model = jQuery.parseJSON(response);
-                                model.TagNo = $("#informationTagNo").val();
+                        if (clickedOrCreated == "created") {
+                            lastCreatedItem = model;
+                            item = lastCreatedItem;
+                        }
+                        if (clickedOrCreated == "clicked") {
+                            lastClickedItem = model;
+                            item = lastClickedItem;
+                        }
 
-                                $.post({
-                                    url: "QuartzItem/UpdateItemJSON",
-                                    data: { model: model },
-                                    success: function () {
-                                        function waitFunc() {
-                                            $("#shapeArea").children().remove();
-                                            createList();
-                                            // Load Spinner Yap! [TAMAMLANMADI]
-                                        }
-                                        setTimeout(waitFunc, 100);
-                                        isInformationCreated = true;
-                                        toast("Item Update Successful!");
-                                    },
-                                    error: function (error) {
-                                        alert("error!");
-                                        console.log(error.responseText);
-                                    }
-                                });
+                        $.post({
+                            url: "QuartzItem/UpdateItemJSON",
+                            data: { model: item },
+                            success: function () {
+                                function waitFunc() {
+                                    $("#shapeArea").children().remove();
+                                    createList();
+                                    // Load Spinner Yap! [TAMAMLANMADI]
+                                }
+                                setTimeout(waitFunc, 100);
+                                isInformationCreated = true;
+                                toast("Item Update Successful!");
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
                             }
                         });
-                    },
-                    error: function (error) {
-                        alert("error!");
-                        console.log(error.responseText);
                     }
                 });
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
             }
-            break;
-
-        case 'Inspections':
-            break;
-
-        case 'Attachments':
-            // [TAMAMLANMADI]
-            break;
-        default:
+        });
     }
 }
 
@@ -209,7 +198,7 @@ function loadInformationPage() {
                     $.ajax({
                         type: "GET",
                         url: "QuartzItem/GetInformationDetailJSON",
-                        data: { quartzItemId: lastClickedItemButtonId },
+                        data: { quartzItemId: lastClickedItem.Id },
                         success: function (response) {
                             lastInformationsResponseModel = jQuery.parseJSON(response);
                             if (lastInformationsResponseModel != null) {
@@ -278,7 +267,7 @@ $("#inspectionModalNav a").on('click', function () {
 
     switch (info) {
         case 'Data':
-            loadInspectionsDataPage();
+            openEditInspectionModal(currentInspection.Id);
             break;
 
         case 'Attachment':
@@ -292,12 +281,12 @@ $("#inspectionModalNav a").on('click', function () {
 
 // Add Modal > Save Button [Click Function]
 $("#inspectionAddSaveButton").on('click', function () {
-    var itemId;
+    var item;
     if (clickedOrCreated == "clicked")
-        itemId = lastClickedItem.Id;
-    else itemId = lastCreatedItem.Id;
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
 
-    var itemInspectionModel;
     var toastContext = "";
     var inspectionUrl = "";
 
@@ -313,7 +302,7 @@ $("#inspectionAddSaveButton").on('click', function () {
             DueDate: $("#inspectionDateDue").val(),
             CreatedDate: getDate(),
             Details: $("#inspectionDetails").val(),
-            QuartzItemId: itemId,
+            QuartzItemId: item.Id,
             AttachmentIds: currentInspection.AttachmentIds
         }
 
@@ -331,7 +320,8 @@ $("#inspectionAddSaveButton").on('click', function () {
             DueDate: $("#inspectionDateDue").val(),
             CreatedDate: getDate(),
             Details: $("#inspectionDetails").val(),
-            QuartzItemId: itemId
+            QuartzItemId: item.Id,
+            AttachmentIds: 0
         }
 
         toastContext = "Inspection Add Successful!";
@@ -344,11 +334,6 @@ $("#inspectionAddSaveButton").on('click', function () {
         data: { model: itemInspectionModel },
         success: function (response) {
             currentInspection = jQuery.parseJSON(response);
-            if ($("#inspectionAddSelectedFile").text() != "" && currentInspection != null) {
-                uploadFile('inspection');
-            }
-            else alert("!#£$#½");
-
             loadInspectionPage();
             toast(toastContext);
         },
@@ -435,10 +420,10 @@ function getInformationSelectOptions() {
                     $('<option>', {
                         value: lastInformationsResponseModel.Specification,
                         text: lastInformationsResponseModel.Specification,
-                        id: "selectInformationComponentType"
+                        id: "selectInformationSpecification"
                     })
                 );
-                $("#selectInformationComponentType").attr("hidden", "");
+                $("#selectInformationSpecification").attr("hidden", "");
             }
 
             for (var i = 0; i < rModel.length; i++) {
@@ -563,7 +548,8 @@ function loadInspectionPage() {
     var itemId;
     if (clickedOrCreated == "clicked")
         itemId = lastClickedItem.Id;
-    else itemId = lastCreatedItem.Id;
+    if (clickedOrCreated == "created")
+        itemId = lastCreatedItem.Id;
 
     $.ajax({
         type: "GET",
@@ -640,6 +626,7 @@ function loadInspectionPage() {
 // Edit Inspection Modal > [Load Function]
 function openEditInspectionModal(inspectionId) {
     function wait() {
+        $("#InspectionAddModalTitle").html("Inspection Modal | Data");
         $("#inspectionAddSelectedFile").text('');
         $("#inspectionModalNav").removeAttr("hidden");
 
@@ -762,7 +749,7 @@ function openEditInspectionModal(inspectionId) {
                                 );
                                 $("#selectInspectionTechnique").attr("hidden", "");
 
-                                for (var i = 0; i < methods.length; i++) {
+                                for (var i = 0; i < techniques.length; i++) {
                                     $("#inspectionTechnique").append(
                                         $('<option>', {
                                             value: techniques[i].Name,
@@ -817,8 +804,9 @@ function openEditInspectionModal(inspectionId) {
 
                         // #region Inspection Data Page > Choose File Button > [Change Function]
                         $("#inspectionAddUploadFile").on('change', function (e) {
+                            alert("brr!");
                             var fileName = e.target.files[0].name;
-                            $("#inspectionAddSelectedFile").text("Selected File is: " + fileName);
+                            $("#inspectionAddSelectedFile").text("Selected File: " + fileName);
                         });
                         // #endregion
                     },
@@ -987,12 +975,6 @@ function loadInspectionsDataPage() {
             });
             // #endregion
 
-            // #region Inspection Data Page > Choose File Button > [Change Function]
-            $("#inspectionAddUploadFile").on('change', function (e) {
-                var fileName = e.target.files[0].name;
-                $("#inspectionAddSelectedFile").text("Selected File is: " + fileName);
-            });
-            // #endregion
         },
         error: function (error) {
             alert("error!");
@@ -1010,7 +992,121 @@ function loadInspectionsAttachmentPage() {
         url: "QuartzItem/GetInspectionsAttachmentPartialView",
         success: function (html) {
             $("#inspectionAddModalPartialArea").html(html);
-            console.log(html);
+
+            // #region Choose File Button > [Change Function]
+            $("#inspectionAddUploadFile").on('change', function (e) {
+                var fileName = e.target.files[0].name;
+                $("#inspectionAddSelectedFile").text("Selected File: " + fileName);
+            });
+            // #endregion
+
+            // #region Create Table's Rows
+            $("#itemAttachmentsTable").children('tbody').children('tr').remove();
+
+            if (currentInspection.AttachmentIds != null) {
+                if (currentInspection.AttachmentIds.indexOf(",") == -1) {
+                    var attachmentId = currentInspection.AttachmentIds
+                    $.ajax({
+                        type: "GET",
+                        url: "FileUpload/GetFileDetail",
+                        data: { fileId: attachmentId },
+                        success: function (response) {
+                            attachmentModel = jQuery.parseJSON(response);
+
+                            if (attachmentModel != "") {
+                                var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                $("#inspectionsAttachmentTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { align: "center" }).append(
+                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.Type
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.UploadedBy
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            uploadedDate
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                        )
+                                    ),
+                                );
+                            }
+                            else {
+                                $("#inspectionsAttachmentTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                    )
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                }
+                else {
+                    var attachmentIds = currentInspection.AttachmentIds.split(',');
+                    for (let id in attachmentIds) {
+                        $.ajax({
+                            type: "GET",
+                            url: "FileUpload/GetFileDetail",
+                            data: { fileId: attachmentIds[id] },
+                            success: function (response) {
+                                attachmentModel = jQuery.parseJSON(response);
+
+                                if (attachmentModel != "") {
+                                    var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                    $("#inspectionsAttachmentTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { align: "center" }).append(
+                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.Type
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.UploadedBy
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                uploadedDate
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                            )
+                                        ),
+                                    );
+                                }
+                                else {
+                                    $("#inspectionsAttachmentTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                        )
+                                    );
+                                }
+
+                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
+                }
+            }
+            else {
+                $("#inspectionsAttachmentTable").children('tbody').append(
+                    $('<tr>').append(
+                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                    )
+                );
+            }
+            // #endregion
         },
         error: function (error) {
             alert("error!");
@@ -1024,12 +1120,11 @@ function loadInspectionsAttachmentPage() {
 function loadAttachmentPage() {
     $("#itemModalTitle").html("Item Modal | Attachment");
 
-    var currentItemModel;
+    var item;
     if (clickedOrCreated == "clicked")
-        currentItemModel = lastClickedItem;
-    else if (clickedOrCreated == "created") {
-        currentItemModel = lastCreatedItem;
-    }
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
 
     $.ajax({
         type: "GET",
@@ -1038,9 +1133,16 @@ function loadAttachmentPage() {
             $("#itemModalPartialArea").html(html);
             $("#itemAttachmentsTable").children('tbody').children('tr').remove();
 
-            if (currentItemModel.AttachmentIds != null) {
-                if (currentItemModel.AttachmentIds.indexOf(",") == -1) {
-                    var attachmentId = currentItemModel.AttachmentIds
+            // #region Choose File Button > [Change Function]
+            $("#itemModalUploadFile").on('change', function (e) {
+                var fileName = e.target.files[0].name;
+                $("#itemModalAttachmentSelectedFile").text("Selected File: " + fileName);
+            });
+            // #endregion
+
+            if (item.AttachmentIds != null) {
+                if (item.AttachmentIds.indexOf(",") == -1) {
+                    var attachmentId = item.AttachmentIds;
                     $.ajax({
                         type: "GET",
                         url: "FileUpload/GetFileDetail",
@@ -1085,7 +1187,7 @@ function loadAttachmentPage() {
                     });
                 }
                 else {
-                    var attachmentIds = currentItemModel.AttachmentIds.split(',');
+                    var attachmentIds = item.AttachmentIds.split(',');
                     for (let id in attachmentIds) {
                         $.ajax({
                             type: "GET",

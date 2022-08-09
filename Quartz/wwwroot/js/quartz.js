@@ -112,24 +112,55 @@
 
     createList();
     // Load Spinner Yap! [TAMAMLANMADI]
-    function waitCreateList() {
-        $(".linkButton").on('click', function () {
-            lastClickedLinkButtonId = $(this).attr('id');
-            clickedOrCreated = "clicked";
-            loadLinkModal();
-        });
+    //function waitCreateList() {
+    //    $(".linkButton").on('click', function () {
+    //        lastClickedLinkButtonId = $(this).attr('id');
+    //        clickedOrCreated = "clicked";
+    //        $.ajax({
+    //            type: "GET",
+    //            url: "QuartzLink/GetLinkDetailJSON",
+    //            data: { linkId: lastClickedLinkButtonId },
+    //            success: function (response) {
+    //                lastClickedLink = jQuery.parseJSON(response);
+    //                loadLinkModal();
+    //            },
+    //            error: function (error) {
+    //                alert("error!");
+    //                console.log(error.responseText);
+    //            }
+    //        });
+    //    });
 
-        $(".itemButton").on('click', function () {
-            lastClickedItemButtonId = $(this).attr('id');
-            clickedOrCreated = "clicked";
-            loadInformationPage();
-        });
-    }
-    setTimeout(waitCreateList, 100);
+    //    $(".itemButton").on('click', function () {
+    //        lastClickedItemButtonId = $(this).attr('id');
+    //        clickedOrCreated = "clicked";
+
+    //        $.ajax({
+    //            type: "GET",
+    //            url: "QuartzItem/GetItemDetailJSON",
+    //            data: { itemId: lastClickedItemButtonId },
+    //            success: function (response) {
+    //                lastClickedItem = jQuery.parseJSON(response);
+    //                loadInformationPage();
+    //                $("#itemModalSaveButton").removeAttr("hidden");
+    //                $("#itemShowLabel").removeAttr("hidden");
+    //                $("#showlabelSpan").removeAttr("hidden");
+    //            },
+    //            error: function (error) {
+    //                alert("error!");
+    //                console.log(error.responseText);
+    //            }
+    //        });
+    //    });
+    //}
+    //setTimeout(waitCreateList, 100);
 
     function addInteraction() {
         if (typeSelect.value !== 'None') {
+            document.getElementById('main').style.cursor = 'crosshair';
             if (typeSelect.value === 'BoxItem' || typeSelect.value === 'BoxLink') {
+                map.removeInteraction(draw);
+
                 draw = new ol.interaction.Draw({
                     source: source,
                     type: 'Circle',
@@ -138,6 +169,8 @@
                 map.addInteraction(draw);
             }
             if (typeSelect.value === 'PolygonItem' || typeSelect.value === 'PolygonLink') {
+                map.removeInteraction(draw);
+
                 draw = new ol.interaction.Draw({
                     source: source,
                     type: 'Polygon'
@@ -182,11 +215,53 @@
                             lastCreatedLink = jQuery.parseJSON(response);
                             clickedOrCreated = "created";
 
-                            //lastClickedLinkButtonId = lastCreatedLink.Id;
+                            $("#clickedLinkMode").attr("hidden", "");
+                            $("#createdLinkMode").removeAttr("hidden");
+                            addLinkUploadDrawingAreaCreatedMode = false;
+                            document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
+                            document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
+                            $("#addLinkSelectDrawing").removeAttr("disabled");
+
                             $("#linkModal").modal('show');
                             $("#addLinkTagNo").val(lastCreatedLink.TagNo);
                             $("#linkShowLabel").prop('checked', true);
-                            $("#addLinkCurrentDrawing").val("Drawing doesn't exist!");
+
+                            loadLinkModal();
+
+                            //var drawingFeatureAddModel = {
+                            //    QuartzLinkId: lastCreatedLink.Id
+                            //}
+                            //$.ajax({
+                            //    type: "POST",
+                            //    url: "QuartzLink/AddDrawingFeaturesJSON",
+                            //    data: { model: drawingFeatureAddModel },
+                            //    success: function (response) {
+                            //        rModel = jQuery.parseJSON(response);
+                            //    },
+                            //    error: function (error) {
+                            //        alert("error!");
+                            //        console.log(error.responseText);
+                            //    }
+                            //});
+
+                            var drawingSettingsAddModel = {
+                                DrawingNo: lastCreatedLink.TagNo,
+                                QuartzLinkId: lastCreatedLink.Id
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzLink/AddDrawingSettingsJSON",
+                                data: { model: drawingSettingsAddModel },
+                                success: function (response) {
+                                    rModel = jQuery.parseJSON(response);
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+
+                            toast("Link Add Successful!");
 
                         },
                         error: function (error) {
@@ -216,10 +291,11 @@
                         success: function (response) {
                             lastCreatedItem = jQuery.parseJSON(response);
                             clickedOrCreated = "created";
+                            isInformationCreated = false;
 
-                            //lastClickedItemButtonId = lastCreatedItem.Id;
                             $("#itemModal").modal('show');
                             loadInformationPage();
+                            toast("Item Add Successful!");
                         },
                         error: function (error) {
                             alert("error: item doesn't saved!");
@@ -229,9 +305,14 @@
                 // #endregion
 
                 setTimeout(addDrawingFeaturesJSON, 100);
+                document.getElementById('main').style.cursor = 'grab';
             });
             // #endregion
 
+        }
+        else {
+            document.getElementById('main').style.cursor = 'grab';
+            map.removeInteraction(draw);
         }
     }
 
@@ -324,7 +405,7 @@
         evt.feature.setId(Math.floor(Math.random() * 1000));
         //console.log(evt.feature.getId());
         //console.log(evt.feature.get('id'));
-        console.log(evt.feature);
+        //console.log(evt.feature);
         // Çizilen Box/Polygon'a text tanımladım
         evt.feature.setStyle(style);
 
@@ -348,7 +429,7 @@
             isValueDelete = true;
             map.on('click', function (evt) {
                 this.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
-                    console.log(feature, layer);
+                    //console.log(feature, layer);
                     if (isValueDelete) {
                         if (confirm("Are you sure?") == true) {
                             var deleteElement = document.getElementById(feature.getId());

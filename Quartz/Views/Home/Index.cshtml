@@ -10,21 +10,18 @@
 <!-- #region Home Page -->
 <div class="container-fluid">
     <!-- #region Breadcrumbs -->
-    <div class="row text-light text-center" style="background: #373a3e; height: 25px;">
+    <div class="row text-light" style="background: #373a3e; height: 25px;">
         <div class="col-lg-2" style="border-right: 1px solid #212529;">
-            <p>Lorem ipsum dolor, sit amet consectetur</p>
+            <p class="text-center">LIST PANEL</p>
         </div>
 
         <div class="col-lg-8" style="border-right: 1px solid #212529; height: 25px;">
-            <span>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ratione repellat officia ullam possimus
-                pariatur atque sed iusto minus illo, facere placeat nisi. Officiis veniam
-            </span>
-
+            <ul class="breadCrumb px-0">
+            </ul>
         </div>
 
         <div class="col-lg-2">
-            <p> Lorem ipsum dolor, sit amet consectetur</p>
+            <p class="text-center">SEARCH PANEL</p>
 
         </div>
     </div>
@@ -40,7 +37,7 @@
             @*@await Html.PartialAsync("/Views/Shared/Partial/HomePage/QuartzPartial.cshtml")*@
         </div>
 
-        <div class="col-lg-2 px-0">
+        <div class="col-lg-2 px-0" id="searchPanel">
             @await Html.PartialAsync("/Views/Shared/Partial/HomePage/SearchPanelPartial.cshtml")
         </div>
     </div>
@@ -67,34 +64,77 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Current Drawing</span>
-                                <input type="text" id="addLinkCurrentDrawing" class="form-control" value="Drawing doesn't exist!" disabled style="background-color: white; border:1px dashed gray;">
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
+                                <select id="addLinkSelectDrawing" class="form-select" onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                                </select>
                             </div>
                         </div>
 
-                        <br>
-                        <hr>
+                        <br />
+                        <hr />
+                        <br />
 
-                        <div class="row">
-                            <div class="text-center">
+                        @* --- CLICKED LINK AREA --- *@
+
+                        <div class="row" id="clickedLinkMode">
+                            <div class="text-center col-lg-6" style="border-right: 1px solid #8F8F95;">
+                                <button id="addLinkGoCurrentLinkButton" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;" onclick="goCurrentLink()" data-bs-dismiss="modal">Go Current Link</button>
+                            </div>
+
+                            <div class="text-center col-lg-6">
                                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
                                 <button id="btnAddLinkUploadDrawing" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="text-center">
-                                <br>
-                                <div id="AddLinkUploadDrawingArea" class="row" hidden>
+                        <div class="row" style="margin-top: -2px;" id="AddLinkUploadDrawingArea" hidden>
+                            <div class="text-center col-lg-6">
+                            </div>
+
+                            <div class="text-center col-lg-6">
+                                <br />
+                                <div class="row">
+                                    <br>
                                     <div class="col-lg-12">
-                                        <label for="addLinkUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
+                                        <label for="addLinkUploadDrawing" style="border-radius: 20px;" class="btn btn-dark"><i class='bi bi-file-image-fill'></i>&nbsp; Choose</label>
                                         <input id="addLinkUploadDrawing" type="file" hidden>
-                                        <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile('link')">Upload</button>
+                                        <button type="button" class="btn btn-dark" style="border-radius: 20px; color: white;" onclick="uploadFile('link')"><i class="bi bi-upload"></i>&nbsp; Upload</button>
                                     </div>
                                 </div>
-                                <br />
+
+                                <div class="row text-center">
+                                    <p class="linkModalSelectedDrawing"></p>
+                                </div>
                             </div>
                         </div>
+                        @* --- CLICKED LINK AREA --- *@
+
+                        @* --- CREATED LINK AREA --- *@
+                        <div class="row" id="createdLinkMode" hidden>
+                            <div class="text-center col-lg-12">
+                                <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                                <button id="btnAddLinkUploadDrawingCreatedMode" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: -2px;" id="AddLinkUploadDrawingAreaCreatedMode" hidden>
+                            <div class="text-center col-lg-12">
+                                <br />
+                                <div class="row">
+                                    <br>
+                                    <div class="col-lg-12">
+                                        <label for="addLinkUploadDrawing" style="border-radius: 20px;" class="btn btn-dark"><i class='bi bi-file-image-fill'></i>&nbsp; Choose</label>
+                                        <input id="addLinkUploadDrawing" type="file" hidden>
+                                        <button type="button" class="btn btn-dark" style="border-radius: 20px; color: white;" onclick="uploadFile('link')"><i class="bi bi-upload"></i>&nbsp; Upload</button>
+                                    </div>
+                                </div>
+
+                                <div class="row text-center">
+                                    <p class="linkModalSelectedDrawing"></p>
+                                </div>
+                            </div>
+                        </div>
+                        @* --- CREATED LINK AREA --- *@
                     </div>
                 </form>
             </div>
@@ -103,8 +143,7 @@
                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="linkShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
                 <button type="button" class="btn btn-dark closeButton" data-bs-dismiss="modal" style="border: none; border-radius: 0px;">Close</button>
-                <button type="button" class="btn btn-danger" style="border:none; border-radius: 0px;">Delete</button>
-                <button type="button" class="btn btn-primary" style="border: none; border-radius: 0px;" onclick="linkModalSaveButton()" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-dark" style="border: none; border-radius: 0px;" onclick="linkModalSaveButton()" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -134,7 +173,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    
+
                 </div>
 
                 <div class="row" id="itemModalPartialArea">
@@ -145,7 +184,7 @@
                 <span id="showlabelSpan" style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="itemShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
-                <button type="button" class="btn btn-primary" id="itemModalSaveButton" style="border:none; border-radius:0px;" onclick="itemModalSaveButton(itemModalActivePartial)" data-bs-dismiss="modal" aria-label="Close">Save</button>
+                <button type="button" class="btn btn-dark" id="itemModalSaveButton" style="border:none; border-radius:0px;" onclick="itemModalSaveButton()" data-bs-dismiss="modal" aria-label="Close">Save</button>
             </div>
         </div>
     </div>
@@ -181,7 +220,7 @@
 
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
-                <button type="button" class="btn btn-primary" style="border:none; border-radius: 0px;" id="inspectionAddSaveButton" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="inspectionAddSaveButton" data-bs-dismiss="modal">Save</button>
             </div>
 
         </div>
@@ -212,7 +251,7 @@
 
                     <div class="col-lg-6">
                         <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing Description</span>
-                        <input type="text" id="dsmDrawingDescription" class="form-control">
+                        <input type="text" id="dsmDrawingDescription" class="form-control" placeholder="Description...">
                     </div>
                 </div>
 
@@ -236,37 +275,53 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500">Drawing File: </span>
-                        <input type="text" id="dsmFile" class="" style="border: none; background-color: white;" disabled value="file not found!">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
+                        <select id="dsmSelectDrawing" class="form-select" onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                        </select>
                     </div>
 
-                    <div class="col-lg-6">
-
+                    <div class="col-lg-6 text-center">
+                        <button id="btnDsmUploadDrawing" type="button" class="btn btn-dark mt-4" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
                     </div>
                 </div>
+
+                @*<div class="row">
+                        <div class="col-lg-6">
+                            <span style="color: #8F8F95; font-size: 1em; font-weight:500">Current Drawing: </span>
+                            <input type="text" id="dsmFile" class="" style="border: none; background-color: white;" disabled value="file not found!">
+                        </div>
+
+                        <div class="col-lg-6 text-center">
+                            <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
+                            <button id="btnDsmUploadDrawing" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
+                        </div>
+                    </div>*@
 
                 <br />
 
-                <!-- #region Upload Drawing Button -->
-                <div class="row">
-                    <div class="text-center">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 "></span>
-                        <button id="btnDsmUploadDrawing" type="button" class="btn btn-dark" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
-                    </div>
-                </div>
-                <!-- #endregion -->
+
                 <!-- #region Upload Drawing Area -->
                 <div class="row">
                     <div class="text-center">
-                        <br>
                         <div id="dsmUploadDrawingArea" class="row" hidden>
-                            <div class="col-lg-12">
-                                <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-primary">Choose</label>
+                            <div class="col-lg-6">
+
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-dark"><i class='bi bi-file-image-fill'></i>&nbsp; Choose</label>
                                 <input id="dsmUploadDrawing" type="file" hidden>
-                                <button type="button" class="btn btn-success" style="border-radius: 20px; color: white;" onclick="uploadFile('drawingSettings')">Upload</button>
+                                <button type="button" class="btn btn-dark" style="border-radius: 20px; color: white;" onclick="uploadFile('drawingSettings')"><i class="bi bi-upload"></i>&nbsp; Upload</button>
+                            </div>
+                            <br />
+                            <div class="row text-center mt-1">
+                                <div class="col-lg-6">
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <p id="dsmSelectedDrawing"></p>
+                                </div>
                             </div>
                         </div>
-                        <br />
                     </div>
                 </div>
                 <!-- #endregion -->
@@ -274,9 +329,8 @@
 
             <!-- #region Footer -->
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <button type="button" class="btn btn-danger">Delete</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnDsmSave" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border-radius: 0px;">Close</button>
+                <button type="button" class="btn btn-dark" id="btnDsmSave" data-bs-dismiss="modal" style="border-radius: 0px;">Save</button>
             </div>
             <!-- #endregion -->
 
@@ -628,15 +682,4 @@
     <script src="~/js/listPanel.js"></script>
     <script src="~/js/searchPanel.js"></script>
     <!-- #endregion -->
-
-    <script>
-        // [CODE SNIPPET TRIAL AREA]
-        $(".exportBtn").click(function () {
-            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-                dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
-            });
-            console.log(json);
-        });
-
-    </script>
 }

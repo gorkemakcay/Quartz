@@ -2,8 +2,9 @@
 
 // #region List Panel's createList() Function
 function createList() {
-
     // #region Get All Links From DB & Display On The List Panel As A Button
+    $("#shapeArea").children().remove();
+
     $.ajax({
         type: "GET",
         url: "QuartzLink/GetAllLinksJSON",
@@ -13,8 +14,7 @@ function createList() {
 
             // #region Create Link Buttons
             allLinks.forEach(function (link) {
-
-                var linkButton = $("<button id=" + link.Id + " type='button' data-bs-toggle='modal' data-bs-target='#linkModal' class='btn text-dark listPanelButtons linkButton'><strong><i class='bi bi-file-image-fill'></i></strong>&nbsp;" + link.TagNo + "</button>");
+                var linkButton = $("<button id=" + link.Id + " type='button' class='btn text-dark listPanelButtons linkButton'><strong><i class='bi bi-file-image-fill'></i></strong>&nbsp;" + link.TagNo + "</button>");
 
                 $("#shapeArea").append(linkButton);
             })
@@ -37,8 +37,7 @@ function createList() {
 
             // #region Create Item Buttons
             allItems.forEach(function (item) {
-
-                var itemButton = $("<button id=" + item.Id + " type='button' data-bs-toggle='modal' data-bs-target='#itemModal' class='btn text-dark listPanelButtons itemButton'><strong><i class='bi bi-tags-fill'></i></strong>&nbsp;" + item.TagNo + "</button>");
+                var itemButton = $("<button id=" + item.Id + " type='button' class='btn text-dark listPanelButtons itemButton'><strong><i class='bi bi-tags-fill'></i></strong>&nbsp;" + item.TagNo + "</button>");
 
                 $("#shapeArea").append(itemButton);
             });
@@ -54,15 +53,29 @@ function createList() {
     // #region Link & Item Button's On Click Functions
     function wait() {
         $(".linkButton").on('click', function () {
+            $("#linkModal").modal('show');
             lastClickedLinkButtonId = $(this).attr('id');
             clickedOrCreated = "clicked";
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetLinkDetailJSON",
+                url: "QuartzLink/GetLinkDetailJSON",
                 data: { linkId: lastClickedLinkButtonId },
                 success: function (response) {
                     lastClickedLink = jQuery.parseJSON(response);
+                    if (lastClickedLink.CurrentDrawingId != 0) {
+                        $("#createdLinkMode").attr("hidden", "");
+                        $("#clickedLinkMode").removeAttr("hidden");
+                    }
+                    else {
+                        $("#createdLinkMode").removeAttr("hidden");
+                        $("#clickedLinkMode").attr("hidden", "");
+                    }
+                    addLinkUploadDrawingArea = false;
+                    document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
+                    document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
+                    $("#addLinkSelectDrawing").removeAttr("disabled");
+
                     loadLinkModal();
                 },
                 error: function (error) {
@@ -70,10 +83,10 @@ function createList() {
                     console.log(error.responseText);
                 }
             });
-            
         });
 
         $(".itemButton").on('click', function () {
+            $("#itemModal").modal('show');
             lastClickedItemButtonId = $(this).attr('id');
             clickedOrCreated = "clicked";
 
@@ -95,7 +108,7 @@ function createList() {
             });
         });
     }
-    setTimeout(wait, 100);
+    setTimeout(wait, 200);
     // #endregion
 }
 // #endregion

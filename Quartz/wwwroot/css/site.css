@@ -1,4 +1,18 @@
-﻿.map {
+﻿body {
+    /*
+        Cursor: url(); eklenebilir!
+    */
+}
+
+#main {
+    cursor: grab;
+}
+
+    #main:active {
+        cursor: grabbing;
+    }
+
+.map {
     width: 100%;
     height: 85vh;
 }
@@ -73,14 +87,19 @@
     white-space: nowrap;
 }
 
-.listPanelButtons:hover {
-    background: gray;
-    border: 3px solid black;
-}
+    .listPanelButtons:hover {
+        background: gray;
+        border: 3px solid white;
+        border-radius: 5px;
+    }
 
 .modal-body {
     max-height: calc(100vh - 210px);
     overflow-y: auto;
+}
+
+.modal-content {
+    min-height: 50vh;
 }
 
 #toastId {
@@ -111,3 +130,32 @@
     border: 4px solid transparent;
     border-radius: 8px;
 }
+
+.crumb {
+    transition: all 0.1s ease;
+}
+
+    .crumb:hover {
+        color: whitesmoke;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+.breadCrumb {
+    list-style: none;
+}
+
+.breadCrumb {
+    list-style: none;
+}
+
+    .breadCrumb li {
+        display: inline;
+        font-size: 15px;
+    }
+
+        .breadCrumb li + li:before {
+            padding: 5px;
+            color: green;
+            content: ">";
+        }
