@@ -109,7 +109,7 @@ $("#btnDrawingSettings").on('click', function () {
             // #region Choose Drawing Button > [Change Function]
             $("#dsmUploadDrawing").on('change', function (e) {
                 var fileName = e.target.files[0].name;
-                $("#dsmSelectedDrawing").text("Selected Drawing: " + fileName);
+                $(".dsmSelectedDrawing").text("Selected Drawing: " + fileName);
             });
             // #endregion
 

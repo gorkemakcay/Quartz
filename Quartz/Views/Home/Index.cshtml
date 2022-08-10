@@ -250,12 +250,23 @@
                     </div>
 
                     <div class="col-lg-6">
+                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
+                        <select id="dsmSelectDrawing" class="form-select" onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                        </select>
+                    </div>
+
+                </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-12">
                         <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Drawing Description</span>
                         <input type="text" id="dsmDrawingDescription" class="form-control" placeholder="Description...">
                     </div>
                 </div>
 
-                <br /><br />
+                <br />
 
                 <div class="row">
                     <div class="col-lg-6">
@@ -274,13 +285,7 @@
                 <br />
 
                 <div class="row">
-                    <div class="col-lg-6">
-                        <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Select Drawing</span>
-                        <select id="dsmSelectDrawing" class="form-select" onblur='this.size=1;' onchange='this.size=1; this.blur();'>
-                        </select>
-                    </div>
-
-                    <div class="col-lg-6 text-center">
+                    <div class="col-lg-12 text-center">
                         <button id="btnDsmUploadDrawing" type="button" class="btn btn-dark mt-4" style="border: none; width:150px; border-radius: 20px;">Upload Drawing</button>
                     </div>
                 </div>
@@ -304,21 +309,17 @@
                 <div class="row">
                     <div class="text-center">
                         <div id="dsmUploadDrawingArea" class="row" hidden>
-                            <div class="col-lg-6">
-
-                            </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <label for="dsmUploadDrawing" style="border-radius: 20px;" class="btn btn-dark"><i class='bi bi-file-image-fill'></i>&nbsp; Choose</label>
                                 <input id="dsmUploadDrawing" type="file" hidden>
                                 <button type="button" class="btn btn-dark" style="border-radius: 20px; color: white;" onclick="uploadFile('drawingSettings')"><i class="bi bi-upload"></i>&nbsp; Upload</button>
                             </div>
-                            <br />
-                            <div class="row text-center mt-1">
-                                <div class="col-lg-6">
 
-                                </div>
-                                <div class="col-lg-6">
-                                    <p id="dsmSelectedDrawing"></p>
+                            <br />
+
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <p class="dsmSelectedDrawing"></p>
                                 </div>
                             </div>
                         </div>
