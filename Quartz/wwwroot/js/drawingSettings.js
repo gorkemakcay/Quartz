@@ -28,6 +28,8 @@ $("#btnDsmSave").on('click', function () {
         QuartzLinkId: currentQuartzLink.Id
     }
 
+    console.log($("#dsmSelectDrawing").val());
+
     if (currentDrawingSettings.File != $("#dsmSelectDrawing").val()) {
         currentDrawingSettings.File = $("#dsmSelectDrawing").val();
         drawingSettingsModel.File = currentDrawingSettings.File;
@@ -134,10 +136,10 @@ $("#btnDrawingSettings").on('click', function () {
                                 $('<option>', {
                                     value: selectedDrawing.Id,
                                     text: selectedDrawing.Name,
-                                    id: "dsmSelectedDrawing"
+                                    id: "dsmSelectedDrawingx"
                                 })
                             );
-                            $("#dsmSelectedDrawing").attr("hidden", "");
+                            $("#dsmSelectedDrawingx").attr("hidden", "");
 
                             for (var i = 0; i < allDrawings.length; i++) {
                                 $("#dsmSelectDrawing").append(
@@ -147,14 +149,13 @@ $("#btnDrawingSettings").on('click', function () {
                                     })
                                 );
                             }
-                            // #endregion
-
                         },
                         error: function (error) {
                             alert("error!");
                             console.log(error.responseText);
                         }
                     });
+                    // #endregion
                 },
                 error: function (error) {
                     alert("error!");
@@ -269,7 +270,6 @@ $("#btnDrawingSettings").on('click', function () {
         }
     });
     // #endregion
-
 });
 // #endregion
 

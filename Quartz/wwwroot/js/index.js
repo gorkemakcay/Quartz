@@ -294,11 +294,17 @@ var itemModalActivePartial = "Informations";
 
 var crumbCount = 1;
 
+var linkOrItem;
+
+var featuresLonLat;
+
+var selectedFeature;
+
 // #endregion
 
 // #region Quartz Variables
 var typeSelect = document.getElementById('type');
-var allShapes = [];
+var addedFeatures = [];
 var draw; // global so we can remove it later
 var isValueDelete = false;
 var shapeId = "";
@@ -343,7 +349,16 @@ $(function () {
         data: { linkId: 1 },
         success: function (response) {
             currentQuartzLink = jQuery.parseJSON(response);
-            breadCrumb();
+
+            $.get({
+                url: 'QuartzLink/GetDrawingSettingsDetailJSON',
+                data: { quartzLinkId: currentQuartzLink.Id },
+                success: function (response) {
+                    currentDrawingSettings = jQuery.parseJSON(response);
+                    breadCrumb();
+                }
+            });
+
 
             $.get({
                 url: 'QuartzLink/GetVectorSource',
@@ -400,7 +415,7 @@ function breadCrumb() {
     $(".breadCrumb").children().remove();
     $(".breadCrumb").append(
         $('<li>', {
-            text: " " + currentQuartzLink.TagNo,
+            text: " " + currentDrawingSettings.DrawingNo,
             value: crumbCount,
             onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " , " + crumbCount + ")",
             class: "crumb"

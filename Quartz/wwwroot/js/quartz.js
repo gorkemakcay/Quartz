@@ -1,10 +1,8 @@
 ﻿function loadQuartz() {
-    // #region Variables
-
-    // #endregion
-
     // #region Elements of Quartz
-    select = new ol.interaction.Select();
+    select = new ol.interaction.Select({
+        condition: ol.events.condition.click
+    });
 
     translate = new ol.interaction.Translate({
         features: select.getFeatures(),
@@ -24,6 +22,7 @@
     source = new ol.source.Vector({
         format: new ol.format.GeoJSON()
     });
+
     ////////////////////////////////////////////////// trial area
     // #region selectInteraction usage:
     // selectInteraction.getFeatures().clear();
@@ -46,9 +45,10 @@
     view = new ol.View({
         projection: projection,
         center: ol.extent.getCenter(extent),
-        zoom: 0,
+        zoom: 2,
         maxZoom: 5,
-        extent: [0, 0, 1920, 1356]
+        minZoom: 2,
+        extent: [-1060, -678, 3080, 2034] // sol > alt > sağ > üst
     });
 
     imageUrl = "http://localhost:5001/home/get?path="; // [TAMAMLANMADI]
@@ -62,12 +62,42 @@
         }),
     });
 
+
     map = new ol.Map({
         interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([select, translate]),
         layers: [imageLayer, rasterLayer, vectorLayer],
         target: 'map',
         view: view
     });
+
+    //---------------------------- Feature Hover ----------------------------
+    //var selected = null;
+
+    //var selectStyle = new ol.style.Style({
+    //    fill: new ol.style.Fill({
+    //        color: 'rgba(255, 255, 0, 0)',
+    //    }),
+    //    stroke: new ol.style.Stroke({
+    //        color: '#000',
+    //        width: 2,
+    //    }),
+    //});
+
+    //map.on('pointermove', function (e) {
+    //    if (selected != null) {
+    //        selected.setStyle(undefined);
+    //        selected = null;
+    //    }
+
+    //    map.forEachFeatureAtPixel(e.pixel, function (f) {
+    //        selected = f;
+    //        //selectStyle.getFill().setColor(f.get('COLOR'));
+    //        f.setStyle(selectStyle);
+    //        return true;
+    //    });
+
+    //});
+    //---------------------------- Feature Hover ----------------------------
 
     // Bunlar gerekli değil sanırım!
     //map.addInteraction(translate);
@@ -88,19 +118,32 @@
     });
     // #endregion
 
+    map.on('click', function (evt) {
+        this.forEachFeatureAtPixel(evt.pixel, function (f) {
+            selectedFeature = f;
+        });
+    });
+
     // #region Get Features From Db & Print Screen
     // db'deki "QuartzLinkDrawingFeature" tablosunun "Features" sütununun değerlerini aldım ve bu bilgilerle feature'ları oluşturdum
     if (currentDrawingFeatures != 0) {
-        //var currentFeatureCount = 0;
         var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
         featureCollection[''] = featuresFromDb;
         featureCollection[''].features.forEach(function (featureJson) {
-            //currentFeatureCount++;
+            //if (featureJson.properties.LonLat == "0.015490411906637962,0.006267433435397152") {
+            //    alert("works!");
+            //}
+            //else alert(featureJson.properties.LonLat);
 
             var feature = new ol.Feature({
-                geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857'),
-                //id: currentFeatureCount // [TAMAMLANMADI] Properties tanımlama
+                geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857')
             });
+
+            feature.setId(featureJson.Id);
+            feature.setProperties({ 'LonLat': featureJson.properties.LonLat });
+            feature.setProperties({ 'Id': featureJson.properties.Id });
+            feature.setProperties({ 'Name': featureJson.properties.Name });
+            feature.setProperties({ 'Type': featureJson.properties.Type });
 
             // Add feature to the vector source
             source.addFeature(feature);
@@ -108,52 +151,9 @@
     }
     // #endregion
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// [FUNCTIONS]
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////// [FUNCTIONS]
 
     createList();
-    // Load Spinner Yap! [TAMAMLANMADI]
-    //function waitCreateList() {
-    //    $(".linkButton").on('click', function () {
-    //        lastClickedLinkButtonId = $(this).attr('id');
-    //        clickedOrCreated = "clicked";
-    //        $.ajax({
-    //            type: "GET",
-    //            url: "QuartzLink/GetLinkDetailJSON",
-    //            data: { linkId: lastClickedLinkButtonId },
-    //            success: function (response) {
-    //                lastClickedLink = jQuery.parseJSON(response);
-    //                loadLinkModal();
-    //            },
-    //            error: function (error) {
-    //                alert("error!");
-    //                console.log(error.responseText);
-    //            }
-    //        });
-    //    });
-
-    //    $(".itemButton").on('click', function () {
-    //        lastClickedItemButtonId = $(this).attr('id');
-    //        clickedOrCreated = "clicked";
-
-    //        $.ajax({
-    //            type: "GET",
-    //            url: "QuartzItem/GetItemDetailJSON",
-    //            data: { itemId: lastClickedItemButtonId },
-    //            success: function (response) {
-    //                lastClickedItem = jQuery.parseJSON(response);
-    //                loadInformationPage();
-    //                $("#itemModalSaveButton").removeAttr("hidden");
-    //                $("#itemShowLabel").removeAttr("hidden");
-    //                $("#showlabelSpan").removeAttr("hidden");
-    //            },
-    //            error: function (error) {
-    //                alert("error!");
-    //                console.log(error.responseText);
-    //            }
-    //        });
-    //    });
-    //}
-    //setTimeout(waitCreateList, 100);
 
     function addInteraction() {
         if (typeSelect.value !== 'None') {
@@ -180,10 +180,10 @@
 
             // #region Feature "drawend" Function
             draw.on("drawend", function (evt) {
-                // çizimin koordinatlarını "coords" değişkeninde tutuyorum (bu kısım kullanılmadı!)
-                var feature = evt.feature;
-                var coords = feature.getGeometry().getCoordinates()[0];
-                coords = coords.toString();
+                selectedFeature = evt.feature;
+                var featuresExtent = selectedFeature.getGeometry().getExtent();
+                var featuresGetCenter = ol.extent.getCenter(featuresExtent);
+                featuresLonLat = ol.proj.toLonLat(featuresGetCenter);
 
                 // Button'a shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra "typeSelect.value" atanaması için
                 function timeOut() {
@@ -214,6 +214,8 @@
                         success: function (response) {
                             lastCreatedLink = jQuery.parseJSON(response);
                             clickedOrCreated = "created";
+                            linkOrItem = "link";
+                            getVectorSource();
 
                             $("#clickedLinkMode").attr("hidden", "");
                             $("#createdLinkMode").removeAttr("hidden");
@@ -227,22 +229,6 @@
                             $("#linkShowLabel").prop('checked', true);
 
                             loadLinkModal();
-
-                            //var drawingFeatureAddModel = {
-                            //    QuartzLinkId: lastCreatedLink.Id
-                            //}
-                            //$.ajax({
-                            //    type: "POST",
-                            //    url: "QuartzLink/AddDrawingFeaturesJSON",
-                            //    data: { model: drawingFeatureAddModel },
-                            //    success: function (response) {
-                            //        rModel = jQuery.parseJSON(response);
-                            //    },
-                            //    error: function (error) {
-                            //        alert("error!");
-                            //        console.log(error.responseText);
-                            //    }
-                            //});
 
                             var drawingSettingsAddModel = {
                                 DrawingNo: lastCreatedLink.TagNo,
@@ -291,7 +277,9 @@
                         success: function (response) {
                             lastCreatedItem = jQuery.parseJSON(response);
                             clickedOrCreated = "created";
+                            linkOrItem = "item";
                             isInformationCreated = false;
+                            getVectorSource();
 
                             $("#itemModal").modal('show');
                             loadInformationPage();
@@ -304,7 +292,12 @@
                 }
                 // #endregion
 
-                setTimeout(addDrawingFeaturesJSON, 100);
+                function waitFunc() {
+                    $("#shapeArea").children().remove();
+                    createList();
+                    // Load Spinner Yap! [TAMAMLANMADI]
+                }
+                setTimeout(waitFunc, 100);
                 document.getElementById('main').style.cursor = 'grab';
             });
             // #endregion
@@ -321,8 +314,11 @@
             url: 'QuartzLink/GetVectorSource',
             data: { quartzLinkId: currentQuartzLink.Id },
             success: function (response) {
-                if (response != 0)
+                if (response != 0) {
                     currentDrawingFeatures = jQuery.parseJSON(response);
+                    var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
+                    featureCollection[''] = featuresFromDb;
+                }
                 else
                     currentDrawingFeatures = 0;
             },
@@ -336,7 +332,8 @@
     function addDrawingFeaturesJSON() {
         // list all current features's details (geoJSON format)
         var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-            dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857'
         });
 
         if (currentDrawingFeatures == 0) {
@@ -385,40 +382,44 @@
 
     // #region Feature "addfeature" Function
     source.on('addfeature', function (evt) {
-        // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim
-        var style = new ol.style.Style({
-            stroke: new ol.style.Stroke({ color: '#000' }),
-            text: new ol.style.Text({
-                text: shapeId,
-                font: '20px Calibri,sans-serif',
-                //fill: new ol.style.Fill({
-                //    color: '#000',
-                //}),
-                stroke: new ol.style.Stroke({
-                    color: '#fff',
-                    width: 2
+        function wait() {
+            var feature;
+            if (linkOrItem == "link")
+                feature = lastCreatedLink;
+            if (linkOrItem == "item")
+                feature = lastCreatedItem;
+
+            // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim
+            var style = new ol.style.Style({
+                stroke: new ol.style.Stroke({ color: '#000' }),
+                text: new ol.style.Text({
+                    text: feature.TagNo,
+                    font: '20px Calibri,sans-serif',
+                    fill: new ol.style.Fill({
+                        color: 'rgba(255, 255, 0, 0)',
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: '#000',
+                        width: 1
+                    })
                 })
-            })
-        });
-        //evt.feature.setProperties({ 'id': "1" }); // [TAMAMLANMADI]
-        // Çizilen Box/Polygon'a ID tanımladım
-        evt.feature.setId(Math.floor(Math.random() * 1000));
-        //console.log(evt.feature.getId());
-        //console.log(evt.feature.get('id'));
-        //console.log(evt.feature);
-        // Çizilen Box/Polygon'a text tanımladım
-        evt.feature.setStyle(style);
+            });
 
-        // Çizilen Box/Polygon'u tüm Çizimlerin olduğu listeye ekledim
-        allShapes.push(evt.feature);
+            // Çizilen Box/Polygon'a ID tanımladım
+            //evt.feature.setId(feature.Id);
 
-        function waitFunc() {
-            $("#shapeArea").children().remove();
-            createList();
-            // Load Spinner Yap! [TAMAMLANMADI]
+            // Çizilen Box/Polygon'a text tanımladım
+            evt.feature.setStyle(style);
+
+            evt.feature.setProperties({ 'LonLat': featuresLonLat });
+            evt.feature.setProperties({ 'Id': feature.Id });
+            evt.feature.setProperties({ 'Name': feature.TagNo });
+            evt.feature.setProperties({ 'Type': linkOrItem });
+            addedFeatures.push(evt.feature);
+
+            setTimeout(addDrawingFeaturesJSON, 100);
         }
-        setTimeout(waitFunc, 100);
-
+        setTimeout(wait, 200);
     });
     // #endregion
 
@@ -448,6 +449,11 @@
 
     // #region Feature "translateend" Event Function
     translate.on('translateend', function (evt) {
+        var featuresExtent = selectedFeature.getGeometry().getExtent();
+        var featuresGetCenter = ol.extent.getCenter(featuresExtent);
+        featuresLonLat = ol.proj.toLonLat(featuresGetCenter);
+        selectedFeature.setProperties({ 'LonLat': featuresLonLat });
+
         var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
             dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
         });

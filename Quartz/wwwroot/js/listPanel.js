@@ -52,8 +52,11 @@ function createList() {
 
     // #region Link & Item Button's On Click Functions
     function wait() {
-        $(".linkButton").on('click', function () {
+        $(".linkButton").on('dblclick', function () {
             $("#linkModal").modal('show');
+        });
+
+        $(".linkButton").on('click', function () {
             lastClickedLinkButtonId = $(this).attr('id');
             clickedOrCreated = "clicked";
 
@@ -63,6 +66,29 @@ function createList() {
                 data: { linkId: lastClickedLinkButtonId },
                 success: function (response) {
                     lastClickedLink = jQuery.parseJSON(response);
+
+                    source.getFeatures().forEach(function (feature) {
+                        if (feature.get("Id") == lastClickedLink.Id) {
+                            select.getFeatures().clear();
+                            select.getFeatures().push(feature);
+                            selectedFeature = select.getFeatures().item(0);
+
+                            view.animate({
+                                center: new ol.proj.fromLonLat(feature.get("LonLat")),
+                                zoom: 4
+                            });
+                        }
+                    });
+
+                    //featureCollection[''].features.forEach(function (featureJson) {
+                    //    if (featureJson.properties.Id == lastClickedLink.Id) {
+                    //        view.animate({
+                    //            center: new ol.proj.fromLonLat(featureJson.properties.LonLat),
+                    //            zoom: 4
+                    //        });
+                    //    }
+                    //});
+
                     if (lastClickedLink.CurrentDrawingId != 0) {
                         $("#createdLinkMode").attr("hidden", "");
                         $("#clickedLinkMode").removeAttr("hidden");
@@ -71,6 +97,7 @@ function createList() {
                         $("#createdLinkMode").removeAttr("hidden");
                         $("#clickedLinkMode").attr("hidden", "");
                     }
+
                     addLinkUploadDrawingArea = false;
                     document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
                     document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
@@ -85,8 +112,11 @@ function createList() {
             });
         });
 
-        $(".itemButton").on('click', function () {
+        $(".itemButton").on('dblclick', function () {
             $("#itemModal").modal('show');
+        });
+
+        $(".itemButton").on('click', function () {
             lastClickedItemButtonId = $(this).attr('id');
             clickedOrCreated = "clicked";
 
@@ -97,6 +127,30 @@ function createList() {
                 success: function (response) {
                     lastClickedItem = jQuery.parseJSON(response);
                     loadInformationPage();
+
+                    source.getFeatures().forEach(function (feature) {
+                        if (feature.get("Id") == lastClickedItem.Id) {
+                            select.getFeatures().clear();
+                            select.getFeatures().push(feature);
+                            selectedFeature = select.getFeatures().item(0);
+
+                            view.animate({
+                                center: new ol.proj.fromLonLat(feature.get("LonLat")),
+                                zoom: 4
+                            });
+                        }
+                        console.log(feature);
+                    });
+
+                    //featureCollection[''].features.forEach(function (featureJson) {
+                    //    if (featureJson.properties.Id == lastClickedItem.Id) {
+                    //        view.animate({
+                    //            center: new ol.proj.fromLonLat(featureJson.properties.LonLat),
+                    //            zoom: 4
+                    //        });
+                    //    }
+                    //});
+
                     $("#itemModalSaveButton").removeAttr("hidden");
                     $("#itemShowLabel").removeAttr("hidden");
                     $("#showlabelSpan").removeAttr("hidden");

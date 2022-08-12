@@ -268,9 +268,34 @@ function goCurrentLink() {
         }
     }
 
-
-
     currentQuartzLink = link;
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzLink/GetDrawingSettingsDetailJSON",
+        data: { quartzLinkId: currentQuartzLink.Id },
+        success: function (response) {
+            currentDrawingSettings = jQuery.parseJSON(response);
+            currentDrawingSettings.File = $("#addLinkSelectDrawing").val();
+
+            $.ajax({
+                type: "POST",
+                url: "QuartzLink/UpdateDrawingSettingsJSON",
+                data: { model: currentDrawingSettings },
+                success: function (response) {
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
     $.ajax({
         type: "GET",
         url: "QuartzLink/GetVectorSource",
