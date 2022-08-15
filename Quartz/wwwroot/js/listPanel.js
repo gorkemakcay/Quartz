@@ -139,7 +139,6 @@ function createList() {
                                 zoom: 4
                             });
                         }
-                        console.log(feature);
                     });
 
                     //featureCollection[''].features.forEach(function (featureJson) {
