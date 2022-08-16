@@ -172,38 +172,24 @@
 }
 
 function linkModalSaveButton() {
-    var linkUpdateModel;
-    switch (clickedOrCreated) {
-        case "clicked":
-            lastClickedLink.TagNo = $("#addLinkTagNo").val();
-            if ($("#addLinkSelectDrawing").val() != "select")
-                lastClickedLink.CurrentDrawingId = $("#addLinkSelectDrawing").val();
 
-            // [TAMAMLANMADI: showlabel controller/action'da modalstate.isvalid = false hatasına sebep oluyor, geçici olarak yorum satırı yaptım!]
-            //lastClickedLink.ShowLabel = showLabel;
-            linkUpdateModel = lastClickedLink;
-            break;
+    var link;
+    if (clickedOrCreated == "clicked")
+        link = lastClickedLink;
+    if (clickedOrCreated == "created")
+        link = lastCreatedLink;
 
-        case "created":
-            lastCreatedLink.TagNo = $("#addLinkTagNo").val();
-            if ($("#addLinkSelectDrawing").val() != "select")
-                lastCreatedLink.CurrentDrawingId = $("#addLinkSelectDrawing").val();
+    link.TagNo = $("#addLinkTagNo").val();
 
-            // [TAMAMLANMADI: showlabel controller/action'da modalstate.isvalid = false hatasına sebep oluyor, geçici olarak yorum satırı yaptım!]
-            //lastCreatedLink.ShowLabel = $("#linkShowLabel").val();
-            linkUpdateModel = lastCreatedLink;
-            break;
-
-        default:
-    }
+    if ($("#addLinkSelectDrawing").val() != "select")
+        link.CurrentDrawingId = $("#addLinkSelectDrawing").val();
 
     $.ajax({
         type: "POST",
         url: "QuartzLink/UpdateLinkJSON",
-        data: { model: linkUpdateModel },
+        data: { model: link },
         success: function (response) {
             rModel = jQuery.parseJSON(response);
-            //console.log(rModel);
             clickedOrCreated = "null";
             function wait() {
                 $("#shapeArea").children().remove();
@@ -219,8 +205,65 @@ function linkModalSaveButton() {
         }
     });
 
+    $.ajax({
+        type: "GET",
+        url: "QuartzLink/GetDrawingSettingsDetailJSON",
+        data: { quartzLinkId: link.Id },
+        success: function (response) {
+            var linksDrawingSettings = jQuery.parseJSON(response);
+            linksDrawingSettings.DrawingNo = $("#addLinkTagNo").val();
+
+            $.ajax({
+                type: "POST",
+                url: "QuartzLink/UpdateDrawingSettingsJSON",
+                data: { model: linksDrawingSettings },
+                success: function (response) {
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
+
+    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+        dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+    });
+
+    var drawingFeaturesModel = {
+        Id: currentDrawingFeatures.Id,
+        Features: json,
+        QuartzLinkId: currentQuartzLink.Id
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "QuartzLink/UpdateDrawingFeaturesJSON",
+        data: { model: drawingFeaturesModel },
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+            getVectorSource();
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
     document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
     document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
+
+    if (clickedOrCreated == "clicked")
+        lastClickedLink = link;
+    if (clickedOrCreated == "created")
+        lastCreatedLink = link;
 }
 
 function goCurrentLink() {
@@ -233,8 +276,60 @@ function goCurrentLink() {
     if (link.CurrentDrawingId != $("#addLinkSelectDrawing").val()) {
         link.CurrentDrawingId = $("#addLinkSelectDrawing").val();
 
-        if (link.TagNo != $("#addLinkTagNo").val())
+        if (link.TagNo != $("#addLinkTagNo").val()) {
             link.TagNo = $("#addLinkTagNo").val();
+
+            $.ajax({
+                type: "GET",
+                url: "QuartzLink/GetDrawingSettingsDetailJSON",
+                data: { quartzLinkId: link.Id },
+                success: function (response) {
+                    var linksDrawingSettings = jQuery.parseJSON(response);
+                    linksDrawingSettings.DrawingNo = $("#addLinkTagNo").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "QuartzLink/UpdateDrawingSettingsJSON",
+                        data: { model: linksDrawingSettings },
+                        success: function (response) {
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+
+            selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
+
+            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+                dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+            });
+
+            var drawingFeaturesModel = {
+                Id: currentDrawingFeatures.Id,
+                Features: json,
+                QuartzLinkId: currentQuartzLink.Id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "QuartzLink/UpdateDrawingFeaturesJSON",
+                data: { model: drawingFeaturesModel },
+                success: function (response) {
+                    rModel = jQuery.parseJSON(response);
+                    getVectorSource();
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
 
         $.ajax({
             type: "POST",
@@ -252,13 +347,64 @@ function goCurrentLink() {
     else {
         if (link.TagNo != $("#addLinkTagNo").val()) {
             link.TagNo = $("#addLinkTagNo").val();
-
             $.ajax({
                 type: "POST",
                 url: "QuartzLink/UpdateLinkJSON",
                 data: { model: link },
-                succes: function (response) {
+                success: function (response) {
                     link = jQuery.parseJSON(response);
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "QuartzLink/GetDrawingSettingsDetailJSON",
+                data: { quartzLinkId: link.Id },
+                success: function (response) {
+                    var linksDrawingSettings = jQuery.parseJSON(response);
+                    linksDrawingSettings.DrawingNo = $("#addLinkTagNo").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "QuartzLink/UpdateDrawingSettingsJSON",
+                        data: { model: linksDrawingSettings },
+                        success: function (response) {
+
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+
+            selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
+
+            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+                dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+            });
+
+            var drawingFeaturesModel = {
+                Id: currentDrawingFeatures.Id,
+                Features: json,
+                QuartzLinkId: currentQuartzLink.Id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "QuartzLink/UpdateDrawingFeaturesJSON",
+                data: { model: drawingFeaturesModel },
+                success: function (response) {
+                    rModel = jQuery.parseJSON(response);
+                    getVectorSource();
                 },
                 error: function (error) {
                     alert("error!");
@@ -269,32 +415,6 @@ function goCurrentLink() {
     }
 
     currentQuartzLink = link;
-
-    $.ajax({
-        type: "GET",
-        url: "QuartzLink/GetDrawingSettingsDetailJSON",
-        data: { quartzLinkId: currentQuartzLink.Id },
-        success: function (response) {
-            currentDrawingSettings = jQuery.parseJSON(response);
-            currentDrawingSettings.File = $("#addLinkSelectDrawing").val();
-
-            $.ajax({
-                type: "POST",
-                url: "QuartzLink/UpdateDrawingSettingsJSON",
-                data: { model: currentDrawingSettings },
-                success: function (response) {
-                },
-                error: function (error) {
-                    alert("error!");
-                    console.log(error.responseText);
-                }
-            });
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
 
     $.ajax({
         type: "GET",

@@ -359,21 +359,7 @@ $(function () {
                 }
             });
 
-
-            $.get({
-                url: 'QuartzLink/GetVectorSource',
-                data: { quartzLinkId: currentQuartzLink.Id },
-                success: function (response) {
-                    if (response != 0)
-                        currentDrawingFeatures = jQuery.parseJSON(response);
-                    else
-                        currentDrawingFeatures = 0;
-                },
-                error: function (error) {
-                    alert("error!");
-                    console.log(error.responseText);
-                }
-            });
+            getVectorSource();
 
             function wait() {
                 $.ajax({
@@ -504,4 +490,24 @@ function goDrawing(linkId, drawingId, thisValue) {
     });
 
 
+}
+
+function getVectorSource() {
+    $.get({
+        url: 'QuartzLink/GetVectorSource',
+        data: { quartzLinkId: currentQuartzLink.Id },
+        success: function (response) {
+            if (response != 0) {
+                currentDrawingFeatures = jQuery.parseJSON(response);
+                var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
+                featureCollection[''] = featuresFromDb;
+            }
+            else
+                currentDrawingFeatures = 0;
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
 }

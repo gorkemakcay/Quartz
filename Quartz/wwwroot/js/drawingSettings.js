@@ -28,8 +28,6 @@ $("#btnDsmSave").on('click', function () {
         QuartzLinkId: currentQuartzLink.Id
     }
 
-    console.log($("#dsmSelectDrawing").val());
-
     if (currentDrawingSettings.File != $("#dsmSelectDrawing").val()) {
         currentDrawingSettings.File = $("#dsmSelectDrawing").val();
         drawingSettingsModel.File = currentDrawingSettings.File;
@@ -68,6 +66,24 @@ $("#btnDsmSave").on('click', function () {
                     }
                 });
                 toast("Drawing Settings Updated!");
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
+    }
+
+    if (currentDrawingSettings.DrawingNo != $("#dsmDrawingNo").val()) {
+        currentQuartzLink.TagNo = $("#dsmDrawingNo").val();
+        $.ajax({
+            type: "POST",
+            url: "QuartzLink/UpdateLinkJSON",
+            data: { model: currentQuartzLink },
+            success: function (response) {
+                rModel = jQuery.parseJSON(response);
+
+                toast("Drawing Upload Successful!");
             },
             error: function (error) {
                 alert("error!");

@@ -785,7 +785,7 @@ function openEditInspectionModal(inspectionId) {
                                 );
                                 $("#selectInspectionStatus").attr("hidden", "");
 
-                                for (var i = 0; i < methods.length; i++) {
+                                for (var i = 0; i < statuses.length; i++) {
                                     $("#inspectionStatus").append(
                                         $('<option>', {
                                             value: statuses[i].Name,
@@ -1011,9 +1011,16 @@ function loadInspectionsAttachmentPage() {
                         url: "FileUpload/GetFileDetail",
                         data: { fileId: attachmentId },
                         success: function (response) {
-                            attachmentModel = jQuery.parseJSON(response);
+                            var attachmentModel = jQuery.parseJSON(response);
 
-                            if (attachmentModel != "") {
+                            if (attachmentModel == null) {
+                                $("#inspectionsAttachmentTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                    )
+                                );
+                            }
+                            else {
                                 var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
                                 $("#inspectionsAttachmentTable").children('tbody').append(
                                     $('<tr>').append(
@@ -1033,13 +1040,6 @@ function loadInspectionsAttachmentPage() {
                                             "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
                                         )
                                     ),
-                                );
-                            }
-                            else {
-                                $("#inspectionsAttachmentTable").children('tbody').append(
-                                    $('<tr>').append(
-                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
-                                    )
                                 );
                             }
                         },

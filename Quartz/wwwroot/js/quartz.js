@@ -4,8 +4,14 @@
         condition: ol.events.condition.click
     });
 
+    var selectPM = new ol.interaction.Select({
+        condition: ol.events.condition.pointerMove
+    });
+
+    var sdsd = select.getFeatures();
+
     translate = new ol.interaction.Translate({
-        features: select.getFeatures(),
+        features: sdsd,
         condition: ol.events.condition.platformModifierKeyOnly
     });
 
@@ -64,7 +70,7 @@
 
 
     map = new ol.Map({
-        interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([select, translate]),
+        interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([select, selectPM, translate]),
         layers: [imageLayer, rasterLayer, vectorLayer],
         target: 'map',
         view: view
@@ -307,26 +313,6 @@
             document.getElementById('main').style.cursor = 'grab';
             map.removeInteraction(draw);
         }
-    }
-
-    function getVectorSource() {
-        $.get({
-            url: 'QuartzLink/GetVectorSource',
-            data: { quartzLinkId: currentQuartzLink.Id },
-            success: function (response) {
-                if (response != 0) {
-                    currentDrawingFeatures = jQuery.parseJSON(response);
-                    var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
-                    featureCollection[''] = featuresFromDb;
-                }
-                else
-                    currentDrawingFeatures = 0;
-            },
-            error: function (error) {
-                alert("error!");
-                console.log(error.responseText);
-            }
-        });
     }
 
     function addDrawingFeaturesJSON() {
