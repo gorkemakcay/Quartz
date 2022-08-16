@@ -16,7 +16,8 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
         {
             optionsBuilder.LogTo(Console.WriteLine).EnableSensitiveDataLogging();
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz2;uid=umutd;pwd=Ud4583!");
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz3;uid=umutd;pwd=Ud4583!");
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz3;uid=umutd;pwd=Ud4583!");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz4;uid=umutd;pwd=Ud4583!");
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -27,13 +28,19 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
 
         public DbSet<AppUser> AspNetUsers { get; set; }
         public DbSet<AppRole> AspNetRoles { get; set; }
+
         public DbSet<FileUpload> FileUploads { get; set; }
+
         public DbSet<QuartzLink> QuartzLinks { get; set; }
         public DbSet<QuartzLinksDrawingFeatures> QuartzLinksDrawingFeatures { get; set; }
         public DbSet<QuartzLinksDrawingSettings> QuartzLinksDrawingSettings { get; set; }
+
         public DbSet<QuartzItem> QuartzItems { get; set; }
         public DbSet<QuartzItemsInformation> QuartzItemsInformations { get; set; }
         public DbSet<QuartzItemsInspection> QuartzItemsInspections { get; set; }
+        public DbSet<QuartzItemsValveMaintenance> quartzItemsValveMaintenances { get; set; }
+        public DbSet<QuartzItemsThicknessMeasurement> quartzItemsThicknessMeasurements { get; set; }
+
         public DbSet<LookUpItemsComponentType> LookupItemsComponentTypes { get; set; }
         public DbSet<LookUpItemsFittingType> LookupItemsFittingTypes { get; set; }
         public DbSet<LookUpItemsMethod> LookupItemsMethods { get; set; }

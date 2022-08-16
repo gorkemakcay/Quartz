@@ -31,6 +31,10 @@ namespace Quartz.DataAccess.UnitOfWorks.Concrete
 
         public IQuartzItemsInspectionDal quartzItemsInspectionDal { get; private set; }
 
+        public IQuartzItemsValveMaintenanceDal quartzItemsValveMaintenanceDal { get; private set; }
+
+        public IQuartzItemsThicknessMeasurementDal quartzItemsThicknessMeasurementDal { get; private set; }
+
         public IQuartzLinkDal quartzLinkDal { get; private set; }
 
         public IQuartzLinksDrawingFeaturesDal quartzLinksDrawingFeaturesDal { get; private set; }
@@ -71,6 +75,8 @@ namespace Quartz.DataAccess.UnitOfWorks.Concrete
             quartzItemDal = new EfQuartzItemRepository(_ctx);
             quartzItemsInformationDal = new EfQuartzItemsInformationRepository(_ctx);
             quartzItemsInspectionDal = new EfQuartzItemsInspectionRepository(_ctx);
+            quartzItemsValveMaintenanceDal = new EfQuartzItemsValveMaintenanceRepository(_ctx);
+            quartzItemsThicknessMeasurementDal = new EfQuartzItemsThicknessMeasurementRepository(_ctx);
             quartzLinkDal = new EfQuartzLinkRepository(_ctx);
             quartzLinksDrawingFeaturesDal = new EfQuartzLinksDrawingFeaturesRepository(_ctx);
             quartzLinksDrawingSettingsDal = new EfQuartzLinksDrawingSettingsRepository(_ctx);

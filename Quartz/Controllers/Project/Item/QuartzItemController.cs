@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Quartz.BusinessLogic.Interface.IProjectService.IItemService;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels;
+using Quartz.Common.ViewModels.Project.Item.QuartzItemsThicknessMeasurement;
+using Quartz.Common.ViewModels.Project.Item.QuartzItemsValveMaintenance;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
 using Quartz.Common.ViewModels.Project.QuartzItem.QuartzItemsInspectionViewModels;
 using System.Linq;
@@ -15,13 +17,19 @@ namespace Quartz.Controllers.Project.Item
         private readonly IQuartzItemService _itemService;
         private readonly IQuartzItemsInformationService _informationService;
         private readonly IQuartzItemsInspectionService _inspectionService;
+        private readonly IQuartzItemsValveMaintenanceService _quartzItemsValveMaintenanceService;
+        private readonly IQuartzItemsThicknessMeasurementService _quartzItemsThicknessMeasurementService;
         public QuartzItemController(IQuartzItemService itemService,
                                     IQuartzItemsInformationService informationService,
-                                    IQuartzItemsInspectionService inspectionService)
+                                    IQuartzItemsInspectionService inspectionService,
+                                    IQuartzItemsValveMaintenanceService quartzItemsValveMaintenanceService,
+                                    IQuartzItemsThicknessMeasurementService quartzItemsThicknessMeasurementService)
         {
             _itemService = itemService;
             _informationService = informationService;
             _inspectionService = inspectionService;
+            _quartzItemsValveMaintenanceService = quartzItemsValveMaintenanceService;
+            _quartzItemsThicknessMeasurementService = quartzItemsThicknessMeasurementService;
         }
 
         #region Item
@@ -214,5 +222,114 @@ namespace Quartz.Controllers.Project.Item
         }
         #endregion
 
+        #region Valve Maintenance
+        [HttpPost]
+        public IActionResult AddValveMaintenanceJSON(QuartzItemsValveMaintenanceAddViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = _quartzItemsValveMaintenanceService.AddValveMaintenance(model);
+                var responseModel = _quartzItemsValveMaintenanceService.GetValveMaintenanceDetail(id);
+                var jSonModel = JsonConvert.SerializeObject(responseModel, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                return Json(jSonModel);
+            }
+            return Json(null);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateValveMaintenanceJSON(QuartzItemsValveMaintenanceUpdateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _quartzItemsValveMaintenanceService.UpdateValveMaintenance(model);
+                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                return Json(jSonModel);
+            }
+            return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetValveMaintenanceDetailJSON(int valveMaintenanceId)
+        {
+            var model = _quartzItemsValveMaintenanceService.GetValveMaintenanceDetail(valveMaintenanceId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllValveMaintenancesJSON(int quartzItemId)
+        {
+            var model = _quartzItemsValveMaintenanceService.GetAllValveMaintenances(quartzItemId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+        #endregion
+
+        #region Thickness Measurement
+        [HttpPost]
+        public IActionResult AddThicknessMeasurementJSON(QuartzItemsThicknessMeasurementAddViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = _quartzItemsThicknessMeasurementService.AddThicknessMeasurement(model);
+                var responseModel = _quartzItemsThicknessMeasurementService.GetThicknessMeasurementDetail(id);
+                var jSonModel = JsonConvert.SerializeObject(responseModel, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                return Json(jSonModel);
+            }
+            return Json(null);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateThicknessMeasurementJSON(QuartzItemsThicknessMeasurementUpdateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _quartzItemsThicknessMeasurementService.UpdateThicknessMeasurement(model);
+                var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                return Json(jSonModel);
+            }
+            return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetThicknessMeasurementDetailJSON(int thicknessMeasurementId)
+        {
+            var model = _quartzItemsThicknessMeasurementService.GetThicknessMeasurementDetail(thicknessMeasurementId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllThicknessMeasurementsJSON(int quartzItemId)
+        {
+            var model = _quartzItemsThicknessMeasurementService.GetAllThicknessMeasurements(quartzItemId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+        #endregion
     }
 }

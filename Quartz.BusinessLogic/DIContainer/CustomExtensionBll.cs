@@ -24,6 +24,8 @@ namespace Quartz.BusinessLogic.DIContainer
                     .AddScoped<IQuartzItemService, QuartzItemManager>()
                     .AddScoped<IQuartzItemsInformationService, QuartzItemsInformationManager>()
                     .AddScoped<IQuartzItemsInspectionService, QuartzItemsInspectionManager>()
+                    .AddScoped<IQuartzItemsValveMaintenanceService, QuartzItemsValveMaintenanceManager>()
+                    .AddScoped<IQuartzItemsThicknessMeasurementService, QuartzItemsThicknessMeasurementManager>()
                     .AddScoped<IQuartzLinkService, QuartzLinkManager>()
                     .AddScoped<IQuartzLinksDrawingFeaturesService, QuartzLinksDrawingFeaturesManager>()
                     .AddScoped<IQuartzLinksDrawingSettingsService, QuartzLinksDrawingSettingsManager>()

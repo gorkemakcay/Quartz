@@ -24,6 +24,8 @@ namespace Quartz.DataAccess.DIContainer
                     .AddScoped<IQuartzItemDal, EfQuartzItemRepository>()
                     .AddScoped<IQuartzItemsInformationDal, EfQuartzItemsInformationRepository>()
                     .AddScoped<IQuartzItemsInspectionDal, EfQuartzItemsInspectionRepository>()
+                    .AddScoped<IQuartzItemsValveMaintenanceDal, EfQuartzItemsValveMaintenanceRepository>()
+                    .AddScoped<IQuartzItemsThicknessMeasurementDal, EfQuartzItemsThicknessMeasurementRepository>()
                     .AddScoped<IQuartzLinkDal, EfQuartzLinkRepository>()
                     .AddScoped<IQuartzLinksDrawingFeaturesDal, EfQuartzLinksDrawingFeaturesRepository>()
                     .AddScoped<IQuartzLinksDrawingSettingsDal, EfQuartzLinksDrawingSettingsRepository>()

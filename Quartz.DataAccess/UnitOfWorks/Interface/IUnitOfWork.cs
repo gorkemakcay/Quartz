@@ -17,6 +17,8 @@ namespace Quartz.DataAccess.UnitOfWorks.Interface
         IQuartzItemDal quartzItemDal { get; }
         IQuartzItemsInformationDal quartzItemsInformationDal { get; }
         IQuartzItemsInspectionDal quartzItemsInspectionDal { get; }
+        IQuartzItemsValveMaintenanceDal quartzItemsValveMaintenanceDal { get; }
+        IQuartzItemsThicknessMeasurementDal quartzItemsThicknessMeasurementDal { get; }
         IQuartzLinkDal quartzLinkDal { get; }
         IQuartzLinksDrawingFeaturesDal quartzLinksDrawingFeaturesDal { get; }
         IQuartzLinksDrawingSettingsDal quartzLinksDrawingSettingsDal { get; }

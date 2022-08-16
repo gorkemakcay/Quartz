@@ -14,6 +14,8 @@ using Quartz.Common.ViewModels.LookUpItems.LookUpItemsTechniqueViewModels;
 using Quartz.Common.ViewModels.LookUpItems.LookUpItemsWeldTypeViewModels;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels;
+using Quartz.Common.ViewModels.Project.Item.QuartzItemsThicknessMeasurement;
+using Quartz.Common.ViewModels.Project.Item.QuartzItemsValveMaintenance;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingFeaturesViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingSettingsViewModels;
@@ -89,6 +91,19 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             #region QuartzItemsInspection
             CreateMap<QuartzItemsInspection, QuartzItemsInspectionAddViewModel>().ReverseMap();
             CreateMap<QuartzItemsInspection, QuartzItemsInspectionUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region QuartzItemsThicknessMeasurement
+            CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementAddViewModel>().ReverseMap();
+            CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementListViewModel>().ReverseMap();
+            CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementUpdateViewModel>().ReverseMap();
+            #endregion
+
+            #region QuartzItemsValveMaintenance
+            CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceAddViewModel>().ReverseMap();
+            CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceListViewModel>().ReverseMap();
+            CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceUpdateViewModel>().ReverseMap();
+
             #endregion
 
             #endregion
