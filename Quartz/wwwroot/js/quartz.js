@@ -288,7 +288,8 @@
                             getVectorSource();
 
                             $("#itemModal").modal('show');
-                            loadInformationPage();
+                            //loadInformationPage();
+                            loadItemModalHomePage();
                             toast("Item Add Successful!");
                         },
                         error: function (error) {

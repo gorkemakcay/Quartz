@@ -147,116 +147,41 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
 }
 
 // NavBar ---> Display PartialViews
-$("#itemModalNav a").on('click', function () {
-    var info = $(this).html();
-    info = info.replace(/\s+/g, '');
+//$("#itemModalNav a").on('click', function () {
+//    var info = $(this).html();
+//    info = info.replace(/\s+/g, '');
 
-    switch (info) {
-        case 'Informations':
-            itemModalActivePartial = "Informations";
-            loadInformationPage();
-            $("#itemModalSaveButton").removeAttr("hidden");
-            $("#itemShowLabel").removeAttr("hidden");
-            $("#showlabelSpan").removeAttr("hidden");
-            break;
+//    switch (info) {
+//        case 'Informations':
+//            itemModalActivePartial = "Informations";
+//            loadInformationPage();
+//            $("#itemModalSaveButton").removeAttr("hidden");
+//            $("#itemShowLabel").removeAttr("hidden");
+//            $("#showlabelSpan").removeAttr("hidden");
+//            break;
 
-        case 'Inspections':
-            itemModalActivePartial = "Inspection";
-            loadInspectionPage();
-            $("#itemModalSaveButton").attr("hidden", "");
-            $("#itemShowLabel").attr("hidden", "");
-            $("#showlabelSpan").attr("hidden", "");
-            break;
+//        case 'Inspections':
+//            itemModalActivePartial = "Inspection";
+//            loadInspectionPage();
+//            $("#itemModalSaveButton").attr("hidden", "");
+//            $("#itemShowLabel").attr("hidden", "");
+//            $("#showlabelSpan").attr("hidden", "");
+//            break;
 
-        // [TAMAMLANMADI]
-        case 'Attachments':
-            itemModalActivePartial = "Attachments";
-            loadAttachmentPage();
-            $("#itemModalSaveButton").attr("hidden", "");
-            $("#itemShowLabel").attr("hidden", "");
-            $("#showlabelSpan").attr("hidden", "");
-            break;
+//        // [TAMAMLANMADI]
+//        case 'Attachments':
+//            itemModalActivePartial = "Attachments";
+//            loadAttachmentPage();
+//            $("#itemModalSaveButton").attr("hidden", "");
+//            $("#itemShowLabel").attr("hidden", "");
+//            $("#showlabelSpan").attr("hidden", "");
+//            break;
 
-        default:
-            break;
-    }
-})
+//        default:
+//            break;
+//    }
+//});
 
-// #region Information
-function loadInformationPage() {
-    $("#itemModalTitle").html("Item Modal | Informations");
-
-    $.ajax({
-        type: "GET",
-        url: "QuartzItem/GetInformationPartialView",
-        success: function (response) {
-            $("#itemModalPartialArea").html(response);
-
-            // #region Get Information Details
-            switch (clickedOrCreated) {
-                case "clicked":
-                    $.ajax({
-                        type: "GET",
-                        url: "QuartzItem/GetInformationDetailJSON",
-                        data: { quartzItemId: lastClickedItem.Id },
-                        success: function (response) {
-                            lastInformationsResponseModel = jQuery.parseJSON(response);
-                            if (lastInformationsResponseModel != null) {
-                                $("#informationTagNo").val(lastInformationsResponseModel.TagNo);
-                                $("#informationSerialNo").val(lastInformationsResponseModel.SerialNo);
-                                $("#informationComponentType").val(lastInformationsResponseModel.ComponentType);
-                                $("#informationComments").val(lastInformationsResponseModel.Comments);
-                                $("#informationSpecification").val(lastInformationsResponseModel.Specification);
-                                $("#informationFittingType").val(lastInformationsResponseModel.FittingType);
-                                $("#informationWeldType").val(lastInformationsResponseModel.WeldType);
-                                $("#informationPipeOD").val(lastInformationsResponseModel.PipeOdIn);
-                                $("#informationPipeThickness").val(lastInformationsResponseModel.PipeThicknessMm);
-                                $("#informationOperatingTemp").val(lastInformationsResponseModel.OperatingTempC);
-                                $("#informationOperatingPressute").val(lastInformationsResponseModel.OperatingPressureBar);
-                                $("#itemShowLabel").val(lastInformationsResponseModel.ShowLabel);
-                                isInformationCreated = true;
-                            }
-                            else if (lastInformationsResponseModel == null) {
-                                $("#informationTagNo").val(lastClickedItem.TagNo);
-                                isInformationCreated = false;
-                            }
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                case "created":
-                    $.ajax({
-                        type: "GET",
-                        url: "QuartzItem/GetInformationDetailJSON",
-                        data: { quartzItemId: lastCreatedItem.Id },
-                        success: function (response) {
-                            lastInformationsResponseModel = jQuery.parseJSON(response);
-                            $("#informationTagNo").val(lastCreatedItem.TagNo);
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                    break;
-
-                default:
-            }
-            // #endregion
-
-            setTimeout(getInformationSelectOptions, 100);
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
-}
-// #endregion
 
 // #region Inspection
 
@@ -541,9 +466,119 @@ function getInformationSelectOptions() {
     // #endregion
 }
 
+// #region Item Modal
+
+// Item Modal Home Page [Load Function]
+function loadItemModalHomePage() {
+    $("#itemModalTitle").html("Item Modal");
+    itemModalActivePartial = "Home";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetQuartzItemsHomePagePartialView",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    $("#itemModalBackButton").attr("hidden", "");
+}
+
+// Information Page [Load Function]
+function loadInformationPage() {
+    $("#itemModalTitle").html("Item Modal | Informations");
+    itemModalActivePartial = "Informations";
+    $("#itemModalSaveButton").removeAttr("hidden");
+    $("#itemShowLabel").removeAttr("hidden");
+    $("#showlabelSpan").removeAttr("hidden");
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetInformationPartialView",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+
+            // #region Get Information Details
+            switch (clickedOrCreated) {
+                case "clicked":
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetInformationDetailJSON",
+                        data: { quartzItemId: lastClickedItem.Id },
+                        success: function (response) {
+                            lastInformationsResponseModel = jQuery.parseJSON(response);
+                            if (lastInformationsResponseModel != null) {
+                                $("#informationTagNo").val(lastInformationsResponseModel.TagNo);
+                                $("#informationSerialNo").val(lastInformationsResponseModel.SerialNo);
+                                $("#informationComponentType").val(lastInformationsResponseModel.ComponentType);
+                                $("#informationComments").val(lastInformationsResponseModel.Comments);
+                                $("#informationSpecification").val(lastInformationsResponseModel.Specification);
+                                $("#informationFittingType").val(lastInformationsResponseModel.FittingType);
+                                $("#informationWeldType").val(lastInformationsResponseModel.WeldType);
+                                $("#informationPipeOD").val(lastInformationsResponseModel.PipeOdIn);
+                                $("#informationPipeThickness").val(lastInformationsResponseModel.PipeThicknessMm);
+                                $("#informationOperatingTemp").val(lastInformationsResponseModel.OperatingTempC);
+                                $("#informationOperatingPressute").val(lastInformationsResponseModel.OperatingPressureBar);
+                                $("#itemShowLabel").val(lastInformationsResponseModel.ShowLabel);
+                                isInformationCreated = true;
+                            }
+                            else if (lastInformationsResponseModel == null) {
+                                $("#informationTagNo").val(lastClickedItem.TagNo);
+                                isInformationCreated = false;
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "created":
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetInformationDetailJSON",
+                        data: { quartzItemId: lastCreatedItem.Id },
+                        success: function (response) {
+                            lastInformationsResponseModel = jQuery.parseJSON(response);
+                            $("#informationTagNo").val(lastCreatedItem.TagNo);
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                default:
+            }
+            // #endregion
+
+            setTimeout(getInformationSelectOptions, 100);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    $("#itemModalBackButton").removeAttr("hidden");
+}
+
 // Inspection Page [Load Function]
 function loadInspectionPage() {
     $("#itemModalTitle").html("Item Modal | Inspections");
+    itemModalActivePartial = "Inspection";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
 
     var itemId;
     if (clickedOrCreated == "clicked")
@@ -621,6 +656,199 @@ function loadInspectionPage() {
             console.log(error.responseText);
         }
     });
+
+    $("#itemModalBackButton").removeAttr("hidden");
+}
+
+// Valve Maintenance Page [Load Function]
+function loadValveMaintenance() {
+    $("#itemModalTitle").html("Item Modal | Valve Maintenance");
+    itemModalActivePartial = "ValveMaintenance";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+
+    var itemId;
+    if (clickedOrCreated == "clicked")
+        itemId = lastClickedItem.Id;
+    if (clickedOrCreated == "created")
+        itemId = lastCreatedItem.Id;
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+}
+
+// Thickness Measurement Page [Load Function]
+function loadThicknessMeasurement() {
+    $("#itemModalTitle").html("Item Modal | Thickness Measurement");
+    itemModalActivePartial = "ThicknessMeasurement";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+
+    var itemId;
+    if (clickedOrCreated == "clicked")
+        itemId = lastClickedItem.Id;
+    if (clickedOrCreated == "created")
+        itemId = lastCreatedItem.Id;
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+}
+
+// Attachment Page [Load Function]
+function loadAttachmentPage() {
+    $("#itemModalTitle").html("Item Modal | Attachment");
+    itemModalActivePartial = "Attachments";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+
+    var item;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetAttachmentPartialView",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+            $("#itemAttachmentsTable").children('tbody').children('tr').remove();
+
+            // #region Choose File Button > [Change Function]
+            $("#itemModalUploadFile").on('change', function (e) {
+                var fileName = e.target.files[0].name;
+                $("#itemModalAttachmentSelectedFile").text("Selected File: " + fileName);
+            });
+            // #endregion
+
+            if (item.AttachmentIds != null) {
+                if (item.AttachmentIds.indexOf(",") == -1) {
+                    var attachmentId = item.AttachmentIds;
+                    $.ajax({
+                        type: "GET",
+                        url: "FileUpload/GetFileDetail",
+                        data: { fileId: attachmentId },
+                        success: function (response) {
+                            attachmentModel = jQuery.parseJSON(response);
+
+                            if (attachmentModel != "") {
+                                var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                $("#itemAttachmentsTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { align: "center" }).append(
+                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.Type
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.UploadedBy
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            uploadedDate
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7.5px; margin-left: -7.5px;'></i></button>"
+                                        )
+                                    ),
+                                );
+                            }
+                            else {
+                                $("#itemAttachmentsTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                    )
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                }
+                else {
+                    var attachmentIds = item.AttachmentIds.split(',');
+                    for (let id in attachmentIds) {
+                        $.ajax({
+                            type: "GET",
+                            url: "FileUpload/GetFileDetail",
+                            data: { fileId: attachmentIds[id] },
+                            success: function (response) {
+                                attachmentModel = jQuery.parseJSON(response);
+
+                                if (attachmentModel != "") {
+                                    var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                    $("#itemAttachmentsTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { align: "center" }).append(
+                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.Type
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.UploadedBy
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                uploadedDate
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                            )
+                                        ),
+                                    );
+                                }
+                                else {
+                                    $("#itemAttachmentsTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                        )
+                                    );
+                                }
+
+                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
+                }
+            }
+            else {
+                $("#itemAttachmentsTable").children('tbody').append(
+                    $('<tr>').append(
+                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                    )
+                );
+            }
+        }
+    });
+
+    $("#itemModalBackButton").removeAttr("hidden");
 }
 
 // Edit Inspection Modal > [Load Function]
@@ -1111,138 +1339,6 @@ function loadInspectionsAttachmentPage() {
         error: function (error) {
             alert("error!");
             console.log(error.responseText);
-        }
-    });
-}
-// #endregion
-
-// #region Attachment
-function loadAttachmentPage() {
-    $("#itemModalTitle").html("Item Modal | Attachment");
-
-    var item;
-    if (clickedOrCreated == "clicked")
-        item = lastClickedItem;
-    if (clickedOrCreated == "created")
-        item = lastCreatedItem;
-
-    $.ajax({
-        type: "GET",
-        url: "QuartzItem/GetAttachmentPartialView",
-        success: function (html) {
-            $("#itemModalPartialArea").html(html);
-            $("#itemAttachmentsTable").children('tbody').children('tr').remove();
-
-            // #region Choose File Button > [Change Function]
-            $("#itemModalUploadFile").on('change', function (e) {
-                var fileName = e.target.files[0].name;
-                $("#itemModalAttachmentSelectedFile").text("Selected File: " + fileName);
-            });
-            // #endregion
-
-            if (item.AttachmentIds != null) {
-                if (item.AttachmentIds.indexOf(",") == -1) {
-                    var attachmentId = item.AttachmentIds;
-                    $.ajax({
-                        type: "GET",
-                        url: "FileUpload/GetFileDetail",
-                        data: { fileId: attachmentId },
-                        success: function (response) {
-                            attachmentModel = jQuery.parseJSON(response);
-
-                            if (attachmentModel != "") {
-                                var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
-                                $("#itemAttachmentsTable").children('tbody').append(
-                                    $('<tr>').append(
-                                        $('<td>', { align: "center" }).append(
-                                            "<strong>" + attachmentModel.Name + "</strong>"
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            attachmentModel.Type
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            attachmentModel.UploadedBy
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            uploadedDate
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7.5px; margin-left: -7.5px;'></i></button>"
-                                        )
-                                    ),
-                                );
-                            }
-                            else {
-                                $("#itemAttachmentsTable").children('tbody').append(
-                                    $('<tr>').append(
-                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
-                                    )
-                                );
-                            }
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                }
-                else {
-                    var attachmentIds = item.AttachmentIds.split(',');
-                    for (let id in attachmentIds) {
-                        $.ajax({
-                            type: "GET",
-                            url: "FileUpload/GetFileDetail",
-                            data: { fileId: attachmentIds[id] },
-                            success: function (response) {
-                                attachmentModel = jQuery.parseJSON(response);
-
-                                if (attachmentModel != "") {
-                                    var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
-                                    $("#itemAttachmentsTable").children('tbody').append(
-                                        $('<tr>').append(
-                                            $('<td>', { align: "center" }).append(
-                                                "<strong>" + attachmentModel.Name + "</strong>"
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                attachmentModel.Type
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                attachmentModel.UploadedBy
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                uploadedDate
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
-                                            )
-                                        ),
-                                    );
-                                }
-                                else {
-                                    $("#itemAttachmentsTable").children('tbody').append(
-                                        $('<tr>').append(
-                                            $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
-                                        )
-                                    );
-                                }
-
-                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
-                    }
-                }
-            }
-            else {
-                $("#itemAttachmentsTable").children('tbody').append(
-                    $('<tr>').append(
-                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
-                    )
-                );
-            }
         }
     });
 }

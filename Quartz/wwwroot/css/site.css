@@ -159,3 +159,127 @@
             color: green;
             content: ">";
         }
+
+
+/******************************************************************/
+
+.card-box {
+    position: relative;
+    color: #fff;
+    padding: 20px 10px 40px;
+    margin: 20px 0px;
+    min-height: 170px;
+}
+
+.card-attachment {
+    position: relative;
+    color: #fff;
+    padding: 20px 10px 40px;
+    margin: 20px 0px;
+    min-height: 50px;
+}
+
+.card-box .itemModalP {
+    opacity: 0.75;
+}
+
+.card-box .icon .img {
+    opacity: 0.5;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.card-box .viewMore {
+    visibility: hidden;
+}
+
+.card-box:hover {
+    text-decoration: none;
+    color: #f1f1f1;
+    cursor: pointer;
+}
+
+    .card-box:hover .viewMore {
+        visibility: visible;
+    }
+
+    .card-box:hover .icon .img {
+        font-size: 100px;
+        transition: 0.1s;
+        -webkit-transition: 0.1s;
+        /*margin-bottom: 20px;*/
+        opacity: 1;
+    }
+
+    .card-box:hover .itemModalP {
+        font-weight: 700;
+        font-size: 18px;
+        transition: .1s;
+        z-index: 1;
+        opacity: 1;
+    }
+
+.card-box .inner {
+    padding: 5px 10px 0 10px;
+}
+
+.card-box h3 {
+    font-size: 27px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    white-space: nowrap;
+    padding: 0;
+    text-align: left;
+}
+
+.card-box p {
+    font-size: 15px;
+}
+
+.card-box .icon {
+    position: absolute;
+    top: auto;
+    bottom: 30px;
+    right: 5px;
+    z-index: 0;
+    font-size: 72px;
+    color: rgba(0, 0, 0, 0.15);
+}
+
+.card-box .card-box-footer {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    text-align: center;
+    padding: 3px 0;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-decoration: none;
+}
+
+.card-box:hover .card-box-footer {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.bg-blue {
+    background-color: #00c0ef !important;
+}
+
+.bg-green {
+    background-color: #00a65a !important;
+}
+
+.bg-orange {
+    background-color: #f39c12 !important;
+}
+
+.bg-red {
+    background-color: #d9534f !important;
+}
+
+/******************************************************************/
+
+#itemModalBackButton:hover {
+    cursor: pointer;
+}

@@ -85,8 +85,14 @@ namespace Quartz.Controllers.Project.Item
             });
             return Json(jSonModel);
         }
+
+        [HttpGet]
+        public IActionResult GetQuartzItemsHomePagePartialView()
+        {
+            return PartialView("QuartzItemsHomePagePartial");
+        }
         #endregion
-         
+
         #region Information
         [HttpPost]
         public IActionResult AddInformationJSON(QuartzItemsInformationAddViewModel model)

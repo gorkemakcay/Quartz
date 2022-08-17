@@ -14,7 +14,7 @@ function createList() {
 
             // #region Create Link Buttons
             allLinks.forEach(function (link) {
-                var linkButton = $("<button id=" + link.Id + " type='button' class='btn text-dark listPanelButtons linkButton'><strong><i class='bi bi-file-image-fill'></i></strong>&nbsp;" + link.TagNo + "</button>");
+                var linkButton = $("<button id=" + link.Id + " type='button' class='btn text-dark listPanelButtons linkButton'><strong><img src='~/lib/icons/tag.png'/></strong>&nbsp;" + link.TagNo + "</button>");
 
                 $("#shapeArea").append(linkButton);
             })
@@ -114,6 +114,8 @@ function createList() {
 
         $(".itemButton").on('dblclick', function () {
             $("#itemModal").modal('show');
+            //loadInformationPage();
+            loadItemModalHomePage();
         });
 
         $(".itemButton").on('click', function () {
@@ -126,7 +128,6 @@ function createList() {
                 data: { itemId: lastClickedItemButtonId },
                 success: function (response) {
                     lastClickedItem = jQuery.parseJSON(response);
-                    loadInformationPage();
 
                     source.getFeatures().forEach(function (feature) {
                         if (feature.get("Id") == lastClickedItem.Id) {
@@ -140,19 +141,6 @@ function createList() {
                             });
                         }
                     });
-
-                    //featureCollection[''].features.forEach(function (featureJson) {
-                    //    if (featureJson.properties.Id == lastClickedItem.Id) {
-                    //        view.animate({
-                    //            center: new ol.proj.fromLonLat(featureJson.properties.LonLat),
-                    //            zoom: 4
-                    //        });
-                    //    }
-                    //});
-
-                    $("#itemModalSaveButton").removeAttr("hidden");
-                    $("#itemShowLabel").removeAttr("hidden");
-                    $("#showlabelSpan").removeAttr("hidden");
                 },
                 error: function (error) {
                     alert("error!");
