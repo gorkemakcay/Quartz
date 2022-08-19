@@ -34,7 +34,9 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
                     TestDate = model.TestDate,
                     Tested = model.Tested,
                     AttachmentIds = model.AttachmentIds,
-                    QuartzItemId = model.QuartzItemId
+                    QuartzItemId = model.QuartzItemId,
+                    PlantArea = model.PlantArea,
+                    CreatedDate = model.CreatedDate
                 };
 
                 context.quartzItemsValveMaintenances.Add(valveMaintenance);

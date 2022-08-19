@@ -438,6 +438,9 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<float>("OpeningPressureBarg")
                         .HasColumnType("real");
 
+                    b.Property<string>("PlantArea")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("QuartzItemId")
                         .HasColumnType("int");
 

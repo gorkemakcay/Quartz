@@ -300,6 +300,12 @@ var featuresLonLat;
 
 var selectedFeature;
 
+var currentValveMaintenance;
+
+var currentThicknessMeasurement;
+
+var isValveMaintenanceExist = false;
+
 // #endregion
 
 // #region Quartz Variables

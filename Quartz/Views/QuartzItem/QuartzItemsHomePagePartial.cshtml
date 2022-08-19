@@ -6,7 +6,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="card-box bg-blue" onclick="loadInformationPage()">
                     <div class="inner">
-                        <h3 class="itemModalP"> 1 </h3>
+                        <h3 class="itemModalP" id="informationCount"></h3>
                         <p class="itemModalP"> Information </p>
                     </div>
                     <div class="icon" style="margin-bottom: -10px;">
@@ -18,11 +18,11 @@
                     <a href="#" class="card-box-footer viewMore">View More</a>
                 </div>
             </div>
-            
+
             <div class="col-lg-3 col-sm-6">
                 <div class="card-box bg-green" onclick="loadInspectionPage()">
                     <div class="inner">
-                        <h3 class="itemModalP"> 14 </h3>
+                        <h3 class="itemModalP" id="inspectionCount"></h3>
                         <p class="itemModalP"> Inspections </p>
                     </div>
                     <div class="icon">
@@ -36,11 +36,11 @@
             </div>
 
             <div class="col-lg-3 col-sm-6">
-                <div class="card-box bg-orange">
+                <div class="card-box bg-orange" onclick="loadValveMaintenancePage()">
                     <div class="inner">
-                        <h3 class="itemModalP"> 4 </h3>
-                        <p class="itemModalP"> Valve <br /> Maintenance </p>
+                        <h3 class="itemModalP" id="valveMaintenanceCount"></h3>
                     </div>
+                    <p class="itemModalP"> Valve <br /> Maintenance </p>
                     <div class="icon">
                         @*<i class="bi bi-box-fill" aria-hidden="true"></i>*@
                         <div class="img">
@@ -53,9 +53,9 @@
             </div>
 
             <div class="col-lg-3 col-sm-6">
-                <div class="card-box bg-red">
+                <div class="card-box bg-red" onclick="loadThicknessMeasurementPage()">
                     <div class="inner">
-                        <h3 class="itemModalP"> 8 </h3>
+                        <h3 class="itemModalP" id="thicknessMeasurementCount"></h3>
                         <p class="itemModalP"> Thickness <br /> Measurement </p>
                     </div>
                     <div class="icon">

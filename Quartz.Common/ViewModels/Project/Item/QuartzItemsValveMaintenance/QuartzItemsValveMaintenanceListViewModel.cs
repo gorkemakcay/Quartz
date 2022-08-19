@@ -5,6 +5,7 @@ namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsValveMaintenance
     public class QuartzItemsValveMaintenanceListViewModel
     {
         public int Id { get; set; }
+        public string PlantArea { get; set; }
         public string KKSNo { get; set; }
         public string SerialNo { get; set; }
         public string SupplierManufacturare { get; set; }

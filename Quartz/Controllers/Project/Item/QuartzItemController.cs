@@ -281,6 +281,24 @@ namespace Quartz.Controllers.Project.Item
             });
             return Json(jSonModel);
         }
+
+        [HttpGet]
+        public IActionResult GetValveMaintenancePartialView()
+        {
+            return PartialView("QuartzItemsValveMaintenancePartial");
+        }
+
+        [HttpGet]
+        public IActionResult GetValveMaintenanceDataPartialView()
+        {
+            return PartialView("QuartzItemsValveMaintenancesDataPartial");
+        }
+
+        [HttpGet]
+        public IActionResult GetValveMaintenancesAttachmentPartialView()
+        {
+            return PartialView("QuartzItemsValveMaintenancesAttachmentPartial");
+        }
         #endregion
 
         #region Thickness Measurement
@@ -335,6 +353,24 @@ namespace Quartz.Controllers.Project.Item
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetThicknessMeasurementPartialView()
+        {
+            return PartialView("QuartzItemsThicknessMeasurementPartial");
+        }
+
+        [HttpGet]
+        public IActionResult GetThicknessMeasurementsDataPartialView()
+        {
+            return PartialView("QuartzItemsThicknessMeasurementsDataPartial");
+        }
+
+        [HttpGet]
+        public IActionResult GetThicknessMeasurementsAttachmentPartialView()
+        {
+            return PartialView("QuartzItemsThicknessMeasurementsAttachmentPartial");
         }
         #endregion
     }

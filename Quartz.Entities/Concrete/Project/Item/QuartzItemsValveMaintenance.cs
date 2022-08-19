@@ -6,6 +6,7 @@ namespace Quartz.Entities.Concrete.Project.Item
     public class QuartzItemsValveMaintenance : ITable
     {
         public int Id { get; set; }
+        public string PlantArea { get; set; }
         public string KKSNo { get; set; }
         public string SerialNo { get; set; }
         public string SupplierManufacturare { get; set; }

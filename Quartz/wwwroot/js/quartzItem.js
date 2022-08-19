@@ -50,6 +50,7 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
                             lastClickedItem = model;
                             item = lastClickedItem;
                         }
+                        $("#itemModalTitle").html(lastClickedItem.TagNo + " | Information");
 
                         $.post({
                             url: "QuartzItem/UpdateItemJSON",
@@ -204,7 +205,7 @@ $("#inspectionModalNav a").on('click', function () {
     }
 })
 
-// Add Modal > Save Button [Click Function]
+// Inspection Add Modal > Save Button [Click Function]
 $("#inspectionAddSaveButton").on('click', function () {
     var item;
     if (clickedOrCreated == "clicked")
@@ -260,6 +261,74 @@ $("#inspectionAddSaveButton").on('click', function () {
         success: function (response) {
             currentInspection = jQuery.parseJSON(response);
             loadInspectionPage();
+            toast(toastContext);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+});
+
+// Valve Maintenance Add Modal > Save Button [Click Function]
+$("#valveMaintenanceAddSaveButton").on('click', function () {
+
+    var item;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+
+    var toastContext = "";
+    var valveMaintenanceUrl = "";
+
+    if (isValveMaintenanceExist) {
+        var valveMaintenanceModel = {
+            Id: currentValveMaintenance.Id,
+            KKSNo: $("#valveMaintenanceKKSNo").val(),
+            SerialNo: $("#valveMaintenanceSerialNo").val(),
+            SupplierManufacturare: $("#valveMaintenanceSupplierManufacturare").val(),
+            Designation: $("#valveMaintenanceDesignation").val(),
+            IdealBarg: $("#valveMaintenanceIdealBarg").val(),
+            OpeningPressureBarg: $("#valveMaintenanceOpeningPressureBarg").val(),
+            Remarks: $("#valveMaintenanceRemarks").val(),
+            TestDate: $("#valveMaintenanceTestDate").val(),
+            PlantArea: $("#valveMaintenancePlantArea").val(),
+            CreatedDate: getDate(),
+            QuartzItemId: item.Id,
+            AttachmentIds: currentValveMaintenance.AttachmentIds
+        }
+
+        toastContext = "Valve Maintenance Update Successful!";
+        valveMaintenanceUrl = "QuartzItem/UpdateValveMaintenanceJSON";
+    }
+    else {
+        var valveMaintenanceModel = {
+            KKSNo: $("#valveMaintenanceKKSNo").val(),
+            SerialNo: $("#valveMaintenanceSerialNo").val(),
+            SupplierManufacturare: $("#valveMaintenanceSupplierManufacturare").val(),
+            Designation: $("#valveMaintenanceDesignation").val(),
+            IdealBarg: $("#valveMaintenanceIdealBarg").val(),
+            OpeningPressureBarg: $("#valveMaintenanceOpeningPressureBarg").val(),
+            Remarks: $("#valveMaintenanceRemarks").val(),
+            TestDate: $("#valveMaintenanceTestDate").val(),
+            CreatedDate: getDate(),
+            PlantArea: $("#valveMaintenancePlantArea").val(),
+            QuartzItemId: item.Id,
+            AttachmentIds: 0
+        }
+
+        toastContext = "Valve Maintenance Add Successful!";
+        valveMaintenanceUrl = "QuartzItem/AddValveMaintenanceJSON";
+    }
+
+    $.ajax({
+        type: "POST",
+        url: valveMaintenanceUrl,
+        data: { model: valveMaintenanceModel },
+        success: function (response) {
+            currentValveMaintenance = jQuery.parseJSON(response);
+            loadValveMaintenancePage();
             toast(toastContext);
         },
         error: function (error) {
@@ -470,7 +539,6 @@ function getInformationSelectOptions() {
 
 // Item Modal Home Page [Load Function]
 function loadItemModalHomePage() {
-    $("#itemModalTitle").html("Item Modal");
     itemModalActivePartial = "Home";
     $("#itemModalSaveButton").attr("hidden", "");
     $("#itemShowLabel").attr("hidden", "");
@@ -481,6 +549,182 @@ function loadItemModalHomePage() {
         url: "QuartzItem/GetQuartzItemsHomePagePartialView",
         success: function (html) {
             $("#itemModalPartialArea").html(html);
+
+            switch (clickedOrCreated) {
+                case "clicked":
+                    $("#itemModalTitle").html(lastClickedItem.TagNo);
+
+                    // #region Information Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetInformationDetailJSON",
+                        data: { quartzItemId: lastClickedItem.Id },
+                        success: function (response) {
+                            information = jQuery.parseJSON(response);
+                            if (information == null) {
+                                $("#informationCount").text("0");
+                            }
+                            else $("#informationCount").text("1");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+
+                    // #region Inspection Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetAllInspections",
+                        data: { quartzItemId: lastClickedItem.Id },
+                        success: function (response) {
+                            inspections = jQuery.parseJSON(response);
+                            if (inspections == null) {
+                                $("#inspectionCount").text("0");
+                            }
+                            else {
+                                $("#inspectionCount").text(inspections.length);
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+
+                    // #region Valve Maintenance Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetAllValveMaintenancesJSON",
+                        data: { quartzItemId: lastClickedItem.Id },
+                        success: function (response) {
+                            valveMaintenances = jQuery.parseJSON(response);
+                            if (valveMaintenances == null) {
+                                $("#valveMaintenanceCount").text("0");
+                            }
+                            else {
+                                $("#valveMaintenanceCount").text(valveMaintenances.length);
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+
+                    // #region Thickness Measurement Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetAllThicknessMeasurementsJSON",
+                        data: { quartzItemId: lastClickedItem.Id },
+                        success: function (response) {
+                            thicknessMeasurements = jQuery.parseJSON(response);
+                            if (thicknessMeasurements == null) {
+                                $("#thicknessMeasurementCount").text("0");
+                            }
+                            else {
+                                $("#thicknessMeasurementCount").text(thicknessMeasurements.length);
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+                    break;
+
+                case "created":
+                    $("#itemModalTitle").html(lastCreatedItem.TagNo);
+
+                    // #region Information Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetInformationDetailJSON",
+                        data: { quartzItemId: lastCreatedItem.Id },
+                        success: function (response) {
+                            information = jQuery.parseJSON(response);
+                            if (information == null) {
+                                $("#informationCount").text("0");
+                            }
+                            else $("#informationCount").text("1");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+
+                    // #region Inspection Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetAllInspections",
+                        data: { quartzItemId: lastCreatedItem.Id },
+                        success: function (response) {
+                            inspections = jQuery.parseJSON(response);
+                            if (inspections == null) {
+                                $("#inspectionCount").text("0");
+                            }
+                            else {
+                                $("#inspectionCount").text(inspections.length);
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+
+                    // #region Valve Maintenance Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetAllValveMaintenancesJSON",
+                        data: { quartzItemId: lastCreatedItem.Id },
+                        success: function (response) {
+                            valveMaintenances = jQuery.parseJSON(response);
+                            if (valveMaintenances == null) {
+                                $("#valveMaintenanceCount").text("0");
+                            }
+                            else {
+                                $("#valveMaintenanceCount").text(valveMaintenances.length);
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+
+                    // #region Thickness Measurement Count
+                    $.ajax({
+                        type: "GET",
+                        url: "QuartzItem/GetAllThicknessMeasurementsJSON",
+                        data: { quartzItemId: lastCreatedItem.Id },
+                        success: function (response) {
+                            thicknessMeasurements = jQuery.parseJSON(response);
+                            if (thicknessMeasurements == null) {
+                                $("#thicknessMeasurementCount").text("0");
+                            }
+                            else {
+                                $("#thicknessMeasurementCount").text(thicknessMeasurements.length);
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    // #endregion
+                    break;
+
+                default:
+            };
         },
         error: function (error) {
             alert("error!");
@@ -490,10 +734,10 @@ function loadItemModalHomePage() {
 
     $("#itemModalBackButton").attr("hidden", "");
 }
+///////////////////////////////////////
 
 // Information Page [Load Function]
 function loadInformationPage() {
-    $("#itemModalTitle").html("Item Modal | Informations");
     itemModalActivePartial = "Informations";
     $("#itemModalSaveButton").removeAttr("hidden");
     $("#itemShowLabel").removeAttr("hidden");
@@ -508,6 +752,8 @@ function loadInformationPage() {
             // #region Get Information Details
             switch (clickedOrCreated) {
                 case "clicked":
+                    $("#itemModalTitle").html(lastClickedItem.TagNo + " | Information");
+
                     $.ajax({
                         type: "GET",
                         url: "QuartzItem/GetInformationDetailJSON",
@@ -542,6 +788,8 @@ function loadInformationPage() {
                     break;
 
                 case "created":
+                    $("#itemModalTitle").html(lastCreatedItem.TagNo + " | Information");
+
                     $.ajax({
                         type: "GET",
                         url: "QuartzItem/GetInformationDetailJSON",
@@ -571,20 +819,22 @@ function loadInformationPage() {
 
     $("#itemModalBackButton").removeAttr("hidden");
 }
+///////////////////////////////////////
 
 // Inspection Page [Load Function]
 function loadInspectionPage() {
-    $("#itemModalTitle").html("Item Modal | Inspections");
     itemModalActivePartial = "Inspection";
     $("#itemModalSaveButton").attr("hidden", "");
     $("#itemShowLabel").attr("hidden", "");
     $("#showlabelSpan").attr("hidden", "");
 
-    var itemId;
+    var item;
     if (clickedOrCreated == "clicked")
-        itemId = lastClickedItem.Id;
+        item = lastClickedItem;
     if (clickedOrCreated == "created")
-        itemId = lastCreatedItem.Id;
+        item = lastCreatedItem;
+
+    $("#itemModalTitle").html(item.TagNo + " | Inspection");
 
     $.ajax({
         type: "GET",
@@ -596,7 +846,7 @@ function loadInspectionPage() {
             $.ajax({
                 type: "GET",
                 url: "QuartzItem/GetAllInspections",
-                data: { quartzItemId: itemId },
+                data: { quartzItemId: item.Id },
                 success: function (response) {
                     allInspections = jQuery.parseJSON(response);
                     $("#inspectionTable").children('tbody').children('tr').remove();
@@ -624,7 +874,7 @@ function loadInspectionPage() {
                                         text: inspection.Status
                                     }),
                                     $('<td>', { align: "center" }).append(
-                                        "<button type='button' class='btn btn-dark' data-bs-toggle='modal' data-bs-target='#AddInspectionData' onclick='openEditInspectionModal(" + inspection.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-pencil-square' style='display: block; margin-top: -5px; margin-left: -7px;'></i></button>"
+                                        "<button type='button' class='btn btn-dark p-0' data-bs-toggle='modal' data-bs-target='#AddInspectionData' onclick='openEditInspectionModal(" + inspection.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-info'></i></button>"
                                     )
                                 )
                             );
@@ -658,396 +908,6 @@ function loadInspectionPage() {
     });
 
     $("#itemModalBackButton").removeAttr("hidden");
-}
-
-// Valve Maintenance Page [Load Function]
-function loadValveMaintenance() {
-    $("#itemModalTitle").html("Item Modal | Valve Maintenance");
-    itemModalActivePartial = "ValveMaintenance";
-    $("#itemModalSaveButton").attr("hidden", "");
-    $("#itemShowLabel").attr("hidden", "");
-    $("#showlabelSpan").attr("hidden", "");
-
-    var itemId;
-    if (clickedOrCreated == "clicked")
-        itemId = lastClickedItem.Id;
-    if (clickedOrCreated == "created")
-        itemId = lastCreatedItem.Id;
-
-    $.ajax({
-        type: "GET",
-        url: "QuartzItem/",
-        success: function (html) {
-            $("#itemModalPartialArea").html(html);
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
-}
-
-// Thickness Measurement Page [Load Function]
-function loadThicknessMeasurement() {
-    $("#itemModalTitle").html("Item Modal | Thickness Measurement");
-    itemModalActivePartial = "ThicknessMeasurement";
-    $("#itemModalSaveButton").attr("hidden", "");
-    $("#itemShowLabel").attr("hidden", "");
-    $("#showlabelSpan").attr("hidden", "");
-
-    var itemId;
-    if (clickedOrCreated == "clicked")
-        itemId = lastClickedItem.Id;
-    if (clickedOrCreated == "created")
-        itemId = lastCreatedItem.Id;
-
-    $.ajax({
-        type: "GET",
-        url: "QuartzItem/",
-        success: function (html) {
-            $("#itemModalPartialArea").html(html);
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
-}
-
-// Attachment Page [Load Function]
-function loadAttachmentPage() {
-    $("#itemModalTitle").html("Item Modal | Attachment");
-    itemModalActivePartial = "Attachments";
-    $("#itemModalSaveButton").attr("hidden", "");
-    $("#itemShowLabel").attr("hidden", "");
-    $("#showlabelSpan").attr("hidden", "");
-
-    var item;
-    if (clickedOrCreated == "clicked")
-        item = lastClickedItem;
-    if (clickedOrCreated == "created")
-        item = lastCreatedItem;
-
-    $.ajax({
-        type: "GET",
-        url: "QuartzItem/GetAttachmentPartialView",
-        success: function (html) {
-            $("#itemModalPartialArea").html(html);
-            $("#itemAttachmentsTable").children('tbody').children('tr').remove();
-
-            // #region Choose File Button > [Change Function]
-            $("#itemModalUploadFile").on('change', function (e) {
-                var fileName = e.target.files[0].name;
-                $("#itemModalAttachmentSelectedFile").text("Selected File: " + fileName);
-            });
-            // #endregion
-
-            if (item.AttachmentIds != null) {
-                if (item.AttachmentIds.indexOf(",") == -1) {
-                    var attachmentId = item.AttachmentIds;
-                    $.ajax({
-                        type: "GET",
-                        url: "FileUpload/GetFileDetail",
-                        data: { fileId: attachmentId },
-                        success: function (response) {
-                            attachmentModel = jQuery.parseJSON(response);
-
-                            if (attachmentModel != "") {
-                                var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
-                                $("#itemAttachmentsTable").children('tbody').append(
-                                    $('<tr>').append(
-                                        $('<td>', { align: "center" }).append(
-                                            "<strong>" + attachmentModel.Name + "</strong>"
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            attachmentModel.Type
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            attachmentModel.UploadedBy
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            uploadedDate
-                                        ),
-                                        $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7.5px; margin-left: -7.5px;'></i></button>"
-                                        )
-                                    ),
-                                );
-                            }
-                            else {
-                                $("#itemAttachmentsTable").children('tbody').append(
-                                    $('<tr>').append(
-                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
-                                    )
-                                );
-                            }
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
-                }
-                else {
-                    var attachmentIds = item.AttachmentIds.split(',');
-                    for (let id in attachmentIds) {
-                        $.ajax({
-                            type: "GET",
-                            url: "FileUpload/GetFileDetail",
-                            data: { fileId: attachmentIds[id] },
-                            success: function (response) {
-                                attachmentModel = jQuery.parseJSON(response);
-
-                                if (attachmentModel != "") {
-                                    var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
-                                    $("#itemAttachmentsTable").children('tbody').append(
-                                        $('<tr>').append(
-                                            $('<td>', { align: "center" }).append(
-                                                "<strong>" + attachmentModel.Name + "</strong>"
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                attachmentModel.Type
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                attachmentModel.UploadedBy
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                uploadedDate
-                                            ),
-                                            $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
-                                            )
-                                        ),
-                                    );
-                                }
-                                else {
-                                    $("#itemAttachmentsTable").children('tbody').append(
-                                        $('<tr>').append(
-                                            $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
-                                        )
-                                    );
-                                }
-
-                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
-                    }
-                }
-            }
-            else {
-                $("#itemAttachmentsTable").children('tbody').append(
-                    $('<tr>').append(
-                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
-                    )
-                );
-            }
-        }
-    });
-
-    $("#itemModalBackButton").removeAttr("hidden");
-}
-
-// Edit Inspection Modal > [Load Function]
-function openEditInspectionModal(inspectionId) {
-    function wait() {
-        $("#InspectionAddModalTitle").html("Inspection Modal | Data");
-        $("#inspectionAddSelectedFile").text('');
-        $("#inspectionModalNav").removeAttr("hidden");
-
-        $.ajax({
-            type: "GET",
-            url: "QuartzItem/GetInspectionsDataPartialView",
-            success: function (html) {
-                $("#inspectionAddModalPartialArea").html(html);
-
-                $.ajax({
-                    type: "GET",
-                    url: "QuartzItem/GetInspectionDetailJSON",
-                    data: { inspectionId: inspectionId },
-                    success: function (response) {
-                        var inspectionDetail = jQuery.parseJSON(response);
-                        if (inspectionDetail != null) {
-                            isInspectionExist = true;
-                            currentInspection = inspectionDetail;
-                        }
-                        var date = inspectionDetail.Date.split('T')[0];
-                        var dueDate = inspectionDetail.DueDate.split('T')[0];
-
-                        $("#inspectionReportNo").val(inspectionDetail.ReportNo);
-                        $("#inspectionDate").val(date);
-                        $("#inspectionDateDue").val(dueDate);
-                        $("#inspectionMethod").val(inspectionDetail.Method);
-                        $("#inspectionProcedure").val(inspectionDetail.Procedure);
-                        $("#inspectionTechnique").val(inspectionDetail.Technique);
-                        $("#inspectionStatus").val(inspectionDetail.Status);
-                        $("#inspectionDetails").val(inspectionDetail.Details);
-
-                        // #region Get Method for Select > Option
-                        $.ajax({
-                            type: "GET",
-                            url: "LookUpItems/GetMethodForOption",
-                            success: function (response) {
-                                methods = jQuery.parseJSON(response);
-
-                                // #region Create & Configure Select > Option
-                                $("#inspectionMethod").children().remove();
-
-                                $("#inspectionMethod").append(
-                                    $('<option>', {
-                                        value: inspectionDetail.Method,
-                                        text: inspectionDetail.Method,
-                                        id: "selectInspectionMethod"
-                                    })
-                                );
-                                $("#selectInspectionMethod").attr("hidden", "");
-
-                                for (var i = 0; i < methods.length; i++) {
-                                    $("#inspectionMethod").append(
-                                        $('<option>', {
-                                            value: methods[i].Name,
-                                            text: methods[i].Name
-                                        })
-                                    );
-                                }
-                                // #endregion
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
-                        // #endregion
-
-                        // #region Get Procedure for Select > Option
-                        $.ajax({
-                            type: "GET",
-                            url: "LookUpItems/GetProcedureForOption",
-                            success: function (response) {
-                                procedures = jQuery.parseJSON(response);
-
-                                // #region Create & Configure Select > Option
-                                $("#inspectionProcedure").children().remove();
-
-                                $("#inspectionProcedure").append(
-                                    $('<option>', {
-                                        value: inspectionDetail.Procedure,
-                                        text: inspectionDetail.Procedure,
-                                        id: "selectInspectionProcedure"
-                                    })
-                                );
-                                $("#selectInspectionProcedure").attr("hidden", "");
-
-                                for (var i = 0; i < procedures.length; i++) {
-                                    $("#inspectionProcedure").append(
-                                        $('<option>', {
-                                            value: procedures[i].Name,
-                                            text: procedures[i].Name
-                                        })
-                                    );
-                                }
-                                // #endregion
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
-                        // #endregion
-
-                        // #region Get Technique for Select > Option
-                        $.ajax({
-                            type: "GET",
-                            url: "LookUpItems/GetTechniqueForOption",
-                            success: function (response) {
-                                techniques = jQuery.parseJSON(response);
-
-                                // #region Create & Configure Select > Option
-                                $("#inspectionTechnique").children().remove();
-
-                                $("#inspectionTechnique").append(
-                                    $('<option>', {
-                                        value: inspectionDetail.Technique,
-                                        text: inspectionDetail.Technique,
-                                        id: "selectInspectionTechnique"
-                                    })
-                                );
-                                $("#selectInspectionTechnique").attr("hidden", "");
-
-                                for (var i = 0; i < techniques.length; i++) {
-                                    $("#inspectionTechnique").append(
-                                        $('<option>', {
-                                            value: techniques[i].Name,
-                                            text: techniques[i].Name
-                                        })
-                                    );
-                                }
-                                // #endregion
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
-                        // #endregion
-
-                        // #region Get Status for Select > Option
-                        $.ajax({
-                            type: "GET",
-                            url: "LookUpItems/GetStatusForOption",
-                            success: function (response) {
-                                statuses = jQuery.parseJSON(response);
-
-                                // #region Create & Configure Select > Option
-                                $("#inspectionStatus").children().remove();
-
-                                $("#inspectionStatus").append(
-                                    $('<option>', {
-                                        value: inspectionDetail.Status,
-                                        text: inspectionDetail.Status,
-                                        id: "selectInspectionStatus"
-                                    })
-                                );
-                                $("#selectInspectionStatus").attr("hidden", "");
-
-                                for (var i = 0; i < statuses.length; i++) {
-                                    $("#inspectionStatus").append(
-                                        $('<option>', {
-                                            value: statuses[i].Name,
-                                            text: statuses[i].Name
-                                        })
-                                    );
-                                }
-                                // #endregion
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
-                        // #endregion
-
-                        // #region Inspection Data Page > Choose File Button > [Change Function]
-                        $("#inspectionAddUploadFile").on('change', function (e) {
-                            alert("brr!");
-                            var fileName = e.target.files[0].name;
-                            $("#inspectionAddSelectedFile").text("Selected File: " + fileName);
-                        });
-                        // #endregion
-                    },
-                    error: function (error) {
-                        alert("error!");
-                        console.log(error.responseText);
-                    }
-                });
-            }
-        });
-
-    }
-    setTimeout(wait, 200);
 }
 
 // Data Tab [loadInspectionsDataPage()]
@@ -1342,4 +1202,529 @@ function loadInspectionsAttachmentPage() {
         }
     });
 }
+///////////////////////////////////////
+
+// Valve Maintenance Page [Load Function]
+function loadValveMaintenancePage() {
+    itemModalActivePartial = "ValveMaintenance";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+
+    var item;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+
+    $("#itemModalTitle").html(item.TagNo + " | Valve Maintenance");
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetValveMaintenancePartialView",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+
+            $.ajax({
+                type: "GET",
+                url: "QuartzItem/GetAllValveMaintenancesJSON",
+                data: { quartzItemId: item.Id },
+                success: function (response) {
+                    allValveMaintenances = jQuery.parseJSON(response);
+                    $("#valveMaintenanceTable").children('tbody').children('tr').remove();
+
+                    if (allValveMaintenances != "") {
+                        //$('#valveMaintenanceTable').DataTable();
+
+                        allValveMaintenances.forEach(function (valveMaintenance) {
+                            var date = valveMaintenance.TestDate.split('T')[0];
+                            $("#valveMaintenanceTable").children('tbody').append(
+                                $('<tr>').append(
+                                    $('<td>', { align: "center" }).append(
+                                        "<strong>" + valveMaintenance.KKSNo + "</strong>"
+                                    ),
+                                    $('<td>', {
+                                        align: "center",
+                                        text: valveMaintenance.SerialNo
+                                    }),
+                                    $('<td>', {
+                                        align: "center",
+                                        text: valveMaintenance.OpeningPressureBarg
+                                    }),
+                                    $('<td>', {
+                                        align: "center",
+                                        text: date
+                                    }),
+                                    $('<td>', { align: "center" }).append(
+                                        "<button type='button' class='btn btn-dark p-0' data-bs-toggle='modal' data-bs-target='#AddInspectionData' onclick='openEditValveMaintenanceModal(" + valveMaintenance.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-info'></i></button>"
+                                    )
+                                )
+                            );
+                        });
+                    }
+                    else {
+                        $("#valveMaintenanceTable").children('tbody').append(
+                            $('<tr>').append(
+                                $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                            )
+                        );
+                    }
+
+                    // #region Valve Maintenance "ADD" Button on 'click' function
+                    $("#addValveMaintenanceDataButton").on('click', function () {
+                        loadValveMaintenancesDataPage();
+                        $("#valveMaintenanceModalNav").attr("hidden", "");
+                    });
+                    // #endregion
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    $("#itemModalBackButton").removeAttr("hidden");
+}
+
+// Data Tab [loadValveMaintenanceDataPage]
+function loadValveMaintenancesDataPage() {
+    $("#valveMaintenanceModalTitle").html("Valve Maintenance | Data");
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetValveMaintenanceDataPartialView",
+        success: function (html) {
+            $("#valveMaintenanceAddModalPartialArea").html(html);
+
+            $("#valveMaintenanceKKSNo").val('');
+            $("#valveMaintenanceSerialNo").val('');
+            $("#valveMaintenanceIdealBarg").val('');
+            $("#valveMaintenanceOpeningPressureBarg").val('');
+            $("#valveMaintenanceTestDate").val('');
+            $("#valveMaintenanceSupplierManufacturare").val('');
+            $("#valveMaintenanceDesignation").val('');
+            $("#valveMaintenanceRemarks").val('');
+            $("#valveMaintenancePlantArea").text('');
+            isValveMaintenanceExist = false;
+
+            // #region Get Plant Area for Select > Option
+            $.ajax({
+                type: "GET",
+                url: "LookUpItems/GetPlantAreaForOption",
+                success: function (response) {
+                    rModel = jQuery.parseJSON(response);
+
+                    // #region Create & Configure Select > Option
+                    $("#valveMaintenancePlantArea").children().remove();
+
+                    $("#valveMaintenancePlantArea").append(
+                        $('<option>', {
+                            value: "select",
+                            text: "Select Method",
+                            id: "selectValveMaintenancePlantArea"
+                        })
+                    );
+                    $("#selectValveMaintenancePlantArea").attr("hidden", "");
+
+                    for (var i = 0; i < rModel.length; i++) {
+                        $("#valveMaintenancePlantArea").append(
+                            $('<option>', {
+                                value: rModel[i].Name,
+                                text: rModel[i].Name
+                            })
+                        );
+                    }
+                    // #endregion
+                },
+                error: function (error) {
+
+                }
+            });
+            // #endregion
+
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+}
+///////////////////////////////////////
+
+// Thickness Measurement Page [Load Function]
+function loadThicknessMeasurementPage() {
+    $("#itemModalTitle").html("Item Modal | Thickness Measurement");
+    itemModalActivePartial = "ThicknessMeasurement";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+
+    var item;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+
+    $("#itemModalTitle").html(item.TagNo + " | Thickness Measurement");
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetThicknessMeasurementPartialView",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    $("#itemModalBackButton").removeAttr("hidden");
+}
+///////////////////////////////////////
+
+// Attachment Page [Load Function]
+function loadAttachmentPage() {
+    $("#itemModalTitle").html("Item Modal | Attachment");
+    itemModalActivePartial = "Attachments";
+    $("#itemModalSaveButton").attr("hidden", "");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+
+    var item;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetAttachmentPartialView",
+        success: function (html) {
+            $("#itemModalPartialArea").html(html);
+            $("#itemAttachmentsTable").children('tbody').children('tr').remove();
+
+            // #region Choose File Button > [Change Function]
+            $("#itemModalUploadFile").on('change', function (e) {
+                var fileName = e.target.files[0].name;
+                $("#itemModalAttachmentSelectedFile").text("Selected File: " + fileName);
+            });
+            // #endregion
+
+            if (item.AttachmentIds != null) {
+                if (item.AttachmentIds.indexOf(",") == -1) {
+                    var attachmentId = item.AttachmentIds;
+                    $.ajax({
+                        type: "GET",
+                        url: "FileUpload/GetFileDetail",
+                        data: { fileId: attachmentId },
+                        success: function (response) {
+                            attachmentModel = jQuery.parseJSON(response);
+
+                            if (attachmentModel != "") {
+                                var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                $("#itemAttachmentsTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { align: "center" }).append(
+                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.Type
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.UploadedBy
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            uploadedDate
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7.5px; margin-left: -7.5px;'></i></button>"
+                                        )
+                                    ),
+                                );
+                            }
+                            else {
+                                $("#itemAttachmentsTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                    )
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                }
+                else {
+                    var attachmentIds = item.AttachmentIds.split(',');
+                    for (let id in attachmentIds) {
+                        $.ajax({
+                            type: "GET",
+                            url: "FileUpload/GetFileDetail",
+                            data: { fileId: attachmentIds[id] },
+                            success: function (response) {
+                                attachmentModel = jQuery.parseJSON(response);
+
+                                if (attachmentModel != "") {
+                                    var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                    $("#itemAttachmentsTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { align: "center" }).append(
+                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.Type
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.UploadedBy
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                uploadedDate
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                            )
+                                        ),
+                                    );
+                                }
+                                else {
+                                    $("#itemAttachmentsTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                        )
+                                    );
+                                }
+
+                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
+                }
+            }
+            else {
+                $("#itemAttachmentsTable").children('tbody').append(
+                    $('<tr>').append(
+                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                    )
+                );
+            }
+        }
+    });
+
+    $("#itemModalBackButton").removeAttr("hidden");
+}
+///////////////////////////////////////
+
+// Edit Inspection Modal > [Load Function]
+function openEditInspectionModal(inspectionId) {
+    function wait() {
+        $("#InspectionAddModalTitle").html("Inspection Modal | Data");
+        $("#inspectionAddSelectedFile").text('');
+        $("#inspectionModalNav").removeAttr("hidden");
+
+        $.ajax({
+            type: "GET",
+            url: "QuartzItem/GetInspectionsDataPartialView",
+            success: function (html) {
+                $("#inspectionAddModalPartialArea").html(html);
+
+                $.ajax({
+                    type: "GET",
+                    url: "QuartzItem/GetInspectionDetailJSON",
+                    data: { inspectionId: inspectionId },
+                    success: function (response) {
+                        var inspectionDetail = jQuery.parseJSON(response);
+                        if (inspectionDetail != null) {
+                            isInspectionExist = true;
+                            currentInspection = inspectionDetail;
+                        }
+                        var date = inspectionDetail.Date.split('T')[0];
+                        var dueDate = inspectionDetail.DueDate.split('T')[0];
+
+                        $("#inspectionReportNo").val(inspectionDetail.ReportNo);
+                        $("#inspectionDate").val(date);
+                        $("#inspectionDateDue").val(dueDate);
+                        $("#inspectionMethod").val(inspectionDetail.Method);
+                        $("#inspectionProcedure").val(inspectionDetail.Procedure);
+                        $("#inspectionTechnique").val(inspectionDetail.Technique);
+                        $("#inspectionStatus").val(inspectionDetail.Status);
+                        $("#inspectionDetails").val(inspectionDetail.Details);
+
+                        // #region Get Method for Select > Option
+                        $.ajax({
+                            type: "GET",
+                            url: "LookUpItems/GetMethodForOption",
+                            success: function (response) {
+                                methods = jQuery.parseJSON(response);
+
+                                // #region Create & Configure Select > Option
+                                $("#inspectionMethod").children().remove();
+
+                                $("#inspectionMethod").append(
+                                    $('<option>', {
+                                        value: inspectionDetail.Method,
+                                        text: inspectionDetail.Method,
+                                        id: "selectInspectionMethod"
+                                    })
+                                );
+                                $("#selectInspectionMethod").attr("hidden", "");
+
+                                for (var i = 0; i < methods.length; i++) {
+                                    $("#inspectionMethod").append(
+                                        $('<option>', {
+                                            value: methods[i].Name,
+                                            text: methods[i].Name
+                                        })
+                                    );
+                                }
+                                // #endregion
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                        // #endregion
+
+                        // #region Get Procedure for Select > Option
+                        $.ajax({
+                            type: "GET",
+                            url: "LookUpItems/GetProcedureForOption",
+                            success: function (response) {
+                                procedures = jQuery.parseJSON(response);
+
+                                // #region Create & Configure Select > Option
+                                $("#inspectionProcedure").children().remove();
+
+                                $("#inspectionProcedure").append(
+                                    $('<option>', {
+                                        value: inspectionDetail.Procedure,
+                                        text: inspectionDetail.Procedure,
+                                        id: "selectInspectionProcedure"
+                                    })
+                                );
+                                $("#selectInspectionProcedure").attr("hidden", "");
+
+                                for (var i = 0; i < procedures.length; i++) {
+                                    $("#inspectionProcedure").append(
+                                        $('<option>', {
+                                            value: procedures[i].Name,
+                                            text: procedures[i].Name
+                                        })
+                                    );
+                                }
+                                // #endregion
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                        // #endregion
+
+                        // #region Get Technique for Select > Option
+                        $.ajax({
+                            type: "GET",
+                            url: "LookUpItems/GetTechniqueForOption",
+                            success: function (response) {
+                                techniques = jQuery.parseJSON(response);
+
+                                // #region Create & Configure Select > Option
+                                $("#inspectionTechnique").children().remove();
+
+                                $("#inspectionTechnique").append(
+                                    $('<option>', {
+                                        value: inspectionDetail.Technique,
+                                        text: inspectionDetail.Technique,
+                                        id: "selectInspectionTechnique"
+                                    })
+                                );
+                                $("#selectInspectionTechnique").attr("hidden", "");
+
+                                for (var i = 0; i < techniques.length; i++) {
+                                    $("#inspectionTechnique").append(
+                                        $('<option>', {
+                                            value: techniques[i].Name,
+                                            text: techniques[i].Name
+                                        })
+                                    );
+                                }
+                                // #endregion
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                        // #endregion
+
+                        // #region Get Status for Select > Option
+                        $.ajax({
+                            type: "GET",
+                            url: "LookUpItems/GetStatusForOption",
+                            success: function (response) {
+                                statuses = jQuery.parseJSON(response);
+
+                                // #region Create & Configure Select > Option
+                                $("#inspectionStatus").children().remove();
+
+                                $("#inspectionStatus").append(
+                                    $('<option>', {
+                                        value: inspectionDetail.Status,
+                                        text: inspectionDetail.Status,
+                                        id: "selectInspectionStatus"
+                                    })
+                                );
+                                $("#selectInspectionStatus").attr("hidden", "");
+
+                                for (var i = 0; i < statuses.length; i++) {
+                                    $("#inspectionStatus").append(
+                                        $('<option>', {
+                                            value: statuses[i].Name,
+                                            text: statuses[i].Name
+                                        })
+                                    );
+                                }
+                                // #endregion
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                        // #endregion
+
+                        // #region Inspection Data Page > Choose File Button > [Change Function]
+                        $("#inspectionAddUploadFile").on('change', function (e) {
+                            alert("brr!");
+                            var fileName = e.target.files[0].name;
+                            $("#inspectionAddSelectedFile").text("Selected File: " + fileName);
+                        });
+                        // #endregion
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            }
+        });
+
+    }
+    setTimeout(wait, 200);
+}
+///////////////////////////////////////
 // #endregion
+

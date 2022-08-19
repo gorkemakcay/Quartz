@@ -1,6 +1,8 @@
 ﻿function loadLinkModal() {
     switch (clickedOrCreated) {
         case "clicked":
+            $("#linkModalName").html(lastClickedLink.TagNo);
+
             $("#addLinkTagNo").val(lastClickedLink.TagNo);
             if (lastClickedLink.ShowLabel == 1)
                 $('#linkShowLabel').prop('checked', true);
@@ -70,6 +72,8 @@
             break;
 
         case "created":
+            $("#linkModalName").html(lastCreatedLink.TagNo);
+
             $("#addLinkTagNo").val(lastCreatedLink.TagNo);
             if (lastCreatedLink.ShowLabel == 1)
                 $("#linkShowLabel").prop('checked', true);
