@@ -389,6 +389,68 @@
             break;
 
         case "thicknessMeasurement":
+            // yüklenen dosyayı input'tan değişkene atadım
+            var fileUpload = $("#thicknessMeasurementUploadFile").get(0);
+
+            // controller'a göndermek için tüm dosyaları fileData'da topladım
+            var files = fileUpload.files;
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++)
+                fileData.append('', files[i]);
+
+            // ajax post ile dosyaları controller'a gönderdim
+            $.ajax({
+                type: 'POST',
+                url: "FileUpload/UploadFile",
+                data: fileData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    uploadedFile = jQuery.parseJSON(response);
+                    var fileUpdate = uploadedFile.Result;
+                    fileUpdate.CreatedDate = getDate();
+
+                    // update last uploaded file for add createdDate
+                    $.ajax({
+                        type: "POST",
+                        url: "FileUpload/UpdateFile",
+                        data: fileUpdate,
+                        success: function (response) {
+                            var updatedFile = jQuery.parseJSON(response);
+
+                            if (currentThicknessMeasurement.AttachmentIds == null) {
+                                currentThicknessMeasurement.AttachmentIds = updatedFile.Id;
+                            }
+                            else {
+                                currentThicknessMeasurement.AttachmentIds = currentThicknessMeasurement.AttachmentIds + "," + updatedFile.Id;
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzItem/UpdateThicknessMeasurementJSON",
+                                data: { model: currentThicknessMeasurement },
+                                success: function (response) {
+                                    currentThicknessMeasurement = jQuery.parseJSON(response);
+                                    openEditThicknessMeasurementModal(currentThicknessMeasurement.Id);
+                                    toast("Attachment Upload Successful!");
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
         default:

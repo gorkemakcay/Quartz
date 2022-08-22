@@ -185,6 +185,26 @@ $("#valveMaintenanceModalNav a").on('click', function () {
     }
 })
 
+// NavBar ---> Display PartialViews
+$("#thicknessMeasurementModalNav a").on('click', function () {
+    var info = $(this).html();
+    info = info.replace(/\s+/g, '');
+
+    switch (info) {
+        case 'Data':
+            openEditThicknessMeasurementModal(currentThicknessMeasurement.Id);
+            break;
+
+        case 'Attachment':
+            loadThicknessMeasurementAttachmentPage();
+            break;
+
+        default:
+            break;
+    }
+})
+
+
 // Inspection Add Modal > Save Button [Click Function]
 $("#inspectionAddSaveButton").on('click', function () {
     var item;
@@ -309,6 +329,67 @@ $("#valveMaintenanceAddSaveButton").on('click', function () {
         success: function (response) {
             currentValveMaintenance = jQuery.parseJSON(response);
             loadValveMaintenancePage();
+            toast(toastContext);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+});
+
+// Thickness Measurement Add Modal > Save Button [Click Function]
+$("#thicknessMeasurementAddSaveButton").on('click', function () {
+
+    var item;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+
+    var toastContext = "";
+    var thicknessMeasurementUrl = "";
+
+    if (isThicknessMeasurementExist) {
+        var thicknessMeasurementModel = {
+            Id: currentThicknessMeasurement.Id,
+            PlantArea: $("#thicknessMeasurementPlantArea").val(),
+            PlantSystem: $("#thicknessMeasurementPlantSystem").val(),
+            Specification: $("#thicknessMeasurementSpecification").val(),
+            NominalThickness: $("#thicknessMeasurementNominalThickness").val(),
+            MeasuredThickness: $("#thicknessMeasurementMeasuredThickness").val(),
+            Description: $("#thicknessMeasurementDescription").val(),
+            CreatedDate: getDate(),
+            QuartzItemId: item.Id,
+            AttachmentIds: currentThicknessMeasurement.AttachmentIds
+        }
+
+        toastContext = "Thickness Measurement Update Successful!";
+        thicknessMeasurementUrl = "QuartzItem/UpdateThicknessMeasurementJSON";
+    }
+    else {
+        var thicknessMeasurementModel = {
+            PlantArea: $("#thicknessMeasurementPlantArea").val(),
+            PlantSystem: $("#thicknessMeasurementPlantSystem").val(),
+            Specification: $("#thicknessMeasurementSpecification").val(),
+            NominalThickness: $("#thicknessMeasurementNominalThickness").val(),
+            MeasuredThickness: $("#thicknessMeasurementMeasuredThickness").val(),
+            Description: $("#thicknessMeasurementDescription").val(),
+            CreatedDate: getDate(),
+            QuartzItemId: item.Id,
+        }
+
+        toastContext = "Thickness Measurement Add Successful!";
+        thicknessMeasurementUrl = "QuartzItem/AddThicknessMeasurementJSON";
+    }
+
+    $.ajax({
+        type: "POST",
+        url: thicknessMeasurementUrl,
+        data: { model: thicknessMeasurementModel },
+        success: function (response) {
+            currentThicknessMeasurement = jQuery.parseJSON(response);
+            loadThicknessMeasurementPage();
             toast(toastContext);
         },
         error: function (error) {
@@ -714,7 +795,6 @@ function loadItemModalHomePage() {
 
     $("#itemModalBackButton").attr("hidden", "");
 }
-///////////////////////////////////////
 
 // Information Page [Load Function]
 function loadInformationPage() {
@@ -799,7 +879,6 @@ function loadInformationPage() {
 
     $("#itemModalBackButton").removeAttr("hidden");
 }
-///////////////////////////////////////
 
 // Inspection Page [Load Function]
 function loadInspectionPage() {
@@ -1182,7 +1261,6 @@ function loadInspectionsAttachmentPage() {
         }
     });
 }
-///////////////////////////////////////
 
 // Valve Maintenance Page [Load Function]
 function loadValveMaintenancePage() {
@@ -1335,7 +1413,6 @@ function loadValveMaintenancesDataPage() {
         }
     });
 }
-///////////////////////////////////////
 
 // Attachment Tab [loadValveMaintenanceAttachmentPage()]
 function loadValveMaintenancesAttachmentPage() {
@@ -1468,7 +1545,6 @@ function loadValveMaintenancesAttachmentPage() {
         }
     });
 }
-///////////////////////////////////////
 
 // Thickness Measurement Page [Load Function]
 function loadThicknessMeasurementPage() {
@@ -1566,7 +1642,6 @@ function loadThicknessMeasurementPage() {
 
     $("#itemModalBackButton").removeAttr("hidden");
 }
-///////////////////////////////////////
 
 // Data Tab [loadThicknessMeasurementDataPage]
 function loadThicknessMeasurementDataPage() {
@@ -1699,7 +1774,138 @@ function loadThicknessMeasurementDataPage() {
         }
     });
 }
-///////////////////////////////////////
+
+// Attachment Tab [loadThicknessMeasurementAttachmentPage()]
+function loadThicknessMeasurementAttachmentPage() {
+    $("#thicknessMeasurementModalTitle").html("Thickness Measurement | Attachment");
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetThicknessMeasurementsAttachmentPartialView",
+        success: function (html) {
+            $("#thicknessMeasurementAddModalPartialArea").html(html);
+
+            // #region Choose File Button > [Change Function]
+            $("#thicknessMeasurementUploadFile").on('change', function (e) {
+                var fileName = e.target.files[0].name;
+                $("#thicknessMeasurementSelectedFile").text("Selected File: " + fileName);
+            });
+            // #endregion
+
+            // #region Create Table's Rows
+            $("#thicknessMeasurementAttachmentTable").children('tbody').children('tr').remove();
+
+            if (currentThicknessMeasurement.AttachmentIds != null) {
+                if (currentThicknessMeasurement.AttachmentIds.indexOf(",") == -1) {
+                    var attachmentId = currentThicknessMeasurement.AttachmentIds
+                    $.ajax({
+                        type: "GET",
+                        url: "FileUpload/GetFileDetail",
+                        data: { fileId: attachmentId },
+                        success: function (response) {
+                            var attachmentModel = jQuery.parseJSON(response);
+
+                            if (attachmentModel == null) {
+                                $("#thicknessMeasurementAttachmentTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                    )
+                                );
+                            }
+                            else {
+                                var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                $("#thicknessMeasurementAttachmentTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { align: "center" }).append(
+                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.Type
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            attachmentModel.UploadedBy
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            uploadedDate
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                        )
+                                    ),
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                }
+                else {
+                    var attachmentIds = currentThicknessMeasurement.AttachmentIds.split(',');
+                    for (let id in attachmentIds) {
+                        $.ajax({
+                            type: "GET",
+                            url: "FileUpload/GetFileDetail",
+                            data: { fileId: attachmentIds[id] },
+                            success: function (response) {
+                                attachmentModel = jQuery.parseJSON(response);
+                        
+                                if (attachmentModel != "") {
+                                    var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
+                                    $("#thicknessMeasurementAttachmentTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { align: "center" }).append(
+                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.Type
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                attachmentModel.UploadedBy
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                uploadedDate
+                                            ),
+                                            $('<td>', { align: "center" }).append(
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top:     -7px; margin-left:-7px;'></i></button>"
+                                            )
+                                        ),
+                                    );
+                                }
+                                else {
+                                    $("#thicknessMeasurementAttachmentTable").children('tbody').append(
+                                        $('<tr>').append(
+                                            $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                                        )
+                                    );
+                                }
+                        
+                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
+                }
+            }
+            else {
+                $("#thicknessMeasurementAttachmentTable").children('tbody').append(
+                    $('<tr>').append(
+                        $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
+                    )
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+}
 
 // Attachment Page [Load Function]
 function loadAttachmentPage() {
@@ -1837,7 +2043,6 @@ function loadAttachmentPage() {
 
     $("#itemModalBackButton").removeAttr("hidden");
 }
-///////////////////////////////////////
 
 // Edit Inspection Modal > [Load Function]
 function openEditInspectionModal(inspectionId) {
@@ -2033,7 +2238,6 @@ function openEditInspectionModal(inspectionId) {
         }
     });
 }
-///////////////////////////////////////
 
 // Edit Valve Maintenance Modal > [Load Function]
 function openEditValveMaintenanceModal(valveMaintenanceId) {
@@ -2103,10 +2307,161 @@ function openEditValveMaintenanceModal(valveMaintenanceId) {
                     });
                     // #endregion
 
-                    // #region Inspection Data Page > Choose File Button > [Change Function]
+                    // #region Valve Maintenance Page > Choose File Button > [Change Function]
                     $("#valveMaintenanceUploadFile").on('change', function (e) {
                         var fileName = e.target.files[0].name;
                         $("#valveMaintenanceSelectedFile").text("Selected File: " + fileName);
+                    });
+                    // #endregion
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
+    });
+}
+
+// Edit Thickness Measurement Modal > [Load Function]
+function openEditThicknessMeasurementModal(thicknessMeasurementId) {
+    $("#thicknessMeasurementModalTitle").html("Thickness Measurement | Data");
+    $("#thicknessMeasurementSelectedFile").text('');
+    $("#thicknessMeasurementModalNav").removeAttr("hidden");
+
+    $.ajax({
+        type: "GET",
+        url: "QuartzItem/GetThicknessMeasurementsDataPartialView",
+        success: function (html) {
+            $("#thicknessMeasurementAddModalPartialArea").html(html);
+
+            $.ajax({
+                type: "GET",
+                url: "QuartzItem/GetThicknessMeasurementDetailJSON",
+                data: { thicknessMeasurementId: thicknessMeasurementId },
+                success: function (response) {
+                    var thicknessMeasurementDetail = jQuery.parseJSON(response);
+                    if (thicknessMeasurementDetail != null) {
+                        isThicknessMeasurementExist = true;
+                        currentThicknessMeasurement = thicknessMeasurementDetail;
+                    }
+
+                    $("#thicknessMeasurementPlantArea").val(thicknessMeasurementDetail.PlantArea);
+                    $("#thicknessMeasurementPlantSystem").val(thicknessMeasurementDetail.PlantSystem);
+                    $("#thicknessMeasurementSpecification").val(thicknessMeasurementDetail.Specification);
+                    $("#thicknessMeasurementNominalThickness").val(thicknessMeasurementDetail.NominalThickness);
+                    $("#thicknessMeasurementMeasuredThickness").val(thicknessMeasurementDetail.MeasuredThickness);
+                    $("#thicknessMeasurementDescription").val(thicknessMeasurementDetail.Description);
+
+                    // #region Get Plant Area for Select > Option
+                    $.ajax({
+                        type: "GET",
+                        url: "LookUpItems/GetPlantAreaForOption",
+                        success: function (response) {
+                            rModel = jQuery.parseJSON(response);
+
+                            // #region Create & Configure Select > Option
+                            $("#thicknessMeasurementPlantArea").children().remove();
+
+                            $("#thicknessMeasurementPlantArea").append(
+                                $('<option>', {
+                                    value: thicknessMeasurementDetail.PlantArea,
+                                    text: thicknessMeasurementDetail.PlantArea,
+                                    id: "selectThicknessMeasurementPlantArea"
+                                })
+                            );
+                            $("#selectThicknessMeasurementPlantArea").attr("hidden", "");
+
+                            for (var i = 0; i < rModel.length; i++) {
+                                $("#thicknessMeasurementPlantArea").append(
+                                    $('<option>', {
+                                        value: rModel[i].Name,
+                                        text: rModel[i].Name
+                                    })
+                                );
+                            }
+                            // #endregion
+                        },
+                        error: function (error) {
+
+                        }
+                    });
+                    // #endregion
+
+                    // #region Get Plant System for Select > Option
+                    $.ajax({
+                        type: "GET",
+                        url: "LookUpItems/GetPlantSystemForOption",
+                        success: function (response) {
+                            rModel = jQuery.parseJSON(response);
+
+                            // #region Create & Configure Select > Option
+                            $("#thicknessMeasurementPlantSystem").children().remove();
+
+                            $("#thicknessMeasurementPlantSystem").append(
+                                $('<option>', {
+                                    value: thicknessMeasurementDetail.PlantSystem,
+                                    text: thicknessMeasurementDetail.PlantSystem,
+                                    id: "selectThicknessMeasurementPlantSystem"
+                                })
+                            );
+                            $("#selectThicknessMeasurementPlantSystem").attr("hidden", "");
+
+                            for (var i = 0; i < rModel.length; i++) {
+                                $("#thicknessMeasurementPlantSystem").append(
+                                    $('<option>', {
+                                        value: rModel[i].Name,
+                                        text: rModel[i].Name
+                                    })
+                                );
+                            }
+                            // #endregion
+                        },
+                        error: function (error) {
+
+                        }
+                    });
+                    // #endregion
+
+                    // #region Get Specification for Select > Option
+                    $.ajax({
+                        type: "GET",
+                        url: "LookUpItems/GetSpecificationForOption",
+                        success: function (response) {
+                            rModel = jQuery.parseJSON(response);
+
+                            // #region Create & Configure Select > Option
+                            $("#thicknessMeasurementSpecification").children().remove();
+
+                            $("#thicknessMeasurementSpecification").append(
+                                $('<option>', {
+                                    value: thicknessMeasurementDetail.Specification,
+                                    text: thicknessMeasurementDetail.Specification,
+                                    id: "selectThicknessMeasurementPlantArea"
+                                })
+                            );
+                            $("#selectThicknessMeasurementPlantArea").attr("hidden", "");
+
+                            for (var i = 0; i < rModel.length; i++) {
+                                $("#thicknessMeasurementSpecification").append(
+                                    $('<option>', {
+                                        value: rModel[i].Name,
+                                        text: rModel[i].Name
+                                    })
+                                );
+                            }
+                            // #endregion
+                        },
+                        error: function (error) {
+
+                        }
+                    });
+                    // #endregion
+
+                    // #region Thickness Measurement Page > Choose File Button > [Change Function]
+                    $("#thicknessMeasurementUploadFile").on('change', function (e) {
+                        var fileName = e.target.files[0].name;
+                        $("#thicknessMeasurementSelectedFile").text("Selected File: " + fileName);
                     });
                     // #endregion
                 },
