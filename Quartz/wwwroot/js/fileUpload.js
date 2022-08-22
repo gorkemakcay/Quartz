@@ -322,6 +322,75 @@
             else alert("Please choose JPG/JPEG/PNG format for upload drawing!");
             break;
 
+        case "valveMaintenance":
+            // yüklenen dosyayı input'tan değişkene atadım
+            var fileUpload = $("#valveMaintenanceUploadFile").get(0);
+
+            // controller'a göndermek için tüm dosyaları fileData'da topladım
+            var files = fileUpload.files;
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++)
+                fileData.append('', files[i]);
+
+            // ajax post ile dosyaları controller'a gönderdim
+            $.ajax({
+                type: 'POST',
+                url: "FileUpload/UploadFile",
+                data: fileData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    uploadedFile = jQuery.parseJSON(response);
+                    var fileUpdate = uploadedFile.Result;
+                    fileUpdate.CreatedDate = getDate();
+
+                    // update last uploaded file for add createdDate
+                    $.ajax({
+                        type: "POST",
+                        url: "FileUpload/UpdateFile",
+                        data: fileUpdate,
+                        success: function (response) {
+                            var updatedFile = jQuery.parseJSON(response);
+
+                            if (currentValveMaintenance.AttachmentIds == null) {
+                                currentValveMaintenance.AttachmentIds = updatedFile.Id;
+                            }
+                            else {
+                                currentValveMaintenance.AttachmentIds = currentValveMaintenance.AttachmentIds + "," + updatedFile.Id;
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzItem/UpdateValveMaintenanceJSON",
+                                data: { model: currentValveMaintenance },
+                                success: function (response) {
+                                    currentValveMaintenance = jQuery.parseJSON(response);
+                                    //loadValveMaintenancesDataPage();
+                                    openEditValveMaintenanceModal(currentValveMaintenance.Id);
+                                    toast("Attachment Upload Successful!");
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "thicknessMeasurement":
+            break;
+
         default:
     }
 }

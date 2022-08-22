@@ -136,10 +136,6 @@
         var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
         featureCollection[''] = featuresFromDb;
         featureCollection[''].features.forEach(function (featureJson) {
-            //if (featureJson.properties.LonLat == "0.015490411906637962,0.006267433435397152") {
-            //    alert("works!");
-            //}
-            //else alert(featureJson.properties.LonLat);
 
             var feature = new ol.Feature({
                 geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857')

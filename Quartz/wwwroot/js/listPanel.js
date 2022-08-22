@@ -68,7 +68,7 @@ function createList() {
                     lastClickedLink = jQuery.parseJSON(response);
 
                     source.getFeatures().forEach(function (feature) {
-                        if (feature.get("Id") == lastClickedLink.Id) {
+                        if (feature.get("Id") == lastClickedLink.Id && feature.get("Type") == "link") {
                             select.getFeatures().clear();
                             select.getFeatures().push(feature);
                             selectedFeature = select.getFeatures().item(0);
@@ -114,7 +114,6 @@ function createList() {
 
         $(".itemButton").on('dblclick', function () {
             $("#itemModal").modal('show');
-            //loadInformationPage();
             loadItemModalHomePage();
         });
 
@@ -130,7 +129,7 @@ function createList() {
                     lastClickedItem = jQuery.parseJSON(response);
 
                     source.getFeatures().forEach(function (feature) {
-                        if (feature.get("Id") == lastClickedItem.Id) {
+                        if (feature.get("Id") == lastClickedItem.Id && feature.get("Type") == "item") {
                             select.getFeatures().clear();
                             select.getFeatures().push(feature);
                             selectedFeature = select.getFeatures().item(0);

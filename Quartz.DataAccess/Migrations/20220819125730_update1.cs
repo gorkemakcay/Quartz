@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Quartz.DataAccess.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class update1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,9 +62,7 @@ namespace Quartz.DataAccess.Migrations
                     Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UploadedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MainId = table.Column<int>(type: "int", nullable: false),
-                    MainType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -365,6 +363,7 @@ namespace Quartz.DataAccess.Migrations
                     TagNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttachmentIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     QuartzLinkId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -468,6 +467,7 @@ namespace Quartz.DataAccess.Migrations
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttachmentIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     QuartzItemId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -475,6 +475,64 @@ namespace Quartz.DataAccess.Migrations
                     table.PrimaryKey("PK_QuartzItemsInspections", x => x.Id);
                     table.ForeignKey(
                         name: "FK_QuartzItemsInspections_QuartzItems_QuartzItemId",
+                        column: x => x.QuartzItemId,
+                        principalTable: "QuartzItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "quartzItemsThicknessMeasurements",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlantArea = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlantSystem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Specification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NominalThickness = table.Column<float>(type: "real", nullable: false),
+                    MeasuredThickness = table.Column<float>(type: "real", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AttachmentIds = table.Column<int>(type: "int", nullable: false),
+                    QuartzItemId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_quartzItemsThicknessMeasurements", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_quartzItemsThicknessMeasurements_QuartzItems_QuartzItemId",
+                        column: x => x.QuartzItemId,
+                        principalTable: "QuartzItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "quartzItemsValveMaintenances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlantArea = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    KKSNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SerialNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SupplierManufacturare = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Designation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdealBarg = table.Column<float>(type: "real", nullable: false),
+                    OpeningPressureBarg = table.Column<float>(type: "real", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TestDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Tested = table.Column<bool>(type: "bit", nullable: false),
+                    AttachmentIds = table.Column<int>(type: "int", nullable: false),
+                    QuartzItemId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_quartzItemsValveMaintenances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_quartzItemsValveMaintenances_QuartzItems_QuartzItemId",
                         column: x => x.QuartzItemId,
                         principalTable: "QuartzItems",
                         principalColumn: "Id",
@@ -534,8 +592,17 @@ namespace Quartz.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_QuartzItemsInspections_QuartzItemId",
                 table: "QuartzItemsInspections",
-                column: "QuartzItemId",
-                unique: true);
+                column: "QuartzItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_quartzItemsThicknessMeasurements_QuartzItemId",
+                table: "quartzItemsThicknessMeasurements",
+                column: "QuartzItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_quartzItemsValveMaintenances_QuartzItemId",
+                table: "quartzItemsValveMaintenances",
+                column: "QuartzItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuartzLinksDrawingFeatures_QuartzLinkId",
@@ -610,6 +677,12 @@ namespace Quartz.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "QuartzItemsInspections");
+
+            migrationBuilder.DropTable(
+                name: "quartzItemsThicknessMeasurements");
+
+            migrationBuilder.DropTable(
+                name: "quartzItemsValveMaintenances");
 
             migrationBuilder.DropTable(
                 name: "QuartzLinksDrawingFeatures");

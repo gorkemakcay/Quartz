@@ -98,7 +98,7 @@
     overflow-y: auto;
 }
 
-.modal-content {
+.minHeight {
     min-height: 50vh;
 }
 

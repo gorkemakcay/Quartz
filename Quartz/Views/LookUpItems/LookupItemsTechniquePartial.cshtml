@@ -30,36 +30,36 @@
 
 <script>
      $("#btnLimAddTechnique").on('click', function () {
-            $.ajax({
-               type: "GET",
-               url: '@Url.Action("GetProcedureForOption", "LookUpItems")',
-               success: function (result) {
-                   rModel = jQuery.parseJSON(result);
+        $.ajax({
+           type: "GET",
+           url: '@Url.Action("GetProcedureForOption", "LookUpItems")',
+           success: function (result) {
+               rModel = jQuery.parseJSON(result);
 
-                   $("#limTechniqueAddModalLookUpItemsProcedure").children().remove();
+               $("#limTechniqueAddModalLookUpItemsProcedure").children().remove();
 
+               $("#limTechniqueAddModalLookUpItemsProcedure").append(
+                   $('<option>', {
+                       value: "select",
+                       text: "Select Procedure",
+                       id: "selectProcedure"
+                   })
+               );
+               $("#selectProcedure").attr("hidden", "");
+
+               for (var i = 0; i < rModel.length; i++) {
                    $("#limTechniqueAddModalLookUpItemsProcedure").append(
                        $('<option>', {
-                           value: "select",
-                           text: "Select Procedure",
-                           id: "selectProcedure"
+                           value: rModel[i].Name,
+                           text: rModel[i].Name
                        })
                    );
-                   $("#selectProcedure").attr("hidden", "");
-
-                   for (var i = 0; i < rModel.length; i++) {
-                       $("#limTechniqueAddModalLookUpItemsProcedure").append(
-                           $('<option>', {
-                               value: rModel[i].Name,
-                               text: rModel[i].Name
-                           })
-                       );
-                   }
-               },
-               error: function (error) {
-                   alert("error!");
-                   console.log(error.responseText);
                }
-            });
+           },
+           error: function (error) {
+               alert("error!");
+               console.log(error.responseText);
+           }
         });
+     });
 </script>

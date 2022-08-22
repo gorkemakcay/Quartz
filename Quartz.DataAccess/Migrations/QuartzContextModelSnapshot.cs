@@ -381,8 +381,8 @@ namespace Quartz.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AttachmentIds")
-                        .HasColumnType("int");
+                    b.Property<string>("AttachmentIds")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -410,6 +410,8 @@ namespace Quartz.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("QuartzItemId");
+
                     b.ToTable("quartzItemsThicknessMeasurements");
                 });
 
@@ -420,8 +422,8 @@ namespace Quartz.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AttachmentIds")
-                        .HasColumnType("int");
+                    b.Property<string>("AttachmentIds")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -460,6 +462,8 @@ namespace Quartz.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuartzItemId");
 
                     b.ToTable("quartzItemsValveMaintenances");
                 });
@@ -813,6 +817,28 @@ namespace Quartz.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("QuartzLink");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Item.QuartzItemsThicknessMeasurement", b =>
+                {
+                    b.HasOne("Quartz.Entities.Concrete.Project.Item.QuartzItem", "QuartzItem")
+                        .WithMany()
+                        .HasForeignKey("QuartzItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuartzItem");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Project.Item.QuartzItemsValveMaintenance", b =>
+                {
+                    b.HasOne("Quartz.Entities.Concrete.Project.Item.QuartzItem", "QuartzItem")
+                        .WithMany()
+                        .HasForeignKey("QuartzItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuartzItem");
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLinksDrawingFeatures", b =>

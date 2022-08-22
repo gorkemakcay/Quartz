@@ -16,7 +16,7 @@ namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsValveMaintenance
         public DateTime TestDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Tested { get; set; }
-        public int AttachmentIds { get; set; }
+        public string AttachmentIds { get; set; }
         public int QuartzItemId { get; set; }
     }
 }

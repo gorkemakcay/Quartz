@@ -306,6 +306,8 @@ var currentThicknessMeasurement;
 
 var isValveMaintenanceExist = false;
 
+var isThicknessMeasurementExist = false;
+
 // #endregion
 
 // #region Quartz Variables
@@ -388,12 +390,6 @@ $(function () {
     // #endregion
 
     // [CODE SNIPPET TRIAL AREA]
-    //$(".exportBtn").click(function () {
-    //    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-    //        dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
-    //    });
-    //    console.log(json);
-    //});
 });
 
 // #region getDate()
@@ -429,6 +425,118 @@ $(".closeButton").on('click', function () {
     $("#addLinkSelectDrawing").removeAttr("disabled");
     $("#dsmSelectDrawing").removeAttr("disabled");
 });
+
+function limCancelButton(type) {
+    $(".clear").val('');
+
+    switch (type) {
+        case "plantSystem":
+            $.ajax({
+                type: "GET",
+                url: "LookUpItems/GetPlantAreaForOption",
+                success: function (result) {
+                    rModel = jQuery.parseJSON(result);
+
+                    $("#limPlantSystemAddModalLookUpItemsPlantAreas").children().remove();
+
+                    $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
+                        $('<option>', {
+                            value: "select",
+                            text: "Select Plant Area(s)",
+                            id: "selectLimPlantAreas"
+                        })
+                    );
+                    $("#selectLimPlantAreas").attr("hidden", "");
+
+                    for (var i = 0; i < rModel.length; i++) {
+                        $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
+                            $('<option>', {
+                                value: rModel[i].Name,
+                                text: rModel[i].Name
+                            })
+                        );
+                    }
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "procedure":
+            $.ajax({
+                type: "GET",
+                url: "LookUpItems/GetMethodForOption",
+                success: function (result) {
+                    rModel = jQuery.parseJSON(result);
+
+                    $("#limProcedureAddModalLookUpItemsMethod").children().remove();
+
+                    $("#limProcedureAddModalLookUpItemsMethod").append(
+                        $('<option>', {
+                            value: "select",
+                            text: "Select Method",
+                            id: "selectMethod"
+                        })
+                    );
+                    $("#selectMethod").attr("hidden", "");
+
+                    for (var i = 0; i < rModel.length; i++) {
+                        $("#limProcedureAddModalLookUpItemsMethod").append(
+                            $('<option>', {
+                                value: rModel[i].Name,
+                                text: rModel[i].Name
+                            })
+                        );
+                    }
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+            break;
+
+        case "technique":
+            $.ajax({
+                type: "GET",
+                url: "LookUpItems/GetProcedureForOption",
+                success: function (result) {
+                    rModel = jQuery.parseJSON(result);
+
+                    $("#limTechniqueAddModalLookUpItemsProcedure").children().remove();
+
+                    $("#limTechniqueAddModalLookUpItemsProcedure").append(
+                        $('<option>', {
+                            value: "select",
+                            text: "Select Procedure",
+                            id: "selectProcedure"
+                        })
+                    );
+                    $("#selectProcedure").attr("hidden", "");
+
+                    for (var i = 0; i < rModel.length; i++) {
+                        $("#limTechniqueAddModalLookUpItemsProcedure").append(
+                            $('<option>', {
+                                value: rModel[i].Name,
+                                text: rModel[i].Name
+                            })
+                        );
+                    }
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+        default:
+    }
+
+
+}
 
 function goDrawing(linkId, drawingId, thisValue) {
     //alert(" you clicked breadcrumb, gorkem() function is working ^.^ | id: " + id);

@@ -13,7 +13,8 @@ namespace Quartz.Entities.Concrete.Project.Item
         public float MeasuredThickness { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int AttachmentIds { get; set; }
-        public int QuartzItemId { get; set; }
+        public string AttachmentIds { get; set; }
+        public int QuartzItemId { get; set; } // Information'ın ait olduğu Item'ın Id'si (Foreign Key)
+        public QuartzItem QuartzItem { get; set; } // Information'ın ait olduğu Item (One-to-Many Relationship)
     }
 }

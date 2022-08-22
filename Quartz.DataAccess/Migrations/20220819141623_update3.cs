@@ -2,21 +2,13 @@
 
 namespace Quartz.DataAccess.Migrations
 {
-    public partial class four : Migration
+    public partial class update3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
                 name: "AttachmentIds",
-                table: "QuartzItemsInspections",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AttachmentIds",
-                table: "QuartzItems",
+                table: "quartzItemsThicknessMeasurements",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(int),
@@ -27,17 +19,7 @@ namespace Quartz.DataAccess.Migrations
         {
             migrationBuilder.AlterColumn<int>(
                 name: "AttachmentIds",
-                table: "QuartzItemsInspections",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "AttachmentIds",
-                table: "QuartzItems",
+                table: "quartzItemsThicknessMeasurements",
                 type: "int",
                 nullable: false,
                 defaultValue: 0,
