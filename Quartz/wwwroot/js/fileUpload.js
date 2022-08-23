@@ -72,6 +72,34 @@
                                         console.log(error.responseText);
                                     }
                                 });
+
+                                // update drawing settings
+                                $.ajax({
+                                    type: "GET",
+                                    url: "QuartzLink/GetDrawingSettingsDetailJSON",
+                                    data: { quartzLinkId: link.Id },
+                                    success: function (response) {
+                                        linksDrawingSettings = jQuery.parseJSON(response);
+                                        linksDrawingSettings.DrawingNo = link.TagNo;
+                                        linksDrawingSettings.File = link.CurrentDrawingId;
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "QuartzLink/UpdateDrawingSettingsJSON",
+                                            data: { model: linksDrawingSettings },
+                                            success: function (response) {
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
+                                    },
+                                    error: function (error) {
+                                        alert("error!");
+                                        console.log(error.responseText);
+                                    }
+                                });
                             },
                             error: function (error) {
                                 alert("error!");
@@ -366,7 +394,7 @@
                                 success: function (response) {
                                     currentValveMaintenance = jQuery.parseJSON(response);
                                     //loadValveMaintenancesDataPage();
-                                    openEditValveMaintenanceModal(currentValveMaintenance.Id);
+                                    loadValveMaintenancesAttachmentPage();
                                     toast("Attachment Upload Successful!");
                                 },
                                 error: function (error) {
@@ -431,7 +459,72 @@
                                 data: { model: currentThicknessMeasurement },
                                 success: function (response) {
                                     currentThicknessMeasurement = jQuery.parseJSON(response);
-                                    openEditThicknessMeasurementModal(currentThicknessMeasurement.Id);
+                                    loadThicknessMeasurementAttachmentPage();
+                                    toast("Attachment Upload Successful!");
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "dsmAttachment":
+            // yüklenen dosyayı input'tan değişkene atadım
+            var fileUpload = $("#dsmUploadFile").get(0);
+
+            // controller'a göndermek için tüm dosyaları fileData'da topladım
+            var files = fileUpload.files;
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++)
+                fileData.append('', files[i]);
+
+            // ajax post ile dosyaları controller'a gönderdim
+            $.ajax({
+                type: 'POST',
+                url: "FileUpload/UploadFile",
+                data: fileData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    uploadedFile = jQuery.parseJSON(response);
+                    var fileUpdate = uploadedFile.Result;
+                    fileUpdate.CreatedDate = getDate();
+
+                    // update last uploaded file for add createdDate
+                    $.ajax({
+                        type: "POST",
+                        url: "FileUpload/UpdateFile",
+                        data: fileUpdate,
+                        success: function (response) {
+                            var updatedFile = jQuery.parseJSON(response);
+
+                            if (currentDrawingSettings.AttachmentIds == null) {
+                                currentDrawingSettings.AttachmentIds = updatedFile.Id;
+                            }
+                            else {
+                                currentDrawingSettings.AttachmentIds = currentDrawingSettings.AttachmentIds + "," + updatedFile.Id;
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzLink/UpdateDrawingSettingsJSON",
+                                data: { model: currentDrawingSettings },
+                                success: function (response) {
+                                    currentDrawingSettings = jQuery.parseJSON(response);
+                                    loadDrawingSettingsAttachmentPage();
                                     toast("Attachment Upload Successful!");
                                 },
                                 error: function (error) {

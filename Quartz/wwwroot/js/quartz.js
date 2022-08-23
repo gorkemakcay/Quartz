@@ -68,12 +68,114 @@
         }),
     });
 
-
     map = new ol.Map({
         interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([select, selectPM, translate]),
         layers: [imageLayer, rasterLayer, vectorLayer],
         target: 'map',
         view: view
+    });
+
+    map.on('dblclick', function (evt) {
+        map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+
+            if (feature.get("Type") == "item") {
+                $.ajax({
+                    type: "GET",
+                    url: "QuartzItem/GetItemDetailJSON",
+                    data: { itemId: feature.get("Id") },
+                    success: function (response) {
+                        lastClickedItem = jQuery.parseJSON(response);
+                        clickedOrCreated = "clicked";
+                        $("#itemModal").modal('show');
+                        loadItemModalHomePage();
+                    }
+                });
+            }
+            if (feature.get("Type") == "link") {
+                $.ajax({
+                    type: "GET",
+                    url: "QuartzLink/GetLinkDetailJSON",
+                    data: { linkId: feature.get("Id") },
+                    success: function (response) {
+                        lastClickedLink = jQuery.parseJSON(response);
+                        clickedOrCreated = "clicked";
+
+                        if (lastClickedLink.CurrentDrawingId == 0 || lastClickedLink.CurrentDrawingId == null) {
+                            $("#linkModal").modal('show');
+
+                            if (lastClickedLink.CurrentDrawingId != 0) {
+                                $("#createdLinkMode").attr("hidden", "");
+                                $("#clickedLinkMode").removeAttr("hidden");
+                            }
+                            else {
+                                $("#createdLinkMode").removeAttr("hidden");
+                                $("#clickedLinkMode").attr("hidden", "");
+                            }
+
+                            addLinkUploadDrawingArea = false;
+                            document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
+                            document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
+                            $("#addLinkSelectDrawing").removeAttr("disabled");
+
+                            loadLinkModal();
+                        }
+                        else {
+                            currentQuartzLink = lastClickedLink;
+
+                            $.ajax({
+                                type: "GET",
+                                url: "QuartzLink/GetVectorSource",
+                                data: { quartzLinkId: currentQuartzLink.Id },
+                                success: function (response) {
+                                    currentDrawingFeatures = jQuery.parseJSON(response);
+
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "FileUpload/GetFileDetail",
+                                        data: { fileId: currentQuartzLink.CurrentDrawingId },
+                                        success: function (response) {
+                                            currentDrawing = jQuery.parseJSON(response);
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "QuartzLink/GetQuartz",
+                                                success: function (html) {
+                                                    $("#main").children().remove();
+                                                    $("#main").html(html);
+
+                                                    loadQuartz();
+
+                                                    crumbCount++;
+                                                    $(".breadCrumb").append(
+                                                        $('<li>', {
+                                                            text: currentQuartzLink.TagNo,
+                                                            value: crumbCount,
+                                                            onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId   +" ,"+crumbCount + ")",
+                                                            class: "crumb"
+                                                        })
+                                                    );
+                                                },
+                                                error: function (error) {
+                                                    alert("error!");
+                                                    console.log(error.responseText);
+                                                }
+                                            });
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
     });
 
     //---------------------------- Feature Hover ----------------------------
@@ -192,7 +294,7 @@
                     typeSelect.value = 'None';
                     map.removeInteraction(draw);
                 }
-                setTimeout(timeOut, 1 / 1000);
+                setTimeout(timeOut, 100);
 
                 // #region Add QuartzLink to DB
                 if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
@@ -215,6 +317,7 @@
                         data: { model: linkModel },
                         success: function (response) {
                             lastCreatedLink = jQuery.parseJSON(response);
+                            alert("drawend");
                             clickedOrCreated = "created";
                             linkOrItem = "link";
                             getVectorSource();
@@ -371,7 +474,7 @@
                 feature = lastCreatedLink;
             if (linkOrItem == "item")
                 feature = lastCreatedItem;
-
+            alert("addfeature");
             // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim
             var style = new ol.style.Style({
                 stroke: new ol.style.Stroke({ color: '#000' }),

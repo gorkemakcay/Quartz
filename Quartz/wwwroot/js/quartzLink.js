@@ -214,8 +214,9 @@ function linkModalSaveButton() {
         url: "QuartzLink/GetDrawingSettingsDetailJSON",
         data: { quartzLinkId: link.Id },
         success: function (response) {
-            var linksDrawingSettings = jQuery.parseJSON(response);
-            linksDrawingSettings.DrawingNo = $("#addLinkTagNo").val();
+            linksDrawingSettings = jQuery.parseJSON(response);
+            linksDrawingSettings.DrawingNo = link.TagNo;
+            linksDrawingSettings.File = link.CurrentDrawingId;
 
             $.ajax({
                 type: "POST",
@@ -290,6 +291,7 @@ function goCurrentLink() {
                 success: function (response) {
                     var linksDrawingSettings = jQuery.parseJSON(response);
                     linksDrawingSettings.DrawingNo = $("#addLinkTagNo").val();
+                    linksDrawingSettings.File = $("#addLinkSelectDrawing").val();
                     $.ajax({
                         type: "POST",
                         url: "QuartzLink/UpdateDrawingSettingsJSON",

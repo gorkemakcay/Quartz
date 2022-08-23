@@ -80,15 +80,6 @@ function createList() {
                         }
                     });
 
-                    //featureCollection[''].features.forEach(function (featureJson) {
-                    //    if (featureJson.properties.Id == lastClickedLink.Id) {
-                    //        view.animate({
-                    //            center: new ol.proj.fromLonLat(featureJson.properties.LonLat),
-                    //            zoom: 4
-                    //        });
-                    //    }
-                    //});
-
                     if (lastClickedLink.CurrentDrawingId != 0) {
                         $("#createdLinkMode").attr("hidden", "");
                         $("#clickedLinkMode").removeAttr("hidden");

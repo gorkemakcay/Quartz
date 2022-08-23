@@ -168,6 +168,18 @@ namespace Quartz.Controllers.Project.Link
             });
             return Json(jSonModel);
         }
+
+        [HttpGet]
+        public IActionResult GetDrawingSettingsDataPartialView()
+        {
+            return PartialView("QuartzLinksDrawingSettingsDataPartial");
+        }
+
+        [HttpGet]
+        public IActionResult GetDrawingSettingsAttachmentPartialView()
+        {
+            return PartialView("QuartzLinksDrawingSettingsAttachmentPartial");
+        }
         #endregion
 
         [HttpGet]

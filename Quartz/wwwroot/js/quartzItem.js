@@ -247,7 +247,6 @@ $("#inspectionAddSaveButton").on('click', function () {
             CreatedDate: getDate(),
             Details: $("#inspectionDetails").val(),
             QuartzItemId: item.Id,
-            AttachmentIds: 0
         }
 
         toastContext = "Inspection Add Successful!";
@@ -1150,7 +1149,7 @@ function loadInspectionsAttachmentPage() {
             // #region Create Table's Rows
             $("#itemAttachmentsTable").children('tbody').children('tr').remove();
 
-            if (currentInspection.AttachmentIds == 0) {
+            if (currentInspection.AttachmentIds == null) {
                 $("#inspectionsAttachmentTable").children('tbody').append(
                     $('<tr>').append(
                         $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
