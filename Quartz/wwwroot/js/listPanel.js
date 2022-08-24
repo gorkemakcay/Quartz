@@ -57,6 +57,7 @@ function createList() {
         });
 
         $(".linkButton").on('click', function () {
+            $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
             lastClickedLinkButtonId = $(this).attr('id');
             clickedOrCreated = "clicked";
 
@@ -109,6 +110,7 @@ function createList() {
         });
 
         $(".itemButton").on('click', function () {
+            $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
             lastClickedItemButtonId = $(this).attr('id');
             clickedOrCreated = "clicked";
 

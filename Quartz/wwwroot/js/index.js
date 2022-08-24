@@ -306,6 +306,8 @@ var isValveMaintenanceExist = false;
 
 var isThicknessMeasurementExist = false;
 
+var lastClickedButtonId;
+
 // #endregion
 
 // #region Quartz Variables
@@ -388,6 +390,11 @@ $(function () {
     // #endregion
 
     // [CODE SNIPPET TRIAL AREA]
+
+    $("#lsls").on('click', function () {
+        $("#listPanel").toggle("slide", { "direction": "left" }, 300);
+        toggleListPanel();
+    });
 });
 
 // #region getDate()
@@ -622,4 +629,19 @@ function getVectorSource() {
             console.log(error.responseText);
         }
     });
+}
+
+function toggleListPanel() {
+    if ($('#listPanel').css('display') == 'none') {
+        $("#listPanel").toggle("slide", { "direction": "left" }, 300);
+    }
+    else {
+        $("#listPanel").toggle("slide", { "direction": "left" }, 300);
+    }
+    setTimeout(updateMap, 310);
+}
+
+function updateMap() {
+    map.updateSize();
+    map.render();
 }

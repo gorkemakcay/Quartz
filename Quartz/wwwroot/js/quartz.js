@@ -1,17 +1,33 @@
 ﻿function loadQuartz() {
     // #region Elements of Quartz
     select = new ol.interaction.Select({
-        condition: ol.events.condition.click
+        condition: ol.events.condition.click,
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgb(0, 152, 254, 0.5)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#0098FE',
+                width: 2
+            })
+        })
     });
 
     var selectPM = new ol.interaction.Select({
-        condition: ol.events.condition.pointerMove
+        condition: ol.events.condition.pointerMove,
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgb(0, 152, 254, 0.1)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#0098FE',
+                width: 1
+            })
+        })
     });
 
-    var sdsd = select.getFeatures();
-
     translate = new ol.interaction.Translate({
-        features: sdsd,
+        features: select.getFeatures(),
         condition: ol.events.condition.platformModifierKeyOnly
     });
 
@@ -30,18 +46,7 @@
     });
 
     ////////////////////////////////////////////////// trial area
-    // #region selectInteraction usage:
-    // selectInteraction.getFeatures().clear();
-    // selectInteraction.getFeatures().push(feature);
-    //function highlightFeature(feat) {
-    //    selectInteraction.getFeatures().push(feat);
-    //    selectInteraction.dispatchEvent({
-    //        type: 'select',
-    //        selected: [feat],
-    //        deselected: []
-    //    });
-    //}
-    // #endregion
+
     ////////////////////////////////////////////////// trial area
 
     vectorLayer = new ol.layer.Vector({
@@ -54,10 +59,10 @@
         zoom: 2,
         maxZoom: 5,
         minZoom: 2,
-        extent: [-1060, -678, 3080, 2034] // sol > alt > sağ > üst
+        extent: [-1060, -678, 3080, 2034] // left > bottom > right > top
     });
 
-    imageUrl = "http://localhost:5001/home/get?path="; // [TAMAMLANMADI]
+    imageUrl = "http://localhost:5001/home/get?path=";
     imageUrl = imageUrl + currentDrawing.Path;
 
     imageLayer = new ol.layer.Image({
@@ -177,44 +182,6 @@
             }
         });
     });
-
-    //---------------------------- Feature Hover ----------------------------
-    //var selected = null;
-
-    //var selectStyle = new ol.style.Style({
-    //    fill: new ol.style.Fill({
-    //        color: 'rgba(255, 255, 0, 0)',
-    //    }),
-    //    stroke: new ol.style.Stroke({
-    //        color: '#000',
-    //        width: 2,
-    //    }),
-    //});
-
-    //map.on('pointermove', function (e) {
-    //    if (selected != null) {
-    //        selected.setStyle(undefined);
-    //        selected = null;
-    //    }
-
-    //    map.forEachFeatureAtPixel(e.pixel, function (f) {
-    //        selected = f;
-    //        //selectStyle.getFill().setColor(f.get('COLOR'));
-    //        f.setStyle(selectStyle);
-    //        return true;
-    //    });
-
-    //});
-    //---------------------------- Feature Hover ----------------------------
-
-    // Bunlar gerekli değil sanırım!
-    //map.addInteraction(translate);
-    //map.addInteraction(select);
-
-    //var translate = new ol.interaction.Translate({
-    //    features: select.getFeatures()
-    //});
-
     // #endregion
 
     // #region Loading Spinner
@@ -226,11 +193,19 @@
     });
     // #endregion
 
+    // #region Tıklanan Feature'a ait buton'un işaretlenmesi
     map.on('click', function (evt) {
+
+
         this.forEachFeatureAtPixel(evt.pixel, function (f) {
             selectedFeature = f;
+            $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
+            var buttonId = selectedFeature.get('Id');
+            lastClickedButtonId = buttonId;
+            $("#" + buttonId + "").attr('style', 'background: #808080');
         });
     });
+    // #endregion
 
     // #region Get Features From Db & Print Screen
     // db'deki "QuartzLinkDrawingFeature" tablosunun "Features" sütununun değerlerini aldım ve bu bilgilerle feature'ları oluşturdum
@@ -243,12 +218,23 @@
                 geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857')
             });
 
-            feature.setId(featureJson.Id);
             feature.setProperties({ 'LonLat': featureJson.properties.LonLat });
             feature.setProperties({ 'Id': featureJson.properties.Id });
             feature.setProperties({ 'Name': featureJson.properties.Name });
             feature.setProperties({ 'Type': featureJson.properties.Type });
 
+            var printStyle = new ol.style.Style({
+                text: new ol.style.Text({
+                    text: 'Hello',
+                    scale: 1.3,
+                    fill: new ol.style.Fill({
+                        color: '#000000'
+                    }),
+                    overflow: true
+                })
+            })
+
+            //feature.setStyle(printStyle);
             // Add feature to the vector source
             source.addFeature(feature);
         });
@@ -330,6 +316,7 @@
                             evt.feature.setProperties({ 'Type': "link" });
 
                             setTimeout(addDrawingFeaturesJSON, 100);
+
                             // #endregion
 
                             // #region Link Modal Settings
