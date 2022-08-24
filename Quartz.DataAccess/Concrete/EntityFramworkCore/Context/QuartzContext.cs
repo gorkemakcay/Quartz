@@ -38,8 +38,8 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
         public DbSet<QuartzItem> QuartzItems { get; set; }
         public DbSet<QuartzItemsInformation> QuartzItemsInformations { get; set; }
         public DbSet<QuartzItemsInspection> QuartzItemsInspections { get; set; }
-        public DbSet<QuartzItemsValveMaintenance> quartzItemsValveMaintenances { get; set; }
-        public DbSet<QuartzItemsThicknessMeasurement> quartzItemsThicknessMeasurements { get; set; }
+        public DbSet<QuartzItemsValveMaintenance> QuartzItemsValveMaintenances { get; set; }
+        public DbSet<QuartzItemsThicknessMeasurement> QuartzItemsThicknessMeasurements { get; set; }
 
         public DbSet<LookUpItemsComponentType> LookupItemsComponentTypes { get; set; }
         public DbSet<LookUpItemsFittingType> LookupItemsFittingTypes { get; set; }

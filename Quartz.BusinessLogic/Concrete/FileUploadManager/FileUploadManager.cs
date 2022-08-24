@@ -47,10 +47,10 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
                 var extension = Path.GetExtension(file.FileName);
                 if (!File.Exists(filePath))
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
+                    using var stream = new FileStream(filePath, FileMode.Create);
+
+                    await file.CopyToAsync(stream);
+
 
                     var fileModel = new FileUpload
                     {

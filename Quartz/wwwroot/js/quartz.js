@@ -149,7 +149,7 @@
                                                         $('<li>', {
                                                             text: currentQuartzLink.TagNo,
                                                             value: crumbCount,
-                                                            onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId   +" ,"+crumbCount + ")",
+                                                            onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
                                                             class: "crumb"
                                                         })
                                                     );
@@ -282,19 +282,22 @@
                 map.addInteraction(draw);
             }
 
-            // #region Feature "drawend" Function
+            // #region Feature "drawend" Function   
             draw.on("drawend", function (evt) {
+                // #region Create LonLat For Feature's Set LonLat Property
                 selectedFeature = evt.feature;
                 var featuresExtent = selectedFeature.getGeometry().getExtent();
                 var featuresGetCenter = ol.extent.getCenter(featuresExtent);
                 featuresLonLat = ol.proj.toLonLat(featuresGetCenter);
+                // #endregion
 
-                // Button'a shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra "typeSelect.value" atanaması için
+                // #region Button'a shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra "typeSelect.value" atanması için
                 function timeOut() {
                     typeSelect.value = 'None';
                     map.removeInteraction(draw);
                 }
                 setTimeout(timeOut, 100);
+                // #endregion
 
                 // #region Add QuartzLink to DB
                 if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
@@ -317,11 +320,19 @@
                         data: { model: linkModel },
                         success: function (response) {
                             lastCreatedLink = jQuery.parseJSON(response);
-                            alert("drawend");
                             clickedOrCreated = "created";
-                            linkOrItem = "link";
                             getVectorSource();
 
+                            // #region Feature Set Properties
+                            evt.feature.setProperties({ 'LonLat': featuresLonLat });
+                            evt.feature.setProperties({ 'Id': lastCreatedLink.Id });
+                            evt.feature.setProperties({ 'Name': lastCreatedLink.TagNo });
+                            evt.feature.setProperties({ 'Type': "link" });
+
+                            setTimeout(addDrawingFeaturesJSON, 100);
+                            // #endregion
+
+                            // #region Link Modal Settings
                             $("#clickedLinkMode").attr("hidden", "");
                             $("#createdLinkMode").removeAttr("hidden");
                             addLinkUploadDrawingAreaCreatedMode = false;
@@ -334,7 +345,9 @@
                             $("#linkShowLabel").prop('checked', true);
 
                             loadLinkModal();
+                            // #endregion
 
+                            // #region Create Drawing Settings
                             var drawingSettingsAddModel = {
                                 DrawingNo: lastCreatedLink.TagNo,
                                 QuartzLinkId: lastCreatedLink.Id
@@ -351,9 +364,9 @@
                                     console.log(error.responseText);
                                 }
                             });
+                            // #endregion
 
                             toast("Link Add Successful!");
-
                         },
                         error: function (error) {
                             alert("error: link doesn't saved!");
@@ -382,13 +395,23 @@
                         success: function (response) {
                             lastCreatedItem = jQuery.parseJSON(response);
                             clickedOrCreated = "created";
-                            linkOrItem = "item";
                             isInformationCreated = false;
                             getVectorSource();
 
+                            // #region Feature Set Properties
+                            evt.feature.setProperties({ 'LonLat': featuresLonLat });
+                            evt.feature.setProperties({ 'Id': lastCreatedItem.Id });
+                            evt.feature.setProperties({ 'Name': lastCreatedItem.TagNo });
+                            evt.feature.setProperties({ 'Type': "item" });
+
+                            setTimeout(addDrawingFeaturesJSON, 100);
+                            // #endregion
+
+                            // #region Item Modal Settings
                             $("#itemModal").modal('show');
-                            //loadInformationPage();
                             loadItemModalHomePage();
+                            // #endregion
+
                             toast("Item Add Successful!");
                         },
                         error: function (error) {
@@ -465,49 +488,6 @@
         }
 
     }
-
-    // #region Feature "addfeature" Function
-    source.on('addfeature', function (evt) {
-        function wait() {
-            var feature;
-            if (linkOrItem == "link")
-                feature = lastCreatedLink;
-            if (linkOrItem == "item")
-                feature = lastCreatedItem;
-            alert("addfeature");
-            // Çizilen Box/Polygon'un style özelliklerini kişiselleştirdim
-            var style = new ol.style.Style({
-                stroke: new ol.style.Stroke({ color: '#000' }),
-                text: new ol.style.Text({
-                    text: feature.TagNo,
-                    font: '20px Calibri,sans-serif',
-                    fill: new ol.style.Fill({
-                        color: 'rgba(255, 255, 0, 0)',
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: '#000',
-                        width: 1
-                    })
-                })
-            });
-
-            // Çizilen Box/Polygon'a ID tanımladım
-            //evt.feature.setId(feature.Id);
-
-            // Çizilen Box/Polygon'a text tanımladım
-            evt.feature.setStyle(style);
-
-            evt.feature.setProperties({ 'LonLat': featuresLonLat });
-            evt.feature.setProperties({ 'Id': feature.Id });
-            evt.feature.setProperties({ 'Name': feature.TagNo });
-            evt.feature.setProperties({ 'Type': linkOrItem });
-            addedFeatures.push(evt.feature);
-
-            setTimeout(addDrawingFeaturesJSON, 100);
-        }
-        setTimeout(wait, 200);
-    });
-    // #endregion
 
     // #region Handle tpyeSelect Change Event
     typeSelect.onchange = function () {

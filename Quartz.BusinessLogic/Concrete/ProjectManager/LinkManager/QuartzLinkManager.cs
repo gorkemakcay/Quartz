@@ -20,23 +20,23 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
 
         public int AddLink(QuartzLinkAddViewModel model)
         {
-            using (var context = new QuartzContext())
+            using var context = new QuartzContext();
+
+            var link = new QuartzLink()
             {
-                var link = new QuartzLink()
-                {
-                    TagNo = model.TagNo,
-                    ShowLabel = model.ShowLabel,
-                    CreatedDate = model.CreatedDate,
-                    CreatedBy = model.CreatedBy,
-                    MainQuartzLinkId = model.MainQuartzLinkId,
-                    CurrentDrawingId = model.CurrentDrawingId
-                };
+                TagNo = model.TagNo,
+                ShowLabel = model.ShowLabel,
+                CreatedDate = model.CreatedDate,
+                CreatedBy = model.CreatedBy,
+                MainQuartzLinkId = model.MainQuartzLinkId,
+                CurrentDrawingId = model.CurrentDrawingId
+            };
 
-                context.QuartzLinks.Add(link);
-                context.SaveChanges();
+            context.QuartzLinks.Add(link);
+            context.SaveChanges();
 
-                return link.Id;
-            }
+            return link.Id;
+
         }
 
         public List<QuartzLinkListViewModel> GetAllLinks(int mainLinkId)

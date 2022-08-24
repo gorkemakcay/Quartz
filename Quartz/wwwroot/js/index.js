@@ -294,8 +294,6 @@ var itemModalActivePartial = "Informations";
 
 var crumbCount = 1;
 
-var linkOrItem;
-
 var featuresLonLat;
 
 var selectedFeature;
@@ -409,7 +407,7 @@ function breadCrumb() {
             class: "crumb"
         }).prepend(
             $('<i>', {
-                class: "bi bi-house"
+                class: "fa fa-house"
             })
         )
     );

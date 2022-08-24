@@ -21,28 +21,28 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
 
         public int AddInspection(QuartzItemsInspectionAddViewModel model)
         {
-            using (var context = new QuartzContext())
+            using var context = new QuartzContext();
+
+            var inspection = new QuartzItemsInspection()
             {
-                var inspection = new QuartzItemsInspection()
-                {
-                    ReportNo = model.ReportNo,
-                    Method = model.Method,
-                    Procedure = model.Procedure,
-                    Technique = model.Technique,
-                    Status = model.Status,
-                    Date = model.Date,
-                    DueDate = model.DueDate,
-                    CreatedDate = model.CreatedDate,
-                    Details = model.Details,
-                    QuartzItemId = model.QuartzItemId,
-                    AttachmentIds = model.AttachmentIds
-                };
+                ReportNo = model.ReportNo,
+                Method = model.Method,
+                Procedure = model.Procedure,
+                Technique = model.Technique,
+                Status = model.Status,
+                Date = model.Date,
+                DueDate = model.DueDate,
+                CreatedDate = model.CreatedDate,
+                Details = model.Details,
+                QuartzItemId = model.QuartzItemId,
+                AttachmentIds = model.AttachmentIds
+            };
 
-                context.QuartzItemsInspections.Add(inspection);
-                context.SaveChanges();
+            context.QuartzItemsInspections.Add(inspection);
+            context.SaveChanges();
 
-                return inspection.Id;
-            }
+            return inspection.Id;
+
         }
 
         public List<QuartzItemsInspectionUpdateViewModel> GetAllInspections(int quartzItemId)

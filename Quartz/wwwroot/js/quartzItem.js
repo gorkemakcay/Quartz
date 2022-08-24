@@ -1190,7 +1190,7 @@ function loadInspectionsAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                         )
                                     ),
                                 );
@@ -1236,13 +1236,11 @@ function loadInspectionsAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                             )
                                         ),
                                     );
                                 }
-
-                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
                             },
                             error: function (error) {
                                 alert("error!");
@@ -1467,7 +1465,7 @@ function loadValveMaintenancesAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                         )
                                     ),
                                 );
@@ -1506,7 +1504,7 @@ function loadValveMaintenancesAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                             )
                                         ),
                                     );
@@ -1518,8 +1516,6 @@ function loadValveMaintenancesAttachmentPage() {
                                         )
                                     );
                                 }
-
-                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
                             },
                             error: function (error) {
                                 alert("error!");
@@ -1828,7 +1824,7 @@ function loadThicknessMeasurementAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                         )
                                     ),
                                 );
@@ -1867,7 +1863,7 @@ function loadThicknessMeasurementAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top:     -7px; margin-left:-7px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                             )
                                         ),
                                     );
@@ -1879,8 +1875,6 @@ function loadThicknessMeasurementAttachmentPage() {
                                         )
                                     );
                                 }
-                        
-                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
                             },
                             error: function (error) {
                                 alert("error!");
@@ -1961,7 +1955,7 @@ function loadAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7.5px; margin-left: -7.5px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                         )
                                     ),
                                 );
@@ -2007,7 +2001,7 @@ function loadAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                             )
                                         ),
                                     );
@@ -2019,8 +2013,6 @@ function loadAttachmentPage() {
                                         )
                                     );
                                 }
-
-                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
                             },
                             error: function (error) {
                                 alert("error!");

@@ -20,21 +20,21 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
 
         public int AddItem(QuartzItemAddViewModel model)
         {
-            using (var context = new QuartzContext())
+            using var context = new QuartzContext();
+
+            var item = new QuartzItem()
             {
-                var item = new QuartzItem()
-                {
-                    TagNo = model.TagNo,
-                    CreatedDate = model.CreatedDate,
-                    CreatedBy = model.CreatedBy,
-                    QuartzLinkId = model.QuartzLinkId
-                };
+                TagNo = model.TagNo,
+                CreatedDate = model.CreatedDate,
+                CreatedBy = model.CreatedBy,
+                QuartzLinkId = model.QuartzLinkId
+            };
 
-                context.QuartzItems.Add(item);
-                context.SaveChanges();
+            context.QuartzItems.Add(item);
+            context.SaveChanges();
 
-                return item.Id;
-            }
+            return item.Id;
+
         }
 
         public List<QuartzItemListViewModel> GetAllItems(int linkId)

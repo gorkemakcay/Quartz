@@ -20,30 +20,28 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
 
         public int AddValveMaintenance(QuartzItemsValveMaintenanceAddViewModel model)
         {
-            using (var context = new QuartzContext())
+            using var context = new QuartzContext();
+            var valveMaintenance = new QuartzItemsValveMaintenance()
             {
-                var valveMaintenance = new QuartzItemsValveMaintenance()
-                {
-                    KKSNo = model.KKSNo,
-                    SerialNo = model.SerialNo,
-                    SupplierManufacturare = model.SupplierManufacturare,
-                    Designation = model.Designation,
-                    IdealBarg = model.IdealBarg,
-                    OpeningPressureBarg = model.OpeningPressureBarg,
-                    Remarks = model.Remarks,
-                    TestDate = model.TestDate,
-                    Tested = model.Tested,
-                    AttachmentIds = model.AttachmentIds,
-                    QuartzItemId = model.QuartzItemId,
-                    PlantArea = model.PlantArea,
-                    CreatedDate = model.CreatedDate
-                };
+                KKSNo = model.KKSNo,
+                SerialNo = model.SerialNo,
+                SupplierManufacturare = model.SupplierManufacturare,
+                Designation = model.Designation,
+                IdealBarg = model.IdealBarg,
+                OpeningPressureBarg = model.OpeningPressureBarg,
+                Remarks = model.Remarks,
+                TestDate = model.TestDate,
+                Tested = model.Tested,
+                AttachmentIds = model.AttachmentIds,
+                QuartzItemId = model.QuartzItemId,
+                PlantArea = model.PlantArea,
+                CreatedDate = model.CreatedDate
+            };
 
-                context.quartzItemsValveMaintenances.Add(valveMaintenance);
-                context.SaveChanges();
+            context.QuartzItemsValveMaintenances.Add(valveMaintenance);
+            context.SaveChanges();
 
-                return valveMaintenance.Id;
-            }
+            return valveMaintenance.Id;
         }
 
         public List<QuartzItemsValveMaintenanceListViewModel> GetAllValveMaintenances(int quartzItemId)

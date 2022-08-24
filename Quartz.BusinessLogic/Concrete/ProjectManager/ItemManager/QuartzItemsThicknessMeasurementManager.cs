@@ -20,11 +20,10 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
 
         public int AddThicknessMeasurement(QuartzItemsThicknessMeasurementAddViewModel model)
         {
-            using (var context = new QuartzContext())
+            using var context = new QuartzContext();
+            var thicknessMeasurement = new QuartzItemsThicknessMeasurement()
             {
-                var thicknessMeasurement = new QuartzItemsThicknessMeasurement()
-                {
-                    PlantArea = model.PlantArea,
+                PlantArea = model.PlantArea,
                     PlantSystem = model.PlantSystem,
                     Specification = model.Specification,
                     NominalThickness = model.NominalThickness,
@@ -34,11 +33,10 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
                     QuartzItemId = model.QuartzItemId
                 };
 
-                context.quartzItemsThicknessMeasurements.Add(thicknessMeasurement);
-                context.SaveChanges();
+            context.QuartzItemsThicknessMeasurements.Add(thicknessMeasurement);
+            context.SaveChanges();
 
-                return thicknessMeasurement.Id;
-            }
+            return thicknessMeasurement.Id;
         }
 
         public List<QuartzItemsThicknessMeasurementListViewModel> GetAllThicknessMeasurements(int quartzItemId)

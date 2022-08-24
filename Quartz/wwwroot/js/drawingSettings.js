@@ -1,19 +1,19 @@
 ﻿// #region Drawing Settings Modal
 
 // #region DSM - Upload New Drawing
-var drawingSettingsModalUploadDrawingArea = false;
-$("#btnDsmUploadDrawing").on("click", function () {
-    if (drawingSettingsModalUploadDrawingArea == false) {
-        document.getElementById("dsmUploadDrawingArea").removeAttribute("hidden");
-        drawingSettingsModalUploadDrawingArea = true;
-        return -1;
-    }
-    if (drawingSettingsModalUploadDrawingArea == true) {
-        document.getElementById("dsmUploadDrawingArea").setAttribute("hidden", "");
-        drawingSettingsModalUploadDrawingArea = false;
-        return -1;
-    }
-});
+//var drawingSettingsModalUploadDrawingArea = false;
+//$("#btnDsmUploadDrawing").on("click", function () {
+//    if (drawingSettingsModalUploadDrawingArea == false) {
+//        document.getElementById("dsmUploadDrawingArea").removeAttribute("hidden");
+//        drawingSettingsModalUploadDrawingArea = true;
+//        return -1;
+//    }
+//    if (drawingSettingsModalUploadDrawingArea == true) {
+//        document.getElementById("dsmUploadDrawingArea").setAttribute("hidden", "");
+//        drawingSettingsModalUploadDrawingArea = false;
+//        return -1;
+//    }
+//});
 // #endregion
 
 // #region DSM - Save Button
@@ -115,26 +115,9 @@ $("#btnDrawingSettings").on('click', function () {
 
 // #endregion
 
-// #region DSM - Upload Drawing Button
-var dsmUploadDrawingArea = false;
-$("#btnDsmUploadDrawing").on("click", function () {
-    if (dsmUploadDrawingArea == false) {
-        document.getElementById("dsmUploadDrawingArea").removeAttribute("hidden");
-        $("#dsmSelectDrawing").attr("disabled", "");
-        dsmUploadDrawingArea = true;
-        return -1;
-    }
-    if (dsmUploadDrawingArea == true) {
-        document.getElementById("dsmUploadDrawingArea").setAttribute("hidden", "");
-        $("#dsmSelectDrawing").removeAttr("disabled");
-        dsmUploadDrawingArea = false;
-        return -1;
-    }
-});
 // #endregion
 
-// #endregion
-
+// Data Tab [loadDrawingSettingsDataPage()]
 function loadDrawingSettingsDataPage() {
     $("#dsmTitle").html("Drawing Settings");
     $("#dsmSelectDrawing").removeAttr("disabled");
@@ -145,6 +128,24 @@ function loadDrawingSettingsDataPage() {
         url: "QuartzLink/GetDrawingSettingsDataPartialView",
         success: function (html) {
             $("#dsmPartialArea").html(html);
+
+            // #region DSM - Upload Drawing Button
+            var dsmUploadDrawingArea = false;
+            $("#btnDsmUploadDrawing").on("click", function () {
+                if (dsmUploadDrawingArea == false) {
+                    document.getElementById("dsmUploadDrawingArea").removeAttribute("hidden");
+                    $("#dsmSelectDrawing").attr("disabled", "");
+                    dsmUploadDrawingArea = true;
+                    return -1;
+                }
+                if (dsmUploadDrawingArea == true) {
+                    document.getElementById("dsmUploadDrawingArea").setAttribute("hidden", "");
+                    $("#dsmSelectDrawing").removeAttr("disabled");
+                    dsmUploadDrawingArea = false;
+                    return -1;
+                }
+            });
+            // #endregion
 
             $.ajax({
                 type: "GET",
@@ -327,7 +328,7 @@ function loadDrawingSettingsDataPage() {
 
 
 
-    
+
     // #endregion
     // #endregion
 }
@@ -386,7 +387,7 @@ function loadDrawingSettingsAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top: -7px; margin-left: -7px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                         )
                                     ),
                                 );
@@ -425,7 +426,7 @@ function loadDrawingSettingsAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='bi bi-download' style='display: block; margin-top:     -7px; margin-left:-7px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
                                             )
                                         ),
                                     );
@@ -437,8 +438,6 @@ function loadDrawingSettingsAttachmentPage() {
                                         )
                                     );
                                 }
-
-                                //"<button class='btn btn-dark' style='border-radius: 0px;'><i class='bi bi-download'></i></button>"
                             },
                             error: function (error) {
                                 alert("error!");

@@ -78,10 +78,10 @@ namespace Quartz.Controllers.FileUpload
         {
             var file = _fileUploadService.GetFileDetail(fileId);
             var memory = new MemoryStream();
-            using (var stream = new FileStream(file.Path, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
+            using var stream = new FileStream(file.Path, FileMode.Open);
+
+            await stream.CopyToAsync(memory);
+
             memory.Position = 0;
             return File(memory, file.Type, file.Name + file.Extension);
         }
