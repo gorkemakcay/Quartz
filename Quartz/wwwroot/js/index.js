@@ -308,6 +308,10 @@ var isThicknessMeasurementExist = false;
 
 var lastClickedButtonId;
 
+var listPanelIsOpen = true;
+
+var searchPanelIsOpen = true;
+
 // #endregion
 
 // #region Quartz Variables
@@ -321,7 +325,8 @@ var itemId = "item" + itemIdCount;
 var linkIdCount = 0;
 var linkId = "link" + linkIdCount;
 var featureCollection = [];
-var extent = [0, 0, 1920, 1356];
+var extent = [0, 0, 1920, 1356]; // left > bottom > right > top
+var viewExtent = [-1200, -778, 3120, 2134]; // left > bottom > right > top
 
 // #region Open Layers Variables
 var select;
@@ -390,11 +395,6 @@ $(function () {
     // #endregion
 
     // [CODE SNIPPET TRIAL AREA]
-
-    $("#lsls").on('click', function () {
-        $("#listPanel").toggle("slide", { "direction": "left" }, 300);
-        toggleListPanel();
-    });
 });
 
 // #region getDate()
@@ -632,13 +632,121 @@ function getVectorSource() {
 }
 
 function toggleListPanel() {
-    if ($('#listPanel').css('display') == 'none') {
-        $("#listPanel").toggle("slide", { "direction": "left" }, 300);
+    // list panel is opening
+    if ($("#listPanel").css('display') == 'none') {
+        $.ajax({
+            type: "GET",
+            url: "QuartzLink/GetQuartz",
+            success: function (html) {
+                $("#main").children().remove();
+                $("#main").html(html);
+                $("#listPanel").toggle("slide", { "direction": "left" }, 100);
+
+                if (searchPanelIsOpen == true) {
+                    $("#main").removeClass().addClass("col-lg-8 px-0");
+                    viewExtent = [-1200, -778, 3120, 2134];
+                }
+                else {
+                    $("#main").removeClass().addClass("col-lg-10 px-0");
+                    viewExtent = [-1500, -778, 3420, 2134];
+                }
+
+                listPanelIsOpen = true;
+                loadQuartz();
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
+    }
+    // list panel is closing
+    else {
+        $.ajax({
+            type: "GET",
+            url: "QuartzLink/GetQuartz",
+            success: function (html) {
+                $("#main").children().remove();
+                $("#main").html(html);
+                $("#listPanel").toggle("slide", { "direction": "left" }, 100);
+
+                if (searchPanelIsOpen == true) {
+                    $("#main").removeClass().addClass("col-lg-10 px-0");
+                    viewExtent = [-1500, -778, 3420, 2134];
+                }
+                else {
+                    $("#main").removeClass().addClass("col-lg-12 px-0");
+                    viewExtent = [-1800, -778, 3720, 2134];
+                }
+
+                listPanelIsOpen = false;
+                loadQuartz();
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
+    }
+    setTimeout(updateMap, 100);
+}
+
+function toggleSearchPanel() {
+    if ($("#searchPanel").css('display') == 'none') {
+        $.ajax({
+            type: "GET",
+            url: "QuartzLink/GetQuartz",
+            success: function (html) {
+                $("#main").children().remove();
+                $("#main").html(html);
+                $("#searchPanel").toggle("slide", { "direction": "right" }, 100);
+
+                if (listPanelIsOpen == true) {
+                    $("#main").removeClass().addClass("col-lg-8 px-0");
+                    viewExtent = [-1200, -778, 3120, 2134];
+                }
+                else {
+                    $("#main").removeClass().addClass("col-lg-10 px-0");
+                    viewExtent = [-1500, -778, 3420, 2134];
+                }
+
+                searchPanelIsOpen = true;
+                loadQuartz();
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
     }
     else {
-        $("#listPanel").toggle("slide", { "direction": "left" }, 300);
+        $.ajax({
+            type: "GET",
+            url: "QuartzLink/GetQuartz",
+            success: function (html) {
+                $("#main").children().remove();
+                $("#main").html(html);
+                $("#searchPanel").toggle("slide", { "direction": "right" }, 100);
+
+                if (listPanelIsOpen == true) {
+                    $("#main").removeClass().addClass("col-lg-10 px-0");
+                    viewExtent = [-1500, -778, 3420, 2134];
+                }
+                else {
+                    $("#main").removeClass().addClass("col-lg-12 px-0");
+                    viewExtent = [-1500, -778, 3420, 2134];
+                }
+
+                searchPanelIsOpen = false;
+                loadQuartz();
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
     }
-    setTimeout(updateMap, 310);
+    setTimeout(updateMap, 400);
 }
 
 function updateMap() {

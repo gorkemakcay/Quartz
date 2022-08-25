@@ -296,9 +296,9 @@
                         $.ajax({
                             type: "GET",
                             url: "QuartzLink/GetQuartz",
-                            success: function (response) {
+                            success: function (html) {
                                 $("#main").children().remove();
-                                $("#main").html(response);
+                                $("#main").html(html);
                                 loadQuartz();
                             },
                             error: function (error) {

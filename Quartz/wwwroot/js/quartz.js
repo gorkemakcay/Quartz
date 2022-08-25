@@ -28,7 +28,7 @@
 
     translate = new ol.interaction.Translate({
         features: select.getFeatures(),
-        condition: ol.events.condition.platformModifierKeyOnly
+        //condition: ol.events.condition.platformModifierKeyOnly
     });
 
     projection = new ol.proj.Projection({
@@ -59,7 +59,8 @@
         zoom: 2,
         maxZoom: 5,
         minZoom: 2,
-        extent: [-1060, -678, 3080, 2034] // left > bottom > right > top
+        extent: viewExtent
+        //extent: [-1200, -778, 3120, 2134]
     });
 
     imageUrl = "http://localhost:5001/home/get?path=";
