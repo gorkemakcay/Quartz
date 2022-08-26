@@ -51,7 +51,6 @@ namespace Quartz.BusinessLogic.Concrete
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

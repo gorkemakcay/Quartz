@@ -395,6 +395,10 @@ $(function () {
     // #endregion
 
     // [CODE SNIPPET TRIAL AREA]
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 });
 
 // #region getDate()
@@ -631,6 +635,150 @@ function getVectorSource() {
     });
 }
 
+// #region List Panel | Main Panel | Search Panel
+
+$("#showListPanelIcon").on('click', function () {
+    $.ajax({
+        type: "GET",
+        url: "QuartzLink/GetQuartz",
+        success: function (html) {
+            $("#main").children().remove();
+            $("#main").html(html);
+            $("#listPanel").toggle("slide", { "direction": "left" }, 100);
+            $("#listPanelHeader").toggle("slide", { "direction": "left" }, 100);
+            $("#showListPanel").toggle("slide", { "direction": "left" }, 100);
+
+            $("#showSearchPanel").removeClass().addClass("col-lg-2 px-0");
+
+            if (searchPanelIsOpen == true) {
+                $("#main").removeClass().addClass("col-lg-8 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-8");
+                viewExtent = [-1200, -778, 3120, 2134];
+            }
+            else {
+                $("#main").removeClass().addClass("col-lg-10 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-10");
+                viewExtent = [-1500, -778, 3420, 2134];
+            }
+
+            listPanelIsOpen = true;
+            loadQuartz();
+            setTimeout(updateMap, 100);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+});
+
+$("#hideListPanelIcon").on('click', function () {
+    $.ajax({
+        type: "GET",
+        url: "QuartzLink/GetQuartz",
+        success: function (html) {
+            $("#main").children().remove();
+            $("#main").html(html);
+            $("#listPanel").toggle("slide", { "direction": "left" }, 100);
+            $("#listPanelHeader").toggle("slide", { "direction": "left" }, 100);
+            $("#showListPanel").toggle("slide", { "direction": "left" }, 100);
+
+            $("#showSearchPanel").removeClass().addClass("col-lg-1 px-0");
+
+            if (searchPanelIsOpen == true) {
+                $("#main").removeClass().addClass("col-lg-10 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-10");
+                viewExtent = [-1500, -778, 3420, 2134];
+            }
+            else {
+                $("#main").removeClass().addClass("col-lg-12 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-12");
+                viewExtent = [-1800, -778, 3720, 2134];
+            }
+
+            listPanelIsOpen = false;
+            loadQuartz();
+            setTimeout(updateMap, 100);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+});
+
+$("#showSearchPanelIcon").on('click', function () {
+    $.ajax({
+        type: "GET",
+        url: "QuartzLink/GetQuartz",
+        success: function (html) {
+            $("#main").children().remove();
+            $("#main").html(html);
+            $("#searchPanel").toggle("slide", { "direction": "right" }, 100);
+            $("#searchPanelHeader").toggle("slide", { "direction": "right" }, 100);
+            $("#showSearchPanel").toggle("slide", { "direction": "right" }, 100);
+
+            $("#showSearchPanel").removeClass().addClass("col-lg-1 px-0");
+
+            if (listPanelIsOpen == true) {
+                $("#main").removeClass().addClass("col-lg-8 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-8");
+                viewExtent = [-1200, -778, 3120, 2134];
+            }
+            else {
+                $("#main").removeClass().addClass("col-lg-10 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-10");
+                viewExtent = [-1500, -778, 3420, 2134];
+            }
+
+            searchPanelIsOpen = true;
+            loadQuartz();
+            setTimeout(updateMap, 100);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+});
+
+$("#hideSearchPanelIcon").on('click', function () {
+    $.ajax({
+        type: "GET",
+        url: "QuartzLink/GetQuartz",
+        success: function (html) {
+            $("#main").children().remove();
+            $("#main").html(html);
+            $("#searchPanel").toggle("slide", { "direction": "right" }, 100);
+            $("#searchPanelHeader").toggle("slide", { "direction": "right" }, 100);
+            $("#showSearchPanel").toggle("slide", { "direction": "right" }, 100);
+
+            $("#showSearchPanel").removeClass().addClass("col-lg-1 px-0");
+
+            if (listPanelIsOpen == true) {
+                $("#main").removeClass().addClass("col-lg-10 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-10");
+                viewExtent = [-1500, -778, 3420, 2134];
+
+                $("#showSearchPanel").removeClass().addClass("col-lg-2 px-0");
+            }
+            else {
+                $("#main").removeClass().addClass("col-lg-12 px-0");
+                $("#mainHeader").removeClass().addClass("col-lg-12");
+                viewExtent = [-1800, -778, 3720, 2134];
+            }
+
+            searchPanelIsOpen = false;
+            loadQuartz();
+            setTimeout(updateMap, 100);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+});
+
 function toggleListPanel() {
     // list panel is opening
     if ($("#listPanel").css('display') == 'none') {
@@ -641,13 +789,17 @@ function toggleListPanel() {
                 $("#main").children().remove();
                 $("#main").html(html);
                 $("#listPanel").toggle("slide", { "direction": "left" }, 100);
+                $("#listPanelHeader").toggle("slide", { "direction": "left" }, 100);
+                $("#showListPanel").toggle("slide", { "direction": "left" }, 100);
 
                 if (searchPanelIsOpen == true) {
                     $("#main").removeClass().addClass("col-lg-8 px-0");
+                    $("#mainHeader").removeClass().addClass("col-lg-8");
                     viewExtent = [-1200, -778, 3120, 2134];
                 }
                 else {
                     $("#main").removeClass().addClass("col-lg-10 px-0");
+                    $("#mainHeader").removeClass().addClass("col-lg-10");
                     viewExtent = [-1500, -778, 3420, 2134];
                 }
 
@@ -669,13 +821,17 @@ function toggleListPanel() {
                 $("#main").children().remove();
                 $("#main").html(html);
                 $("#listPanel").toggle("slide", { "direction": "left" }, 100);
+                $("#listPanelHeader").toggle("slide", { "direction": "left" }, 100);
+                $("#showListPanel").toggle("slide", { "direction": "left" }, 100);
 
                 if (searchPanelIsOpen == true) {
                     $("#main").removeClass().addClass("col-lg-10 px-0");
+                    $("#mainHeader").removeClass().addClass("col-lg-10");
                     viewExtent = [-1500, -778, 3420, 2134];
                 }
                 else {
                     $("#main").removeClass().addClass("col-lg-12 px-0");
+                    $("#mainHeader").removeClass().addClass("col-lg-12");
                     viewExtent = [-1800, -778, 3720, 2134];
                 }
 
@@ -700,13 +856,17 @@ function toggleSearchPanel() {
                 $("#main").children().remove();
                 $("#main").html(html);
                 $("#searchPanel").toggle("slide", { "direction": "right" }, 100);
+                $("#searchPanelHeader").toggle("slide", { "direction": "right" }, 100);
+                $("#showSearchPanel").toggle("slide", { "direction": "right" }, 100);
 
                 if (listPanelIsOpen == true) {
                     $("#main").removeClass().addClass("col-lg-8 px-0");
+                    $("#mainHeader").removeClass().addClass("col-lg-8");
                     viewExtent = [-1200, -778, 3120, 2134];
                 }
                 else {
                     $("#main").removeClass().addClass("col-lg-10 px-0");
+                    $("#mainHeader").removeClass().addClass("col-lg-10");
                     viewExtent = [-1500, -778, 3420, 2134];
                 }
 
@@ -727,14 +887,18 @@ function toggleSearchPanel() {
                 $("#main").children().remove();
                 $("#main").html(html);
                 $("#searchPanel").toggle("slide", { "direction": "right" }, 100);
+                $("#searchPanelHeader").toggle("slide", { "direction": "right" }, 100);
+                $("#showSearchPanel").toggle("slide", { "direction": "right" }, 100);
 
                 if (listPanelIsOpen == true) {
                     $("#main").removeClass().addClass("col-lg-10 px-0");
+                    $("#mainHeader").removeClass().addClass("col-lg-10");
                     viewExtent = [-1500, -778, 3420, 2134];
                 }
                 else {
                     $("#main").removeClass().addClass("col-lg-12 px-0");
-                    viewExtent = [-1500, -778, 3420, 2134];
+                    $("#mainHeader").removeClass().addClass("col-lg-12");
+                    viewExtent = [-1800, -778, 3720, 2134];
                 }
 
                 searchPanelIsOpen = false;
@@ -746,10 +910,12 @@ function toggleSearchPanel() {
             }
         });
     }
-    setTimeout(updateMap, 400);
+    setTimeout(updateMap, 100);
 }
 
 function updateMap() {
     map.updateSize();
     map.render();
 }
+
+// #endregion

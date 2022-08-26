@@ -283,3 +283,19 @@
 #itemModalBackButton:hover {
     cursor: pointer;
 }
+
+#showListPanelIcon:hover {
+    cursor: pointer;
+}
+
+#hideListPanelIcon:hover {
+    cursor: pointer;
+}
+
+#showSearchPanelIcon:hover {
+    cursor: pointer;
+}
+
+#hideSearchPanelIcon:hover {
+    cursor: pointer;
+}

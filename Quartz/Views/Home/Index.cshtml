@@ -5,17 +5,54 @@
 <div class="container-fluid">
     <!-- #region Breadcrumbs -->
     <div class="row text-light" style="background: #373a3e; height: 25px;">
-        <div class="col-lg-2" style="border-right: 1px solid #212529; height: 100%;">
-            <p class="text-center">LIST PANEL</p>
+        <div id="listPanelHeader" class="col-lg-2" style="border-right: 1px solid #212529; height: 100%;">
+            <div class="row">
+                <div class="col-lg-1">
+
+                </div>
+
+                <div class="col-lg-10">
+                    <p class="text-center">LIST PANEL</p>
+                </div>
+
+                <div class="col-lg-1">
+                    <i class="fa-solid fa-circle-chevron-left float-end my-1" id="hideListPanelIcon" data-bs-toggle="tooltip" data-bs-placement="left" title="Hide List Panel"></i>
+                </div>
+            </div>
         </div>
 
-        <div class="col-lg-8" style="border-right: 1px solid #212529; height: 25px;">
-            <ul class="breadCrumb px-0">
-            </ul>
+        <div id="mainHeader" class="col-lg-8" height: 25px;">
+            <div class="row">
+                <div class="col-lg-1 px-0" style="display: none;" id="showListPanel">
+                    <i class="fa-solid fa-circle-chevron-right" id="showListPanelIcon" style="margin-left: 10px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Show List Panel"></i>
+                </div>
+
+                <div class="col-lg-10">
+                    <ul class="breadCrumb px-0">
+                    </ul>
+                </div>
+
+                <div class="col-lg-1 px-0" style="display: none;" id="showSearchPanel">
+                    <i class="fa-solid fa-circle-chevron-left float-end my-1" id="showSearchPanelIcon" style="margin-right: 10px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Show Search Panel"></i>
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-lg-2">
-            <p class="text-center">SEARCH PANEL</p>
+        <div id="searchPanelHeader" class="col-lg-2" style="border-left: 1px solid #212529; height: 100%;">
+            <div class="row">
+                <div class="col-lg-1">
+                    <i class="fa-solid fa-circle-chevron-right my-1" id="hideSearchPanelIcon" data-bs-toggle="tooltip" data-bs-placement="right" title="Hide Search Panel"></i>
+                </div>
+
+                <div class="col-lg-10">
+                    <p class="text-center">SEARCH PANEL</p>
+                </div>
+
+                <div class="col-lg-1">
+
+                </div>
+            </div>
         </div>
     </div>
     <!-- #endregion -->
