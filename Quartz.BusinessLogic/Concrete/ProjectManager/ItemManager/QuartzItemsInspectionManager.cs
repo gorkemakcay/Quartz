@@ -45,6 +45,12 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
 
         }
 
+        public void DeleteInspection(QuartzItemsInspectionDeleteViewModel model)
+        {
+            Delete(_mapper.Map<QuartzItemsInspection>(model));
+            _uow.SaveChange();
+        }
+
         public List<QuartzItemsInspectionUpdateViewModel> GetAllInspections(int quartzItemId)
         {
             return _mapper.Map<List<QuartzItemsInspectionUpdateViewModel>>(GetAll(I => I.QuartzItemId == quartzItemId));

@@ -1,10 +1,6 @@
 ﻿using Quartz.Common.ViewModels.LookUpItems.LookUpItemsProcedureViewModels;
 using Quartz.Entities.Concrete.LookUpItems;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
 {
@@ -12,6 +8,7 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
     {
         void AddProcedure(LookUpItemsProcedureAddViewModel model);
         void UpdateProcedure(LookUpItemsProcedureUpdateViewModel model);
+        void DeleteProcedure(LookUpItemsProcedureDeleteViewModel model);
         List<LookUpItemsProcedureListViewModel> GetAllProcedures();
     }
 }

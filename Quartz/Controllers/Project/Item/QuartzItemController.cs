@@ -86,6 +86,16 @@ namespace Quartz.Controllers.Project.Item
             return Json(jSonModel);
         }
 
+        [HttpDelete]
+        public IActionResult DeleteItem(QuartzItemDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _itemService.DeleteItem(model);
+            }
+                return Json(null);
+        }
+
         [HttpGet]
         public IActionResult GetQuartzItemsHomePagePartialView()
         {
@@ -202,6 +212,16 @@ namespace Quartz.Controllers.Project.Item
             return Json(jSonModel);
         }
 
+        [HttpDelete]
+        public IActionResult DeleteInspection(QuartzItemsInspectionDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _inspectionService.DeleteInspection(model);
+            }
+            return Json(null);
+        }
+
         [HttpGet]
         public IActionResult GetInspectionPartialView()
         {
@@ -282,6 +302,16 @@ namespace Quartz.Controllers.Project.Item
             return Json(jSonModel);
         }
 
+        [HttpDelete]
+        public IActionResult DeleteValveMaintenance(QuartzItemsValveMaintenanceDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _quartzItemsValveMaintenanceService.DeleteValveMaintenance(model);
+            }
+            return Json(null);
+        }
+
         [HttpGet]
         public IActionResult GetValveMaintenancePartialView()
         {
@@ -353,6 +383,16 @@ namespace Quartz.Controllers.Project.Item
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return Json(jSonModel);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteThicknessMeasurement(QuartzItemsThicknessMeasurementDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _quartzItemsThicknessMeasurementService.DeleteThicknessMeasurement(model);
+            }
+            return Json(null);
         }
 
         [HttpGet]

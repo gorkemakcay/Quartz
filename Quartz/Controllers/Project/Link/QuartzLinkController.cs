@@ -82,6 +82,16 @@ namespace Quartz.Controllers.Project.Link
             });
             return Json(jSonModel);
         }
+
+        [HttpDelete]
+        public IActionResult DeleteLink(QuartzLinkDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _linkService.DeleteLink(model);
+            }
+            return Json(null);
+        }
         #endregion
 
         #region Drawing Features

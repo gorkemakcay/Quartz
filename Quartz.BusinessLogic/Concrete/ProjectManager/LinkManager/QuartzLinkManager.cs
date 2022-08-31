@@ -39,6 +39,12 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
 
         }
 
+        public void DeleteLink(QuartzLinkDeleteViewModel model)
+        {
+            Delete(_mapper.Map<QuartzLink>(model));
+            _uow.SaveChange();
+        }
+
         public List<QuartzLinkListViewModel> GetAllLinks(int mainLinkId)
         {
             return _mapper.Map<List<QuartzLinkListViewModel>>(GetAll(I => I.MainQuartzLinkId == mainLinkId));

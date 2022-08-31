@@ -81,7 +81,7 @@ $("#limNav a").on('click', function () {
                 url: "LookUpItems/GetAllPlantAreasJSON",
                 success: function (result) {
                     $("#limPartialArea").html(result);
-                    $('#plantAreaTable').DataTable();
+                    //$('#plantAreaTable').DataTable();
                 },
                 error: function (error) {
                     alert("error!");
@@ -428,7 +428,7 @@ function addPlantArea() {
                     url: "LookUpItems/GetAllPlantAreasJSON",
                     success: function (result) {
                         $("#limPartialArea").html(result);
-                        $('#plantAreaTable').DataTable();
+                        //$('#plantAreaTable').DataTable();
                     },
                     error: function (error) {
                         alert("error!");

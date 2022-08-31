@@ -3,11 +3,7 @@ using Quartz.BusinessLogic.Interface.ILookUpItemsService;
 using Quartz.Common.ViewModels.LookUpItems.LookUpItemsPlantAreaViewModels;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.LookUpItems;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
 {
@@ -24,6 +20,12 @@ namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
         public void AddPlantArea(LookUpItemsPlantAreaAddViewModel model)
         {
             Add(_mapper.Map<LookUpItemsPlantArea>(model));
+            _uow.SaveChange();
+        }
+
+        public void DeletePlantArea(LookUpItemsPlantAreaDeleteViewModel model)
+        {
+            Delete(_mapper.Map<LookUpItemsPlantArea>(model));
             _uow.SaveChange();
         }
 

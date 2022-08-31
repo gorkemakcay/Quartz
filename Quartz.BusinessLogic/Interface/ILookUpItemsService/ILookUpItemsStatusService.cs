@@ -1,10 +1,6 @@
 ﻿using Quartz.Common.ViewModels.LookUpItems.LookUpItemsStatusViewModels;
 using Quartz.Entities.Concrete.LookUpItems;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
 {
@@ -12,6 +8,7 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
     {
         void AddStatus(LookUpItemsStatusAddViewModel model);
         void UpdateStatus(LookUpItemsStatusUpdateViewModel model);
+        void DeleteStatus(LookUpItemsStatusDeleteViewModel model);
         List<LookUpItemsStatusListViewModel> GetAllStatuses();
     }
 }

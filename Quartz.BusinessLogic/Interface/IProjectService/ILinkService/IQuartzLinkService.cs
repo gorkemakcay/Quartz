@@ -11,5 +11,6 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.ILinkService
         int AddLink(QuartzLinkAddViewModel model);
         void UpdateLink(QuartzLinkUpdateViewModel model);
         void UpdateLinksTagNo(int linkId, string tagNo);
+        void DeleteLink(QuartzLinkDeleteViewModel model);
     }
 }

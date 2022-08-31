@@ -103,6 +103,16 @@ namespace Quartz.Controllers.LookUpItems
             });
             return PartialView("LookupItemsComponentTypePartial", Json(jSonModel));
         }
+
+        [HttpDelete]
+        public IActionResult DeleteComponentType(LookUpItemsComponentTypeDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _componentTypeService.DeleteComponentType(model);
+            }
+                return Json(null);
+        }
         #endregion
 
         #region Fitting Type
@@ -146,6 +156,16 @@ namespace Quartz.Controllers.LookUpItems
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return PartialView("LookUpItemsFittingTypePartial" ,Json(jSonModel));
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteFittingType(LookUpItemsFittingTypeDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _fittingTypeService.DeleteFittingType(model);
+            }
+            return Json(null);
         }
         #endregion
 
@@ -191,6 +211,16 @@ namespace Quartz.Controllers.LookUpItems
             });
             return PartialView("LookupItemsMethodPartial", Json(jSonModel));
         }
+
+        [HttpDelete]
+        public IActionResult DeleteMethod(LookUpItemsMethodDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _methodService.DeleteMethod(model);
+            }
+            return Json(null);
+        }
         #endregion
 
         #region Operator
@@ -235,6 +265,16 @@ namespace Quartz.Controllers.LookUpItems
             });
             return PartialView("LookupItemsOperatorPartial", Json(jSonModel));
         }
+
+        [HttpDelete]
+        public IActionResult DeleteOperator(LookUpItemsOperatorDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _operatorService.DeleteOperator(model);
+            }
+            return Json(null);
+        }
         #endregion
 
         #region Plant Area
@@ -278,6 +318,16 @@ namespace Quartz.Controllers.LookUpItems
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return PartialView("LookupItemsPlantAreaPartial", Json(jSonModel));
+        }
+
+        [HttpDelete]
+        public IActionResult DeletePlantArea(LookUpItemsPlantAreaDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _plantAreaService.DeletePlantArea(model);
+            }
+            return Json(null);
         }
         #endregion
 
@@ -325,6 +375,16 @@ namespace Quartz.Controllers.LookUpItems
             });
             return PartialView("LookupItemsPlantSystemPartial", Json(jSonModel));
         }
+
+        [HttpDelete]
+        public IActionResult DeletePlantSystem(LookUpItemsPlantSystemDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _plantSystemService.DeletePlantSystem(model);
+            }
+            return Json(null);
+        }
         #endregion
 
         #region Procedure
@@ -368,6 +428,16 @@ namespace Quartz.Controllers.LookUpItems
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return PartialView("LookupItemsProcedurePartial", Json(jSonModel));
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteProcedure(LookUpItemsProcedureDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _procedureService.DeleteProcedure(model);
+            }
+            return Json(null);
         }
         #endregion
 
@@ -413,6 +483,16 @@ namespace Quartz.Controllers.LookUpItems
             });
             return PartialView("LookupItemsSpecificationPartial", Json(jSonModel));
         }
+
+        [HttpDelete]
+        public IActionResult DeleteSpecification(LookUpItemsSpecificationDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _specificationService.DeleteSpecification(model);
+            }
+            return Json(null);
+        }
         #endregion
 
         #region Standard Statement
@@ -456,6 +536,16 @@ namespace Quartz.Controllers.LookUpItems
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return PartialView("LookupItemsStandardStatementPartial", Json(jSonModel));
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteStandardStatement(LookUpItemsStandardStatementDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _standardStatementService.DeleteStandardStatement(model);
+            }
+            return Json(null);
         }
         #endregion
 
@@ -501,6 +591,16 @@ namespace Quartz.Controllers.LookUpItems
             });
             return PartialView("LookupItemsStatusPartial", Json(jSonModel));
         }
+
+        [HttpDelete]
+        public IActionResult DeleteStatus(LookUpItemsStatusDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _statusService.DeleteStatus(model);
+            }
+            return Json(null);
+        }
         #endregion
 
         #region Technique
@@ -545,6 +645,16 @@ namespace Quartz.Controllers.LookUpItems
             });
             return PartialView("LookupItemsTechniquePartial", Json(jSonModel));
         }
+
+        [HttpDelete]
+        public IActionResult DeleteTechnique(LookUpItemsTechniqueDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _techniqueService.DeleteTechnique(model);
+            }
+            return Json(null);
+        }
         #endregion
 
         #region Weld Type
@@ -588,6 +698,16 @@ namespace Quartz.Controllers.LookUpItems
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return PartialView("LookupItemsWeldTypePartial", Json(jSonModel));
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteWeldType(LookUpItemsWeldTypeDeleteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _weldTypeService.DeleteWeldType(model);
+            }
+            return Json(null);
         }
         #endregion
 

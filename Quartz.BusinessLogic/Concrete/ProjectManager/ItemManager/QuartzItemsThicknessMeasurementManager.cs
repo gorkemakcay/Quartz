@@ -39,6 +39,12 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             return thicknessMeasurement.Id;
         }
 
+        public void DeleteThicknessMeasurement(QuartzItemsThicknessMeasurementDeleteViewModel model)
+        {
+            Delete(_mapper.Map<QuartzItemsThicknessMeasurement>(model));
+            _uow.SaveChange();
+        }
+
         public List<QuartzItemsThicknessMeasurementListViewModel> GetAllThicknessMeasurements(int quartzItemId)
         {
             return _mapper.Map<List<QuartzItemsThicknessMeasurementListViewModel>>(GetAll(I => I.QuartzItemId == quartzItemId));

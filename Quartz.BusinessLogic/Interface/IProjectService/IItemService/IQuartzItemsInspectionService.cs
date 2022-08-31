@@ -9,6 +9,7 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.IItemService
     {
         int AddInspection(QuartzItemsInspectionAddViewModel model);
         void UpdateInspection(QuartzItemsInspectionUpdateViewModel model);
+        void DeleteInspection(QuartzItemsInspectionDeleteViewModel model);
         QuartzItemsInspectionUpdateViewModel GetInspectionDetail(int inspectionId);
         List<QuartzItemsInspectionUpdateViewModel> GetAllInspections(int quartzItemId);
     }

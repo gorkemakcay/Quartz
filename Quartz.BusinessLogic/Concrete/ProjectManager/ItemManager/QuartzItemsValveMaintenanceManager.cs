@@ -44,6 +44,12 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             return valveMaintenance.Id;
         }
 
+        public void DeleteValveMaintenance(QuartzItemsValveMaintenanceDeleteViewModel model)
+        {
+            Delete(_mapper.Map<QuartzItemsValveMaintenance>(model));
+            _uow.SaveChange();
+        }
+
         public List<QuartzItemsValveMaintenanceListViewModel> GetAllValveMaintenances(int quartzItemId)
         {
             return _mapper.Map<List<QuartzItemsValveMaintenanceListViewModel>>(GetAll(I => I.QuartzItemId == quartzItemId));

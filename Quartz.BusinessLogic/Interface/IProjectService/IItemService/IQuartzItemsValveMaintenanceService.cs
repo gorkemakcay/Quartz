@@ -8,6 +8,7 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.IItemService
     {
         int AddValveMaintenance(QuartzItemsValveMaintenanceAddViewModel model);
         void UpdateValveMaintenance(QuartzItemsValveMaintenanceUpdateViewModel model);
+        void DeleteValveMaintenance(QuartzItemsValveMaintenanceDeleteViewModel model);
         QuartzItemsValveMaintenanceUpdateViewModel GetValveMaintenanceDetail(int valveMaintenanceId);
         List<QuartzItemsValveMaintenanceListViewModel> GetAllValveMaintenances(int quartzItemId);
     }

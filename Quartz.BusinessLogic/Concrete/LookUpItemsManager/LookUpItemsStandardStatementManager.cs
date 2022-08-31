@@ -3,11 +3,7 @@ using Quartz.BusinessLogic.Interface.ILookUpItemsService;
 using Quartz.Common.ViewModels.LookUpItems.LookUpItemsStandardStatementViewModels;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.LookUpItems;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
 {
@@ -24,6 +20,12 @@ namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
         public void AddStandardStatement(LookUpItemsStandardStatementAddViewModel model)
         {
             Add(_mapper.Map<LookUpItemsStandardStatement>(model));
+            _uow.SaveChange();
+        }
+
+        public void DeleteStandardStatement(LookUpItemsStandardStatementDeleteViewModel model)
+        {
+            Delete(_mapper.Map<LookUpItemsStandardStatement>(model));
             _uow.SaveChange();
         }
 

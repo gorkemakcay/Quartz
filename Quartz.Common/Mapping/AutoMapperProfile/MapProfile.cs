@@ -61,6 +61,7 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             CreateMap<QuartzLink, QuartzLinkAddViewModel>().ReverseMap();
             CreateMap<QuartzLink, QuartzLinkListViewModel>().ReverseMap();
             CreateMap<QuartzLink, QuartzLinkUpdateViewModel>().ReverseMap();
+            CreateMap<QuartzLink, QuartzLinkDeleteViewModel>().ReverseMap();
             #endregion
 
             #region QuartzLinksDrawingFeatures
@@ -81,6 +82,7 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             CreateMap<QuartzItem, QuartzItemAddViewModel>().ReverseMap();
             CreateMap<QuartzItem, QuartzItemListViewModel>().ReverseMap();
             CreateMap<QuartzItem, QuartzItemUpdateViewModel>().ReverseMap();
+            CreateMap<QuartzItem, QuartzItemDeleteViewModel>().ReverseMap();
             #endregion
 
             #region QuartzItemsInformation
@@ -91,18 +93,21 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             #region QuartzItemsInspection
             CreateMap<QuartzItemsInspection, QuartzItemsInspectionAddViewModel>().ReverseMap();
             CreateMap<QuartzItemsInspection, QuartzItemsInspectionUpdateViewModel>().ReverseMap();
+            CreateMap<QuartzItemsInspection, QuartzItemsInspectionDeleteViewModel>().ReverseMap();
             #endregion
 
             #region QuartzItemsThicknessMeasurement
             CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementAddViewModel>().ReverseMap();
             CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementListViewModel>().ReverseMap();
             CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementUpdateViewModel>().ReverseMap();
+            CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementDeleteViewModel>().ReverseMap();
             #endregion
 
             #region QuartzItemsValveMaintenance
             CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceAddViewModel>().ReverseMap();
             CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceListViewModel>().ReverseMap();
             CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceUpdateViewModel>().ReverseMap();
+            CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceDeleteViewModel>().ReverseMap();
 
             #endregion
 
@@ -114,72 +119,84 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             CreateMap<LookUpItemsComponentType, LookUpItemsComponentTypeAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsComponentType, LookUpItemsComponentTypeListViewModel>().ReverseMap();
             CreateMap<LookUpItemsComponentType, LookUpItemsComponentTypeUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsComponentType, LookUpItemsComponentTypeDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsFittingType
             CreateMap<LookUpItemsFittingType, LookUpItemsFittingTypeAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsFittingType, LookUpItemsFittingTypeListViewModel>().ReverseMap();
             CreateMap<LookUpItemsFittingType, LookUpItemsFittingTypeUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsFittingType, LookUpItemsFittingTypeDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsMethod
             CreateMap<LookUpItemsMethod, LookUpItemsMethodAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsMethod, LookUpItemsMethodListViewModel>().ReverseMap();
             CreateMap<LookUpItemsMethod, LookUpItemsMethodUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsMethod, LookUpItemsMethodDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsOperator
             CreateMap<LookUpItemsOperator, LookUpItemsOperatorAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsOperator, LookUpItemsOperatorListViewModel>().ReverseMap();
             CreateMap<LookUpItemsOperator, LookUpItemsOperatorUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsOperator, LookUpItemsOperatorDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsPlantArea
             CreateMap<LookUpItemsPlantArea, LookUpItemsPlantAreaAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsPlantArea, LookUpItemsPlantAreaListViewModel>().ReverseMap();
             CreateMap<LookUpItemsPlantArea, LookUpItemsPlantAreaUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsPlantArea, LookUpItemsPlantAreaDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsPlantSystem
             CreateMap<LookUpItemsPlantSystem, LookUpItemsPlantSystemAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsPlantSystem, LookUpItemsPlantSystemListViewModel>().ReverseMap();
             CreateMap<LookUpItemsPlantSystem, LookUpItemsPlantSystemUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsPlantSystem, LookUpItemsPlantSystemDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsProcedure
             CreateMap<LookUpItemsProcedure, LookUpItemsProcedureAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsProcedure, LookUpItemsProcedureListViewModel>().ReverseMap();
             CreateMap<LookUpItemsProcedure, LookUpItemsProcedureUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsProcedure, LookUpItemsProcedureDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsSpecification
             CreateMap<LookUpItemsSpecification, LookUpItemsSpecificationAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsSpecification, LookUpItemsSpecificationListViewModel>().ReverseMap();
             CreateMap<LookUpItemsSpecification, LookUpItemsSpecificationUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsSpecification, LookUpItemsSpecificationDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsStandardStatement
             CreateMap<LookUpItemsStandardStatement, LookUpItemsStandardStatementAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsStandardStatement, LookUpItemsStandardStatementListViewModel>().ReverseMap();
             CreateMap<LookUpItemsStandardStatement, LookUpItemsStandardStatementUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsStandardStatement, LookUpItemsStandardStatementDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsStatus
             CreateMap<LookUpItemsStatus, LookUpItemsStatusAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsStatus, LookUpItemsStatusListViewModel>().ReverseMap();
             CreateMap<LookUpItemsStatus, LookUpItemsStatusUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsStatus, LookUpItemsStatusDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsTechnique
             CreateMap<LookUpItemsTechnique, LookUpItemsTechniqueAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsTechnique, LookUpItemsTechniqueListViewModel>().ReverseMap();
             CreateMap<LookUpItemsTechnique, LookUpItemsTechniqueUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsTechnique, LookUpItemsTechniqueDeleteViewModel>().ReverseMap();
             #endregion
 
             #region LookUpItemsWeldType
             CreateMap<LookUpItemsWeldType, LookUpItemsWeldTypeAddViewModel>().ReverseMap();
             CreateMap<LookUpItemsWeldType, LookUpItemsWeldTypeListViewModel>().ReverseMap();
             CreateMap<LookUpItemsWeldType, LookUpItemsWeldTypeUpdateViewModel>().ReverseMap();
+            CreateMap<LookUpItemsWeldType, LookUpItemsWeldTypeDeleteViewModel>().ReverseMap();
             #endregion
 
             #endregion

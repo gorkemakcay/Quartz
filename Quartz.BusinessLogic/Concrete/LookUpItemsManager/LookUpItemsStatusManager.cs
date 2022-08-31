@@ -27,6 +27,12 @@ namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
             _uow.SaveChange();
         }
 
+        public void DeleteStatus(LookUpItemsStatusDeleteViewModel model)
+        {
+            Delete(_mapper.Map<LookUpItemsStatus>(model));
+            _uow.SaveChange();
+        }
+
         public List<LookUpItemsStatusListViewModel> GetAllStatuses()
         {
             return _mapper.Map<List<LookUpItemsStatusListViewModel>>(GetAll());
