@@ -172,6 +172,7 @@
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="linkShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
+                <i class="fa-solid fa-trash-can fa-2xl deleteButton" id="deleteLink" data-bs-toggle="modal" data-bs-target="#areYouSureModal"></i>
                 <button type="button" class="btn btn-dark closeButton" data-bs-dismiss="modal" style="border: none; border-radius: 0px;">Close</button>
                 <button type="button" class="btn btn-dark" style="border: none; border-radius: 0px;" onclick="linkModalSaveButton()" data-bs-dismiss="modal">Save</button>
             </div>
@@ -206,6 +207,7 @@
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <span id="showlabelSpan" style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="itemShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
+                <i class="fa-solid fa-trash-can fa-2xl deleteButton" id="deleteItem" data-bs-toggle="modal" data-bs-target="#areYouSureModal"></i>
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
                 <button type="button" class="btn btn-dark" id="itemModalSaveButton" style="border:none; border-radius:0px;" onclick="itemModalSaveButton()">Save</button>
             </div>
@@ -368,26 +370,28 @@
                 <h5 id="limTitle" class="modal-title">Lookup Items</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="row">
-                <div class="col-lg-2">
-                    <ul class="spec nav" role="tablist" id="limNav">
-                        <li class="active nav-item limListA"><a class="nav-link" href="#limStatus" data-toggle="tab">Status</a></li>
-                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limPlantArea" data-toggle="tab">Plant Area</a></li>
-                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limPlantSystem" data-toggle="tab">Plant System</a></li>
-                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limOperator" data-toggle="tab">Operator</a></li>
-                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limMethod" data-toggle="tab">Method</a></li>
-                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limProcedure" data-toggle="tab">Procedure</a></li>
-                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limTechnique" data-toggle="tab">Technique</a></li>
-                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limComponentType" data-toggle="tab">Component Type</a></li>
-                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limStandardStatement" data-toggle="tab">Stand. Statement</a></li>
-                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limSpecification" data-toggle="tab">Specification</a></li>
-                        <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limFittingType" data-toggle="tab">Fitting Type</a></li>
-                        <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limWeldType" data-toggle="tab">Weld Type</a></li>
-                    </ul>
-                </div>
+            <div class="modal-body p-0">
+                <div class="row p-0">
+                    <div class="col-lg-2" style="padding-right: 0px;">
+                        <ul class="spec nav" role="tablist" id="limNav">
+                            <li class="active nav-item limListA"><a class="nav-link" href="#limStatus" data-toggle="tab">Status</a></li>
+                            <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limPlantArea" data-toggle="tab">Plant Area</a></li>
+                            <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limPlantSystem" data-toggle="tab">Plant System</a></li>
+                            <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limOperator" data-toggle="tab">Operator</a></li>
+                            <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limMethod" data-toggle="tab">Method</a></li>
+                            <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limProcedure" data-toggle="tab">Procedure</a></li>
+                            <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limTechnique" data-toggle="tab">Technique</a></li>
+                            <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limComponentType" data-toggle="tab">Component Type</a></li>
+                            <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limStandardStatement" data-toggle="tab">Stand. Statement</a></li>
+                            <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limSpecification" data-toggle="tab">Specification</a></li>
+                            <li class="nav-item limListA"><a role="tab" class="nav-link" href="#limFittingType" data-toggle="tab">Fitting Type</a></li>
+                            <li class="nav-item limListB"><a role="tab" class="nav-link" href="#limWeldType" data-toggle="tab">Weld Type</a></li>
+                        </ul>
+                    </div>
 
-                <div class="col-lg-10" id="limPartialArea">
+                    <div class="col-lg-10" style="padding-left: 0px;" id="limPartialArea">
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -404,11 +408,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addComponentType()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addComponentType()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -427,11 +431,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addFittingType()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addFittingType()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -452,11 +456,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addMethod()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addMethod()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -475,11 +479,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addOperator()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addOperator()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -500,11 +504,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantArea()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantArea()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -527,11 +531,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantSystem()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('plantSystem')">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('plantSystem')">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantSystem(); limCancelButton('plantSystem')" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -553,11 +557,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addProcedure()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('procedure')">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('procedure')">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addProcedure(); limCancelButton('procedure')" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -576,11 +580,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addSpecification()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addSpecification()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -599,11 +603,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStandardStatement()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStandardStatement()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -622,11 +626,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStatus()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStatus()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -648,11 +652,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addTechnique()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('technique')">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('technique')">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addTechnique(); limCancelButton('technique')" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -671,11 +675,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addWeldType()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addWeldType()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -684,6 +688,59 @@
     </div>
 </div>
 <!-- #endregion -->
+<!-- #endregion -->
+<!-- #region Are You Sure Modal -->
+<div class="modal animate__animated animate__jackInTheBox" id="areYouSureModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="max-height: 20px; ">
+                <img src="~/lib/icons8-delete-200.png" style="width: 50%; margin-top: -40px; transform: rotate(20deg);" class="mx-auto"  />
+                @*<img src="https://img.icons8.com/bubbles/100/000000/trash.png" style="width: 50%; margin-top: -30px; transform: rotate(20deg); z-index: 1100;" class="mx-auto" />*@
+            </div>
+            <div class="modal-body" >
+                <div class="row text-center">
+                    <p><strong>Are you sure you want to delete?</strong></p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal"><i class="fa-solid fa-xmark fa-2xl"></i></button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" data-bs-dismiss="modal" onclick="deleteThis(objectToBeDeleted);"><i class="fa-solid fa-check fa-2xl"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@*<div class="modal fade show" id="areyousuremodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="max-height: 20px;">
+                <img src="/lib/icons8-delete-200.png" style="width: 50%; margin-top: -30px; transform: rotate(20deg);" class="mx-auto">
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <p><strong>Are you sure you want to delete?</strong></p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">no</button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary" style="width:100%;" data-bs-dismiss="modal">yes</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>*@
 <!-- #endregion -->
 
 @section Scripts {

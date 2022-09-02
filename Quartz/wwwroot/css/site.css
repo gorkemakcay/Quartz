@@ -96,10 +96,17 @@
 .modal-body {
     max-height: calc(100vh - 210px);
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .minHeight {
     min-height: 50vh;
+}
+
+.maxHeight {
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #toastId {
@@ -297,5 +304,9 @@
 }
 
 #hideSearchPanelIcon:hover {
+    cursor: pointer;
+}
+
+.deleteButton:hover {
     cursor: pointer;
 }

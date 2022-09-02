@@ -1,29 +1,22 @@
-﻿<table id="methodTable" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Code</th>
-        </tr>
-    </thead>
+﻿<div class="card-body p-0" style="display:block;">
 
-    <tbody>
-        @if (ViewBag.Methods != null)
-        {
-            foreach (var method in ViewBag.Methods)
-            {
-                <tr>
-                    <td>@method.Name</td>
-                    <td>@method.Code</td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+    <table id="methodTable" class="table table-hover text-sm table-responsive-sm table-sm">
+        <thead class="no-border" style="background-color: #C9D6DF; color: #1B262C; font-weight: 600;">
+            <tr>
+                <th class="text-sm text-center" style="font-weight:500">Name</th>
+                <th class="text-sm text-center" style="font-weight:500">Code</th>
+                <th class="text-sm text-center" style="font-weight:500">Delete</th>
+            </tr>
+        </thead>
 
-<br />
+        <tbody>
+        </tbody>
+    </table>
 
-<div class="modal-footer">
-    <br />
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#limMethodAddModal">+ Add</button>
-    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+    <div class="row">
+        <div class="col-md-12" style="text-align: center;">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#limMethodAddModal" style="border: none; background: none;"><img src="~/lib/bootstrap-icons-1.9.1/plus-circle.svg" style="position: absolute; width: 32px; display: block; margin-top: -20px; margin-left: -16px;" /></button>
+        </div>
+    </div>
+
 </div>

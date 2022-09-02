@@ -204,7 +204,6 @@ $("#thicknessMeasurementModalNav a").on('click', function () {
     }
 })
 
-
 // Inspection Add Modal > Save Button [Click Function]
 $("#inspectionAddSaveButton").on('click', function () {
     var item;
@@ -396,6 +395,11 @@ $("#thicknessMeasurementAddSaveButton").on('click', function () {
             console.log(error.responseText);
         }
     });
+});
+
+// Item Delete Button [Click Function]
+$("#deleteItem").on('click', function () {
+    alert("hi!");
 });
 
 // Select/Option's [Get Functions]
@@ -1730,7 +1734,7 @@ function loadThicknessMeasurementDataPage() {
             // #region Get Specification for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetPlantAreaForOption",
+                url: "LookUpItems/GetSpecificationForOption",
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 

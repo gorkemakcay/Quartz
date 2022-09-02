@@ -95,13 +95,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllComponentTypesJSON()
         {
-            ViewBag.ComponentTypes = _componentTypeService.GetAllComponentTypes();
             var model = _componentTypeService.GetAllComponentTypes();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsComponentTypePartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -112,6 +111,12 @@ namespace Quartz.Controllers.LookUpItems
                 _componentTypeService.DeleteComponentType(model);
             }
                 return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetComponentTypePartialView()
+        {
+            return PartialView("LookUpItemsComponentTypePartial");
         }
         #endregion
 
@@ -149,13 +154,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllFittingTypesJSON()
         {
-            ViewBag.FittingTypes = _fittingTypeService.GetAllFittingTypes();
             var model = _fittingTypeService.GetAllFittingTypes();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookUpItemsFittingTypePartial" ,Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -166,6 +170,12 @@ namespace Quartz.Controllers.LookUpItems
                 _fittingTypeService.DeleteFittingType(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetFittingTypePartialView()
+        {
+            return PartialView("LookupItemsFittingTypePartial");
         }
         #endregion
 
@@ -203,13 +213,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllMethodsJSON()
         {
-            ViewBag.Methods = _methodService.GetAllMethods();
             var model = _methodService.GetAllMethods();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsMethodPartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -220,6 +229,12 @@ namespace Quartz.Controllers.LookUpItems
                 _methodService.DeleteMethod(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetMethodPartialView()
+        {
+            return PartialView("LookupItemsMethodPartial");
         }
         #endregion
 
@@ -257,13 +272,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllOperatorsJSON()
         {
-            ViewBag.Operators = _operatorService.GetAllOperators();
             var model = _operatorService.GetAllOperators();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsOperatorPartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -274,6 +288,12 @@ namespace Quartz.Controllers.LookUpItems
                 _operatorService.DeleteOperator(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetOperatorPartialView()
+        {
+            return PartialView("LookupItemsOperatorPartial");
         }
         #endregion
 
@@ -311,13 +331,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllPlantAreasJSON()
         {
-            ViewBag.PlantAreas = _plantAreaService.GetAllPlantAreas();
             var model = _plantAreaService.GetAllPlantAreas();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsPlantAreaPartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -328,6 +347,12 @@ namespace Quartz.Controllers.LookUpItems
                 _plantAreaService.DeletePlantArea(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetPlantAreaPartialView()
+        {
+            return PartialView("LookUpItemsPlantAreaPartial");
         }
         #endregion
 
@@ -365,15 +390,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllPlantSystemsJSON()
         {
-            ViewBag.PlantSystems = _plantSystemService.GetAllPlantSystems();
-            //ViewBag.GetPlantAreasForOption = _plantAreaService.GetAllPlantAreas();
-            ViewBag.GetPlantAreasForOption = new SelectList(_plantAreaService.GetAll().ToList(), "Name");
             var model = _plantSystemService.GetAllPlantSystems();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsPlantSystemPartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -384,6 +406,12 @@ namespace Quartz.Controllers.LookUpItems
                 _plantSystemService.DeletePlantSystem(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetPlantSystemPartialView()
+        {
+            return PartialView("LookupItemsPlantSystemPartial");
         }
         #endregion
 
@@ -421,13 +449,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllProceduresJSON()
         {
-            ViewBag.Procedures = _procedureService.GetAllProcedures();
             var model = _procedureService.GetAllProcedures();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsProcedurePartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -438,6 +465,12 @@ namespace Quartz.Controllers.LookUpItems
                 _procedureService.DeleteProcedure(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetProcedurePartialView()
+        {
+            return PartialView("LookupItemsProcedurePartial");
         }
         #endregion
 
@@ -475,13 +508,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllSpecificationsJSON()
         {
-            ViewBag.Specifications = _specificationService.GetAllSpecifications();
             var model = _specificationService.GetAllSpecifications();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsSpecificationPartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -492,6 +524,12 @@ namespace Quartz.Controllers.LookUpItems
                 _specificationService.DeleteSpecification(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetSpecificationPartialView()
+        {
+            return PartialView("LookupItemsSpecificationPartial");
         }
         #endregion
 
@@ -529,13 +567,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllStandardStatementsJSON()
         {
-            ViewBag.StandardStatements = _standardStatementService.GetAllStandardStatements();
             var model = _standardStatementService.GetAllStandardStatements();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsStandardStatementPartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -546,6 +583,12 @@ namespace Quartz.Controllers.LookUpItems
                 _standardStatementService.DeleteStandardStatement(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetStandardStatementPartialView()
+        {
+            return PartialView("LookupItemsStandardStatementPartial");
         }
         #endregion
 
@@ -583,13 +626,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllStatusesJSON()
         {
-            ViewBag.Statuses = _statusService.GetAllStatuses();
             var model = _statusService.GetAllStatuses();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsStatusPartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -600,6 +642,12 @@ namespace Quartz.Controllers.LookUpItems
                 _statusService.DeleteStatus(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetStatusPartialView()
+        {
+            return PartialView("LookupItemsStatusPartial");
         }
         #endregion
 
@@ -637,13 +685,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllTechniquesJSON()
         {
-            ViewBag.Techniques = _techniqueService.GetAllTechniques();
             var model = _techniqueService.GetAllTechniques();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsTechniquePartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -654,6 +701,12 @@ namespace Quartz.Controllers.LookUpItems
                 _techniqueService.DeleteTechnique(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetTechniquePartialView()
+        {
+            return PartialView("LookupItemsTechniquePartial");
         }
         #endregion
 
@@ -691,13 +744,12 @@ namespace Quartz.Controllers.LookUpItems
         [HttpGet]
         public IActionResult GetAllWeldTypesJSON()
         {
-            ViewBag.WeldTypes = _weldTypeService.GetAllWeldTypes();
             var model = _weldTypeService.GetAllWeldTypes();
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
-            return PartialView("LookupItemsWeldTypePartial", Json(jSonModel));
+            return Json(jSonModel);
         }
 
         [HttpDelete]
@@ -708,6 +760,12 @@ namespace Quartz.Controllers.LookUpItems
                 _weldTypeService.DeleteWeldType(model);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetWeldTypePartialView()
+        {
+            return PartialView("LookupItemsWeldTypePartial");
         }
         #endregion
 

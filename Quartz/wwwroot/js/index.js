@@ -312,6 +312,8 @@ var listPanelIsOpen = true;
 
 var searchPanelIsOpen = true;
 
+var objectToBeDeleted;
+
 // #endregion
 
 // #region Quartz Variables
@@ -394,11 +396,14 @@ $(function () {
     });
     // #endregion
 
-    // [CODE SNIPPET TRIAL AREA]
+    // #region Show & Hide Panels
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
+    // #endregion
+
+    // [CODE SNIPPET TRIAL AREA]
 });
 
 // #region getDate()
@@ -633,6 +638,33 @@ function getVectorSource() {
             console.log(error.responseText);
         }
     });
+}
+
+function deleteThis(object) {
+    switch (object) {
+        case "link":
+            break;
+
+        case "file":
+            break;
+
+        case "item":
+            break;
+
+        case "inspection":
+            break;
+
+        case "lookupItem":
+            break;
+
+        case "valveMaintenance":
+            break;
+
+        case "thicknessMeasurement":
+            break;
+
+        default:
+    }
 }
 
 // #region List Panel | Main Panel | Search Panel

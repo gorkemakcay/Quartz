@@ -2,5 +2,6 @@
 {
     public class LookUpItemsPlantAreaDeleteViewModel
     {
+        public int Id { get; set; }
     }
 }
