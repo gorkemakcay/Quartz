@@ -399,7 +399,14 @@ $("#thicknessMeasurementAddSaveButton").on('click', function () {
 
 // Item Delete Button [Click Function]
 $("#deleteItem").on('click', function () {
-    alert("hi!");
+    var item;
+    if (clickedOrCreated == "clicked")
+        item = lastClickedItem;
+    if (clickedOrCreated == "created")
+        item = lastCreatedItem;
+
+    objectToBeDeleted = item;
+    objectTypeToBeDeleted = "item";
 });
 
 // Select/Option's [Get Functions]

@@ -239,7 +239,8 @@ function linkModalSaveButton() {
     selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
 
     var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-        dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:3857'
     });
 
     var drawingFeaturesModel = {
@@ -313,7 +314,8 @@ function goCurrentLink() {
             selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
 
             var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-                dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
             });
 
             var drawingFeaturesModel = {
@@ -395,7 +397,8 @@ function goCurrentLink() {
             selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
 
             var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-                dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
             });
 
             var drawingFeaturesModel = {

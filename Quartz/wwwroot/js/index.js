@@ -314,6 +314,8 @@ var searchPanelIsOpen = true;
 
 var objectToBeDeleted;
 
+var objectTypeToBeDeleted;
+
 // #endregion
 
 // #region Quartz Variables
@@ -640,8 +642,8 @@ function getVectorSource() {
     });
 }
 
-function deleteThis(object) {
-    switch (object) {
+function deleteThis(objectType, object) {
+    switch (objectType) {
         case "link":
             break;
 
@@ -649,6 +651,22 @@ function deleteThis(object) {
             break;
 
         case "item":
+            // [TAMAMLANMADI]
+            var itemDeleteModel = { Id: object.Id };
+            $.ajax({
+                type: "DELETE",
+                url: "QuartzItem/DeleteItem",
+                data: { model: itemDeleteModel },
+                success: function (response) {
+                    $("#itemModal").modal("toggle");
+                    createList();
+                    toast("Item Deleted Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
         case "inspection":

@@ -509,7 +509,8 @@
         selectedFeature.setProperties({ 'LonLat': featuresLonLat });
 
         var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-            dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857'
         });
 
         var drawingFeaturesModel = {
