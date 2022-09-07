@@ -1,10 +1,10 @@
-﻿<div class="card-body" style="display:block;">
+﻿<div class="card-body p-0" style="display:block;">
 
-    <div class="container">
+    <div class="container py-0">
         <div class="row p-0">
 
-            <div class="col-lg-3 col-sm-6">
-                <div class="card-box bg-blue" onclick="loadInformationPage()">
+            <div class="col-lg-6 col-sm-6 p-0">
+                <div class="card-box bg-blue m-0" onclick="loadInformationPage()">
                     <div class="inner">
                         <h3 class="itemModalP" id="informationCount"></h3>
                         <p class="itemModalP"> Information </p>
@@ -19,8 +19,8 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-sm-6">
-                <div class="card-box bg-green" onclick="loadInspectionPage()">
+            <div class="col-lg-6 col-sm-6 p-0">
+                <div class="card-box bg-green m-0" onclick="loadInspectionPage()">
                     <div class="inner">
                         <h3 class="itemModalP" id="inspectionCount"></h3>
                         <p class="itemModalP"> Inspections </p>
@@ -35,12 +35,17 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-sm-6">
-                <div class="card-box bg-orange" onclick="loadValveMaintenancePage()">
+
+
+        </div>
+
+        <div class="row p-0">
+            <div class="col-lg-6 col-sm-6 p-0">
+                <div class="card-box bg-orange m-0" onclick="loadValveMaintenancePage()">
                     <div class="inner">
                         <h3 class="itemModalP" id="valveMaintenanceCount"></h3>
                     </div>
-                    <p class="itemModalP"> Valve <br /> Maintenance </p>
+                    <p class="itemModalP"> Valve Maintenance </p>
                     <div class="icon">
                         @*<i class="bi bi-box-fill" aria-hidden="true"></i>*@
                         <div class="img">
@@ -52,11 +57,11 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-sm-6">
-                <div class="card-box bg-red" onclick="loadThicknessMeasurementPage()">
+            <div class="col-lg-6 col-sm-6 p-0">
+                <div class="card-box bg-red m-0" onclick="loadThicknessMeasurementPage()">
                     <div class="inner">
                         <h3 class="itemModalP" id="thicknessMeasurementCount"></h3>
-                        <p class="itemModalP"> Thickness <br /> Measurement </p>
+                        <p class="itemModalP"> Thickness Measurement </p>
                     </div>
                     <div class="icon">
                         @*<i class="fa-solid fa-ruler"></i>*@
@@ -68,16 +73,15 @@
                     <a href="#" class="card-box-footer viewMore">View More </a>
                 </div>
             </div>
-
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <button type="button" style="border-radius: 0px; width: 100%;" class="btn btn-success" onclick="loadAttachmentPage()">Attachments</button>
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <button type="button" style="border-radius: 0px; width: 100%; height: 50px; font-size: 20px;" id="itemAttachmentButton" class="btn btn-success" onclick="loadAttachmentPage()">Attachments</button>
+                </div>
             </div>
         </div>
+
+
+
     </div>
-
-
-
-</div>

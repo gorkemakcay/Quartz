@@ -172,7 +172,7 @@
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <span style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
                 <input id="linkShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
-                <i class="fa-solid fa-trash-can fa-2xl deleteButton" id="deleteLink" data-bs-toggle="modal" data-bs-target="#areYouSureModal"></i>
+                <i class="fa-solid fa-trash-can fa-2xl deleteButton" id="deleteLink" data-bs-toggle="modal" data-bs-target="#areYouSureModal" onclick="$('#linkModal').modal('hide');"></i>
                 <button type="button" class="btn btn-dark closeButton" data-bs-dismiss="modal" style="border: none; border-radius: 0px;">Close</button>
                 <button type="button" class="btn btn-dark" style="border: none; border-radius: 0px;" onclick="linkModalSaveButton()" data-bs-dismiss="modal">Save</button>
             </div>
@@ -195,7 +195,7 @@
                     <button type="button" class="btn-close float-end mx-1 closeButton" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-0">
                 <div class="row">
 
                 </div>
@@ -205,9 +205,9 @@
                 </div>
             </div>
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <span id="showlabelSpan" style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</span>
+                <label id="showlabelSpan" for="itemShowLabel" style="color: #8F8F95; font-size: 1em; font-weight:500 ">Show Label</label>
                 <input id="itemShowLabel" type="checkbox" name="showLabel" /> &nbsp;&nbsp;
-                <i class="fa-solid fa-trash-can fa-2xl deleteButton" id="deleteItem" data-bs-toggle="modal" data-bs-target="#areYouSureModal"></i>
+                <i class="fa-solid fa-trash-can fa-2xl deleteButton" id="deleteItem" data-bs-toggle="modal" data-bs-target="#areYouSureModal" onclick="$('#itemModal').modal('hide');"></i>
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
                 <button type="button" class="btn btn-dark" id="itemModalSaveButton" style="border:none; border-radius:0px;" onclick="itemModalSaveButton()">Save</button>
             </div>
@@ -230,10 +230,10 @@
                     </ul>
                 </div>
 
-                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close" onclick="$('#itemModal').modal('toggle');"></button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body p-0">
                 <div class="row">
 
                 </div>
@@ -244,8 +244,8 @@
             </div>
 
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
-                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="inspectionAddSaveButton" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;" onclick="$('#itemModal').modal('toggle');">Close</button>
+                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="inspectionAddSaveButton" data-bs-dismiss="modal" onclick="$('#itemModal').modal('toggle');">Save</button>
             </div>
 
         </div>
@@ -268,10 +268,10 @@
                     </ul>
                 </div>
 
-                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close" onclick="$('#itemModal').modal('toggle');"></button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body p-0">
                 <div class="row">
 
                 </div>
@@ -282,8 +282,8 @@
             </div>
 
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
-                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="valveMaintenanceAddSaveButton" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;" onclick="$('#itemModal').modal('toggle');">Close</button>
+                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="valveMaintenanceAddSaveButton" data-bs-dismiss="modal" onclick="$('#itemModal').modal('toggle');">Save</button>
             </div>
 
         </div>
@@ -306,10 +306,10 @@
                     </ul>
                 </div>
 
-                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close" onclick="$('#itemModal').modal('toggle');"></button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body p-0">
                 <div class="row">
 
                 </div>
@@ -320,8 +320,8 @@
             </div>
 
             <div class="modal-footer" style="background-color: #F3F5F7;">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
-                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="thicknessMeasurementAddSaveButton" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;" onclick="$('#itemModal').modal('toggle');">Close</button>
+                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="thicknessMeasurementAddSaveButton" data-bs-dismiss="modal" onclick="$('#itemModal').modal('toggle');">Save</button>
             </div>
         </div>
     </div>
@@ -346,8 +346,14 @@
                 <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body" id="dsmPartialArea">
+            <div class="modal-body p-0">
+                <div class="row">
 
+                </div>
+
+                <div class="row" id="dsmPartialArea">
+
+                </div>
             </div>
 
             <!-- #region Footer -->
@@ -408,11 +414,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addComponentType()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addComponentType()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -431,11 +437,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addFittingType()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addFittingType()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -456,11 +462,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addMethod()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addMethod()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -479,11 +485,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addOperator()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addOperator()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -504,11 +510,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantArea()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addPlantArea()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -518,24 +524,28 @@
 </div>
 <!-- #endregion -->
 <!-- #region Plant System Add Modal -->
-<div class="modal fade" id="limPlantSystemAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="limPlantSystemAddModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="z-index: 1050;">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
 
             <div class="modal-body">
                 <input id="limPlantSystemAddModalName" type="text" class="form-control clear" placeholder="Enter New Plant System " style="border: none; background: #f3f5f7;">
+
                 <br />
-                <select id="limPlantSystemAddModalLookUpItemsPlantAreas" class="form-select">
+                
+                <select id="limPlantSystemAddModalLookUpItemsPlantAreas" multiple="" data-placeholder="Select Plant Area(s)" style="width: 100%;">
                 </select>
 
                 <br />
+                <br />
+
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('plantSystem')">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('plantSystem')">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addPlantSystem(); limCancelButton('plantSystem')" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addPlantSystem(); limCancelButton('plantSystem')" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -557,11 +567,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('procedure')">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('procedure')">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addProcedure(); limCancelButton('procedure')" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addProcedure(); limCancelButton('procedure')" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -580,11 +590,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addSpecification()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addSpecification()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -603,11 +613,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStandardStatement()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addStandardStatement()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -626,11 +636,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addStatus()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addStatus()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -652,11 +662,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('technique')">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton('technique')">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addTechnique(); limCancelButton('technique')" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addTechnique(); limCancelButton('technique')" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -675,11 +685,11 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger clearInput" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
+                        <button type="button" class="btn btn-danger clearInput showLookupItemModal" style="width:100%;" data-bs-dismiss="modal" onclick="limCancelButton()">Cancel</button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" onclick="addWeldType()" data-bs-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-primary showLookupItemModal" style="width:100%;" onclick="addWeldType()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </div>
@@ -694,20 +704,20 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <div class="modal-header border-0" style="max-height: 20px; ">
-                <img src="~/lib/icons8-delete-200.png" style="width: 50%; margin-top: -40px; transform: rotate(20deg);" class="mx-auto"  />
+                <img src="~/lib/icons8-delete-200.png" style="width: 50%; margin-top: -40px; transform: rotate(20deg);" class="mx-auto" />
                 @*<img src="https://img.icons8.com/bubbles/100/000000/trash.png" style="width: 50%; margin-top: -30px; transform: rotate(20deg); z-index: 1100;" class="mx-auto" />*@
             </div>
-            <div class="modal-body" >
+            <div class="modal-body">
                 <div class="row text-center">
                     <p><strong>Are you sure you want to delete?</strong></p>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal"><i class="fa-solid fa-xmark fa-2xl"></i></button>
+                        <button type="button" id="cancelDeleteButton" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal"><i class="fa-solid fa-xmark fa-2xl"></i></button>
                     </div>
 
                     <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" data-bs-dismiss="modal" onclick="deleteThis(objectTypeToBeDeleted, objectToBeDeleted);"><i class="fa-solid fa-check fa-2xl"></i></button>
+                        <button type="button" class="btn btn-primary" style="width:100%;" data-bs-dismiss="modal" onclick="deleteThis(objectTypeToBeDeleted, objectIdToBeDeleted);"><i class="fa-solid fa-check fa-2xl"></i></button>
                     </div>
                 </div>
             </div>
@@ -718,36 +728,91 @@
 
 
 @*<div class="modal fade show" id="areyousuremodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-modal="true" role="dialog" style="display: block;">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-header border-0" style="max-height: 20px;">
-                <img src="/lib/icons8-delete-200.png" style="width: 50%; margin-top: -30px; transform: rotate(20deg);" class="mx-auto">
-            </div>
-            <div class="modal-body">
-                <div class="row text-center">
-                    <p><strong>Are you sure you want to delete?</strong></p>
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header border-0" style="max-height: 20px;">
+                    <img src="/lib/icons8-delete-200.png" style="width: 50%; margin-top: -30px; transform: rotate(20deg);" class="mx-auto">
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">no</button>
+                <div class="modal-body">
+                    <div class="row text-center">
+                        <p><strong>Are you sure you want to delete?</strong></p>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn-danger" style="width:100%;" data-bs-dismiss="modal">no</button>
+                        </div>
 
-                    <div class="col-lg-6">
-                        <button type="button" class="btn btn-primary" style="width:100%;" data-bs-dismiss="modal">yes</button>
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn-primary" style="width:100%;" data-bs-dismiss="modal">yes</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 <!-- #endregion -->
+<!-- #region Inspection Menu -->
+<div id="inspectionMenu" class="context-menu" style="display: none">
+    <ul class="menu">
+        <li class="edit"><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>Edit & Attachment</a></li>
+        <li class="trash"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+    </ul>
+</div>
+<!-- #endregion -->
+<!-- #region Valve Maintenance Menu -->
+<div id="valveMaintenanceMenu" class="context-menu" style="display: none">
+    <ul class="menu">
+        <li class="edit"><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>Edit & Attachment</a></li>
+        <li class="delete"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+    </ul>
+</div>
+<!-- #endregion -->
+<!-- #region Thickness Measurement Menu -->
+<div id="thicknessMeasurement" class="context-menu" style="display: none">
+    <ul class="menu">
+        <li class="edit"><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>Edit & Attachment</a></li>
+        <li class="delete"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+    </ul>
+</div>
+<!-- #endregion -->
+<!-- #region Lookup Item Menu -->
+<div id="lookupItemMenu" class="context-menu" style="display: none">
+    <ul class="menu">
+        <li class="edit"><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>Edit & Attachment</a></li>
+        <li class="delete"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+    </ul>
+</div>
+<!-- #endregion -->
+<!-- #region Attachment Menu -->
+<div id="attachmentMenu" class="context-menu" style="display: none">
+    <ul class="menu">
+        <li class="edit"><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>Edit & Attachment</a></li>
+        <li class="download"><a href="#"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+        <li class="delete"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+    </ul>
+</div>
+<!-- #endregion -->
+
+<div id="contextMenu" class="context-menu" style="display: none">
+    <ul class="menu">
+        <li class="share"><a href="#"><i class="fa fa-share" aria-hidden="true"></i> Share</a></li>
+        <li class="rename"><a href="#"><i class="fa fa-pencil" aria-hidden="true"></i> Rename</a></li>
+        <li class="link"><a href="#"><i class="fa fa-link" aria-hidden="true"></i> Copy Link Address</a></li>
+        <li class="copy"><a href="#"><i class="fa fa-copy" aria-hidden="true"></i> Copy to</a></li>
+        <li class="paste"><a href="#"><i class="fa fa-paste" aria-hidden="true"></i> Move to</a></li>
+        <li class="download"><a href="#"><i class="fa fa-download" aria-hidden="true"></i> Download</a></li>
+        <li class="trash"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+    </ul>
+</div>
+
 
 @section Scripts {
 
     <!-- #region Script Sources -->
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.18.3/minified.js"></script>*@
     @*<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>*@
+
     <script src="~/lib/ol.js"></script>
     <script src="~/js/ol.js"></script>
     <script src="~/js/index.js"></script>

@@ -80,5 +80,16 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
         {
             return _mapper.Map<List<FileUploadListViewModel>>(GetAll(I => I.Type == "image/jpeg" || I.Type == "image/png"));
         }
+
+        public void DeleteFile(int fileId)
+        {
+            var file = GetFileDetail(fileId);
+            if (System.IO.File.Exists(file.Path))
+            {
+                System.IO.File.Delete(file.Path);
+            }
+            Delete(_mapper.Map<FileUpload>(file));
+            _uow.SaveChange();
+        }
     }
 }

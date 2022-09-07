@@ -238,30 +238,7 @@ function linkModalSaveButton() {
 
     selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
 
-    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-        dataProjection: 'EPSG:4326',
-        featureProjection: 'EPSG:3857'
-    });
-
-    var drawingFeaturesModel = {
-        Id: currentDrawingFeatures.Id,
-        Features: json,
-        QuartzLinkId: currentQuartzLink.Id
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "QuartzLink/UpdateDrawingFeaturesJSON",
-        data: { model: drawingFeaturesModel },
-        success: function (response) {
-            rModel = jQuery.parseJSON(response);
-            getVectorSource();
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
+    updateDrawingFeatures();
 
     document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
     document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
@@ -313,30 +290,7 @@ function goCurrentLink() {
 
             selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
 
-            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-                dataProjection: 'EPSG:4326',
-                featureProjection: 'EPSG:3857'
-            });
-
-            var drawingFeaturesModel = {
-                Id: currentDrawingFeatures.Id,
-                Features: json,
-                QuartzLinkId: currentQuartzLink.Id
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "QuartzLink/UpdateDrawingFeaturesJSON",
-                data: { model: drawingFeaturesModel },
-                success: function (response) {
-                    rModel = jQuery.parseJSON(response);
-                    getVectorSource();
-                },
-                error: function (error) {
-                    alert("error!");
-                    console.log(error.responseText);
-                }
-            });
+            updateDrawingFeatures();
         }
 
         $.ajax({
@@ -396,30 +350,7 @@ function goCurrentLink() {
 
             selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
 
-            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-                dataProjection: 'EPSG:4326',
-                featureProjection: 'EPSG:3857'
-            });
-
-            var drawingFeaturesModel = {
-                Id: currentDrawingFeatures.Id,
-                Features: json,
-                QuartzLinkId: currentQuartzLink.Id
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "QuartzLink/UpdateDrawingFeaturesJSON",
-                data: { model: drawingFeaturesModel },
-                success: function (response) {
-                    rModel = jQuery.parseJSON(response);
-                    getVectorSource();
-                },
-                error: function (error) {
-                    alert("error!");
-                    console.log(error.responseText);
-                }
-            });
+            updateDrawingFeatures();
         }
     }
 
@@ -480,6 +411,18 @@ function goCurrentLink() {
         }
     });
 }
+
+$("#deleteLink").on('click', function () {
+    // clicked/created
+    var link;
+    if (clickedOrCreated == "clicked")
+        link = lastClickedLink;
+    if (clickedOrCreated == "created")
+        link = lastCreatedLink;
+
+    objectTypeToBeDeleted = "link";
+    objectIdToBeDeleted = link.Id;
+});
 
 // #region Link Modal
 

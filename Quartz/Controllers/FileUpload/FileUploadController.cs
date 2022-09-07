@@ -85,5 +85,12 @@ namespace Quartz.Controllers.FileUpload
             memory.Position = 0;
             return File(memory, file.Type, file.Name + file.Extension);
         }
+
+        [HttpDelete]
+        public IActionResult DeleteFile(int fileId)
+        {
+            _fileUploadService.DeleteFile(fileId);
+            return Json(null);
+        }
     }
 }

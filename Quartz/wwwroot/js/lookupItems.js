@@ -291,6 +291,10 @@ $("#limNav a").on('click', function () {
             break;
     }
 })
+
+$(".showLookupItemModal").on('click', function () {
+    $("#lookupItemsModal").modal('show');
+});
 // #endregion
 
 // #region Add Functions

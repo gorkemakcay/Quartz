@@ -155,10 +155,12 @@ $("#inspectionModalNav a").on('click', function () {
     switch (info) {
         case 'Data':
             openEditInspectionModal(currentInspection.Id);
+            $("#inspectionAddSaveButton").removeAttr("hidden");
             break;
 
         case 'Attachment':
             loadInspectionsAttachmentPage();
+            $("#inspectionAddSaveButton").attr("hidden", "");
             break;
 
         default:
@@ -174,10 +176,12 @@ $("#valveMaintenanceModalNav a").on('click', function () {
     switch (info) {
         case 'Data':
             openEditValveMaintenanceModal(currentValveMaintenance.Id);
+            $("#valveMaintenanceAddSaveButton").removeAttr("hidden");
             break;
 
         case 'Attachment':
             loadValveMaintenancesAttachmentPage();
+            $("#valveMaintenanceAddSaveButton").attr("hidden", "");
             break;
 
         default:
@@ -193,10 +197,12 @@ $("#thicknessMeasurementModalNav a").on('click', function () {
     switch (info) {
         case 'Data':
             openEditThicknessMeasurementModal(currentThicknessMeasurement.Id);
+            $("#thicknessMeasurementAddSaveButton").removeAttr("hidden");
             break;
 
         case 'Attachment':
             loadThicknessMeasurementAttachmentPage();
+            $("#thicknessMeasurementAddSaveButton").attr("hidden", "");
             break;
 
         default:
@@ -399,14 +405,15 @@ $("#thicknessMeasurementAddSaveButton").on('click', function () {
 
 // Item Delete Button [Click Function]
 $("#deleteItem").on('click', function () {
+    // clicked/created
     var item;
     if (clickedOrCreated == "clicked")
         item = lastClickedItem;
     if (clickedOrCreated == "created")
         item = lastCreatedItem;
 
-    objectToBeDeleted = item;
     objectTypeToBeDeleted = "item";
+    objectIdToBeDeleted = item.Id;
 });
 
 // Select/Option's [Get Functions]
@@ -612,8 +619,9 @@ function getInformationSelectOptions() {
 function loadItemModalHomePage() {
     itemModalActivePartial = "Home";
     $("#itemModalSaveButton").attr("hidden", "");
-    $("#itemShowLabel").attr("hidden", "");
-    $("#showlabelSpan").attr("hidden", "");
+    $("#itemShowLabel").removeAttr("hidden");
+    $("#showlabelSpan").removeAttr("hidden");
+    $("#deleteItem").removeAttr("hidden");
 
     $.ajax({
         type: "GET",
@@ -810,8 +818,9 @@ function loadItemModalHomePage() {
 function loadInformationPage() {
     itemModalActivePartial = "Informations";
     $("#itemModalSaveButton").removeAttr("hidden");
-    $("#itemShowLabel").removeAttr("hidden");
-    $("#showlabelSpan").removeAttr("hidden");
+    $("#itemShowLabel").attr("hidden", "");
+    $("#showlabelSpan").attr("hidden", "");
+    $("#deleteItem").attr("hidden", "");
 
     $.ajax({
         type: "GET",
@@ -888,6 +897,7 @@ function loadInformationPage() {
     });
 
     $("#itemModalBackButton").removeAttr("hidden");
+
 }
 
 // Inspection Page [Load Function]
@@ -896,6 +906,7 @@ function loadInspectionPage() {
     $("#itemModalSaveButton").attr("hidden", "");
     $("#itemShowLabel").attr("hidden", "");
     $("#showlabelSpan").attr("hidden", "");
+    $("#deleteItem").attr("hidden", "");
 
     var item;
     if (clickedOrCreated == "clicked")
@@ -943,10 +954,24 @@ function loadInspectionPage() {
                                         text: inspection.Status
                                     }),
                                     $('<td>', { align: "center" }).append(
-                                        "<button type='button' class='btn btn-dark p-0' data-bs-toggle='modal' data-bs-target='#AddInspectionData' onclick='openEditInspectionModal(" + inspection.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-info'></i></button>"
+                                        "<button type='button' class='btn btn-dark p-0 inspectionEditButton' data-bs-toggle='modal' data-bs-target='#AddInspectionData' onclick='openEditInspectionModal(" + inspection.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                                        "<button type='button' id='" + inspection.Id + "' class='btn btn-dark p-0 inspectionDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                     )
                                 )
                             );
+                        });
+
+                        // Inspection Edit Button [Click Function]
+                        $(".inspectionEditButton").on('click', function () {
+                            $('#itemModal').modal('toggle');
+                        });
+
+                        // Inspection Delete Button [Click Function]
+                        $(".inspectionDeleteButton").on('click', function () {
+                            objectIdToBeDeleted = $(this).attr('id');
+                            objectTypeToBeDeleted = "inspection";
+
+                            $("#itemModal").modal("hide");
                         });
                     }
                     else {
@@ -1201,10 +1226,20 @@ function loadInspectionsAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                            "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 inspectionDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
                                     ),
                                 );
+
+                                // Inspection Delete Button [Click Function]
+                                $(".inspectionDeleteButton").on('click', function () {
+                                    objectIdToBeDeleted = $(this).attr('id');
+                                    objectTypeToBeDeleted = "attachment";
+                                    deleteThisWhichAttachment = "inspection";
+
+                                    $("#AddInspectionData").modal("hide");
+                                });
                             }
                         },
                         error: function (error) {
@@ -1247,10 +1282,20 @@ function loadInspectionsAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                                "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 inspectionDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
                                         ),
                                     );
+
+                                    // Inspection Delete Button [Click Function]
+                                    $(".inspectionDeleteButton").on('click', function () {
+                                        objectIdToBeDeleted = $(this).attr('id');
+                                        objectTypeToBeDeleted = "attachment";
+                                        deleteThisWhichAttachment = "inspection";
+
+                                        $("#AddInspectionData").modal("hide");
+                                    });
                                 }
                             },
                             error: function (error) {
@@ -1276,6 +1321,7 @@ function loadValveMaintenancePage() {
     $("#itemModalSaveButton").attr("hidden", "");
     $("#itemShowLabel").attr("hidden", "");
     $("#showlabelSpan").attr("hidden", "");
+    $("#deleteItem").attr("hidden", "");
 
     var item;
     if (clickedOrCreated == "clicked")
@@ -1322,10 +1368,24 @@ function loadValveMaintenancePage() {
                                         text: date
                                     }),
                                     $('<td>', { align: "center" }).append(
-                                        "<button type='button' class='btn btn-dark p-0' data-bs-toggle='modal' data-bs-target='#AddValveMaintenanceData' onclick='openEditValveMaintenanceModal(" + valveMaintenance.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-info'></i></button>"
+                                        "<button type='button' class='btn btn-dark p-0 valveMaintenanceEditButton' data-bs-toggle='modal' data-bs-target='#AddValveMaintenanceData' onclick='openEditValveMaintenanceModal(" + valveMaintenance.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                                        "<button type='button' id='" + valveMaintenance.Id + "' class='btn btn-dark p-0 valveMaintenanceDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa-solid fa-trash-can'></i></button>"
                                     )
                                 )
                             );
+                        });
+
+                        // Valve Maintenance Edit Button [Click Function]
+                        $(".valveMaintenanceEditButton").on('click', function () {
+                            $('#itemModal').modal('toggle');
+                        });
+
+                        // Valve Maintenance Delete Button [Click Function]
+                        $(".valveMaintenanceDeleteButton").on('click', function () {
+                            objectIdToBeDeleted = $(this).attr('id');
+                            objectTypeToBeDeleted = "valveMaintenance";
+
+                            $("#itemModal").modal("hide");
                         });
                     }
                     else {
@@ -1476,10 +1536,20 @@ function loadValveMaintenancesAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                            "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 valveMaintenanceAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
                                     ),
                                 );
+
+                                // Valve Maintenance Delete Button [Click Function]
+                                $(".valveMaintenanceAttachmentDeleteButton").on('click', function () {
+                                    objectIdToBeDeleted = $(this).attr('id');
+                                    objectTypeToBeDeleted = "attachment";
+                                    deleteThisWhichAttachment = "valveMaintenance";
+
+                                    $("#AddValveMaintenanceData").modal("hide");
+                                });
                             }
                         },
                         error: function (error) {
@@ -1515,10 +1585,20 @@ function loadValveMaintenancesAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                                "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 valveMaintenanceAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
                                         ),
                                     );
+
+                                    // Valve Maintenance Button [Click Function]
+                                    $(".valveMaintenanceAttachmentDeleteButton").on('click', function () {
+                                        objectIdToBeDeleted = $(this).attr('id');
+                                        objectTypeToBeDeleted = "attachment";
+                                        deleteThisWhichAttachment = "valveMaintenance";
+
+                                        $("#AddValveMaintenanceData").modal("hide");
+                                    });
                                 }
                                 else {
                                     $("#valveMaintenancesAttachmentTable").children('tbody').append(
@@ -1559,6 +1639,7 @@ function loadThicknessMeasurementPage() {
     $("#itemModalSaveButton").attr("hidden", "");
     $("#itemShowLabel").attr("hidden", "");
     $("#showlabelSpan").attr("hidden", "");
+    $("#deleteItem").attr("hidden", "");
 
     var item;
     if (clickedOrCreated == "clicked")
@@ -1613,10 +1694,24 @@ function loadThicknessMeasurementPage() {
                                         text: thicknessMeasurement.Description
                                     }),
                                     $('<td>', { align: "center" }).append(
-                                        "<button type='button' class='btn btn-dark p-0' data-bs-toggle='modal' data-bs-target='#AddThicknessMeasurementData' onclick='openEditThicknessMeasurementModal(" + thicknessMeasurement.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-info'></i></button>"
+                                        "<button type='button' class='btn btn-dark p-0 thicknessMeasurementEditButton' data-bs-toggle='modal' data-bs-target='#AddThicknessMeasurementData' onclick='openEditThicknessMeasurementModal(" + thicknessMeasurement.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                                        "<button type='button' id='" + thicknessMeasurement.Id + "' class='btn btn-dark p-0 thicknessMeasurementDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa-solid fa-trash-can'></i></button>"
                                     )
                                 )
                             );
+                        });
+
+                        // Thickness Measurement Edit Button [Click Function]
+                        $(".thicknessMeasurementEditButton").on('click', function () {
+                            $('#itemModal').modal('toggle');
+                        });
+
+                        // Thickness Measurement Delete Button [Click Function]
+                        $(".thicknessMeasurementDeleteButton").on('click', function () {
+                            objectIdToBeDeleted = $(this).attr('id');
+                            objectTypeToBeDeleted = "thicknessMeasurement";
+
+                            $("#itemModal").modal("hide");
                         });
                     }
                     else {
@@ -1835,10 +1930,20 @@ function loadThicknessMeasurementAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                            "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 thicknessMeasurementDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
                                     ),
                                 );
+
+                                // Thickness Measurement Delete Button [Click Function]
+                                $(".thicknessMeasurementDeleteButton").on('click', function () {
+                                    objectIdToBeDeleted = $(this).attr('id');
+                                    objectTypeToBeDeleted = "attachment";
+                                    deleteThisWhichAttachment = "thicknessMeasurement";
+
+                                    $("#AddThicknessMeasurementData").modal("hide");
+                                });
                             }
                         },
                         error: function (error) {
@@ -1856,7 +1961,7 @@ function loadThicknessMeasurementAttachmentPage() {
                             data: { fileId: attachmentIds[id] },
                             success: function (response) {
                                 attachmentModel = jQuery.parseJSON(response);
-                        
+
                                 if (attachmentModel != "") {
                                     var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
                                     $("#thicknessMeasurementAttachmentTable").children('tbody').append(
@@ -1874,10 +1979,20 @@ function loadThicknessMeasurementAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                                "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 thicknessMeasurementDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
                                         ),
                                     );
+
+                                    // Thickness Measurement Delete Button [Click Function]
+                                    $(".thicknessMeasurementDeleteButton").on('click', function () {
+                                        objectIdToBeDeleted = $(this).attr('id');
+                                        objectTypeToBeDeleted = "attachment";
+                                        deleteThisWhichAttachment = "thicknessMeasurement";
+
+                                        $("#AddThicknessMeasurementData").modal("hide");
+                                    });
                                 }
                                 else {
                                     $("#thicknessMeasurementAttachmentTable").children('tbody').append(
@@ -1918,6 +2033,7 @@ function loadAttachmentPage() {
     $("#itemModalSaveButton").attr("hidden", "");
     $("#itemShowLabel").attr("hidden", "");
     $("#showlabelSpan").attr("hidden", "");
+    $("#deleteItem").attr("hidden", "");
 
     var item;
     if (clickedOrCreated == "clicked")
@@ -1966,10 +2082,20 @@ function loadAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                            "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 itemAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
                                     ),
-                                );
+                                )
+
+                                // Item Attachment Button [Click Function]
+                                $(".itemAttachmentDeleteButton").on('click', function () {
+                                    objectIdToBeDeleted = $(this).attr('id');
+                                    objectTypeToBeDeleted = "attachment";
+                                    deleteThisWhichAttachment = "item";
+
+                                    $("#itemModal").modal("hide");
+                                });
                             }
                             else {
                                 $("#itemAttachmentsTable").children('tbody').append(
@@ -1995,7 +2121,7 @@ function loadAttachmentPage() {
                             success: function (response) {
                                 attachmentModel = jQuery.parseJSON(response);
 
-                                if (attachmentModel != "") {
+                                if (attachmentModel != "" || attachmentModel != null) {
                                     var uploadedDate = attachmentModel.CreatedDate.split('T')[0];
                                     $("#itemAttachmentsTable").children('tbody').append(
                                         $('<tr>').append(
@@ -2012,10 +2138,20 @@ function loadAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>"
+                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                                "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 itemAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
                                         ),
                                     );
+
+                                    // Item Attachment Button [Click Function]
+                                    $(".itemAttachmentDeleteButton").on('click', function () {
+                                        objectIdToBeDeleted = $(this).attr('id');
+                                        objectTypeToBeDeleted = "attachment";
+                                        deleteThisWhichAttachment = "item";
+
+                                        $("#itemModal").modal("hide");
+                                    });
                                 }
                                 else {
                                     $("#itemAttachmentsTable").children('tbody').append(
@@ -2476,4 +2612,3 @@ function openEditThicknessMeasurementModal(thicknessMeasurementId) {
     });
 }
 // #endregion
-

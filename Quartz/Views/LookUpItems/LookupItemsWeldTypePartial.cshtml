@@ -15,8 +15,14 @@
 
     <div class="row">
         <div class="col-md-12" style="text-align: center;">
-            <button type="button" data-bs-toggle="modal" data-bs-target="#limWeldTypeAddModal" style="border: none; background: none;"><img src="~/lib/bootstrap-icons-1.9.1/plus-circle.svg" style="position: absolute; width: 32px; display: block; margin-top: -20px; margin-left: -16px;" /></button>
+            <button type="button" class="addLookupItemButton" data-bs-toggle="modal" data-bs-target="#limWeldTypeAddModal" style="border: none; background: none;"><img src="~/lib/bootstrap-icons-1.9.1/plus-circle.svg" style="position: absolute; width: 32px; display: block; margin-top: -20px; margin-left: -16px;" /></button>
         </div>
     </div>
+
+    <script>
+        $(".addLookupItemButton").on('click', function () {
+            $("#lookupItemsModal").modal('hide');
+        });
+    </script>
 
 </div>

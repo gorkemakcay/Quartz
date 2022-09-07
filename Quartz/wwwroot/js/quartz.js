@@ -428,12 +428,13 @@
 
     function addDrawingFeaturesJSON() {
         // list all current features's details (geoJSON format)
-        var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-        });
 
         if (currentDrawingFeatures == 0) {
+            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
+            });
+
             var drawingFeaturesAddModel = {
                 Features: json,
                 QuartzLinkId: currentQuartzLink.Id
@@ -453,28 +454,35 @@
                 }
             });
         }
-        else {
-            var drawingFeaturesUpdateModel = {
-                Id: currentDrawingFeatures.Id,
-                Features: json,
-                QuartzLinkId: currentQuartzLink.Id
-            };
+        else updateDrawingFeatures();
 
-            $.ajax({
-                type: "POST",
-                url: "QuartzLink/UpdateDrawingFeaturesJSON",
-                data: { model: drawingFeaturesUpdateModel },
-                success: function (response) {
-                    rModel = jQuery.parseJSON(response);
-                    getVectorSource();
-                },
-                error: function (error) {
-                    alert("error!");
-                    console.log(error.responseText);
-                }
-            });
-        }
+    }
 
+    function updateDrawingFeatures() {
+        var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857'
+        });
+
+        var drawingFeaturesModel = {
+            Id: currentDrawingFeatures.Id,
+            Features: json,
+            QuartzLinkId: currentQuartzLink.Id
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "QuartzLink/UpdateDrawingFeaturesJSON",
+            data: { model: drawingFeaturesModel },
+            success: function (response) {
+                rModel = jQuery.parseJSON(response);
+                getVectorSource();
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
     }
 
     // #region Handle tpyeSelect Change Event
@@ -508,30 +516,7 @@
         featuresLonLat = ol.proj.toLonLat(featuresGetCenter);
         selectedFeature.setProperties({ 'LonLat': featuresLonLat });
 
-        var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-        });
-
-        var drawingFeaturesModel = {
-            Id: currentDrawingFeatures.Id,
-            Features: json,
-            QuartzLinkId: currentQuartzLink.Id
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "QuartzLink/UpdateDrawingFeaturesJSON",
-            data: { model: drawingFeaturesModel },
-            success: function (response) {
-                rModel = jQuery.parseJSON(response);
-                getVectorSource();
-            },
-            error: function (error) {
-                alert("error!");
-                console.log(error.responseText);
-            }
-        });
+        updateDrawingFeatures();
     });
     // #endregion
 }

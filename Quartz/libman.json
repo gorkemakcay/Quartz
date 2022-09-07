@@ -1,0 +1,15 @@
+{
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.6.1",
+      "destination": "wwwroot/lib/libman/jQuery/"
+    },
+    {
+      "library": "bootstrap@5.0.2",
+      "destination": "wwwroot/lib/libman/bootstrap/",
+      "provider": "jsdelivr"
+    }
+  ],
+  "version": "1.0"
+}

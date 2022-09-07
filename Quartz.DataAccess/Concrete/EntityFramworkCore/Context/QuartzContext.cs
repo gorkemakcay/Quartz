@@ -18,6 +18,7 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz2;uid=umutd;pwd=Ud4583!");
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz3;uid=umutd;pwd=Ud4583!");
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz4;uid=umutd;pwd=Ud4583!");
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             base.OnConfiguring(optionsBuilder);
         }
 

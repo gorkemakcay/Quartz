@@ -312,9 +312,11 @@ var listPanelIsOpen = true;
 
 var searchPanelIsOpen = true;
 
-var objectToBeDeleted;
+var objectIdToBeDeleted;
 
 var objectTypeToBeDeleted;
+
+var deleteThisWhichAttachment;
 
 // #endregion
 
@@ -406,6 +408,43 @@ $(function () {
     // #endregion
 
     // [CODE SNIPPET TRIAL AREA]
+    //$('.button').click(function () {
+    //    var buttonId = $(this).attr('id');
+    //    $('#modal-container').removeAttr('class').addClass(buttonId);
+    //    $('body').addClass('modal-active');
+    //})
+
+    //$('#modal-container').click(function () {
+    //    $(this).addClass('out');
+    //    $('body').removeClass('modal-active');
+    //});
+
+    $.ajax({
+        type: "GET",
+        url: "LookUpItems/GetPlantAreaForOption",
+        success: function (result) {
+            rModel = jQuery.parseJSON(result);
+
+            $("#12142142132132423").children().remove();
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#12142142132132423").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+
+            $('#12142142132132423').select2({
+                closeOnSelect: false
+            });
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
 });
 
 // #region getDate()
@@ -442,6 +481,59 @@ $(".closeButton").on('click', function () {
     $("#dsmSelectDrawing").removeAttr("disabled");
 });
 
+$("#cancelDeleteButton").on('click', function () {
+    switch (objectTypeToBeDeleted) {
+
+        case "link":
+            $("#linkModal").modal("show");
+            break;
+
+        case "attachment":
+            switch (deleteThisWhichAttachment) {
+
+                case "item":
+                    $("#itemModal").modal("show");
+                    break;
+
+                case "inspection":
+                    $("#AddInspectionData").modal("show");
+                    break;
+
+                case "valveMaintenance":
+                    $("#AddValveMaintenanceData").modal("show");
+                    break;
+
+                case "thicknessMeasurement":
+                    $("#AddThicknessMeasurementData").modal("show");
+                    break;
+
+                default:
+            }
+            break;
+
+        case "lookupItem":
+            break;
+
+        case "item":
+            $("#itemModal").modal("show");
+            break;
+
+        case "inspection":
+            $("#itemModal").modal("show");
+            break;
+
+        case "valveMaintenance":
+            $("#itemModal").modal("show");
+            break;
+
+        case "thicknessMeasurement":
+            $("#itemModal").modal("show");
+            break;
+
+        default:
+    }
+});
+
 function limCancelButton(type) {
     $(".clear").val('');
 
@@ -454,7 +546,6 @@ function limCancelButton(type) {
                     rModel = jQuery.parseJSON(result);
 
                     $("#limPlantSystemAddModalLookUpItemsPlantAreas").children().remove();
-
                     $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
                         $('<option>', {
                             value: "select",
@@ -462,7 +553,8 @@ function limCancelButton(type) {
                             id: "selectLimPlantAreas"
                         })
                     );
-                    $("#selectLimPlantAreas").attr("hidden", "");
+                    $("#selectLimPlantAreas").css("background", "black");
+                    $("#selectLimPlantAreas").attr("disabled", "");
 
                     for (var i = 0; i < rModel.length; i++) {
                         $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
@@ -642,25 +734,285 @@ function getVectorSource() {
     });
 }
 
-function deleteThis(objectType, object) {
+function deleteThis(objectType, objectId) {
     switch (objectType) {
         case "link":
+            var linkDeleteModel = { Id: objectId };
+            $.ajax({
+                type: "DELETE",
+                url: "QuartzLink/DeleteLink",
+                data: { model: linkDeleteModel },
+                success: function (response) {
+                    $("#linkModal").modal("hide");
+                    createList();
+                    source.getFeatures().forEach(function (feature) {
+                        if (feature.get("Id") == linkDeleteModel.Id && feature.get("Type") == "link") {
+                            source.removeFeature(feature);
+
+                            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+                                dataProjection: 'EPSG:4326',
+                                featureProjection: 'EPSG:3857'
+                            });
+
+                            var drawingFeaturesModel = {
+                                Id: currentDrawingFeatures.Id,
+                                Features: json,
+                                QuartzLinkId: currentQuartzLink.Id
+                            };
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzLink/UpdateDrawingFeaturesJSON",
+                                data: { model: drawingFeaturesModel },
+                                success: function (response) {
+                                    rModel = jQuery.parseJSON(response);
+                                    getVectorSource();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+                            toast("Link Deleted Successful");
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
-        case "file":
+        case "attachment":
+            $.ajax({
+                type: "DELETE",
+                url: "FileUpload/DeleteFile",
+                data: { fileId: objectId },
+                success: function (response) {
+
+                    switch (deleteThisWhichAttachment) {
+
+                        case "item":
+                            var item;
+                            if (clickedOrCreated == "clicked")
+                                item = lastClickedItem;
+                            if (clickedOrCreated == "created")
+                                item = lastCreatedItem;
+
+                            if (item.AttachmentIds.indexOf(",") == -1) {
+                                item.AttachmentIds = null;
+                            }
+                            else {
+                                var attachmentIds = item.AttachmentIds.split(',');
+                                for (let id in attachmentIds) {
+                                    if (attachmentIds[id] == objectId) {
+                                        var index = attachmentIds.indexOf(attachmentIds[id]);
+                                        attachmentIds.splice(index, 1);
+                                        item.AttachmentIds = attachmentIds.toString();
+                                    }
+                                }
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzItem/UpdateItemJSON",
+                                data: { model: item },
+                                success: function (response) {
+                                    $("#itemModal").modal("show");
+                                    loadAttachmentPage();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                            break;
+
+                        case "inspection":
+                            if (currentInspection.AttachmentIds.indexOf(",") == -1) {
+                                currentInspection.AttachmentIds = null;
+                            }
+                            else {
+                                var attachmentIds = currentInspection.AttachmentIds.split(',');
+                                for (let id in attachmentIds) {
+                                    if (attachmentIds[id] == objectId) {
+                                        var index = attachmentIds.indexOf(attachmentIds[id]);
+                                        attachmentIds.splice(index, 1);
+                                        currentInspection.AttachmentIds = attachmentIds.toString();
+                                    }
+                                }
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzItem/UpdateInspectionJSON",
+                                data: { model: currentInspection },
+                                success: function (response) {
+                                    $("#AddInspectionData").modal("show");
+                                    loadInspectionsAttachmentPage();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                            break;
+
+                        case "valveMaintenance":
+                            if (currentValveMaintenance.AttachmentIds.indexOf(",") == -1) {
+                                currentValveMaintenance.AttachmentIds = null;
+                            }
+                            else {
+                                var attachmentIds = currentValveMaintenance.AttachmentIds.split(',');
+                                for (let id in attachmentIds) {
+                                    if (attachmentIds[id] == objectId) {
+                                        var index = attachmentIds.indexOf(attachmentIds[id]);
+                                        attachmentIds.splice(index, 1);
+                                        currentValveMaintenance.AttachmentIds = attachmentIds.toString();
+                                    }
+                                }
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzItem/UpdateValveMaintenanceJSON",
+                                data: { model: currentValveMaintenance },
+                                success: function (response) {
+                                    $("#AddValveMaintenanceData").modal("show");
+                                    loadValveMaintenancesAttachmentPage();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                            break;
+
+                        case "thicknessMeasurement":
+                            if (currentThicknessMeasurement.AttachmentIds.indexOf(",") == -1) {
+                                currentThicknessMeasurement.AttachmentIds = null;
+                            }
+                            else {
+                                var attachmentIds = currentThicknessMeasurement.AttachmentIds.split(',');
+                                for (let id in attachmentIds) {
+                                    if (attachmentIds[id] == objectId) {
+                                        var index = attachmentIds.indexOf(attachmentIds[id]);
+                                        attachmentIds.splice(index, 1);
+                                        currentThicknessMeasurement.AttachmentIds = attachmentIds.toString();
+                                    }
+                                }
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzItem/UpdateThicknessMeasurementJSON",
+                                data: { model: currentThicknessMeasurement },
+                                success: function (response) {
+                                    $("#AddThicknessMeasurementData").modal("show");
+                                    loadThicknessMeasurementAttachmentPage();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                            break;
+
+                        case "drawingSettings":
+                            if (currentDrawingSettings.AttachmentIds.indexOf(",") == -1) {
+                                currentDrawingSettings.AttachmentIds = null;
+                            }
+                            else {
+                                var attachmentIds = currentDrawingSettings.AttachmentIds.split(',');
+                                for (let id in attachmentIds) {
+                                    if (attachmentIds[id] == objectId) {
+                                        var index = attachmentIds.indexOf(attachmentIds[id]);
+                                        attachmentIds.splice(index, 1);
+                                        currentDrawingSettings.AttachmentIds = attachmentIds.toString();
+                                    }
+                                }
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzLink/UpdateDrawingSettingsJSON",
+                                data: { model: currentDrawingSettings },
+                                success: function (response) {
+                                    $("#drawingSettingsModal").modal("show");
+                                    loadDrawingSettingsAttachmentPage();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                            break;
+
+                        default:
+                    }
+
+                    objectTypeToBeDeleted = "";
+                    objectIdToBeDeleted = "";
+                    deleteThisWhichAttachment = "";
+
+                    toast("Attachment Deleted Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
         case "item":
-            // [TAMAMLANMADI]
-            var itemDeleteModel = { Id: object.Id };
+            var itemDeleteModel = { Id: objectId };
             $.ajax({
                 type: "DELETE",
                 url: "QuartzItem/DeleteItem",
                 data: { model: itemDeleteModel },
                 success: function (response) {
-                    $("#itemModal").modal("toggle");
+                    $("#itemModal").modal("hide");
                     createList();
-                    toast("Item Deleted Successful");
+                    source.getFeatures().forEach(function (feature) {
+                        if (feature.get("Id") == itemDeleteModel.Id && feature.get("Type") == "item") {
+                            source.removeFeature(feature);
+
+                            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+                                dataProjection: 'EPSG:4326',
+                                featureProjection: 'EPSG:3857'
+                            });
+
+                            var drawingFeaturesModel = {
+                                Id: currentDrawingFeatures.Id,
+                                Features: json,
+                                QuartzLinkId: currentQuartzLink.Id
+                            };
+
+                            $.ajax({
+                                type: "POST",
+                                url: "QuartzLink/UpdateDrawingFeaturesJSON",
+                                data: { model: drawingFeaturesModel },
+                                success: function (response) {
+                                    rModel = jQuery.parseJSON(response);
+                                    getVectorSource();
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+                            toast("Item Deleted Successful");
+                        }
+                    });
                 },
                 error: function (error) {
                     alert("error!");
@@ -670,20 +1022,104 @@ function deleteThis(objectType, object) {
             break;
 
         case "inspection":
+            var inspectionDeleteModel = { Id: objectId };
+            $.ajax({
+                type: "DELETE",
+                url: "QuartzItem/DeleteInspection",
+                data: { model: inspectionDeleteModel },
+                success: function (response) {
+                    loadInspectionPage();
+
+                    objectTypeToBeDeleted = "";
+                    objectIdToBeDeleted = "";
+
+                    $("#itemModal").modal("show");
+
+                    toast("Inspection Deleted Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
         case "lookupItem":
             break;
 
         case "valveMaintenance":
+            var valveMaintenanceDeleteModel = { Id: objectId };
+            $.ajax({
+                type: "DELETE",
+                url: "QuartzItem/DeleteValveMaintenance",
+                data: { model: valveMaintenanceDeleteModel },
+                success: function (response) {
+                    loadValveMaintenancePage();
+
+                    objectTypeToBeDeleted = "";
+                    objectIdToBeDeleted = "";
+
+                    $("#itemModal").modal("show");
+
+                    toast("Valve Maintenance Deleted Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
         case "thicknessMeasurement":
+            var thicknessMeasurementDeleteModel = { Id: objectId };
+            $.ajax({
+                type: "DELETE",
+                url: "QuartzItem/DeleteThicknessMeasurement",
+                data: { model: thicknessMeasurementDeleteModel },
+                success: function (response) {
+                    loadThicknessMeasurementPage();
+
+                    objectTypeToBeDeleted = "";
+                    objectIdToBeDeleted = "";
+
+                    $("#itemModal").modal("show");
+
+                    toast("Thickness Measurement Deleted Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
         default:
     }
 }
+
+// TTTTTTTTTTTTTTTTTTTTTTTTTTRIAL AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+document.onclick = hideMenu;
+document.oncontextmenu = rightClick;
+
+function hideMenu() {
+    document.getElementById("inspectionMenu")
+        .style.display = "none"
+}
+
+function rightClick(e) {
+    e.preventDefault();
+
+    if (document.getElementById("inspectionMenu").style.display == "block") {
+        hideMenu();
+    } else {
+        var menu = document.getElementById("inspectionMenu")
+        menu.style.display = 'block';
+        menu.style.left = e.pageX + "px";
+        menu.style.top = e.pageY + "px";
+    }
+}
+// TTTTTTTTTTTTTTTTTTTTTTTTTTRIAL AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 // #region List Panel | Main Panel | Search Panel
 
