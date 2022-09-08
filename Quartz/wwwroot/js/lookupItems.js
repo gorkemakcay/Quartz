@@ -1,5 +1,7 @@
 ﻿// #region Lookup Item Modal
 
+//const { registerFont } = require("ol/render/canvas");
+
 //const { Toast } = require("../lib/bootstrap/dist/js/bootstrap.esm");
 
 // #region General
@@ -490,7 +492,7 @@ function addPlantArea() {
                         console.log(error.responseText);
                     }
                 });
-                
+
             },
             error: function (error) {
                 alert("error!");
@@ -506,8 +508,9 @@ function addPlantSystem() {
     if ($("#limPlantSystemAddModalName").val() != null && $("#limPlantSystemAddModalName").val() != " ") {
         var plantSystemModel = {
             Name: $("#limPlantSystemAddModalName").val(),
-            LookUpItemsPlantAreas: $("#limPlantSystemAddModalLookUpItemsPlantAreas").val()
+            LookUpItemsPlantAreas: $("#limPlantSystemAddModalLookUpItemsPlantAreas").val().toString()
         }
+        console.log(plantSystemModel);
 
         $("#limPlantSystemAddModalName").val("");
         $("#limPlantSystemAddModalLookUpItemsPlantAreas").val("");

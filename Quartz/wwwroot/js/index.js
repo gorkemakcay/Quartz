@@ -418,33 +418,6 @@ $(function () {
     //    $(this).addClass('out');
     //    $('body').removeClass('modal-active');
     //});
-
-    $.ajax({
-        type: "GET",
-        url: "LookUpItems/GetPlantAreaForOption",
-        success: function (result) {
-            rModel = jQuery.parseJSON(result);
-
-            $("#12142142132132423").children().remove();
-
-            for (var i = 0; i < rModel.length; i++) {
-                $("#12142142132132423").append(
-                    $('<option>', {
-                        value: rModel[i].Name,
-                        text: rModel[i].Name
-                    })
-                );
-            }
-
-            $('#12142142132132423').select2({
-                closeOnSelect: false
-            });
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
 });
 
 // #region getDate()
@@ -546,15 +519,6 @@ function limCancelButton(type) {
                     rModel = jQuery.parseJSON(result);
 
                     $("#limPlantSystemAddModalLookUpItemsPlantAreas").children().remove();
-                    $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
-                        $('<option>', {
-                            value: "select",
-                            text: "Select Plant Area(s)",
-                            id: "selectLimPlantAreas"
-                        })
-                    );
-                    $("#selectLimPlantAreas").css("background", "black");
-                    $("#selectLimPlantAreas").attr("disabled", "");
 
                     for (var i = 0; i < rModel.length; i++) {
                         $("#limPlantSystemAddModalLookUpItemsPlantAreas").append(
@@ -564,6 +528,10 @@ function limCancelButton(type) {
                             })
                         );
                     }
+
+                    $('#limPlantSystemAddModalLookUpItemsPlantAreas').select2({
+                        //closeOnSelect: false
+                    });
                 },
                 error: function (error) {
                     alert("error!");
@@ -642,8 +610,6 @@ function limCancelButton(type) {
             break;
         default:
     }
-
-
 }
 
 function goDrawing(linkId, drawingId, thisValue) {
