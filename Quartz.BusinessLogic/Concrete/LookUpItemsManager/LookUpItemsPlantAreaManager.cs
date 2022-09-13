@@ -34,6 +34,11 @@ namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
             return _mapper.Map<List<LookUpItemsPlantAreaListViewModel>>(GetAll());
         }
 
+        public LookUpItemsPlantAreaListViewModel GetPlantAreaDetail(int plantAreaId)
+        {
+            return _mapper.Map<LookUpItemsPlantAreaListViewModel>(GetById(plantAreaId));
+        }
+
         public void UpdatePlantArea(LookUpItemsPlantAreaUpdateViewModel model)
         {
             Update(_mapper.Map<LookUpItemsPlantArea>(model));

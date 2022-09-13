@@ -211,6 +211,17 @@ namespace Quartz.Controllers.LookUpItems
         }
 
         [HttpGet]
+        public IActionResult GetMethodDetailJSON(int methodId)
+        {
+            var model = _methodService.GetMethodDetail(methodId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
         public IActionResult GetAllMethodsJSON()
         {
             var model = _methodService.GetAllMethods();
@@ -326,6 +337,17 @@ namespace Quartz.Controllers.LookUpItems
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetPlantAreaDetailJSON(int plantAreaId)
+        {
+            var model = _plantAreaService.GetPlantAreaDetail(plantAreaId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]

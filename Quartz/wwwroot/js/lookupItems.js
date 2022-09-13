@@ -795,37 +795,45 @@ function componentTypePartial() {
             $("#componentTypeTable").children('tbody').children('tr').remove();
 
             if (allComponentTypes != "") {
+                var componentTypeId;
+                var columnId;
 
                 allComponentTypes.forEach(function (componentType) {
                     $("#componentTypeTable").children('tbody').append(
                         $('<tr>').append(
-                            $('<td>', { align: "center" }).append(
+                            $('<td>', { align: "center" }).attr("Id", "" + componentType.Id + "gg").addClass("col-6").append(
                                 "<strong>" + componentType.Name + "</strong>"
                             ),
-                            $('<td>', {
-                                align: "center",
-                                text: ""
-                            }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteComponentType" id="' + componentType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                "<button type='button' class='btn btn-dark p-0 editComponentType' id='" + componentType.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                                '<button type="button" class="btn btn-dark p-0 deleteComponentType" id="' + componentType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
                             )
                         )
                     );
                 });
-                $(".deleteComponentType").on('click', function () {
-                    var deleteComponentTypeModel = { Id: $(this).attr("Id") };
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteComponentType",
-                        data: { model: deleteComponentTypeModel },
-                        success: function (response) {
-                            componentTypePartial();
-                            toast("Component Type Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
+                $(".deleteComponentType").on('click', function () {
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
+
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "componentType";
+                });
+
+                $(".editComponentType").on('click', function () {
+                    componentTypeId = $(this).attr("Id").slice(0, -1);
+                    columnId = $(this).attr("Id") + "g";
+                    editThisWhichLookupItem = "componentType";
+                    cancelThisWhichLookupItem = "componentType";
+                    allComponentTypes.forEach(function (componentType) {
+                        if (componentType.Id == componentTypeId) {
+                            $("#" + columnId + "").children().remove();
+                            $("#" + columnId + "").append(
+                                '<input type="text" value="' + componentType.Name + '" id="' + componentType.Id + 'input" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />',
+                                '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + componentType.Id + 'input\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 5px;" ><i class="fa fa-check"></i></button>',
+                                '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + columnId + '\',\'' + componentType.Name + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                            );
                         }
                     });
                 });
@@ -854,37 +862,45 @@ function fittingTypePartial() {
             $("#fittingTypeTable").children('tbody').children('tr').remove();
 
             if (allFittingTypes != "") {
+                var fittingTypeId;
+                var columnId;
 
                 allFittingTypes.forEach(function (fittingType) {
                     $("#fittingTypeTable").children('tbody').append(
                         $('<tr>').append(
-                            $('<td>', { align: "center" }).append(
+                            $('<td>', { align: "center" }).attr("Id", "" + fittingType.Id + "gg").addClass("col-6").append(
                                 "<strong>" + fittingType.Name + "</strong>"
                             ),
-                            $('<td>', {
-                                align: "center",
-                                text: ""
-                            }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteFittingType" id="' + fittingType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                "<button type='button' class='btn btn-dark p-0 editFittingType' id='" + fittingType.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                                '<button type="button" class="btn btn-dark p-0 deleteFittingType" id="' + fittingType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
                             )
                         )
                     );
                 });
-                $(".deleteFittingType").on('click', function () {
-                    var deleteFittingTypeModel = { Id: $(this).attr("Id") };
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteFittingType",
-                        data: { model: deleteFittingTypeModel },
-                        success: function (response) {
-                            fittingTypePartial();
-                            toast("Fitting Type Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
+                $(".deleteFittingType").on('click', function () {
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
+
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "fittingType";
+                });
+
+                $(".editFittingType").on('click', function () {
+                    fittingTypeId = $(this).attr("Id").slice(0, -1);
+                    columnId = $(this).attr("Id") + "g";
+                    editThisWhichLookupItem = "fittingType";
+                    cancelThisWhichLookupItem = "fittingType";
+                    allFittingTypes.forEach(function (fittingType) {
+                        if (fittingType.Id == fittingTypeId) {
+                            $("#" + columnId + "").children().remove();
+                            $("#" + columnId + "").append(
+                                '<input type="text" value="' + fittingType.Name + '" id="' + fittingType.Id + 'input" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />',
+                                '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + fittingType.Id + 'input\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 5px;" ><i class="fa fa-check"></i></button>',
+                                '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + columnId + '\',\'' + fittingType.Name + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                            );
                         }
                     });
                 });
@@ -905,6 +921,7 @@ function fittingTypePartial() {
 }
 
 function methodPartial() {
+    // Get all Methods from DB with AJAX
     $.ajax({
         type: "GET",
         url: "LookUpItems/GetAllMethodsJSON",
@@ -913,37 +930,61 @@ function methodPartial() {
             $("#methodTable").children('tbody').children('tr').remove();
 
             if (allMethods != "") {
+                var methodId;
+                var firstColumnId;
+                var secondColumnId;
+                var thirdColumnId;
 
                 allMethods.forEach(function (method) {
                     $("#methodTable").children('tbody').append(
                         $('<tr>').append(
-                            $('<td>', { align: "center" }).append(
+                            $('<td>', { align: "center" }).attr("Id", "" + method.Id + "gg").addClass("col-4").append(
                                 "<strong>" + method.Name + "</strong>"
                             ),
-                            $('<td>', {
-                                align: "center",
-                                text: method.Code
-                            }),
-                            $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteMethod" id="' + method.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
-                            )
+                            $('<td>', { align: "center" }).attr("Id", "" + method.Id + "ggg").addClass("col-4").append(
+                                "<strong>" + method.Code + "</strong>"
+                            ),
+                            $('<td>', { align: "center" }).attr("Id", "" + method.Id + "gggg").addClass("col-4").append(
+                                "<button type='button' class='btn btn-dark p-0 editMethod' id='" + method.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                                '<button type="button" class="btn btn-dark p-0 deleteMethod" id="' + method.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+                            ).addClass("col-4")
                         )
                     );
                 });
-                $(".deleteMethod").on('click', function () {
-                    var deleteMethodModel = { Id: $(this).attr("Id") };
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteMethod",
-                        data: { model: deleteMethodModel },
-                        success: function (response) {
-                            methodPartial();
-                            toast("Method Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
+                $(".deleteMethod").on('click', function () {
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
+
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "method";
+                });
+
+                $(".editMethod").on('click', function () {
+                    methodId = $(this).attr("Id").slice(0, -1);
+                    firstColumnId = $(this).attr("Id") + "g";
+                    secondColumnId = $(this).attr("Id") + "gg";
+                    thirdColumnId = $(this).attr("Id") + "ggg";
+                    editThisWhichLookupItem = "method";
+                    cancelThisWhichLookupItem = "method";
+                    allMethods.forEach(function (method) {
+                        if (method.Id == methodId) {
+                            $("#" + firstColumnId + "").children().remove();
+                            $("#" + firstColumnId + "").append(
+                                '<input class="text-center" type="text" value="' + method.Name + '" id="' + method.Id + 'input1" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                            );
+
+                            $("#" + secondColumnId + "").children().remove();
+                            $("#" + secondColumnId + "").append(
+                                '<input class="text-center" type="text" value="' + method.Code + '" id="' + method.Id + 'input2" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                            );
+
+                            $("#" + thirdColumnId + "").children().remove();
+                            $("#" + thirdColumnId + "").append(
+                                '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + method.Id + 'input1\', \'' + method.Id + 'input2\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" ><i class="fa fa-check"></i></button>',
+                                '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + firstColumnId + '\', \'' + secondColumnId + '\', \'' + thirdColumnId + '\',  \'' + method.Name + '\',  \'' + method.Code + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                            );
                         }
                     });
                 });
@@ -990,21 +1031,12 @@ function operatorPartial() {
                     );
                 });
                 $(".deleteOperator").on('click', function () {
-                    var deleteOperatorModel = { Id: $(this).attr("Id") };
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteOperator",
-                        data: { model: deleteOperatorModel },
-                        success: function (response) {
-                            operatorPartial();
-                            toast("Operator Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "operator";
                 });
             }
             else {
@@ -1023,6 +1055,7 @@ function operatorPartial() {
 }
 
 function plantAreaPartial() {
+    // Get all Methods from DB with AJAX
     $.ajax({
         type: "GET",
         url: "LookUpItems/GetAllPlantAreasJSON",
@@ -1031,38 +1064,60 @@ function plantAreaPartial() {
             $("#plantAreaTable").children('tbody').children('tr').remove();
 
             if (allPlantAreas != "") {
-                //$('#inspectionTable').DataTable();
+                var plantAreaId;
+                var firstColumnId;
+                var secondColumnId;
+                var thirdColumnId;
 
                 allPlantAreas.forEach(function (plantArea) {
                     $("#plantAreaTable").children('tbody').append(
                         $('<tr>').append(
-                            $('<td>', { align: "center" }).append(
+                            $('<td>', { align: "center" }).attr("Id", "" + plantArea.Id + "gg").addClass("col-4").append(
                                 "<strong>" + plantArea.Name + "</strong>"
                             ),
-                            $('<td>', {
-                                align: "center",
-                                text: plantArea.Code
-                            }),
-                            $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deletePlantArea" id="' + plantArea.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
-                            )
+                            $('<td>', { align: "center" }).attr("Id", "" + plantArea.Id + "ggg").addClass("col-4").append(
+                                "<strong>" + plantArea.Code + "</strong>"
+                            ),
+                            $('<td>', { align: "center" }).attr("Id", "" + plantArea.Id + "gggg").addClass("col-4").append(
+                                "<button type='button' class='btn btn-dark p-0 editPlantArea' id='" + plantArea.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;' data-bs-toggle='tooltip' data-bs-placement='left' title='Edit'><i class='fa fa-pencil fa-sm'></i></button>",
+                                '<button type="button" class="btn btn-dark p-0 deletePlantArea" id="' + plantArea.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fa fa-trash-can"></i></button>'
+                            ).addClass("col-4")
                         )
                     );
                 });
                 $(".deletePlantArea").on('click', function () {
-                    var deletePlantAreaModel = { Id: $(this).attr("Id") };
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeletePlantArea",
-                        data: { model: deletePlantAreaModel },
-                        success: function (response) {
-                            plantAreaPartial();
-                            toast("Plant Area Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "plantArea";
+                });
+
+                $(".editPlantArea").on('click', function () {
+                    plantAreaId = $(this).attr("Id").slice(0, -1);
+                    firstColumnId = $(this).attr("Id") + "g";
+                    secondColumnId = $(this).attr("Id") + "gg";
+                    thirdColumnId = $(this).attr("Id") + "ggg";
+                    editThisWhichLookupItem = "plantArea";
+                    cancelThisWhichLookupItem = "plantArea";
+                    allPlantAreas.forEach(function (plantArea) {
+                        if (plantArea.Id == plantAreaId) {
+                            $("#" + firstColumnId + "").children().remove();
+                            $("#" + firstColumnId + "").append(
+                                '<input class="text-center" type="text" value="' + plantArea.Name + '" id="' + plantArea.Id + 'input1" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                            );
+
+                            $("#" + secondColumnId + "").children().remove();
+                            $("#" + secondColumnId + "").append(
+                                '<input class="text-center" type="text" value="' + plantArea.Code + '" id="' + plantArea.Id + 'input2" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                            );
+
+                            $("#" + thirdColumnId + "").children().remove();
+                            $("#" + thirdColumnId + "").append(
+                                '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + plantArea.Id + 'input1\', \'' + plantArea.Id + 'input2\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" ><i class="fa fa-check"></i></button>',
+                                '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + firstColumnId + '\', \'' + secondColumnId + '\', \'' + thirdColumnId + '\',  \'' + plantArea.Name + '\',  \'' + plantArea.Code + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                            );
                         }
                     });
                 });
@@ -1109,22 +1164,14 @@ function plantSystemPartial() {
                         )
                     );
                 });
-                $(".deletePlantSystem").on('click', function () {
-                    var deletePlantSystemModel = { Id: $(this).attr("Id") };
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeletePlantSystem",
-                        data: { model: deletePlantSystemModel },
-                        success: function (response) {
-                            plantSystemPartial();
-                            toast("Plant System Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
+                $(".deletePlantSystem").on('click', function () {
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
+
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "plantSystem";
                 });
             }
             else {
@@ -1164,27 +1211,20 @@ function procedurePartial() {
                                 text: procedure.LookUpItemsMethod
                             }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteProcedure" id="' + procedure.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                '<button type="button" class="btn btn-dark p-0 deleteProcedure" id="' + procedure.Id + '" data-bs- style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                // [TAMAMLANMADI]
                             )
                         )
                     );
                 });
-                $(".deleteProcedure").on('click', function () {
-                    var deleteProcedureModel = { Id: $(this).attr("Id") };
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteProcedure",
-                        data: { model: deleteProcedureModel },
-                        success: function (response) {
-                            procedurePartial();
-                            toast("Procedure Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
+                $(".deleteProcedure").on('click', function () {
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
+
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "procedure";
                 });
             }
             else {
@@ -1230,21 +1270,12 @@ function specificationPartial() {
                     );
                 });
                 $(".deleteSpecification").on('click', function () {
-                    var deleteSpecificationModel = { Id: $(this).attr("Id") };
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteSpecification",
-                        data: { model: deleteSpecificationModel },
-                        success: function (response) {
-                            specificationPartial();
-                            toast("Specification Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "specification";
                 });
             }
             else {
@@ -1290,21 +1321,12 @@ function standardStatementPartial() {
                     );
                 });
                 $(".deleteStandardStatement").on('click', function () {
-                    var deleteStandardStatementModel = { Id: $(this).attr("Id") };
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteStandardStatement",
-                        data: { model: deleteStandardStatementModel },
-                        success: function (response) {
-                            standardStatementPartial();
-                            toast("Standard Statement Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "standardStatement";
                 });
             }
             else {
@@ -1332,37 +1354,45 @@ function statusPartial() {
 
             if (allStatuses != "") {
                 //$('#inspectionTable').DataTable();
+                var statusId;
+                var columnId;
 
                 allStatuses.forEach(function (status) {
                     $("#statusTable").children('tbody').append(
                         $('<tr>').append(
-                            $('<td>', { align: "center" }).append(
+                            $('<td>', { align: "center" }).attr("Id", "" + status.Id + "gg").addClass("col-6").append(
                                 "<strong>" + status.Name + "</strong>"
                             ),
-                            $('<td>', {
-                                align: "center",
-                                text: ""
-                            }),
-                            $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteStatus" id="' + status.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                            $('<td>', { align: "center" }).addClass("col-6").append(
+                                "<button type='button' class='btn btn-dark p-0 editStatus' id='" + status.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                                '<button type="button" class="btn btn-dark p-0 deleteStatus" id="' + status.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
                             )
                         )
                     );
                 });
-                $(".deleteStatus").on('click', function () {
-                    var deleteStatusModel = { Id: $(this).attr("Id") };
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteStatus",
-                        data: { model: deleteStatusModel },
-                        success: function (response) {
-                            statusPartial();
-                            toast("Status Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
+                $(".deleteStatus").on('click', function () {
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
+
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "status";
+                });
+
+                $(".editStatus").on('click', function () {
+                    statusId = $(this).attr("Id").slice(0, -1);
+                    columnId = $(this).attr("Id") + "g";
+                    editThisWhichLookupItem = "status";
+                    cancelThisWhichLookupItem = "status";
+                    allStatuses.forEach(function (status) {
+                        if (status.Id == statusId) {
+                            $("#" + columnId + "").children().remove();
+                            $("#" + columnId + "").append(
+                                '<input type="text" value="' + status.Name + '" id="' + status.Id + 'input" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />',
+                                '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + status.Id + 'input\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 5px;" ><i class="fa fa-check"></i></button>',
+                                '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + columnId + '\',\'' + status.Name + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                            );
                         }
                     });
                 });
@@ -1410,21 +1440,12 @@ function techniquePartial() {
                     );
                 });
                 $(".deleteTechnique").on('click', function () {
-                    var deleteTechniqueModel = { Id: $(this).attr("Id") };
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteTechnique",
-                        data: { model: deleteTechniqueModel },
-                        success: function (response) {
-                            techniquePartial();
-                            toast("Technique Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "technique";
                 });
             }
             else {
@@ -1470,21 +1491,12 @@ function weldTypePartial() {
                     );
                 });
                 $(".deleteWeldType").on('click', function () {
-                    var deleteWeldTypeModel = { Id: $(this).attr("Id") };
+                    $("#areYouSureModal").modal('show');
+                    $("#lookupItemsModal").modal('hide');
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: "LookUpItems/DeleteWeldType",
-                        data: { model: deleteWeldTypeModel },
-                        success: function (response) {
-                            weldTypePartial();
-                            toast("Weld Type Deleted Successful");
-                        },
-                        error: function (error) {
-                            alert("error!");
-                            console.log(error.responseText);
-                        }
-                    });
+                    objectTypeToBeDeleted = "lookupItem";
+                    objectIdToBeDeleted = $(this).attr("Id");
+                    deleteThisWhichLookupItem = "weldType";
                 });
             }
             else {
@@ -1500,4 +1512,341 @@ function weldTypePartial() {
             console.log(error.responseText);
         }
     });
+}
+
+function cancelEditLookupItemButton(firstColumnId, secondColumnId, thirdColumnId, firstColumnValue, secondColumnValue) {
+
+    switch (cancelThisWhichLookupItem) {
+
+        case "componentType":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+            break;
+
+        case "fittingType":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+            break;
+
+        case "method":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+
+            $("#" + secondColumnId + "").children().remove();
+            $("#" + secondColumnId + "").append(
+                "<strong>" + secondColumnValue + "</strong>"
+            );
+
+            $("#" + thirdColumnId + "").children().remove();
+            $("#" + thirdColumnId + "").append(
+                "<button type='button' class='btn btn-dark p-0 editMethod' id='" + thirdColumnId.slice(0, -4) + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                '<button type="button" class="btn btn-dark p-0 deleteMethod" id="' + thirdColumnId.slice(0, -4) + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+            );
+
+            $(".deleteMethod").on('click', function () {
+                $("#areYouSureModal").modal('show');
+                $("#lookupItemsModal").modal('hide');
+
+                objectTypeToBeDeleted = "lookupItem";
+                objectIdToBeDeleted = $(this).attr("Id");
+                deleteThisWhichLookupItem = "method";
+            });
+
+            $(".editMethod").on('click', function () {
+                methodId = $(this).attr("Id").slice(0, -1);
+                firstColumnId = $(this).attr("Id") + "g";
+                secondColumnId = $(this).attr("Id") + "gg";
+                thirdColumnId = $(this).attr("Id") + "ggg";
+                editThisWhichLookupItem = "method";
+                cancelThisWhichLookupItem = "method";
+                allMethods.forEach(function (method) {
+                    if (method.Id == methodId) {
+                        $("#" + firstColumnId + "").children().remove();
+                        $("#" + firstColumnId + "").append(
+                            '<input class="text-center" type="text" value="' + method.Name + '" id="' + method.Id + 'input1" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                        );
+
+                        $("#" + secondColumnId + "").children().remove();
+                        $("#" + secondColumnId + "").append(
+                            '<input class="text-center" type="text" value="' + method.Code + '" id="' + method.Id + 'input2" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                        );
+
+                        $("#" + thirdColumnId + "").children().remove();
+                        $("#" + thirdColumnId + "").append(
+                            '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + method.Id + 'input1\', \'' + method.Id + 'input2\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" ><i class="fa fa-check"></i></button>',
+                            '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + firstColumnId + '\', \'' + secondColumnId + '\', \'' + thirdColumnId + '\',  \'' + method.Name + '\',  \'' + method.Code + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                        );
+                    }
+                });
+            });
+            break;
+
+        case "operator":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+            break;
+
+        case "plantArea":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+
+            $("#" + secondColumnId + "").children().remove();
+            $("#" + secondColumnId + "").append(
+                "<strong>" + secondColumnValue + "</strong>"
+            );
+
+            $("#" + thirdColumnId + "").children().remove();
+            $("#" + thirdColumnId + "").append(
+                "<button type='button' class='btn btn-dark p-0 editPlantArea' id='" + thirdColumnId.slice(0, -4) + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
+                '<button type="button" class="btn btn-dark p-0 deletePlantArea" id="' + thirdColumnId.slice(0, -4) + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+            );
+
+            $(".deletePlantArea").on('click', function () {
+                $("#areYouSureModal").modal('show');
+                $("#lookupItemsModal").modal('hide');
+
+                objectTypeToBeDeleted = "lookupItem";
+                objectIdToBeDeleted = $(this).attr("Id");
+                deleteThisWhichLookupItem = "plantArea";
+            });
+
+            $(".editPlantArea").on('click', function () {
+                plantAreaId = $(this).attr("Id").slice(0, -1);
+                firstColumnId = $(this).attr("Id") + "g";
+                secondColumnId = $(this).attr("Id") + "gg";
+                thirdColumnId = $(this).attr("Id") + "ggg";
+                editThisWhichLookupItem = "plantArea";
+                cancelThisWhichLookupItem = "plantArea";
+                allPlantAreas.forEach(function (plantArea) {
+                    if (plantArea.Id == plantAreaId) {
+                        $("#" + firstColumnId + "").children().remove();
+                        $("#" + firstColumnId + "").append(
+                            '<input class="text-center" type="text" value="' + plantArea.Name + '" id="' + plantArea.Id + 'input1" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                        );
+
+                        $("#" + secondColumnId + "").children().remove();
+                        $("#" + secondColumnId + "").append(
+                            '<input class="text-center" type="text" value="' + plantArea.Code + '" id="' + plantArea.Id + 'input2" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                        );
+
+                        $("#" + thirdColumnId + "").children().remove();
+                        $("#" + thirdColumnId + "").append(
+                            '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + plantArea.Id + 'input1\', \'' + plantArea.Id + 'input2\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" ><i class="fa fa-check"></i></button>',
+                            '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + firstColumnId + '\', \'' + secondColumnId + '\', \'' + thirdColumnId + '\',  \'' + plantArea.Name + '\',  \'' + plantArea.Code + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                        );
+                    }
+                });
+            });
+            break;
+
+        case "plantSystem":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+
+            //////////////////////////////////////////////////
+            break;
+
+        case "procedure":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+
+            //////////////////////////////////////////////////
+            break;
+
+        case "specification":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+            break;
+
+        case "standardStatement":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+            break;
+
+        case "status":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+            break;
+
+        case "technique":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+
+            //////////////////////////////////////////////////
+            break;
+
+        case "weldType":
+            $("#" + firstColumnId + "").children().remove();
+            $("#" + firstColumnId + "").append(
+                "<strong>" + firstColumnValue + "</strong>"
+            );
+            break;
+
+        default:
+    }
+
+}
+
+function saveEditLookupItemButton(input1Id, input2Id) {
+    switch (editThisWhichLookupItem) {
+        case "componentType":
+            var updateComponentTypeModel = { Id: input1Id.slice(0, -6), Name: $("#" + input1Id + "").val() };
+            $.ajax({
+                type: "POST",
+                url: "LookUpItems/UpdateComponentTypeJSON",
+                data: { model: updateComponentTypeModel },
+                success: function (response) {
+                    componentTypePartial();
+                    toast("Component Type Update Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "fittingType":
+            var updateFittingTypeModel = { Id: input1Id.slice(0, -6), Name: $("#" + input1Id + "").val() };
+            $.ajax({
+                type: "POST",
+                url: "LookUpItems/UpdateFittingTypeJSON",
+                data: { model: updateFittingTypeModel },
+                success: function (response) {
+                    fittingTypePartial();
+                    toast("Fitting Type Update Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "method":
+            var methodId = input1Id.slice(0, -6);
+            $.ajax({
+                type: "GET",
+                url: "LookUpItems/GetMethodDetailJSON",
+                data: { methodId: methodId },
+                success: function (response) {
+                    var rMethod = jQuery.parseJSON(response);
+                    rMethod.Name = $("#" + input1Id + "").val();
+                    rMethod.Code = $("#" + input2Id + "").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "LookUpItems/UpdateMethodJSON",
+                        data: { model: rMethod },
+                        success: function (response) {
+                            methodPartial();
+                            toast("Method Update Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "operator":
+            break;
+
+        case "plantArea":
+            var plantAreaId = input1Id.slice(0, -6);
+            $.ajax({
+                type: "GET",
+                url: "LookUpItems/GetPlantAreaDetailJSON",
+                data: { plantAreaId: plantAreaId },
+                success: function (response) {
+                    var rPlantArea = jQuery.parseJSON(response);
+                    rPlantArea.Name = $("#" + input1Id + "").val();
+                    rPlantArea.Code = $("#" + input2Id + "").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "LookUpItems/UpdatePlantAreaJSON",
+                        data: { model: rPlantArea },
+                        success: function (response) {
+                            plantAreaPartial();
+                            toast("Plant Area Update Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "plantSystem":
+            break;
+
+        case "procedure":
+            break;
+
+        case "specification":
+            break;
+
+        case "standardStatement":
+            break;
+
+        case "status":
+            var updateStatusModel = { Id: input1Id.slice(0, -6), Name: $("#" + input1Id + "").val() };
+            $.ajax({
+                type: "POST",
+                url: "LookUpItems/UpdateStatusJSON",
+                data: { model: updateStatusModel },
+                success: function (response) {
+                    statusPartial();
+                    toast("Status Update Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "technique":
+            break;
+
+        case "weldType":
+            break;
+
+        default:
+    }
 }

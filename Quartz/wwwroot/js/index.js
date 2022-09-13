@@ -318,6 +318,12 @@ var objectTypeToBeDeleted;
 
 var deleteThisWhichAttachment;
 
+var deleteThisWhichLookupItem;
+
+var editThisWhichLookupItem;
+
+var cancelThisWhichLookupItem;
+
 // #endregion
 
 // #region Quartz Variables
@@ -485,6 +491,7 @@ $("#cancelDeleteButton").on('click', function () {
             break;
 
         case "lookupItem":
+            $("#lookupItemsModal").modal('show');
             break;
 
         case "item":
@@ -1011,6 +1018,297 @@ function deleteThis(objectType, objectId) {
             break;
 
         case "lookupItem":
+            switch (deleteThisWhichLookupItem) {
+                case "componentType":
+                    var deleteComponentTypeModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteComponentType",
+                        data: { model: deleteComponentTypeModel },
+                        success: function (response) {
+                            componentTypePartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Component Type Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "fittingType":
+                    var deleteFittingTypeModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteFittingType",
+                        data: { model: deleteFittingTypeModel },
+                        success: function (response) {
+                            fittingTypePartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Fitting Type Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "method":
+                    var deleteMethodModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteMethod",
+                        data: { model: deleteMethodModel },
+                        success: function (response) {
+                            methodPartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Method Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "operator":
+                    var deleteOperatorModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteOperator",
+                        data: { model: deleteOperatorModel },
+                        success: function (response) {
+                            operatorPartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Operator Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "plantArea":
+                    var deletePlantAreaModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeletePlantArea",
+                        data: { model: deletePlantAreaModel },
+                        success: function (response) {
+                            plantAreaPartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Plant Area Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "plantSystem":
+                    var deletePlantSystemModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeletePlantSystem",
+                        data: { model: deletePlantSystemModel },
+                        success: function (response) {
+                            plantSystemPartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Plant System Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "procedure":
+                    var deleteProcedureModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteProcedure",
+                        data: { model: deleteProcedureModel },
+                        success: function (response) {
+                            procedurePartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Procedure Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "specification":
+                    var deleteSpecificationModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteSpecification",
+                        data: { model: deleteSpecificationModel },
+                        success: function (response) {
+                            specificationPartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Specification Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "standardStatement":
+                    var deleteStandardStatementModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteStandardStatement",
+                        data: { model: deleteStandardStatementModel },
+                        success: function (response) {
+                            standardStatementPartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Standard Statement Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "status":
+                    var deleteStatusModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteStatus",
+                        data: { model: deleteStatusModel },
+                        success: function (response) {
+                            statusPartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Status Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "technique":
+                    var deleteTechniqueModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteTechnique",
+                        data: { model: deleteTechniqueModel },
+                        success: function (response) {
+                            techniquePartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Technique Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                case "weldType":
+                    var deleteWeldTypeModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: "LookUpItems/DeleteWeldType",
+                        data: { model: deleteWeldTypeModel },
+                        success: function (response) {
+                            weldTypePartial();
+
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
+
+
+                            $("#lookupItemsModal").modal('show');
+
+                            toast("Weld Type Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                    break;
+
+                default:
+            }
             break;
 
         case "valveMaintenance":

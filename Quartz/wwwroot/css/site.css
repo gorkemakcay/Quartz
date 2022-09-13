@@ -905,3 +905,12 @@ ul {
     .menu > li.trash > a:hover {
         color: red;
     }
+
+
+.editPlantArea:hover {
+    background: #0B5ED7;
+}
+
+.deletePlantArea:hover {
+    background: #BB2D3B;
+}

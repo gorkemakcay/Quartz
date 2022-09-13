@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateMethod(LookUpItemsMethodUpdateViewModel model);
         void DeleteMethod(LookUpItemsMethodDeleteViewModel model);
         List<LookUpItemsMethodListViewModel> GetAllMethods();
+        LookUpItemsMethodListViewModel GetMethodDetail(int methodId);
     }
 }
