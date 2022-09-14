@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateStandardStatement(LookUpItemsStandardStatementUpdateViewModel model);
         void DeleteStandardStatement(LookUpItemsStandardStatementDeleteViewModel model);
         List<LookUpItemsStandardStatementListViewModel> GetAllStandardStatements();
+        LookUpItemsStandardStatementListViewModel GetStandardStatementDetail(int standardStatementId);
     }
 }

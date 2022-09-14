@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateWeldType(LookUpItemsWeldTypeUpdateViewModel model);
         void DeleteWeldType(LookUpItemsWeldTypeDeleteViewModel model);
         List<LookUpItemsWeldTypeListViewModel> GetAllWeldTypes();
+        LookUpItemsWeldTypeListViewModel GetWeldTypeDetail(int weldTypeId);
     }
 }

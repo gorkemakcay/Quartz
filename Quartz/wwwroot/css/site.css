@@ -906,11 +906,10 @@ ul {
         color: red;
     }
 
-
-.editPlantArea:hover {
-    background: #0B5ED7;
+.deleteButton:hover {
+    background: #BB2D3B;
 }
 
-.deletePlantArea:hover {
-    background: #BB2D3B;
+.editButton:hover {
+    background: #0B5ED7;
 }

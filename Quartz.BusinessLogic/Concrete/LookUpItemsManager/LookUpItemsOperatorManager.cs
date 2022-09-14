@@ -34,6 +34,11 @@ namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
             return _mapper.Map<List<LookUpItemsOperatorUpdateViewModel>>(GetAll());
         }
 
+        public LookUpItemsOperatorListViewModel GetOperatorDetail(int operatorId)
+        {
+            return _mapper.Map<LookUpItemsOperatorListViewModel>(GetById(operatorId));
+        }
+
         public void UpdateOperator(LookUpItemsOperatorUpdateViewModel model)
         {
             Update(_mapper.Map<LookUpItemsOperator>(model));

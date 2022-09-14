@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateStatus(LookUpItemsStatusUpdateViewModel model);
         void DeleteStatus(LookUpItemsStatusDeleteViewModel model);
         List<LookUpItemsStatusListViewModel> GetAllStatuses();
+        LookUpItemsStatusListViewModel GetStatusDetail(int statusId);
     }
 }

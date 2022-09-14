@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateSpecification(LookUpItemsSpecificationUpdateViewModel model);
         void DeleteSpecification(LookUpItemsSpecificationDeleteViewModel model);
         List<LookUpItemsSpecificationListViewModel> GetAllSpecifications();
+        LookUpItemsSpecificationListViewModel GetSpecificationDetail(int specificationId);
     }
 }

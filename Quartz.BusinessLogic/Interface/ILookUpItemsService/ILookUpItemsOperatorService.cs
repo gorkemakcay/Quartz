@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateOperator(LookUpItemsOperatorUpdateViewModel model);
         void DeleteOperator(LookUpItemsOperatorDeleteViewModel model);
         List<LookUpItemsOperatorUpdateViewModel> GetAllOperators();
+        LookUpItemsOperatorListViewModel GetOperatorDetail(int operatorId);
     }
 }

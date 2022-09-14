@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdatePlantSystem(LookUpItemsPlantSystemUpdateViewModel model);
         void DeletePlantSystem(LookUpItemsPlantSystemDeleteViewModel model);
         List<LookUpItemsPlantSystemListViewModel> GetAllPlantSystems();
+        LookUpItemsPlantSystemListViewModel GetPlantSystemDetail(int plantSystemId);
     }
 }

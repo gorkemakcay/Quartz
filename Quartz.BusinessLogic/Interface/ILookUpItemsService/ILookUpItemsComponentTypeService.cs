@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateComponentType(LookUpItemsComponentTypeUpdateViewModel model);
         void DeleteComponentType(LookUpItemsComponentTypeDeleteViewModel model);
         List<LookUpItemsComponentTypeListViewModel> GetAllComponentTypes();
+        LookUpItemsComponentTypeListViewModel GetComponentTypeDetail(int componentTypeId);
     }
 }

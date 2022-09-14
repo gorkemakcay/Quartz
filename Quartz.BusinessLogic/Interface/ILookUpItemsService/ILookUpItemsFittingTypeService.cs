@@ -10,5 +10,6 @@ namespace Quartz.BusinessLogic.Interface.ILookUpItemsService
         void UpdateFittingType(LookUpItemsFittingTypeUpdateViewModel model);
         void DeleteFittingType(LookUpItemsFittingTypeDeleteViewModel model);
         List<LookUpItemsFittingTypeListViewModel> GetAllFittingTypes();
+        LookUpItemsFittingTypeListViewModel GetFittingTypeDetail(int fittingTypeId);
     }
 }

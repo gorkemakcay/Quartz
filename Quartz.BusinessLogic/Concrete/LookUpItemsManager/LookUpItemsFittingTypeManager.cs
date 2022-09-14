@@ -34,6 +34,11 @@ namespace Quartz.BusinessLogic.Concrete.LookUpItemsManager
             return _mapper.Map<List<LookUpItemsFittingTypeListViewModel>>(GetAll());
         }
 
+        public LookUpItemsFittingTypeListViewModel GetFittingTypeDetail(int fittingTypeId)
+        {
+            return _mapper.Map<LookUpItemsFittingTypeListViewModel>(GetById(fittingTypeId));
+        }
+
         public void UpdateFittingType(LookUpItemsFittingTypeUpdateViewModel model)
         {
             Update(_mapper.Map<LookUpItemsFittingType>(model));

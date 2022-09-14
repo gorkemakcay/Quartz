@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Quartz.BusinessLogic.Interface.ILookUpItemsService;
 using Quartz.Common.ViewModels.LookUpItems.LookUpItemsComponentTypeViewModels;
@@ -14,7 +13,6 @@ using Quartz.Common.ViewModels.LookUpItems.LookUpItemsStandardStatementViewModel
 using Quartz.Common.ViewModels.LookUpItems.LookUpItemsStatusViewModels;
 using Quartz.Common.ViewModels.LookUpItems.LookUpItemsTechniqueViewModels;
 using Quartz.Common.ViewModels.LookUpItems.LookUpItemsWeldTypeViewModels;
-using System.Linq;
 
 namespace Quartz.Controllers.LookUpItems
 {
@@ -407,6 +405,17 @@ namespace Quartz.Controllers.LookUpItems
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetPlantSystemDetailJSON(int plantSystemId)
+        {
+            var model = _plantSystemService.GetPlantSystemDetail(plantSystemId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]

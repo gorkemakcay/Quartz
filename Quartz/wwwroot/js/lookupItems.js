@@ -805,9 +805,9 @@ function componentTypePartial() {
                                 "<strong>" + componentType.Name + "</strong>"
                             ),
                             $('<td>', { align: "center" }).append(
-                                "<button type='button' class='btn btn-dark p-0 editComponentType' id='" + componentType.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
-                                '<button type="button" class="btn btn-dark p-0 deleteComponentType" id="' + componentType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+                                "<button type='button' class='btn btn-dark p-0 editComponentType' id='" + componentType.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>"
                             )
+                            /*'<button type="button" class="btn btn-dark p-0 deleteComponentType" id="' + componentType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'*/
                         )
                     );
                 });
@@ -872,9 +872,9 @@ function fittingTypePartial() {
                                 "<strong>" + fittingType.Name + "</strong>"
                             ),
                             $('<td>', { align: "center" }).append(
-                                "<button type='button' class='btn btn-dark p-0 editFittingType' id='" + fittingType.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
-                                '<button type="button" class="btn btn-dark p-0 deleteFittingType" id="' + fittingType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+                                "<button type='button' class='btn btn-dark p-0 editFittingType' id='" + fittingType.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>"
                             )
+                            /*'<button type="button" class="btn btn-dark p-0 deleteFittingType" id="' + fittingType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'*/
                         )
                     );
                 });
@@ -945,21 +945,21 @@ function methodPartial() {
                                 "<strong>" + method.Code + "</strong>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + method.Id + "gggg").addClass("col-4").append(
-                                "<button type='button' class='btn btn-dark p-0 editMethod' id='" + method.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
-                                '<button type="button" class="btn btn-dark p-0 deleteMethod" id="' + method.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+                                '<button type="button" class="btn btn-dark p-0 editButton editMethod" id="' + method.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
                             ).addClass("col-4")
+                            /*'<button type="button" class="btn btn-dark p-0 deleteButton deleteMethod" id="' + method.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fa fa-trash-can"></i></button>'*/
                         )
                     );
                 });
 
-                $(".deleteMethod").on('click', function () {
-                    $("#areYouSureModal").modal('show');
-                    $("#lookupItemsModal").modal('hide');
+                //$(".deleteMethod").on('click', function () {
+                //    $("#areYouSureModal").modal('show');
+                //    $("#lookupItemsModal").modal('hide');
 
-                    objectTypeToBeDeleted = "lookupItem";
-                    objectIdToBeDeleted = $(this).attr("Id");
-                    deleteThisWhichLookupItem = "method";
-                });
+                //    objectTypeToBeDeleted = "lookupItem";
+                //    objectIdToBeDeleted = $(this).attr("Id");
+                //    deleteThisWhichLookupItem = "method";
+                //});
 
                 $(".editMethod").on('click', function () {
                     methodId = $(this).attr("Id").slice(0, -1);
@@ -1025,7 +1025,7 @@ function operatorPartial() {
                                 text: ""
                             }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteOperator" id="' + operator.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                /*'<button type="button" class="btn btn-dark p-0 deleteOperator" id="' + operator.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'*/
                             )
                         )
                     );
@@ -1079,8 +1079,8 @@ function plantAreaPartial() {
                                 "<strong>" + plantArea.Code + "</strong>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + plantArea.Id + "gggg").addClass("col-4").append(
-                                "<button type='button' class='btn btn-dark p-0 editPlantArea' id='" + plantArea.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;' data-bs-toggle='tooltip' data-bs-placement='left' title='Edit'><i class='fa fa-pencil fa-sm'></i></button>",
-                                '<button type="button" class="btn btn-dark p-0 deletePlantArea" id="' + plantArea.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fa fa-trash-can"></i></button>'
+                                '<button type="button" class="btn btn-dark p-0 editButton editPlantArea" id="' + plantArea.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"><i class="fa fa-pencil fa-sm"></i></button>'
+                                /*'<button type="button" class="btn btn-dark p-0 deleteButton deletePlantArea" id="' + plantArea.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fa fa-trash-can"></i></button>'*/
                             ).addClass("col-4")
                         )
                     );
@@ -1138,6 +1138,7 @@ function plantAreaPartial() {
 }
 
 function plantSystemPartial() {
+    // Get all Methods from DB with AJAX
     $.ajax({
         type: "GET",
         url: "LookUpItems/GetAllPlantSystemsJSON",
@@ -1146,32 +1147,101 @@ function plantSystemPartial() {
             $("#plantSystemTable").children('tbody').children('tr').remove();
 
             if (allPlantSystems != "") {
-                //$('#inspectionTable').DataTable();
+                var plantSystemId;
+                var firstColumnId;
+                var secondColumnId;
+                var thirdColumnId;
 
                 allPlantSystems.forEach(function (plantSystem) {
                     $("#plantSystemTable").children('tbody').append(
                         $('<tr>').append(
-                            $('<td>', { align: "center" }).append(
+                            $('<td>', { align: "center" }).attr("Id", "" + plantSystem.Id + "gg").addClass("col-4").append(
                                 "<strong>" + plantSystem.Name + "</strong>"
                             ),
-                            $('<td>', {
-                                align: "center",
-                                text: plantSystem.LookUpItemsPlantAreas
-                            }),
-                            $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deletePlantSystem" id="' + plantSystem.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
-                            )
+                            $('<td>', { align: "center" }).attr("Id", "" + plantSystem.Id + "ggg").addClass("col-4").append(
+                                "<strong>" + plantSystem.LookUpItemsPlantAreas + "</strong>"
+                            ),
+                            $('<td>', { align: "center" }).attr("Id", "" + plantSystem.Id + "gggg").addClass("col-4").append(
+                                '<button type="button" class="btn btn-dark p-0 editButton editPlantSystem" id="' + plantSystem.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
+                            ).addClass("col-4")
+                            /*'<button type="button" class="btn btn-dark p-0 deleteButton deletePlantSystem" id="' + plantSystem.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fa fa-trash-can"></i></button>'*/
                         )
                     );
                 });
 
-                $(".deletePlantSystem").on('click', function () {
-                    $("#areYouSureModal").modal('show');
-                    $("#lookupItemsModal").modal('hide');
+                //$(".deletePlantSystem").on('click', function () {
+                //    $("#areYouSureModal").modal('show');
+                //    $("#lookupItemsModal").modal('hide');
 
-                    objectTypeToBeDeleted = "lookupItem";
-                    objectIdToBeDeleted = $(this).attr("Id");
-                    deleteThisWhichLookupItem = "plantSystem";
+                //    objectTypeToBeDeleted = "lookupItem";
+                //    objectIdToBeDeleted = $(this).attr("Id");
+                //    deleteThisWhichLookupItem = "plantSystem";
+                //});
+
+                $(".editPlantSystem").on('click', function () {
+                    plantSystemId = $(this).attr("Id").slice(0, -1);
+                    firstColumnId = $(this).attr("Id") + "g";
+                    secondColumnId = $(this).attr("Id") + "gg";
+                    thirdColumnId = $(this).attr("Id") + "ggg";
+                    editThisWhichLookupItem = "plantSystem";
+                    cancelThisWhichLookupItem = "plantSystem";
+
+                    $.ajax({
+                        type: "GET",
+                        url: "LookUpItems/GetPlantAreaForOption",
+                        success: function (response) {
+                            var rPlantAreas = jQuery.parseJSON(response);
+
+                            allPlantSystems.forEach(function (plantSystem) {
+                                if (plantSystem.Id == plantSystemId) {
+                                    $("#" + firstColumnId + "").children().remove();
+                                    $("#" + firstColumnId + "").append(
+                                        '<input class="text-center" type="text" value="' + plantSystem.Name + '" id="' + plantSystem.Id + 'input1" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                                    );
+
+                                    $("#" + secondColumnId + "").children().remove();
+                                    $("#" + secondColumnId + "").append(
+                                        '<select class="form-select" id="' + plantSystem.Id + 'input2" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4; width: 75%;" multiple="" data-placeholder="Select Plant Area(s)"></select>'
+                                    );
+                                    $("#" + plantSystem.Id + "input2").append(
+                                        $('<option>', {
+                                            value: plantSystem.LookUpItemsPlantAreas,
+                                            text: plantSystem.LookUpItemsPlantAreas,
+                                            id: plantSystem.Name + "SelectedPlantArea",
+                                            selected: "selected"
+                                        })
+                                    );
+                                    $("#" + plantSystem.Name + "SelectedPlantArea").attr("hidden", "");
+                                    rPlantAreas.forEach(function (plantArea) {
+                                        if (plantArea.Name != plantSystem.LookUpItemsPlantAreas) {
+                                            $("#" + plantSystem.Id + "input2").append(
+                                                $('<option>', {
+                                                    value: plantArea.Name,
+                                                    text: plantArea.Name
+                                                })
+                                            );
+                                        }
+                                    });
+
+                                    $("#" + thirdColumnId + "").children().remove();
+                                    $("#" + thirdColumnId + "").append(
+                                        '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + plantSystem.Id + 'input1\', \'' + plantSystem.Id + 'input2\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" ><i class="fa fa-check"></i></button>',
+                                        '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + firstColumnId + '\', \'' + secondColumnId + '\', \'' + thirdColumnId + '\',  \'' + plantSystem.Name + '\',  \'' + plantSystem.LookUpItemsPlantAreas + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                                    );
+                                }
+
+                                $("#" + plantSystem.Id + "input2").select2({
+                                    //closeOnSelect: false
+                                });
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+
+
                 });
             }
             else {
@@ -1211,7 +1281,7 @@ function procedurePartial() {
                                 text: procedure.LookUpItemsMethod
                             }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteProcedure" id="' + procedure.Id + '" data-bs- style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                /*'<button type="button" class="btn btn-dark p-0 deleteProcedure" id="' + procedure.Id + '" data-bs- style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'*/
                                 // [TAMAMLANMADI]
                             )
                         )
@@ -1264,7 +1334,7 @@ function specificationPartial() {
                                 text: ""
                             }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteSpecification" id="' + specification.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                /*'<button type="button" class="btn btn-dark p-0 deleteSpecification" id="' + specification.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'*/
                             )
                         )
                     );
@@ -1315,7 +1385,7 @@ function standardStatementPartial() {
                                 text: ""
                             }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteStandardStatement" id="' + standardStatement.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                /*'<button type="button" class="btn btn-dark p-0 deleteStandardStatement" id="' + standardStatement.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'*/
                             )
                         )
                     );
@@ -1364,8 +1434,8 @@ function statusPartial() {
                                 "<strong>" + status.Name + "</strong>"
                             ),
                             $('<td>', { align: "center" }).addClass("col-6").append(
-                                "<button type='button' class='btn btn-dark p-0 editStatus' id='" + status.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
-                                '<button type="button" class="btn btn-dark p-0 deleteStatus" id="' + status.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+                                "<button type='button' class='btn btn-dark p-0 editStatus' id='" + status.Id + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>"
+                                /*'<button type="button" class="btn btn-dark p-0 deleteStatus" id="' + status.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'*/
                             )
                         )
                     );
@@ -1434,7 +1504,7 @@ function techniquePartial() {
                                 text: technique.LookUpItemsProcedure
                             }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteTechnique" id="' + technique.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                /*'<button type="button" class="btn btn-dark p-0 deleteTechnique" id="' + technique.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'*/
                             )
                         )
                     );
@@ -1485,7 +1555,7 @@ function weldTypePartial() {
                                 text: ""
                             }),
                             $('<td>', { align: "center" }).append(
-                                '<button type="button" class="btn btn-dark p-0 deleteWeldType" id="' + weldType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'
+                                /*'<button type="button" class="btn btn-dark p-0 deleteWeldType" id="' + weldType.Id + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-trash-can"></i></button>'*/
                             )
                         )
                     );
@@ -1545,18 +1615,18 @@ function cancelEditLookupItemButton(firstColumnId, secondColumnId, thirdColumnId
 
             $("#" + thirdColumnId + "").children().remove();
             $("#" + thirdColumnId + "").append(
-                "<button type='button' class='btn btn-dark p-0 editMethod' id='" + thirdColumnId.slice(0, -4) + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
-                '<button type="button" class="btn btn-dark p-0 deleteMethod" id="' + thirdColumnId.slice(0, -4) + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+                '<button type="button" class="btn btn-dark p-0 editButton editMethod" id="' + thirdColumnId.slice(0, -4) + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"><i class="fa fa-pencil fa-sm"></i></button>'
             );
+            /*'<button type="button" class="btn btn-dark p-0 deleteButton deleteMethod" id="' + thirdColumnId.slice(0, -4) + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fa fa-trash-can"></i></button>'*/
 
-            $(".deleteMethod").on('click', function () {
-                $("#areYouSureModal").modal('show');
-                $("#lookupItemsModal").modal('hide');
+            //$(".deleteMethod").on('click', function () {
+            //    $("#areYouSureModal").modal('show');
+            //    $("#lookupItemsModal").modal('hide');
 
-                objectTypeToBeDeleted = "lookupItem";
-                objectIdToBeDeleted = $(this).attr("Id");
-                deleteThisWhichLookupItem = "method";
-            });
+            //    objectTypeToBeDeleted = "lookupItem";
+            //    objectIdToBeDeleted = $(this).attr("Id");
+            //    deleteThisWhichLookupItem = "method";
+            //});
 
             $(".editMethod").on('click', function () {
                 methodId = $(this).attr("Id").slice(0, -1);
@@ -1607,18 +1677,18 @@ function cancelEditLookupItemButton(firstColumnId, secondColumnId, thirdColumnId
 
             $("#" + thirdColumnId + "").children().remove();
             $("#" + thirdColumnId + "").append(
-                "<button type='button' class='btn btn-dark p-0 editPlantArea' id='" + thirdColumnId.slice(0, -4) + "g' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
-                '<button type="button" class="btn btn-dark p-0 deletePlantArea" id="' + thirdColumnId.slice(0, -4) + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-trash-can"></i></button>'
+                '<button type="button" class="btn btn-dark p-0 editButton editPlantArea" id="' + thirdColumnId.slice(0, -4) + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"><i class="fa fa-pencil fa-sm"></i></button>'
+                /*'<button type="button" class="btn btn-dark p-0 deleteButton deletePlantArea" id="' + thirdColumnId.slice(0, -4) + '" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fa fa-trash-can"></i></button>'*/
             );
 
-            $(".deletePlantArea").on('click', function () {
-                $("#areYouSureModal").modal('show');
-                $("#lookupItemsModal").modal('hide');
+        //$(".deletePlantArea").on('click', function () {
+        //    $("#areYouSureModal").modal('show');
+        //    $("#lookupItemsModal").modal('hide');
 
-                objectTypeToBeDeleted = "lookupItem";
-                objectIdToBeDeleted = $(this).attr("Id");
-                deleteThisWhichLookupItem = "plantArea";
-            });
+        //    objectTypeToBeDeleted = "lookupItem";
+        //    objectIdToBeDeleted = $(this).attr("Id");
+        //    deleteThisWhichLookupItem = "plantArea";
+        //});
 
             $(".editPlantArea").on('click', function () {
                 plantAreaId = $(this).attr("Id").slice(0, -1);
@@ -1655,7 +1725,79 @@ function cancelEditLookupItemButton(firstColumnId, secondColumnId, thirdColumnId
                 "<strong>" + firstColumnValue + "</strong>"
             );
 
-            //////////////////////////////////////////////////
+            $("#" + secondColumnId + "").children().remove();
+            $("#" + secondColumnId + "").append(
+                "<strong>" + secondColumnValue + "</strong>"
+            );
+
+            $("#" + thirdColumnId + "").children().remove();
+            $("#" + thirdColumnId + "").append(
+                '<button type="button" class="btn btn-dark p-0 editButton editPlantSystem" id="' + thirdColumnId.slice(0, -4) + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"><i class="fa fa-pencil fa-sm"></i></button>'
+            );
+
+            $(".editPlantSystem").on('click', function () {
+                plantSystemId = $(this).attr("Id").slice(0, -1);
+                firstColumnId = $(this).attr("Id") + "g";
+                secondColumnId = $(this).attr("Id") + "gg";
+                thirdColumnId = $(this).attr("Id") + "ggg";
+                editThisWhichLookupItem = "plantSystem";
+                cancelThisWhichLookupItem = "plantSystem";
+
+                $.ajax({
+                    type: "GET",
+                    url: "LookUpItems/GetPlantAreaForOption",
+                    success: function (response) {
+                        var rPlantAreas = jQuery.parseJSON(response);
+
+                        allPlantSystems.forEach(function (plantSystem) {
+                            if (plantSystem.Id == plantSystemId) {
+                                $("#" + firstColumnId + "").children().remove();
+                                $("#" + firstColumnId + "").append(
+                                    '<input class="text-center" type="text" value="' + plantSystem.Name + '" id="' + plantSystem.Id + 'input1" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4;" />'
+                                );
+
+                                $("#" + secondColumnId + "").children().remove();
+                                $("#" + secondColumnId + "").append(
+                                    '<select class="form-select" id="' + plantSystem.Id + 'input2" style="margin-top: 1px; border: none; border-radius: 20px; background: #d4d4d4; width: 75%;" multiple="" data-placeholder="Select Plant Area(s)"></select>'
+                                );
+                                $("#" + plantSystem.Id + "input2").append(
+                                    $('<option>', {
+                                        value: plantSystem.LookUpItemsPlantAreas,
+                                        text: plantSystem.LookUpItemsPlantAreas,
+                                        id: plantSystem.Name + "SelectedPlantArea",
+                                        selected: "selected"
+                                    })
+                                );
+                                $("#" + plantSystem.Name + "SelectedPlantArea").attr("hidden", "");
+                                rPlantAreas.forEach(function (plantArea) {
+                                    if (plantArea.Name != plantSystem.LookUpItemsPlantAreas) {
+                                        $("#" + plantSystem.Id + "input2").append(
+                                            $('<option>', {
+                                                value: plantArea.Name,
+                                                text: plantArea.Name
+                                            })
+                                        );
+                                    }
+                                });
+
+                                $("#" + thirdColumnId + "").children().remove();
+                                $("#" + thirdColumnId + "").append(
+                                    '<button type="button" class="btn btn-primary p-0" onclick="saveEditLookupItemButton(\'' + plantSystem.Id + 'input1\', \'' + plantSystem.Id + 'input2\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" ><i class="fa fa-check"></i></button>',
+                                    '<button type="button" class="btn btn-danger p-0" onclick="cancelEditLookupItemButton(\'' + firstColumnId + '\', \'' + secondColumnId + '\', \'' + thirdColumnId + '\',  \'' + plantSystem.Name + '\',  \'' + plantSystem.LookUpItemsPlantAreas + '\')" style="border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;"><i class="fa fa-xmark"></i></button>'
+                                );
+                            }
+
+                            $("#" + plantSystem.Id + "input2").select2({
+                                //closeOnSelect: false
+                            });
+                        });
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+            });
             break;
 
         case "procedure":
@@ -1813,6 +1955,35 @@ function saveEditLookupItemButton(input1Id, input2Id) {
             break;
 
         case "plantSystem":
+            var plantSystemId = input1Id.slice(0, -6);
+            $.ajax({
+                type: "GET", // [BURADA KALDIM 13.09.2022 18:34]
+                url: "LookUpItems/GetPlantSystemDetailJSON",
+                data: { methodId: methodId },
+                success: function (response) {
+                    var rMethod = jQuery.parseJSON(response);
+                    rMethod.Name = $("#" + input1Id + "").val();
+                    rMethod.Code = $("#" + input2Id + "").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "LookUpItems/UpdateMethodJSON",
+                        data: { model: rMethod },
+                        success: function (response) {
+                            methodPartial();
+                            toast("Method Update Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
             break;
 
         case "procedure":
