@@ -91,6 +91,17 @@ namespace Quartz.Controllers.LookUpItems
         }
 
         [HttpGet]
+        public IActionResult GetComponentTypeDetailJSON(int componentTypeId)
+        {
+            var model = _componentTypeService.GetComponentTypeDetail(componentTypeId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
         public IActionResult GetAllComponentTypesJSON()
         {
             var model = _componentTypeService.GetAllComponentTypes();
@@ -147,6 +158,17 @@ namespace Quartz.Controllers.LookUpItems
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetFittingTypeDetailJSON(int fittingTypeId)
+        {
+            var model = _fittingTypeService.GetFittingTypeDetail(fittingTypeId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]
@@ -276,6 +298,17 @@ namespace Quartz.Controllers.LookUpItems
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetOperatorDetailJSON(int operatorId)
+        {
+            var model = _operatorService.GetOperatorDetail(operatorId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]
@@ -478,6 +511,17 @@ namespace Quartz.Controllers.LookUpItems
         }
 
         [HttpGet]
+        public IActionResult GetProcedureDetailJSON(int procedureId)
+        {
+            var model = _procedureService.GetProcedureDetail(procedureId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
         public IActionResult GetAllProceduresJSON()
         {
             var model = _procedureService.GetAllProcedures();
@@ -534,6 +578,17 @@ namespace Quartz.Controllers.LookUpItems
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetSpecificationDetailJSON(int specificationId)
+        {
+            var model = _specificationService.GetSpecificationDetail(specificationId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]
@@ -596,6 +651,17 @@ namespace Quartz.Controllers.LookUpItems
         }
 
         [HttpGet]
+        public IActionResult GetStandardStatementDetailJSON(int standardStatementId)
+        {
+            var model = _standardStatementService.GetStandardStatementDetail(standardStatementId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
         public IActionResult GetAllStandardStatementsJSON()
         {
             var model = _standardStatementService.GetAllStandardStatements();
@@ -652,6 +718,17 @@ namespace Quartz.Controllers.LookUpItems
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetStatusDetailJSON(int statusId)
+        {
+            var model = _statusService.GetStatusDetail(statusId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]
@@ -714,6 +791,17 @@ namespace Quartz.Controllers.LookUpItems
         }
 
         [HttpGet]
+        public IActionResult GetTechniqueDetailJSON(int techniqueId)
+        {
+            var model = _techniqueService.GetTechniqueDetail(techniqueId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
         public IActionResult GetAllTechniquesJSON()
         {
             var model = _techniqueService.GetAllTechniques();
@@ -770,6 +858,17 @@ namespace Quartz.Controllers.LookUpItems
                 return Json(jSonModel);
             }
             return Json(null);
+        }
+
+        [HttpGet]
+        public IActionResult GetWeldTypeDetailJSON(int weldTypeId)
+        {
+            var model = _weldTypeService.GetWeldTypeDetail(weldTypeId);
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]

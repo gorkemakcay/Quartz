@@ -360,7 +360,7 @@ var map;
 $(function () {
     // #region [GET Quartz's Partial View from QuartzLink Controller]
     $.get({
-        url: "QuartzLink/GetQuartz",
+        url: linkController.QuartzPartialView,
         success: function (response) {
             $("#main").html(response);
         }
@@ -370,13 +370,13 @@ $(function () {
     // #region [GET Link Details from QuartzLink Controller]
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetLinkDetailJSON",
+        url: linkController.Link.Detail,
         data: { linkId: 1 },
         success: function (response) {
             currentQuartzLink = jQuery.parseJSON(response);
 
             $.get({
-                url: 'QuartzLink/GetDrawingSettingsDetailJSON',
+                url: linkController.DrawingSettings.Detail,
                 data: { quartzLinkId: currentQuartzLink.Id },
                 success: function (response) {
                     currentDrawingSettings = jQuery.parseJSON(response);
@@ -389,7 +389,7 @@ $(function () {
             function wait() {
                 $.ajax({
                     type: "GET",
-                    url: "FileUpload/GetFileDetail",
+                    url: fileController.Detail,
                     data: { fileId: currentQuartzLink.CurrentDrawingId },
                     success: function (result) {
                         currentDrawing = jQuery.parseJSON(result);
@@ -521,7 +521,7 @@ function limCancelButton(type) {
         case "plantSystem":
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetPlantAreaForOption",
+                url: lookupItemController.PlantArea.List,
                 success: function (result) {
                     rModel = jQuery.parseJSON(result);
 
@@ -550,7 +550,7 @@ function limCancelButton(type) {
         case "procedure":
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetMethodForOption",
+                url: lookupItemController.Method.List,
                 success: function (result) {
                     rModel = jQuery.parseJSON(result);
 
@@ -585,7 +585,7 @@ function limCancelButton(type) {
         case "technique":
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetProcedureForOption",
+                url: lookupItemController.Procedure.List,
                 success: function (result) {
                     rModel = jQuery.parseJSON(result);
 
@@ -625,27 +625,27 @@ function goDrawing(linkId, drawingId, thisValue) {
 
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetLinkDetailJSON",
+        url: linkController.Link.Detail,
         data: { linkId: linkId },
         success: function (response) {
             currentQuartzLink = jQuery.parseJSON(response);
 
             $.ajax({
                 type: "GET",
-                url: "QuartzLink/GetVectorSource",
+                url: linkController.DrawingFeatures.GetVectorSource,
                 data: { quartzLinkId: linkId },
                 success: function (response) {
                     currentDrawingFeatures = jQuery.parseJSON(response);
 
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: drawingId },
                         success: function (response) {
                             currentDrawing = jQuery.parseJSON(response);
                             $.ajax({
                                 type: "GET",
-                                url: "QuartzLink/GetQuartz",
+                                url: linkController.QuartzPartialView,
                                 success: function (html) {
                                     $("#main").children().remove();
                                     $("#main").html(html);
@@ -689,7 +689,7 @@ function goDrawing(linkId, drawingId, thisValue) {
 
 function getVectorSource() {
     $.get({
-        url: 'QuartzLink/GetVectorSource',
+        url: linkController.DrawingFeatures.GetVectorSource,
         data: { quartzLinkId: currentQuartzLink.Id },
         success: function (response) {
             if (response != 0) {
@@ -713,7 +713,7 @@ function deleteThis(objectType, objectId) {
             var linkDeleteModel = { Id: objectId };
             $.ajax({
                 type: "DELETE",
-                url: "QuartzLink/DeleteLink",
+                url: linkController.Link.Delete,
                 data: { model: linkDeleteModel },
                 success: function (response) {
                     $("#linkModal").modal("hide");
@@ -735,7 +735,7 @@ function deleteThis(objectType, objectId) {
 
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzLink/UpdateDrawingFeaturesJSON",
+                                url: linkController.DrawingFeatures.Update,
                                 data: { model: drawingFeaturesModel },
                                 success: function (response) {
                                     rModel = jQuery.parseJSON(response);
@@ -764,7 +764,7 @@ function deleteThis(objectType, objectId) {
         case "attachment":
             $.ajax({
                 type: "DELETE",
-                url: "FileUpload/DeleteFile",
+                url: fileController.Delete,
                 data: { fileId: objectId },
                 success: function (response) {
 
@@ -793,7 +793,7 @@ function deleteThis(objectType, objectId) {
 
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzItem/UpdateItemJSON",
+                                url: itemController.Item.Update,
                                 data: { model: item },
                                 success: function (response) {
                                     $("#itemModal").modal("show");
@@ -823,7 +823,7 @@ function deleteThis(objectType, objectId) {
 
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzItem/UpdateInspectionJSON",
+                                url: itemController.Inspection.Update,
                                 data: { model: currentInspection },
                                 success: function (response) {
                                     $("#AddInspectionData").modal("show");
@@ -853,7 +853,7 @@ function deleteThis(objectType, objectId) {
 
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzItem/UpdateValveMaintenanceJSON",
+                                url: itemController.ValveMaintenance.Update,
                                 data: { model: currentValveMaintenance },
                                 success: function (response) {
                                     $("#AddValveMaintenanceData").modal("show");
@@ -883,7 +883,7 @@ function deleteThis(objectType, objectId) {
 
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzItem/UpdateThicknessMeasurementJSON",
+                                url: itemController.ThicknessMeasurement.Update,
                                 data: { model: currentThicknessMeasurement },
                                 success: function (response) {
                                     $("#AddThicknessMeasurementData").modal("show");
@@ -913,7 +913,7 @@ function deleteThis(objectType, objectId) {
 
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzLink/UpdateDrawingSettingsJSON",
+                                url: linkController.DrawingSettings.Update,
                                 data: { model: currentDrawingSettings },
                                 success: function (response) {
                                     $("#drawingSettingsModal").modal("show");
@@ -946,7 +946,7 @@ function deleteThis(objectType, objectId) {
             var itemDeleteModel = { Id: objectId };
             $.ajax({
                 type: "DELETE",
-                url: "QuartzItem/DeleteItem",
+                url: itemController.Item.Delete,
                 data: { model: itemDeleteModel },
                 success: function (response) {
                     $("#itemModal").modal("hide");
@@ -968,7 +968,7 @@ function deleteThis(objectType, objectId) {
 
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzLink/UpdateDrawingFeaturesJSON",
+                                url: linkController.DrawingFeatures.Update,
                                 data: { model: drawingFeaturesModel },
                                 success: function (response) {
                                     rModel = jQuery.parseJSON(response);
@@ -998,7 +998,7 @@ function deleteThis(objectType, objectId) {
             var inspectionDeleteModel = { Id: objectId };
             $.ajax({
                 type: "DELETE",
-                url: "QuartzItem/DeleteInspection",
+                url: itemController.Inspection.Delete,
                 data: { model: inspectionDeleteModel },
                 success: function (response) {
                     loadInspectionPage();
@@ -1023,7 +1023,7 @@ function deleteThis(objectType, objectId) {
                     var deleteComponentTypeModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteComponentType",
+                        url: lookupItemController.ComponentType.Delete,
                         data: { model: deleteComponentTypeModel },
                         success: function (response) {
                             componentTypePartial();
@@ -1047,7 +1047,7 @@ function deleteThis(objectType, objectId) {
                     var deleteFittingTypeModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteFittingType",
+                        url: lookupItemController.FittingType.Delete,
                         data: { model: deleteFittingTypeModel },
                         success: function (response) {
                             fittingTypePartial();
@@ -1071,7 +1071,7 @@ function deleteThis(objectType, objectId) {
                     var deleteMethodModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteMethod",
+                        url: lookupItemController.Method.Delete,
                         data: { model: deleteMethodModel },
                         success: function (response) {
                             methodPartial();
@@ -1095,7 +1095,7 @@ function deleteThis(objectType, objectId) {
                     var deleteOperatorModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteOperator",
+                        url: lookupItemController.Operator.Delete,
                         data: { model: deleteOperatorModel },
                         success: function (response) {
                             operatorPartial();
@@ -1119,7 +1119,7 @@ function deleteThis(objectType, objectId) {
                     var deletePlantAreaModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeletePlantArea",
+                        url: lookupItemController.PlantArea.Delete,
                         data: { model: deletePlantAreaModel },
                         success: function (response) {
                             plantAreaPartial();
@@ -1143,7 +1143,7 @@ function deleteThis(objectType, objectId) {
                     var deletePlantSystemModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeletePlantSystem",
+                        url: lookupItemController.PlantSystem.Delete,
                         data: { model: deletePlantSystemModel },
                         success: function (response) {
                             plantSystemPartial();
@@ -1167,7 +1167,7 @@ function deleteThis(objectType, objectId) {
                     var deleteProcedureModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteProcedure",
+                        url: lookupItemController.Procedure.Delete,
                         data: { model: deleteProcedureModel },
                         success: function (response) {
                             procedurePartial();
@@ -1191,7 +1191,7 @@ function deleteThis(objectType, objectId) {
                     var deleteSpecificationModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteSpecification",
+                        url: lookupItemController.Specification.Delete,
                         data: { model: deleteSpecificationModel },
                         success: function (response) {
                             specificationPartial();
@@ -1215,7 +1215,7 @@ function deleteThis(objectType, objectId) {
                     var deleteStandardStatementModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteStandardStatement",
+                        url: lookupItemController.StandardStatement.Delete,
                         data: { model: deleteStandardStatementModel },
                         success: function (response) {
                             standardStatementPartial();
@@ -1239,7 +1239,7 @@ function deleteThis(objectType, objectId) {
                     var deleteStatusModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteStatus",
+                        url: lookupItemController.Status.Delete,
                         data: { model: deleteStatusModel },
                         success: function (response) {
                             statusPartial();
@@ -1263,7 +1263,7 @@ function deleteThis(objectType, objectId) {
                     var deleteTechniqueModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteTechnique",
+                        url: lookupItemController.Technique.Delete,
                         data: { model: deleteTechniqueModel },
                         success: function (response) {
                             techniquePartial();
@@ -1287,7 +1287,7 @@ function deleteThis(objectType, objectId) {
                     var deleteWeldTypeModel = { Id: objectId };
                     $.ajax({
                         type: "DELETE",
-                        url: "LookUpItems/DeleteWeldType",
+                        url: lookupItemController.WeldType.Delete,
                         data: { model: deleteWeldTypeModel },
                         success: function (response) {
                             weldTypePartial();
@@ -1315,7 +1315,7 @@ function deleteThis(objectType, objectId) {
             var valveMaintenanceDeleteModel = { Id: objectId };
             $.ajax({
                 type: "DELETE",
-                url: "QuartzItem/DeleteValveMaintenance",
+                url: itemController.ValveMaintenance.Delete,
                 data: { model: valveMaintenanceDeleteModel },
                 success: function (response) {
                     loadValveMaintenancePage();
@@ -1338,7 +1338,7 @@ function deleteThis(objectType, objectId) {
             var thicknessMeasurementDeleteModel = { Id: objectId };
             $.ajax({
                 type: "DELETE",
-                url: "QuartzItem/DeleteThicknessMeasurement",
+                url: itemController.ThicknessMeasurement.Delete,
                 data: { model: thicknessMeasurementDeleteModel },
                 success: function (response) {
                     loadThicknessMeasurementPage();
@@ -1390,7 +1390,7 @@ function rightClick(e) {
 $("#showListPanelIcon").on('click', function () {
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetQuartz",
+        url: linkController.QuartzPartialView,
         success: function (html) {
             $("#main").children().remove();
             $("#main").html(html);
@@ -1425,7 +1425,7 @@ $("#showListPanelIcon").on('click', function () {
 $("#hideListPanelIcon").on('click', function () {
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetQuartz",
+        url: linkController.QuartzPartialView,
         success: function (html) {
             $("#main").children().remove();
             $("#main").html(html);
@@ -1460,7 +1460,7 @@ $("#hideListPanelIcon").on('click', function () {
 $("#showSearchPanelIcon").on('click', function () {
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetQuartz",
+        url: linkController.QuartzPartialView,
         success: function (html) {
             $("#main").children().remove();
             $("#main").html(html);
@@ -1495,7 +1495,7 @@ $("#showSearchPanelIcon").on('click', function () {
 $("#hideSearchPanelIcon").on('click', function () {
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetQuartz",
+        url: linkController.QuartzPartialView,
         success: function (html) {
             $("#main").children().remove();
             $("#main").html(html);
@@ -1534,7 +1534,7 @@ function toggleListPanel() {
     if ($("#listPanel").css('display') == 'none') {
         $.ajax({
             type: "GET",
-            url: "QuartzLink/GetQuartz",
+            url: linkController.QuartzPartialView,
             success: function (html) {
                 $("#main").children().remove();
                 $("#main").html(html);
@@ -1566,7 +1566,7 @@ function toggleListPanel() {
     else {
         $.ajax({
             type: "GET",
-            url: "QuartzLink/GetQuartz",
+            url: linkController.QuartzPartialView,
             success: function (html) {
                 $("#main").children().remove();
                 $("#main").html(html);
@@ -1601,7 +1601,7 @@ function toggleSearchPanel() {
     if ($("#searchPanel").css('display') == 'none') {
         $.ajax({
             type: "GET",
-            url: "QuartzLink/GetQuartz",
+            url: linkController.QuartzPartialView,
             success: function (html) {
                 $("#main").children().remove();
                 $("#main").html(html);
@@ -1632,7 +1632,7 @@ function toggleSearchPanel() {
     else {
         $.ajax({
             type: "GET",
-            url: "QuartzLink/GetQuartz",
+            url: linkController.QuartzPartialView,
             success: function (html) {
                 $("#main").children().remove();
                 $("#main").html(html);

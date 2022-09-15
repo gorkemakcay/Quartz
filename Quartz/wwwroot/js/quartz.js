@@ -87,7 +87,7 @@
             if (feature.get("Type") == "item") {
                 $.ajax({
                     type: "GET",
-                    url: "QuartzItem/GetItemDetailJSON",
+                    url: itemController.Item.Detail,
                     data: { itemId: feature.get("Id") },
                     success: function (response) {
                         lastClickedItem = jQuery.parseJSON(response);
@@ -100,7 +100,7 @@
             if (feature.get("Type") == "link") {
                 $.ajax({
                     type: "GET",
-                    url: "QuartzLink/GetLinkDetailJSON",
+                    url: linkController.Link.Detail,
                     data: { linkId: feature.get("Id") },
                     success: function (response) {
                         lastClickedLink = jQuery.parseJSON(response);
@@ -130,20 +130,20 @@
 
                             $.ajax({
                                 type: "GET",
-                                url: "QuartzLink/GetVectorSource",
+                                url: linkController.DrawingFeatures.GetVectorSource,
                                 data: { quartzLinkId: currentQuartzLink.Id },
                                 success: function (response) {
                                     currentDrawingFeatures = jQuery.parseJSON(response);
 
                                     $.ajax({
                                         type: "GET",
-                                        url: "FileUpload/GetFileDetail",
+                                        url: fileController.Detail,
                                         data: { fileId: currentQuartzLink.CurrentDrawingId },
                                         success: function (response) {
                                             currentDrawing = jQuery.parseJSON(response);
                                             $.ajax({
                                                 type: "GET",
-                                                url: "QuartzLink/GetQuartz",
+                                                url: linkController.QuartzPartialView,
                                                 success: function (html) {
                                                     $("#main").children().remove();
                                                     $("#main").html(html);
@@ -303,7 +303,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "QuartzLink/AddLinkJSON",
+                        url: linkController.Link.Add,
                         data: { model: linkModel },
                         success: function (response) {
                             lastCreatedLink = jQuery.parseJSON(response);
@@ -342,7 +342,7 @@
                             }
                             $.ajax({
                                 type: "POST",
-                                url: "QuartzLink/AddDrawingSettingsJSON",
+                                url: linkController.DrawingSettings.Add,
                                 data: { model: drawingSettingsAddModel },
                                 success: function (response) {
                                     rModel = jQuery.parseJSON(response);
@@ -378,7 +378,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "QuartzItem/AddItemJSON",
+                        url: itemController.Item.Add,
                         data: { model: itemModel },
                         success: function (response) {
                             lastCreatedItem = jQuery.parseJSON(response);
@@ -442,7 +442,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "QuartzLink/AddDrawingFeaturesJSON",
+                url: linkController.DrawingFeatures.Add,
                 data: { model: drawingFeaturesAddModel },
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
@@ -472,7 +472,7 @@
 
         $.ajax({
             type: "POST",
-            url: "QuartzLink/UpdateDrawingFeaturesJSON",
+            url: linkController.DrawingFeatures.Update,
             data: { model: drawingFeaturesModel },
             success: function (response) {
                 rModel = jQuery.parseJSON(response);

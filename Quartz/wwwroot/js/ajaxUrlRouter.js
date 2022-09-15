@@ -6,7 +6,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateComponentTypeJSON",
         Delete: "LookUpItems/DeleteComponentType",
         List: "LookUpItems/GetAllComponentTypesJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetComponentTypeDetailJSON",
         PartialView: "LookUpItems/GetComponentTypePartialView"
     },
 
@@ -15,7 +15,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateFittingTypeJSON",
         Delete: "LookUpItems/DeleteFittingType",
         List: "LookUpItems/GetAllFittingTypesJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetFittingTypeDetailJSON",
         PartialView: "LookUpItems/GetFittingTypePartialView"
     },
 
@@ -33,7 +33,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateOperatorJSON",
         Delete: "LookUpItems/DeleteOperator",
         List: "LookUpItems/GetAllOperatorsJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetOperatorDetailJSON",
         PartialView: "LookUpItems/GetOperatorPartialView"
     },
 
@@ -60,7 +60,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateProcedureJSON",
         Delete: "LookUpItems/DeleteProcedure",
         List: "LookUpItems/GetAllProceduresJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetProcedureDetailJSON",
         PartialView: "LookUpItems/GetProcedurePartialView"
     },
 
@@ -69,7 +69,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateSpecificationJSON",
         Delete: "LookUpItems/DeleteSpecification",
         List: "LookUpItems/GetAllSpecificationsJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetSpecificationDetailJSON",
         PartialView: "LookUpItems/GetSpecificationPartialView"
     },
 
@@ -78,7 +78,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateStandardStatementJSON",
         Delete: "LookUpItems/DeleteStandardStatement",
         List: "LookUpItems/GetAllStandardStatementsJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetStandardStatementDetailJSON",
         PartialView: "LookUpItems/GetStandardStatementPartialView"
     },
 
@@ -87,7 +87,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateStatusJSON",
         Delete: "LookUpItems/DeleteStatus",
         List: "LookUpItems/GetAllStatusesJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetStatusDetailJSON",
         PartialView: "LookUpItems/GetStatusPartialView"
     },
 
@@ -96,7 +96,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateTechniqueJSON",
         Delete: "LookUpItems/DeleteTechnique",
         List: "LookUpItems/GetAllTechniquesJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetTechniqueDetailJSON",
         PartialView: "LookUpItems/GetTechniquePartialView"
     },
 
@@ -105,7 +105,7 @@ const lookupItemController = {
         Update: "LookUpItems/UpdateWeldTypeJSON",
         Delete: "LookUpItems/DeleteWeldType",
         List: "LookUpItems/GetAllWeldTypesJSON",
-        Detail: "LookUpItems/",
+        Detail: "LookUpItems/GetWeldTypeDetailJSON",
         PartialView: "LookUpItems/GetWeldTypePartialView"
     }
 
@@ -113,7 +113,7 @@ const lookupItemController = {
 // #endregion
 
 // #region File
-const FileController = {
+const fileController = {
     Upload: "FileUpload/UploadFile",
     Update: "FileUpload/UpdateFile",
     List: "FileUpload/GetAllFiles",
@@ -125,7 +125,7 @@ const FileController = {
 // #endregion
 
 // #region Item
-const ItemController = {
+const itemController = {
 
     Item: {
         Add: "QuartzItem/AddItemJSON",
@@ -209,12 +209,5 @@ const linkController = {
 
     QuartzPartialView: "QuartzLink/GetQuartz"
 
-}
-// #endregion
-
-// #region Home
-var homeController = {
-    Index: "Home/Index",
-    GetQuartzDrawing: "Home/Get"
 }
 // #endregion

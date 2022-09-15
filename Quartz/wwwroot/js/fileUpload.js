@@ -31,7 +31,7 @@
                 // ajax post ile çizimleri controller'a gönderdim
                 $.ajax({
                     type: "POST",
-                    url: "FileUpload/UploadFile",
+                    url: fileController.Upload,
                     data: fileData,
                     processData: false,
                     contentType: false,
@@ -43,7 +43,7 @@
                         // update last uploaded file for add createdDate
                         $.ajax({
                             type: "POST",
-                            url: "FileUpload/UpdateFile",
+                            url: fileController.Update,
                             data: fileUpdate,
                             success: function (response) {
                                 var updatedFile = jQuery.parseJSON(response);
@@ -53,7 +53,7 @@
                                 // update link for currentDrawingId
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzLink/UpdateLinkJSON",
+                                    url: linkController.Link.Update,
                                     data: { model: link },
                                     success: function (response) {
                                         link = jQuery.parseJSON(response);
@@ -76,7 +76,7 @@
                                 // update drawing settings
                                 $.ajax({
                                     type: "GET",
-                                    url: "QuartzLink/GetDrawingSettingsDetailJSON",
+                                    url: linkController.DrawingSettings.Detail,
                                     data: { quartzLinkId: link.Id },
                                     success: function (response) {
                                         linksDrawingSettings = jQuery.parseJSON(response);
@@ -85,7 +85,7 @@
 
                                         $.ajax({
                                             type: "POST",
-                                            url: "QuartzLink/UpdateDrawingSettingsJSON",
+                                            url: linkController.DrawingSettings.Update,
                                             data: { model: linksDrawingSettings },
                                             success: function (response) {
                                             },
@@ -139,7 +139,7 @@
                 // ajax post ile dosyaları controller'a gönderdim
                 $.ajax({
                     type: 'POST',
-                    url: "FileUpload/UploadFile",
+                    url: fileController.Upload,
                     data: fileData,
                     processData: false,
                     contentType: false,
@@ -151,7 +151,7 @@
                         // update last uploaded file for add createdDate
                         $.ajax({
                             type: "POST",
-                            url: "FileUpload/UpdateFile",
+                            url: fileController.Update,
                             data: fileUpdate,
                             success: function (response) {
                                 var updatedFile = jQuery.parseJSON(response);
@@ -162,7 +162,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzItem/UpdateItemJSON",
+                                    url: itemController.Item.Update,
                                     data: { model: item },
                                     success: function (response) {
                                         item = jQuery.parseJSON(response);
@@ -212,7 +212,7 @@
                 // ajax post ile dosyaları controller'a gönderdim
                 $.ajax({
                     type: 'POST',
-                    url: "FileUpload/UploadFile",
+                    url: fileController.Upload,
                     data: fileData,
                     processData: false,
                     contentType: false,
@@ -224,7 +224,7 @@
                         // update last uploaded file for add createdDate
                         $.ajax({
                             type: "POST",
-                            url: "FileUpload/UpdateFile",
+                            url: fileController.Update,
                             data: fileUpdate,
                             success: function (response) {
                                 var updatedFile = jQuery.parseJSON(response);
@@ -236,7 +236,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzItem/UpdateInspectionJSON",
+                                    url: itemController.Inspection.Update,
                                     data: { model: currentInspection },
                                     success: function (response) {
                                         currentInspection = jQuery.parseJSON(response);
@@ -282,7 +282,7 @@
                 // send files to controller 
                 $.ajax({
                     type: 'POST',
-                    url: "FileUpload/UploadFile",
+                    url: fileController.Upload,
                     data: fileData,
                     processData: false,
                     contentType: false,
@@ -295,7 +295,7 @@
                         currentDrawing = fileUpdate;
                         $.ajax({
                             type: "GET",
-                            url: "QuartzLink/GetQuartz",
+                            url: linkController.QuartzPartialView,
                             success: function (html) {
                                 $("#main").children().remove();
                                 $("#main").html(html);
@@ -310,7 +310,7 @@
                         // update last uploaded file for add createdDate
                         $.ajax({
                             type: "POST",
-                            url: "FileUpload/UpdateFile",
+                            url: fileController.Update,
                             data: fileUpdate,
                             success: function (response) {
                                 var updatedFile = jQuery.parseJSON(response);
@@ -318,7 +318,7 @@
                                 currentQuartzLink.CurrentDrawingId = updatedFile.Id;
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzLink/UpdateLinkJSON",
+                                    url: linkController.Link.Update,
                                     data: currentQuartzLink,
                                     success: function (response) {
                                         rModel = jQuery.parseJSON(response);
@@ -333,7 +333,7 @@
                                 currentDrawingSettings.File = updatedFile.Id;
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzLink/UpdateDrawingSettingsJSON",
+                                    url: linkController.DrawingSettings.Update,
                                     data: currentDrawingSettings,
                                     success: function (response) {
                                         rModel = jQuery.parseJSON(response);
@@ -377,7 +377,7 @@
                 // ajax post ile dosyaları controller'a gönderdim
                 $.ajax({
                     type: 'POST',
-                    url: "FileUpload/UploadFile",
+                    url: fileController.Upload,
                     data: fileData,
                     processData: false,
                     contentType: false,
@@ -389,7 +389,7 @@
                         // update last uploaded file for add createdDate
                         $.ajax({
                             type: "POST",
-                            url: "FileUpload/UpdateFile",
+                            url: fileController.Update,
                             data: fileUpdate,
                             success: function (response) {
                                 var updatedFile = jQuery.parseJSON(response);
@@ -403,7 +403,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzItem/UpdateValveMaintenanceJSON",
+                                    url: itemController.ValveMaintenance.Update,
                                     data: { model: currentValveMaintenance },
                                     success: function (response) {
                                         currentValveMaintenance = jQuery.parseJSON(response);
@@ -448,7 +448,7 @@
                 // ajax post ile dosyaları controller'a gönderdim
                 $.ajax({
                     type: 'POST',
-                    url: "FileUpload/UploadFile",
+                    url: fileController.Upload,
                     data: fileData,
                     processData: false,
                     contentType: false,
@@ -460,7 +460,7 @@
                         // update last uploaded file for add createdDate
                         $.ajax({
                             type: "POST",
-                            url: "FileUpload/UpdateFile",
+                            url: fileController.Update,
                             data: fileUpdate,
                             success: function (response) {
                                 var updatedFile = jQuery.parseJSON(response);
@@ -474,7 +474,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzItem/UpdateThicknessMeasurementJSON",
+                                    url: itemController.ThicknessMeasurement.Update,
                                     data: { model: currentThicknessMeasurement },
                                     success: function (response) {
                                         currentThicknessMeasurement = jQuery.parseJSON(response);
@@ -518,7 +518,7 @@
                 // ajax post ile dosyaları controller'a gönderdim
                 $.ajax({
                     type: 'POST',
-                    url: "FileUpload/UploadFile",
+                    url: fileController.Upload,
                     data: fileData,
                     processData: false,
                     contentType: false,
@@ -530,7 +530,7 @@
                         // update last uploaded file for add createdDate
                         $.ajax({
                             type: "POST",
-                            url: "FileUpload/UpdateFile",
+                            url: fileController.Update,
                             data: fileUpdate,
                             success: function (response) {
                                 var updatedFile = jQuery.parseJSON(response);
@@ -544,7 +544,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: "QuartzLink/UpdateDrawingSettingsJSON",
+                                    url: linkController.DrawingSettings.Update,
                                     data: { model: currentDrawingSettings },
                                     success: function (response) {
                                         currentDrawingSettings = jQuery.parseJSON(response);

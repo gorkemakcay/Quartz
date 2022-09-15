@@ -30,13 +30,13 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
 
         $.ajax({
             type: "POST",
-            url: "QuartzItem/UpdateInformationJSON",
+            url: itemController.Information.Update,
             data: { model: itemInformationUpdateModel },
             success: function (response) {
                 rModel = jQuery.parseJSON(response);
 
                 $.get({
-                    url: "QuartzItem/GetItemDetailJSON",
+                    url: itemController.Item.Detail,
                     data: { itemId: item.Id },
                     success: function (response) {
                         var model = jQuery.parseJSON(response);
@@ -53,7 +53,7 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
                         $("#itemModalTitle").html(lastClickedItem.TagNo + " | Information");
 
                         $.post({
-                            url: "QuartzItem/UpdateItemJSON",
+                            url: itemController.Item.Update,
                             data: { model: item },
                             success: function () {
                                 function waitFunc() {
@@ -97,13 +97,13 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
 
         $.ajax({
             type: "POST",
-            url: "QuartzItem/AddInformationJSON",
+            url: itemController.Information.Add,
             data: { model: itemInformationAddModel },
             success: function (response) {
                 rModel = jQuery.parseJSON(response);
 
                 $.get({
-                    url: "QuartzItem/GetItemDetailJSON",
+                    url: itemController.Item.Detail,
                     data: { itemId: item.Id },
                     success: function (response) {
                         var model = jQuery.parseJSON(response);
@@ -119,7 +119,7 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
                         }
 
                         $.post({
-                            url: "QuartzItem/UpdateItemJSON",
+                            url: itemController.Item.Update,
                             data: { model: item },
                             success: function () {
                                 function waitFunc() {
@@ -238,7 +238,7 @@ $("#inspectionAddSaveButton").on('click', function () {
         }
 
         toastContext = "Inspection Update Successful!";
-        inspectionUrl = "QuartzItem/UpdateInspectionJSON";
+        inspectionUrl = itemController.Inspection.Update;
     }
     else {
         var itemInspectionModel = {
@@ -255,7 +255,7 @@ $("#inspectionAddSaveButton").on('click', function () {
         }
 
         toastContext = "Inspection Add Successful!";
-        inspectionUrl = "QuartzItem/AddInspectionJSON";
+        inspectionUrl = itemController.Inspection.Add;
     }
 
     $.ajax({
@@ -304,7 +304,7 @@ $("#valveMaintenanceAddSaveButton").on('click', function () {
         }
 
         toastContext = "Valve Maintenance Update Successful!";
-        valveMaintenanceUrl = "QuartzItem/UpdateValveMaintenanceJSON";
+        valveMaintenanceUrl = itemController.ValveMaintenance.Update;
     }
     else {
         var valveMaintenanceModel = {
@@ -323,7 +323,7 @@ $("#valveMaintenanceAddSaveButton").on('click', function () {
         }
 
         toastContext = "Valve Maintenance Add Successful!";
-        valveMaintenanceUrl = "QuartzItem/AddValveMaintenanceJSON";
+        valveMaintenanceUrl = itemController.ValveMaintenance.Add;
     }
 
     $.ajax({
@@ -369,7 +369,7 @@ $("#thicknessMeasurementAddSaveButton").on('click', function () {
         }
 
         toastContext = "Thickness Measurement Update Successful!";
-        thicknessMeasurementUrl = "QuartzItem/UpdateThicknessMeasurementJSON";
+        thicknessMeasurementUrl = itemController.ThicknessMeasurement.Update;
     }
     else {
         var thicknessMeasurementModel = {
@@ -384,7 +384,7 @@ $("#thicknessMeasurementAddSaveButton").on('click', function () {
         }
 
         toastContext = "Thickness Measurement Add Successful!";
-        thicknessMeasurementUrl = "QuartzItem/AddThicknessMeasurementJSON";
+        thicknessMeasurementUrl = itemController.ThicknessMeasurement.Add;
     }
 
     $.ajax({
@@ -422,7 +422,7 @@ function getInformationSelectOptions() {
     // #region Get Component Types for Select/Option
     $.ajax({
         type: "GET",
-        url: "LookUpItems/GetComponentTypeForOption",
+        url: lookupItemController.ComponentType.List,
         success: function (response) {
             rModel = jQuery.parseJSON(response);
 
@@ -470,7 +470,7 @@ function getInformationSelectOptions() {
     // #region Get Specification for Select/Option
     $.ajax({
         type: "GET",
-        url: "LookUpItems/GetSpecificationForOption",
+        url: lookupItemController.Specification.List,
         success: function (response) {
             rModel = jQuery.parseJSON(response);
 
@@ -518,7 +518,7 @@ function getInformationSelectOptions() {
     // #region Get Fitting Types for Select/Option
     $.ajax({
         type: "GET",
-        url: "LookUpItems/GetFittingTypeForOption",
+        url: lookupItemController.FittingType.List,
         success: function (response) {
             rModel = jQuery.parseJSON(response);
 
@@ -566,7 +566,7 @@ function getInformationSelectOptions() {
     // #region Get Weld Types for Select/Option
     $.ajax({
         type: "GET",
-        url: "LookUpItems/GetWeldTypeForOption",
+        url: lookupItemController.WeldType.List,
 
         success: function (response) {
             rModel = jQuery.parseJSON(response);
@@ -625,7 +625,7 @@ function loadItemModalHomePage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetQuartzItemsHomePagePartialView",
+        url: itemController.Item.PartialView,
         success: function (html) {
             $("#itemModalPartialArea").html(html);
 
@@ -636,7 +636,7 @@ function loadItemModalHomePage() {
                     // #region Information Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetInformationDetailJSON",
+                        url: itemController.Information.Detail,
                         data: { quartzItemId: lastClickedItem.Id },
                         success: function (response) {
                             information = jQuery.parseJSON(response);
@@ -655,7 +655,7 @@ function loadItemModalHomePage() {
                     // #region Inspection Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetAllInspections",
+                        url: itemController.Inspection.List,
                         data: { quartzItemId: lastClickedItem.Id },
                         success: function (response) {
                             inspections = jQuery.parseJSON(response);
@@ -676,7 +676,7 @@ function loadItemModalHomePage() {
                     // #region Valve Maintenance Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetAllValveMaintenancesJSON",
+                        url: itemController.ValveMaintenance.List,
                         data: { quartzItemId: lastClickedItem.Id },
                         success: function (response) {
                             valveMaintenances = jQuery.parseJSON(response);
@@ -697,7 +697,7 @@ function loadItemModalHomePage() {
                     // #region Thickness Measurement Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetAllThicknessMeasurementsJSON",
+                        url: itemController.ThicknessMeasurement.List,
                         data: { quartzItemId: lastClickedItem.Id },
                         success: function (response) {
                             thicknessMeasurements = jQuery.parseJSON(response);
@@ -722,7 +722,7 @@ function loadItemModalHomePage() {
                     // #region Information Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetInformationDetailJSON",
+                        url: itemController.Information.Detail,
                         data: { quartzItemId: lastCreatedItem.Id },
                         success: function (response) {
                             information = jQuery.parseJSON(response);
@@ -741,7 +741,7 @@ function loadItemModalHomePage() {
                     // #region Inspection Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetAllInspections",
+                        url: itemController.Inspection.List,
                         data: { quartzItemId: lastCreatedItem.Id },
                         success: function (response) {
                             inspections = jQuery.parseJSON(response);
@@ -762,7 +762,7 @@ function loadItemModalHomePage() {
                     // #region Valve Maintenance Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetAllValveMaintenancesJSON",
+                        url: itemController.ValveMaintenance.List,
                         data: { quartzItemId: lastCreatedItem.Id },
                         success: function (response) {
                             valveMaintenances = jQuery.parseJSON(response);
@@ -783,7 +783,7 @@ function loadItemModalHomePage() {
                     // #region Thickness Measurement Count
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetAllThicknessMeasurementsJSON",
+                        url: itemController.ThicknessMeasurement.List,
                         data: { quartzItemId: lastCreatedItem.Id },
                         success: function (response) {
                             thicknessMeasurements = jQuery.parseJSON(response);
@@ -824,7 +824,7 @@ function loadInformationPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetInformationPartialView",
+        url: itemController.Information.PartialView,
         success: function (html) {
             $("#itemModalPartialArea").html(html);
 
@@ -835,7 +835,7 @@ function loadInformationPage() {
 
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetInformationDetailJSON",
+                        url: itemController.Information.Detail,
                         data: { quartzItemId: lastClickedItem.Id },
                         success: function (response) {
                             lastInformationsResponseModel = jQuery.parseJSON(response);
@@ -871,7 +871,7 @@ function loadInformationPage() {
 
                     $.ajax({
                         type: "GET",
-                        url: "QuartzItem/GetInformationDetailJSON",
+                        url: itemController.Information.Detail,
                         data: { quartzItemId: lastCreatedItem.Id },
                         success: function (response) {
                             lastInformationsResponseModel = jQuery.parseJSON(response);
@@ -918,14 +918,14 @@ function loadInspectionPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetInspectionPartialView",
+        url: itemController.Inspection.PartialView,
         //data: { quartzItemId: itemId },
         success: function (html) {
             $("#itemModalPartialArea").html(html);
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetAllInspections",
+                url: itemController.Inspection.List,
                 data: { quartzItemId: item.Id },
                 success: function (response) {
                     allInspections = jQuery.parseJSON(response);
@@ -1010,7 +1010,7 @@ function loadInspectionsDataPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetInspectionsDataPartialView",
+        url: itemController.Inspection.DataPartialView,
         success: function (html) {
             $("#inspectionAddModalPartialArea").html(html);
 
@@ -1025,7 +1025,7 @@ function loadInspectionsDataPage() {
             // #region Get Methods for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetMethodForOption",
+                url: lookupItemController.Method.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1060,7 +1060,7 @@ function loadInspectionsDataPage() {
             // #region Get Procedures for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetProcedureForOption",
+                url: lookupItemController.Procedure.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1096,7 +1096,7 @@ function loadInspectionsDataPage() {
             // #region Get Technique for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetTechniqueForOption",
+                url: lookupItemController.Technique.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1128,7 +1128,7 @@ function loadInspectionsDataPage() {
             // #region Get Status for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetStatusForOption",
+                url: lookupItemController.Status.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1171,7 +1171,7 @@ function loadInspectionsAttachmentPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetInspectionsAttachmentPartialView",
+        url: itemController.Inspection.AttachmentPartialView,
         success: function (html) {
             $("#inspectionAddModalPartialArea").html(html);
 
@@ -1197,7 +1197,7 @@ function loadInspectionsAttachmentPage() {
                     var attachmentId = currentInspection.AttachmentIds
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: attachmentId },
                         success: function (response) {
                             var attachmentModel = jQuery.parseJSON(response);
@@ -1253,7 +1253,7 @@ function loadInspectionsAttachmentPage() {
                     for (let id in attachmentIds) {
                         $.ajax({
                             type: "GET",
-                            url: "FileUpload/GetFileDetail",
+                            url: fileController.Detail,
                             data: { fileId: attachmentIds[id] },
                             success: function (response) {
                                 attachmentModel = jQuery.parseJSON(response);
@@ -1333,13 +1333,13 @@ function loadValveMaintenancePage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetValveMaintenancePartialView",
+        url: itemController.ValveMaintenance.PartialView,
         success: function (html) {
             $("#itemModalPartialArea").html(html);
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetAllValveMaintenancesJSON",
+                url: itemController.ValveMaintenance.List,
                 data: { quartzItemId: item.Id },
                 success: function (response) {
                     allValveMaintenances = jQuery.parseJSON(response);
@@ -1424,7 +1424,7 @@ function loadValveMaintenancesDataPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetValveMaintenanceDataPartialView",
+        url: itemController.ValveMaintenance.DataPartialView,
         success: function (html) {
             $("#valveMaintenanceAddModalPartialArea").html(html);
 
@@ -1442,7 +1442,7 @@ function loadValveMaintenancesDataPage() {
             // #region Get Plant Area for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetPlantAreaForOption",
+                url: lookupItemController.PlantArea.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1488,7 +1488,7 @@ function loadValveMaintenancesAttachmentPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetValveMaintenancesAttachmentPartialView",
+        url: itemController.ValveMaintenance.AttachmentPartialView,
         success: function (html) {
             $("#valveMaintenanceAddModalPartialArea").html(html);
 
@@ -1507,7 +1507,7 @@ function loadValveMaintenancesAttachmentPage() {
                     var attachmentId = currentValveMaintenance.AttachmentIds
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: attachmentId },
                         success: function (response) {
                             var attachmentModel = jQuery.parseJSON(response);
@@ -1563,7 +1563,7 @@ function loadValveMaintenancesAttachmentPage() {
                     for (let id in attachmentIds) {
                         $.ajax({
                             type: "GET",
-                            url: "FileUpload/GetFileDetail",
+                            url: fileController.Detail,
                             data: { fileId: attachmentIds[id] },
                             success: function (response) {
                                 attachmentModel = jQuery.parseJSON(response);
@@ -1651,13 +1651,13 @@ function loadThicknessMeasurementPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetThicknessMeasurementPartialView",
+        url: itemController.ThicknessMeasurement.PartialView,
         success: function (html) {
             $("#itemModalPartialArea").html(html);
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetAllThicknessMeasurementsJSON",
+                url: itemController.ThicknessMeasurement.List,
                 data: { quartzItemId: item.Id },
                 success: function (response) {
                     allThicknessMeasurements = jQuery.parseJSON(response);
@@ -1750,7 +1750,7 @@ function loadThicknessMeasurementDataPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetThicknessMeasurementsDataPartialView",
+        url: itemController.ThicknessMeasurement.DataPartialView,
         success: function (html) {
             $("#thicknessMeasurementAddModalPartialArea").html(html);
 
@@ -1766,7 +1766,7 @@ function loadThicknessMeasurementDataPage() {
             // #region Get Plant Area for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetPlantAreaForOption",
+                url: lookupItemController.PlantArea.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1801,7 +1801,7 @@ function loadThicknessMeasurementDataPage() {
             // #region Get Plant System for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetPlantSystemForOption",
+                url: lookupItemController.PlantSystem.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1836,7 +1836,7 @@ function loadThicknessMeasurementDataPage() {
             // #region Get Specification for Select > Option
             $.ajax({
                 type: "GET",
-                url: "LookUpItems/GetSpecificationForOption",
+                url: lookupItemController.Specification.List,
                 success: function (response) {
                     rModel = jQuery.parseJSON(response);
 
@@ -1882,7 +1882,7 @@ function loadThicknessMeasurementAttachmentPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetThicknessMeasurementsAttachmentPartialView",
+        url: itemController.ThicknessMeasurement.AttachmentPartialView,
         success: function (html) {
             $("#thicknessMeasurementAddModalPartialArea").html(html);
 
@@ -1901,7 +1901,7 @@ function loadThicknessMeasurementAttachmentPage() {
                     var attachmentId = currentThicknessMeasurement.AttachmentIds
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: attachmentId },
                         success: function (response) {
                             var attachmentModel = jQuery.parseJSON(response);
@@ -1957,7 +1957,7 @@ function loadThicknessMeasurementAttachmentPage() {
                     for (let id in attachmentIds) {
                         $.ajax({
                             type: "GET",
-                            url: "FileUpload/GetFileDetail",
+                            url: fileController.Detail,
                             data: { fileId: attachmentIds[id] },
                             success: function (response) {
                                 attachmentModel = jQuery.parseJSON(response);
@@ -2043,7 +2043,7 @@ function loadAttachmentPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetAttachmentPartialView",
+        url: itemController.Item.AttachmentPartialView,
         success: function (html) {
             $("#itemModalPartialArea").html(html);
             $("#itemAttachmentsTable").children('tbody').children('tr').remove();
@@ -2060,7 +2060,7 @@ function loadAttachmentPage() {
                     var attachmentId = item.AttachmentIds;
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: attachmentId },
                         success: function (response) {
                             attachmentModel = jQuery.parseJSON(response);
@@ -2116,7 +2116,7 @@ function loadAttachmentPage() {
                     for (let id in attachmentIds) {
                         $.ajax({
                             type: "GET",
-                            url: "FileUpload/GetFileDetail",
+                            url: fileController.Detail,
                             data: { fileId: attachmentIds[id] },
                             success: function (response) {
                                 attachmentModel = jQuery.parseJSON(response);
@@ -2190,13 +2190,13 @@ function openEditInspectionModal(inspectionId) {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetInspectionsDataPartialView",
+        url: itemController.Inspection.DataPartialView,
         success: function (html) {
             $("#inspectionAddModalPartialArea").html(html);
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetInspectionDetailJSON",
+                url: itemController.Inspection.Detail,
                 data: { inspectionId: inspectionId },
                 success: function (response) {
                     var inspectionDetail = jQuery.parseJSON(response);
@@ -2219,7 +2219,7 @@ function openEditInspectionModal(inspectionId) {
                     // #region Get Method for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetMethodForOption",
+                        url: lookupItemController.Method.List,
                         success: function (response) {
                             methods = jQuery.parseJSON(response);
 
@@ -2255,7 +2255,7 @@ function openEditInspectionModal(inspectionId) {
                     // #region Get Procedure for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetProcedureForOption",
+                        url: lookupItemController.Procedure.List,
                         success: function (response) {
                             procedures = jQuery.parseJSON(response);
 
@@ -2291,7 +2291,7 @@ function openEditInspectionModal(inspectionId) {
                     // #region Get Technique for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetTechniqueForOption",
+                        url: lookupItemController.Technique.List,
                         success: function (response) {
                             techniques = jQuery.parseJSON(response);
 
@@ -2327,7 +2327,7 @@ function openEditInspectionModal(inspectionId) {
                     // #region Get Status for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetStatusForOption",
+                        url: lookupItemController.Status.List,
                         success: function (response) {
                             statuses = jQuery.parseJSON(response);
 
@@ -2385,13 +2385,13 @@ function openEditValveMaintenanceModal(valveMaintenanceId) {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetValveMaintenanceDataPartialView",
+        url: itemController.ValveMaintenance.DataPartialView,
         success: function (html) {
             $("#valveMaintenanceAddModalPartialArea").html(html);
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetValveMaintenanceDetailJSON",
+                url: itemController.ValveMaintenance.Detail,
                 data: { valveMaintenanceId: valveMaintenanceId },
                 success: function (response) {
                     var valveMaintenanceDetail = jQuery.parseJSON(response);
@@ -2413,7 +2413,7 @@ function openEditValveMaintenanceModal(valveMaintenanceId) {
                     // #region Get Plant Area for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetPlantAreaForOption",
+                        url: lookupItemController.PlantArea.List,
                         success: function (response) {
                             rModel = jQuery.parseJSON(response);
 
@@ -2469,13 +2469,13 @@ function openEditThicknessMeasurementModal(thicknessMeasurementId) {
 
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetThicknessMeasurementsDataPartialView",
+        url: itemController.ThicknessMeasurement.DataPartialView,
         success: function (html) {
             $("#thicknessMeasurementAddModalPartialArea").html(html);
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetThicknessMeasurementDetailJSON",
+                url: itemController.ThicknessMeasurement.Detail,
                 data: { thicknessMeasurementId: thicknessMeasurementId },
                 success: function (response) {
                     var thicknessMeasurementDetail = jQuery.parseJSON(response);
@@ -2494,7 +2494,7 @@ function openEditThicknessMeasurementModal(thicknessMeasurementId) {
                     // #region Get Plant Area for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetPlantAreaForOption",
+                        url: lookupItemController.PlantArea.List,
                         success: function (response) {
                             rModel = jQuery.parseJSON(response);
 
@@ -2529,7 +2529,7 @@ function openEditThicknessMeasurementModal(thicknessMeasurementId) {
                     // #region Get Plant System for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetPlantSystemForOption",
+                        url: lookupItemController.PlantSystem.List,
                         success: function (response) {
                             rModel = jQuery.parseJSON(response);
 
@@ -2564,7 +2564,7 @@ function openEditThicknessMeasurementModal(thicknessMeasurementId) {
                     // #region Get Specification for Select > Option
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetSpecificationForOption",
+                        url: lookupItemController.Specification.List,
                         success: function (response) {
                             rModel = jQuery.parseJSON(response);
 

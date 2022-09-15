@@ -34,20 +34,20 @@ $("#btnDsmSave").on('click', function () {
 
         $.ajax({
             type: "POST",
-            url: "QuartzLink/UpdateDrawingSettingsJSON",
+            url: linkController.DrawingSettings.Update,
             data: { model: drawingSettingsModel },
             success: function (response) {
                 currentDrawingSettings = jQuery.parseJSON(response);
 
                 $.ajax({
                     type: "GET",
-                    url: "FileUpload/GetFileDetail",
+                    url: fileController.Detail,
                     data: { fileId: currentDrawingSettings.File },
                     success: function (response) {
                         currentDrawing = jQuery.parseJSON(response);
                         $.ajax({
                             type: "GET",
-                            url: "QuartzLink/GetQuartz",
+                            url: linkController.QuartzPartialView,
                             success: function (html) {
                                 $("#main").children().remove();
                                 $("#main").html(html);
@@ -78,7 +78,7 @@ $("#btnDsmSave").on('click', function () {
         currentQuartzLink.TagNo = $("#dsmDrawingNo").val();
         $.ajax({
             type: "POST",
-            url: "QuartzLink/UpdateLinkJSON",
+            url: linkController.Link.Update,
             data: { model: currentQuartzLink },
             success: function (response) {
                 rModel = jQuery.parseJSON(response);
@@ -94,7 +94,7 @@ $("#btnDsmSave").on('click', function () {
 
     $.ajax({
         type: "POST",
-        url: "QuartzLink/UpdateDrawingSettingsJSON",
+        url: linkController.DrawingSettings.Update,
         data: { model: drawingSettingsModel },
         success: function (response) {
             currentDrawingSettings = jQuery.parseJSON(response);
@@ -125,7 +125,7 @@ function loadDrawingSettingsDataPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetDrawingSettingsDataPartialView",
+        url: linkController.DrawingSettings.DataPartialView,
         success: function (html) {
             $("#dsmPartialArea").html(html);
 
@@ -149,7 +149,7 @@ function loadDrawingSettingsDataPage() {
 
             $.ajax({
                 type: "GET",
-                url: "QuartzLink/GetDrawingSettingsDetailJSON",
+                url: linkController.DrawingSettings.Detail,
                 data: { quartzLinkId: currentQuartzLink.Id },
                 success: function (result) {
                     currentDrawingSettings = jQuery.parseJSON(result);
@@ -168,7 +168,7 @@ function loadDrawingSettingsDataPage() {
                     // #region Get All Drawings for Select/Option
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetAllDrawings",
+                        url: fileController.GetAllDrawings,
                         success: function (response) {
                             allDrawings = jQuery.parseJSON(response);
 
@@ -177,7 +177,7 @@ function loadDrawingSettingsDataPage() {
 
                             $.ajax({
                                 type: "GET",
-                                url: "FileUpload/GetFileDetail",
+                                url: fileController.Detail,
                                 data: { fileId: currentDrawingSettings.File }, // TAMAMLANAMDI BURADA KALDIM
                                 success: function (response) {
                                     var selectedDrawing = jQuery.parseJSON(response);
@@ -220,7 +220,7 @@ function loadDrawingSettingsDataPage() {
                     // #region DSM - Get Plant Areas For Select > Options
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetPlantAreaForOption",
+                        url: lookupItemController.PlantArea.List,
                         success: function (result) {
                             rModel = jQuery.parseJSON(result);
 
@@ -269,7 +269,7 @@ function loadDrawingSettingsDataPage() {
                     // #region DSM - Get Plant Systems For Select>Options
                     $.ajax({
                         type: "GET",
-                        url: "LookUpItems/GetPlantSystemForOption",
+                        url: lookupItemController.PlantSystem.List,
                         success: function (result) {
                             rModel = jQuery.parseJSON(result);
 
@@ -339,7 +339,7 @@ function loadDrawingSettingsAttachmentPage() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetDrawingSettingsAttachmentPartialView",
+        url: linkController.DrawingSettings.AttachmentPartialView,
         success: function (html) {
             $("#dsmPartialArea").html(html);
 
@@ -358,7 +358,7 @@ function loadDrawingSettingsAttachmentPage() {
                     var attachmentId = currentDrawingSettings.AttachmentIds
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: attachmentId },
                         success: function (response) {
                             var attachmentModel = jQuery.parseJSON(response);
@@ -414,7 +414,7 @@ function loadDrawingSettingsAttachmentPage() {
                     for (let id in attachmentIds) {
                         $.ajax({
                             type: "GET",
-                            url: "FileUpload/GetFileDetail",
+                            url: fileController.Detail,
                             data: { fileId: attachmentIds[id] },
                             success: function (response) {
                                 attachmentModel = jQuery.parseJSON(response);

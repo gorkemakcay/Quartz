@@ -11,7 +11,7 @@
             // #region Get All Drawings for Select/Option
             $.ajax({
                 type: "GET",
-                url: "FileUpload/GetAllDrawings",
+                url: fileController.GetAllDrawings,
                 success: function (response) {
                     allDrawings = jQuery.parseJSON(response);
 
@@ -20,7 +20,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: lastClickedLink.CurrentDrawingId },
                         success: function (response) {
                             var selectedDrawing = jQuery.parseJSON(response);
@@ -82,7 +82,7 @@
             // #region Get All Drawings for Select/Option
             $.ajax({
                 type: "GET",
-                url: "FileUpload/GetAllDrawings",
+                url: fileController.GetAllDrawings,
                 success: function (response) {
                     allDrawings = jQuery.parseJSON(response);
 
@@ -91,7 +91,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "FileUpload/GetFileDetail",
+                        url: fileController.Detail,
                         data: { fileId: lastCreatedLink.CurrentDrawingId },
                         success: function (response) {
                             var selectedDrawing = jQuery.parseJSON(response);
@@ -190,7 +190,7 @@ function linkModalSaveButton() {
 
     $.ajax({
         type: "POST",
-        url: "QuartzLink/UpdateLinkJSON",
+        url: linkController.Link.Update,
         data: { model: link },
         success: function (response) {
             rModel = jQuery.parseJSON(response);
@@ -211,7 +211,7 @@ function linkModalSaveButton() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetDrawingSettingsDetailJSON",
+        url: linkController.DrawingSettings.Detail,
         data: { quartzLinkId: link.Id },
         success: function (response) {
             linksDrawingSettings = jQuery.parseJSON(response);
@@ -220,7 +220,7 @@ function linkModalSaveButton() {
 
             $.ajax({
                 type: "POST",
-                url: "QuartzLink/UpdateDrawingSettingsJSON",
+                url: linkController.DrawingSettings.Update,
                 data: { model: linksDrawingSettings },
                 success: function (response) {
                 },
@@ -264,7 +264,7 @@ function goCurrentLink() {
 
             $.ajax({
                 type: "GET",
-                url: "QuartzLink/GetDrawingSettingsDetailJSON",
+                url: linkController.DrawingSettings.Detail,
                 data: { quartzLinkId: link.Id },
                 success: function (response) {
                     var linksDrawingSettings = jQuery.parseJSON(response);
@@ -272,7 +272,7 @@ function goCurrentLink() {
                     linksDrawingSettings.File = $("#addLinkSelectDrawing").val();
                     $.ajax({
                         type: "POST",
-                        url: "QuartzLink/UpdateDrawingSettingsJSON",
+                        url: linkController.DrawingSettings.Update,
                         data: { model: linksDrawingSettings },
                         success: function (response) {
                         },
@@ -295,7 +295,7 @@ function goCurrentLink() {
 
         $.ajax({
             type: "POST",
-            url: "QuartzLink/UpdateLinkJSON",
+            url: linkController.Link.Update,
             data: { model: link },
             succes: function (response) {
                 link = jQuery.parseJSON(response);
@@ -311,7 +311,7 @@ function goCurrentLink() {
             link.TagNo = $("#addLinkTagNo").val();
             $.ajax({
                 type: "POST",
-                url: "QuartzLink/UpdateLinkJSON",
+                url: linkController.Link.Update,
                 data: { model: link },
                 success: function (response) {
                     link = jQuery.parseJSON(response);
@@ -324,14 +324,14 @@ function goCurrentLink() {
 
             $.ajax({
                 type: "GET",
-                url: "QuartzLink/GetDrawingSettingsDetailJSON",
+                url: linkController.DrawingSettings.Detail,
                 data: { quartzLinkId: link.Id },
                 success: function (response) {
                     var linksDrawingSettings = jQuery.parseJSON(response);
                     linksDrawingSettings.DrawingNo = $("#addLinkTagNo").val();
                     $.ajax({
                         type: "POST",
-                        url: "QuartzLink/UpdateDrawingSettingsJSON",
+                        url: linkController.DrawingSettings.Update,
                         data: { model: linksDrawingSettings },
                         success: function (response) {
 
@@ -358,20 +358,20 @@ function goCurrentLink() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetVectorSource",
+        url: linkController.DrawingFeatures.GetVectorSource,
         data: { quartzLinkId: link.Id },
         success: function (response) {
             currentDrawingFeatures = jQuery.parseJSON(response);
 
             $.ajax({
                 type: "GET",
-                url: "FileUpload/GetFileDetail",
+                url: fileController.Detail,
                 data: { fileId: link.CurrentDrawingId },
                 success: function (response) {
                     currentDrawing = jQuery.parseJSON(response);
                     $.ajax({
                         type: "GET",
-                        url: "QuartzLink/GetQuartz",
+                        url: linkController.QuartzPartialView,
                         success: function (html) {
                             $("#main").children().remove();
                             $("#main").html(html);

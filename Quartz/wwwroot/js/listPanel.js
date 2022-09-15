@@ -7,7 +7,7 @@ function createList() {
 
     $.ajax({
         type: "GET",
-        url: "QuartzLink/GetAllLinksJSON",
+        url: linkController.Link.List,
         data: { mainLinkId: currentQuartzLink.Id },
         success: function (response) {
             allLinks = jQuery.parseJSON(response);
@@ -30,7 +30,7 @@ function createList() {
     // #region Get All Items From DB & Display On The List Panel As A Button
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetAllItemsJSON",
+        url: itemController.Item.List,
         data: { linkId: currentQuartzLink.Id },
         success: function (response) {
             allItems = jQuery.parseJSON(response);
@@ -63,7 +63,7 @@ function createList() {
 
             $.ajax({
                 type: "GET",
-                url: "QuartzLink/GetLinkDetailJSON",
+                url: linkController.Link.Detail,
                 data: { linkId: lastClickedLinkButtonId },
                 success: function (response) {
                     lastClickedLink = jQuery.parseJSON(response);
@@ -116,7 +116,7 @@ function createList() {
 
             $.ajax({
                 type: "GET",
-                url: "QuartzItem/GetItemDetailJSON",
+                url: itemController.Item.Detail,
                 data: { itemId: lastClickedItemButtonId },
                 success: function (response) {
                     lastClickedItem = jQuery.parseJSON(response);
