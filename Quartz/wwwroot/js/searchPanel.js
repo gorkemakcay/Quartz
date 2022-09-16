@@ -1,33 +1,40 @@
-﻿$("#vbv").on('click', function () {
-    var features = [];
+﻿function filterInspection() {
+    var date;
+    var dueDate;
 
-    for (var i = 0; i < source.getFeatures().length; i++) {
-        features.push(source.getFeatures()[i]);
-        console.log(features[i]);
+    if ($("#inspectionFilterDate").val().toString() == "") {
+        date = null;
     }
+    else date = $("#inspectionFilterDate").val();
 
-});
-$("#focusLastFeature").on('click', function () {
-    //console.log(featureCollection[''].features[0].geometry.coordinates[0][0]);
-    //console.log("x: " + map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
-    view.animate({
-        center: new ol.proj.fromLonLat(featuresLonLat),
-        zoom: 4
+    if ($("#inspectionFilterDueDate").val().toString() == "") {
+        dueDate = null;
+    }
+    else dueDate = $("#inspectionFilterDueDate").val();
+
+
+    var filterInspectionModel = {
+        ReportNo: $("#inspectionFilterReportNo").val(),
+        Method: $("#inspectionFilterMethod").val(),
+        Procedure: $("#inspectionFilterProcedure").val(),
+        Technique: $("#inspectionFilterTechnique").val(),
+        Status: $("#inspectionFilterStatus").val(),
+        Date: date,
+        DueDate: dueDate,
+        Details: $("#inspectionFilterDetails").val()
+    };
+
+    $.ajax({
+        type: "Post",
+        url: "QuartzItem/FilterInspections",
+        data: { model: filterInspectionModel },
+        success: function (response) {
+            var rModel = jQuery.parseJSON(response);
+            console.log(rModel);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
     });
-});
-
-
-$("#getFeatures").on('click', function () {
-    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-        dataProjection: 'EPSG:4326',
-        featureProjection: 'EPSG:3857'
-    });
-    console.log(json);
-});
-
-
-$("#getCurrenFeature").on('click', function () {
-    console.log(select);
-});
-
-
+}

@@ -913,3 +913,88 @@ ul {
 .editButton:hover {
     background: #0B5ED7;
 }
+
+
+/*******************************************************************/
+/*ACCORDION*/
+/*******************************************************************/
+
+.accordion {
+    position: relative;
+}
+
+[id*="open-accordion"], [id*="close-accordion"] {
+    background: #808080;
+    border-bottom: 2px solid #fff;
+    line-height: 40px;
+    height: 40px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+[id*="close-accordion"] {
+    display: none;
+}
+
+.accordion a {
+    color: #fff;
+    font-weight: 600;
+    padding-left: 2%;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+[id*="open-accordion"]:after, [id*="close-accordion"]:after {
+    content: "";
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgba(255, 255, 255, 0.6);
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    z-index: 999;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+}
+
+.target-fix {
+    display: block;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.accordion-content {
+    background: #dadcde;
+    height: 0;
+    padding: 0 10%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.1s ease;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+}
+
+.accordion span:target ~ .accordion-content {
+    display: block;
+    height: auto;
+    padding-bottom: 25px;
+    padding-top: 10px;
+}
+
+.accordion span:target ~ [id*="close-accordion"] {
+    display: block;
+}
+
+.accordion span:target ~ [id*="open-accordion"] {
+    display: none;
+}
+
+.accordion span:target ~ [id*="close-accordion"]:after {
+    border-top: 10px solid #333;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+}
+
+/*******************************************************************/

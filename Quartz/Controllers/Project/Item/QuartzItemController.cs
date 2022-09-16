@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Quartz.BusinessLogic.Interface.IProjectService.IItemService;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels;
@@ -7,7 +6,6 @@ using Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsThicknessMeasurement;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsValveMaintenance;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
-using Quartz.Common.ViewModels.Project.QuartzItem.QuartzItemsInspectionViewModels;
 using System.Linq;
 
 namespace Quartz.Controllers.Project.Item
@@ -203,9 +201,19 @@ namespace Quartz.Controllers.Project.Item
         [HttpGet]
         public IActionResult GetAllInspections(int quartzItemId)
         {
-            ViewBag.Inspection = _inspectionService.GetAllInspections(quartzItemId);
             var model = _inspectionService.GetAllInspections(quartzItemId);
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpPost]
+        public IActionResult FilterInspections(QuartzItemsInspectionFilterViewModel model)
+        {
+            var rModel = _inspectionService.FilterInspections(model);
+            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });

@@ -20,7 +20,6 @@ using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingFeaturesViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingSettingsViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinkViewModels;
-using Quartz.Common.ViewModels.Project.QuartzItem.QuartzItemsInspectionViewModels;
 using Quartz.Common.ViewModels.Users.AppRoleViewModels;
 using Quartz.Common.ViewModels.Users.AppUserViewModels;
 using Quartz.Entities.Concrete.FileUploads;
@@ -94,6 +93,7 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             CreateMap<QuartzItemsInspection, QuartzItemsInspectionAddViewModel>().ReverseMap();
             CreateMap<QuartzItemsInspection, QuartzItemsInspectionUpdateViewModel>().ReverseMap();
             CreateMap<QuartzItemsInspection, QuartzItemsInspectionDeleteViewModel>().ReverseMap();
+            CreateMap<QuartzItemsInspection, QuartzItemsInspectionFilterViewModel>().ReverseMap();
             #endregion
 
             #region QuartzItemsThicknessMeasurement
