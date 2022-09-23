@@ -6,10 +6,11 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.IItemService
 {
     public interface IQuartzItemService : IGenericService<QuartzItem>
     {
-        List<QuartzItemListViewModel> GetAllItems(int linkId);
         QuartzItemUpdateViewModel GetItemDetail(int itemId);
         int AddItem(QuartzItemAddViewModel model);
         void UpdateItem(QuartzItemUpdateViewModel model);
         void DeleteItem(QuartzItemDeleteViewModel model);
+        List<QuartzItemListViewModel> GetAllItems(int linkId);
+        List<QuartzItemFilterViewModel> FilterItems(QuartzItemFilterViewModel model);
     }
 }

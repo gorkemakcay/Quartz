@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Modals\" />
+    <Folder Include="Views\SearchPanel\" />
     <Folder Include="wwwroot\Files\" />
     <Folder Include="wwwroot\lib\bootstrap-select-v1.13.18\" />
     <Folder Include="wwwroot\lib\libman\jQuery\" />

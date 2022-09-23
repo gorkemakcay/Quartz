@@ -12,5 +12,6 @@ namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels
         public DateTime Date { get; set; }
         public DateTime DueDate { get; set; }
         public string Details { get; set; }
+        public int QuartzItemId { get; set; }
     }
 }

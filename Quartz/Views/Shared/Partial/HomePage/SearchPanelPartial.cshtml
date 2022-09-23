@@ -3,7 +3,7 @@
     <div class="accordion">
         <span class="target-fix" id="accordion"></span>
 
-        <!-- 1. Accordion Option -->
+        <!-- 1. Search Drawing Option -->
         <div>
             <span class="target-fix" id="accordion1"></span>
 
@@ -28,51 +28,51 @@
                     <option value="value">Plant System 2</option>
                 </select>
 
-                <button class="btn" style="width: 100%; border: none; border-radius: 5px; background: #808080; color: white;">Search</button>
+                <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #808080;" onclick="filterDrawing()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
             </div>
         </div>
 
-        <!-- 2. Accordion Option -->
+        <!-- 2. Search Tag Option -->
         <div>
             <span class="target-fix" id="accordion2"></span>
             <a href="#accordion2" id="open-accordion2" title="open">Search Tag</a>
             <a href="#accordion" id="close-accordion2" title="close">Search Tag</a>
             <div class="accordion-content">
-                <input class="form-control" type="text" placeholder="Plant Ident/Tag No" style="margin-bottom: 10px;" />
+                <input class="form-control" id="itemFilterTagNo" type="text" placeholder="Plant Ident/Tag No" style="margin-bottom: 10px;" />
 
-                <input class="form-control" type="text" placeholder="Original Ident/Serial No" style="margin-bottom: 10px;" />
+                <input class="form-control" id="itemFilterSerialNo" type="text" placeholder="Original Ident/Serial No" style="margin-bottom: 10px;" />
 
-                <input class="form-control" type="text" placeholder="Description" style="margin-bottom: 10px;" />
+                <input class="form-control" id="itemFilterDrawingDescription" type="text" placeholder="Drawing Description" style="margin-bottom: 10px;" />
 
-                <select class="form-select" style="margin-bottom: 10px;">
+                <select class="form-select" id="itemFilterFittingType" style="margin-bottom: 10px;">
                     <option value="value" selected hidden>Select Fitting Type</option>
                     <option value="value">Fitting Type 1</option>
                     <option value="value">Fitting Type 2</option>
                 </select>
 
-                <select class="form-select" style="margin-bottom: 10px;">
+                <select class="form-select" id="itemFilterWeldType" style="margin-bottom: 10px;">
                     <option value="value" selected hidden>Select Weld Type</option>
                     <option value="value">Weld Type 1</option>
                     <option value="value">Weld Type 2</option>
                 </select>
 
-                <select class="form-select" style="margin-bottom: 10px;">
+                <select class="form-select" id="itemFilterPlantArea" style="margin-bottom: 10px;">
                     <option value="value" selected hidden>Select Plant Area</option>
                     <option value="value">Plant Area 1</option>
                     <option value="value">Plant Area 2</option>
                 </select>
 
-                <select class="form-select" style="margin-bottom: 10px;">
+                <select class="form-select" id="itemFilterPlantSystem" style="margin-bottom: 10px;">
                     <option value="value" selected hidden>Select Plant System</option>
                     <option value="value">Plant System 1</option>
                     <option value="value">Plant System 2</option>
                 </select>
 
-                <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #808080;">Search</button>
+                <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #808080;" onclick="filterTag()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
             </div>
         </div>
 
-        <!-- 3. Accordion Option -->
+        <!-- 3. Search Inspection Option -->
         <div>
             <span class="target-fix" id="accordion3"></span>
             <a href="#accordion3" id="open-accordion3" title="open">Search Inspection</a>
@@ -83,7 +83,7 @@
                 <input class="form-control" id="inspectionFilterDetails" type="text" placeholder="Details" style="margin-bottom: 10px;" />
 
                 <input class="form-control" id="inspectionFilterDate" type="text" onfocus="(this.type='date')" placeholder="Date From" style="margin-bottom: 10px;" />
-                                                  
+
                 <input class="form-control" id="inspectionFilterDueDate" type="text" onfocus="(this.type='date')" placeholder="Date To" style="margin-bottom: 10px;" />
 
                 <select class="form-select" id="inspectionFilterStatus" style="margin-bottom: 10px;">
@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        <!-- 4. Accordion Option -->
+        <!-- 4. Search Valve Maintenance Option -->
         <div>
             <span class="target-fix" id="accordion4"></span>
             <a href="#accordion4" id="open-accordion4" title="open">Search Valve Maintenance</a>
@@ -138,11 +138,11 @@
                     <option value="value">Plant Area 2</option>
                 </select>
 
-                <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #808080;">Search</button>
+                <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #808080;" onclick="filterValveMaintenance()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
             </div>
         </div>
 
-        <!-- 5. Accordion Option -->
+        <!-- 5. Search Thickness Measurement Option -->
         <div>
             <span class="target-fix" id="accordion5"></span>
             <a href="#accordion5" id="open-accordion5" title="open">Search Thickness Measurement</a>
@@ -172,7 +172,7 @@
                     <option value="value">Plant System 2</option>
                 </select>
 
-                <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #808080;">Search</button>
+                <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #808080;" onclick="filterThicknessMeasurement()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
             </div>
         </div>
     </div>

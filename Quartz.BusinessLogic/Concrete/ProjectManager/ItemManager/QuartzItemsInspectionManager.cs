@@ -54,11 +54,12 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
         public List<QuartzItemsInspectionFilterViewModel> FilterInspections(QuartzItemsInspectionFilterViewModel model)
         {
             var inspections = _mapper.Map<List<QuartzItemsInspectionFilterViewModel>>(GetAll());
+
             if (model.ReportNo != null)
-                inspections = inspections.Where(I => I.ReportNo == model.ReportNo).ToList();
+                inspections = inspections.Where(I => I.ReportNo.ToLower().Contains(model.ReportNo.ToLower())).ToList();
 
             if (model.Details != null)
-                inspections = inspections.Where(I => I.Details.Contains(model.Details)).ToList();
+                inspections = inspections.Where(I => I.Details.ToLower().Contains(model.Details.ToLower())).ToList();
 
             if (model.Date.ToString() != "1.01.0001 00:00:00")
                 inspections = inspections.Where(I => I.Date == model.Date).ToList();

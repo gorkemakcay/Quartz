@@ -247,6 +247,12 @@ namespace Quartz.Controllers.Project.Item
         {
             return PartialView("QuartzItemsInspectionsAttachmentPartial");
         }
+
+        [HttpGet]
+        public IActionResult GetSearchPanelsInspectionPartialView()
+        {
+            return PartialView("SearchPanelsInspectionPartial");
+        }
         #endregion
 
         #region Attachment

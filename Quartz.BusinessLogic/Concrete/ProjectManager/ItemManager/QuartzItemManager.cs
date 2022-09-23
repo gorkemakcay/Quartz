@@ -43,6 +43,17 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             _uow.SaveChange();
         }
 
+        public List<QuartzItemFilterViewModel> FilterItems(QuartzItemFilterViewModel model)
+        {
+            //var items = _mapper.Map<List<QuartzItemFilterViewModel>>(GetAll());
+            //var informations = _mapper.Map<List<QuartzI>>(GetAll());
+
+            //if (model.ReportNo != null)
+            //    inspections = inspections.Where(I => I.ReportNo.Contains(model.ReportNo)).ToList();
+
+            return null;
+        }
+
         public List<QuartzItemListViewModel> GetAllItems(int linkId)
         {
             return _mapper.Map<List<QuartzItemListViewModel>>(GetAll(I => I.QuartzLinkId == linkId));
