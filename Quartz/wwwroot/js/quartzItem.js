@@ -50,7 +50,7 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
                             lastClickedItem = model;
                             item = lastClickedItem;
                         }
-                        $("#itemModalTitle").html(lastClickedItem.TagNo + " | Information");
+                        $("#itemModalTitle").html(item.TagNo + " | Information");
 
                         $.post({
                             url: itemController.Item.Update,
@@ -428,8 +428,7 @@ function getInformationSelectOptions() {
 
             // #region Create & Configure Select > Option
             $("#informationComponentType").children().remove();
-
-            if (!isInformationCreated) {
+            if (lastInformationsResponseModel.ComponentType == null) {
                 $("#informationComponentType").append(
                     $('<option>', {
                         value: "select",
@@ -477,7 +476,7 @@ function getInformationSelectOptions() {
             // #region Create & Configure Select > Option
             $("#informationSpecification").children().remove();
 
-            if (!isInformationCreated) {
+            if (lastInformationsResponseModel.Specification == null) {
                 $("#informationSpecification").append(
                     $('<option>', {
                         value: "select",
@@ -525,7 +524,7 @@ function getInformationSelectOptions() {
             // #region Create & Configure Select > Option
             $("#informationFittingType").children().remove();
 
-            if (!isInformationCreated) {
+            if (lastInformationsResponseModel.FittingType == null) {
                 $("#informationFittingType").append(
                     $('<option>', {
                         value: "select",
@@ -574,7 +573,7 @@ function getInformationSelectOptions() {
             // #region Create & Configure Select > Option
             $("#informationWeldType").children().remove();
 
-            if (!isInformationCreated) {
+            if (lastInformationsResponseModel.WeldType == null) {
                 $("#informationWeldType").append(
                     $('<option>', {
                         value: "select",

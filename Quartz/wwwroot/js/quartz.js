@@ -383,7 +383,25 @@
                         success: function (response) {
                             lastCreatedItem = jQuery.parseJSON(response);
                             clickedOrCreated = "created";
-                            isInformationCreated = false;
+                            //isInformationCreated = false;
+
+                            var itemInformationAddModel = {
+                                TagNo: lastCreatedItem.TagNo,
+                                QuartzItemId: lastCreatedItem.Id
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: itemController.Information.Add,
+                                data: { model: itemInformationAddModel },
+                                success: function (response) {
+                                    rModel = jQuery.parseJSON(response);
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                            isInformationCreated = true;
                             getVectorSource();
 
                             // #region Feature Set Properties
