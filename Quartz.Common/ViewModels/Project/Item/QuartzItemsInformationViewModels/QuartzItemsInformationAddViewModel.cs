@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels
+﻿namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsInformationViewModels
 {
     public class QuartzItemsInformationAddViewModel
     {

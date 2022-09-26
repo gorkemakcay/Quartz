@@ -3,6 +3,7 @@ using Quartz.DataAccess.Interface.IFileUpload;
 using Quartz.DataAccess.Interface.ILookUpItems;
 using Quartz.DataAccess.Interface.IProject.IItem;
 using Quartz.DataAccess.Interface.IProject.ILink;
+using Quartz.DataAccess.Interface.ISearch;
 using Quartz.DataAccess.Interface.Users;
 using Quartz.Entities.Interface;
 using System;
@@ -34,6 +35,7 @@ namespace Quartz.DataAccess.UnitOfWorks.Interface
         ILookupItemsStatusDal lookupItemsStatusDal { get; }
         ILookupItemsTechniqueDal lookupItemsTechniqueDal { get; }
         ILookupItemsWeldTypeDal lookupItemsWeldTypeDal { get; }
+        ISearchTagDal searchTagDal { get; }
         IGenericDal<Table> GetRepository<Table>() where Table : class, ITable, new();
 
         void SaveChange();

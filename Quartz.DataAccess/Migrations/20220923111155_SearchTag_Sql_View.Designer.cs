@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 
 namespace Quartz.DataAccess.Migrations
 {
     [DbContext(typeof(QuartzContext))]
-    partial class QuartzContextModelSnapshot : ModelSnapshot
+    [Migration("20220923111155_SearchTag_Sql_View")]
+    partial class SearchTag_Sql_View
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -653,32 +655,6 @@ namespace Quartz.DataAccess.Migrations
                     b.HasIndex("QuartzItemId");
 
                     b.ToTable("QuartzItemsInspections");
-                });
-
-            modelBuilder.Entity("Quartz.Entities.Concrete.Search.SearchTag", b =>
-                {
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FittingType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PlantArea")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlantSystem")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TagNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WeldType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("vw_SearchTag");
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.Users.AppRole", b =>

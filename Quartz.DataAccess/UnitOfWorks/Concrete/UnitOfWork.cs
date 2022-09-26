@@ -4,12 +4,14 @@ using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfFileUploadRes
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfLookupRepository;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfProjectRepository.EfItemRepository;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfProjectRepository.EfLinkRepository;
+using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfSearchRepository;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfUsersRepository;
 using Quartz.DataAccess.Interface;
 using Quartz.DataAccess.Interface.IFileUpload;
 using Quartz.DataAccess.Interface.ILookUpItems;
 using Quartz.DataAccess.Interface.IProject.IItem;
 using Quartz.DataAccess.Interface.IProject.ILink;
+using Quartz.DataAccess.Interface.ISearch;
 using Quartz.DataAccess.Interface.Users;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 
@@ -65,6 +67,8 @@ namespace Quartz.DataAccess.UnitOfWorks.Concrete
 
         public ILookupItemsWeldTypeDal lookupItemsWeldTypeDal { get; private set; }
 
+        public ISearchTagDal searchTagDal { get; set; }
+
         public UnitOfWork(QuartzContext ctx)
         {
             _ctx = ctx;
@@ -92,6 +96,7 @@ namespace Quartz.DataAccess.UnitOfWorks.Concrete
             lookupItemsStatusDal = new EfLookupItemsStatusRepository(_ctx);
             lookupItemsTechniqueDal = new EfLookupItemsTechniqueRepository(_ctx);
             lookupItemsWeldTypeDal = new EfLookupItemsWeldTypeRepository(_ctx);
+            searchTagDal = new EfSearchTagRepository(_ctx);
         }
 
         public void Dispose()

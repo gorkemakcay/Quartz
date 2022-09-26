@@ -4,12 +4,14 @@ using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfFileUploadRes
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfLookupRepository;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfProjectRepository.EfItemRepository;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfProjectRepository.EfLinkRepository;
+using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfSearchRepository;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Repositories.EfUsersRepository;
 using Quartz.DataAccess.Interface;
 using Quartz.DataAccess.Interface.IFileUpload;
 using Quartz.DataAccess.Interface.ILookUpItems;
 using Quartz.DataAccess.Interface.IProject.IItem;
 using Quartz.DataAccess.Interface.IProject.ILink;
+using Quartz.DataAccess.Interface.ISearch;
 using Quartz.DataAccess.Interface.Users;
 using Quartz.DataAccess.UnitOfWorks.Concrete;
 using Quartz.DataAccess.UnitOfWorks.Interface;
@@ -42,7 +44,8 @@ namespace Quartz.DataAccess.DIContainer
                     .AddScoped<ILookupItemsStandardStatementDal, EfLookupItemsStandardStatementRepository>()
                     .AddScoped<ILookupItemsStatusDal, EfLookupItemsStatusRepository>()
                     .AddScoped<ILookupItemsTechniqueDal, EfLookupItemsTechniqueRepository>()
-                    .AddScoped<ILookupItemsWeldTypeDal, EfLookupItemsWeldTypeRepository>();
+                    .AddScoped<ILookupItemsWeldTypeDal, EfLookupItemsWeldTypeRepository>()
+                    .AddScoped<ISearchTagDal, EfSearchTagRepository>();
                     
 
             services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>))
