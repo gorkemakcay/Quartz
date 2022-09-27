@@ -31,6 +31,12 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
                 c.ToView("vw_SearchTag");
             });
 
+            builder.Entity<SearchDrawing>(c =>
+            {
+                c.HasNoKey();
+                c.ToView("vw_SearchDrawing");
+            });
+
             base.OnModelCreating(builder);
         }
 
@@ -63,6 +69,7 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
         public DbSet<LookUpItemsWeldType> LookupItemsWeldTypes { get; set; }
 
         public DbSet<SearchTag> vw_SearchTag { get; set; }
+        public DbSet<SearchDrawing> vw_SearchDrawing { get; set; }
 
     }
 }

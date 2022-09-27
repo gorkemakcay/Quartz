@@ -7,7 +7,6 @@ using Quartz.Common.ViewModels.Project.Item.QuartzItemsInspectionViewModels;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsThicknessMeasurement;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemsValveMaintenance;
 using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
-using Quartz.Common.ViewModels.Search.SearchTag;
 using System.Linq;
 
 namespace Quartz.Controllers.Project.Item
@@ -19,31 +18,17 @@ namespace Quartz.Controllers.Project.Item
         private readonly IQuartzItemsInspectionService _inspectionService;
         private readonly IQuartzItemsValveMaintenanceService _quartzItemsValveMaintenanceService;
         private readonly IQuartzItemsThicknessMeasurementService _quartzItemsThicknessMeasurementService;
-        private readonly ISearchTagService _searchTagService;
         public QuartzItemController(IQuartzItemService itemService,
                                     IQuartzItemsInformationService informationService,
                                     IQuartzItemsInspectionService inspectionService,
                                     IQuartzItemsValveMaintenanceService quartzItemsValveMaintenanceService,
-                                    IQuartzItemsThicknessMeasurementService quartzItemsThicknessMeasurementService,
-                                    ISearchTagService searchTagService)
+                                    IQuartzItemsThicknessMeasurementService quartzItemsThicknessMeasurementService)
         {
             _itemService = itemService;
             _informationService = informationService;
             _inspectionService = inspectionService;
             _quartzItemsValveMaintenanceService = quartzItemsValveMaintenanceService;
             _quartzItemsThicknessMeasurementService = quartzItemsThicknessMeasurementService;
-            _searchTagService = searchTagService;
-        }
-
-        [HttpPost]
-        public IActionResult FilterTag(SearchTagListViewModel model)
-        {
-            var filteredTags = _searchTagService.FilterTags(model);
-            var jSonModel = JsonConvert.SerializeObject(filteredTags, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-            return Json(jSonModel);
         }
 
         #region Item

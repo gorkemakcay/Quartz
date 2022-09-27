@@ -20,6 +20,7 @@ using Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingFeaturesViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinksDrawingSettingsViewModels;
 using Quartz.Common.ViewModels.Project.Link.QuartzLinkViewModels;
+using Quartz.Common.ViewModels.Search.SearchDrawing;
 using Quartz.Common.ViewModels.Search.SearchTag;
 using Quartz.Common.ViewModels.Users.AppRoleViewModels;
 using Quartz.Common.ViewModels.Users.AppUserViewModels;
@@ -216,6 +217,10 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
 
             #region Search Tag
             CreateMap<SearchTag, SearchTagListViewModel>().ReverseMap();
+            #endregion
+
+            #region Search Drawing
+            CreateMap<SearchDrawing, SearchDrawingListViewModel>().ReverseMap();
             #endregion
 
             #endregion

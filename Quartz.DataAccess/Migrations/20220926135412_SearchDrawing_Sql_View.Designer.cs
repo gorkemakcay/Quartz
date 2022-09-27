@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 
 namespace Quartz.DataAccess.Migrations
 {
     [DbContext(typeof(QuartzContext))]
-    partial class QuartzContextModelSnapshot : ModelSnapshot
+    [Migration("20220926135412_SearchDrawing_Sql_View")]
+    partial class SearchDrawing_Sql_View
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

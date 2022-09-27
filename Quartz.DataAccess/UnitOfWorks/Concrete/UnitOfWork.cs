@@ -68,6 +68,7 @@ namespace Quartz.DataAccess.UnitOfWorks.Concrete
         public ILookupItemsWeldTypeDal lookupItemsWeldTypeDal { get; private set; }
 
         public ISearchTagDal searchTagDal { get; set; }
+        public ISearchDrawingDal searchDrawingDal { get; set; }
 
         public UnitOfWork(QuartzContext ctx)
         {
@@ -97,6 +98,7 @@ namespace Quartz.DataAccess.UnitOfWorks.Concrete
             lookupItemsTechniqueDal = new EfLookupItemsTechniqueRepository(_ctx);
             lookupItemsWeldTypeDal = new EfLookupItemsWeldTypeRepository(_ctx);
             searchTagDal = new EfSearchTagRepository(_ctx);
+            searchDrawingDal = new EfSearchDrawingRepository(_ctx);
         }
 
         public void Dispose()

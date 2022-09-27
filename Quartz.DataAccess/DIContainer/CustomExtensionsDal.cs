@@ -45,7 +45,8 @@ namespace Quartz.DataAccess.DIContainer
                     .AddScoped<ILookupItemsStatusDal, EfLookupItemsStatusRepository>()
                     .AddScoped<ILookupItemsTechniqueDal, EfLookupItemsTechniqueRepository>()
                     .AddScoped<ILookupItemsWeldTypeDal, EfLookupItemsWeldTypeRepository>()
-                    .AddScoped<ISearchTagDal, EfSearchTagRepository>();
+                    .AddScoped<ISearchTagDal, EfSearchTagRepository>()
+                    .AddScoped<ISearchDrawingDal, EfSearchDrawingRepository>();
                     
 
             services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>))

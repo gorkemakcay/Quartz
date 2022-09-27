@@ -36,6 +36,7 @@ namespace Quartz.DataAccess.UnitOfWorks.Interface
         ILookupItemsTechniqueDal lookupItemsTechniqueDal { get; }
         ILookupItemsWeldTypeDal lookupItemsWeldTypeDal { get; }
         ISearchTagDal searchTagDal { get; }
+        ISearchDrawingDal searchDrawingDal { get; }
         IGenericDal<Table> GetRepository<Table>() where Table : class, ITable, new();
 
         void SaveChange();

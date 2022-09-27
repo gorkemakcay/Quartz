@@ -43,7 +43,8 @@ namespace Quartz.BusinessLogic.DIContainer
                     .AddScoped<ILookUpItemsStatusService, LookUpItemsStatusManager>()
                     .AddScoped<ILookUpItemsTechniqueService, LookUpItemsTechniqueManager>()
                     .AddScoped<ILookUpItemsWeldTypeService, LookUpItemsWeldTypeManager>()
-                    .AddScoped<ISearchTagService, SearchTagManager>();
+                    .AddScoped<ISearchTagService, SearchTagManager>()
+                    .AddScoped<ISearchDrawingService, SearchDrawingManager>();
                     
 
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
