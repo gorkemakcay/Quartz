@@ -15,6 +15,7 @@ namespace Quartz.Entities.Concrete.Project.Link
         public string CreatedBy { get; set; }
         public int MainQuartzLinkId { get; set; } // Linkin ait olduğu üst linkin Id'si
         public int CurrentDrawingId { get; set; } // Linkin mevcut çiziminin Id'si
+        public string Hierarchy { get; set; }
         public QuartzLinksDrawingSettings DrawingSettings { get; set; } // Linke ait DrawingSettings (One-to-One Relationship)
         public List<QuartzItem> Items { get; set; } // Linkin Itemları (One-to-Many Relationship)
         public List<QuartzLinksDrawingFeatures> DrawingFeatures { get; set; } // Linke ait DrawingFeature'lar (One-to-Many Relationship)

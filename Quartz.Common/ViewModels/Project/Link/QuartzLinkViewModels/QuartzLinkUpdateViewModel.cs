@@ -11,5 +11,6 @@ namespace Quartz.Common.ViewModels.Project.Link.QuartzLinkViewModels
         public string CreatedBy { get; set; }
         public int MainQuartzLinkId { get; set; } // Linkin ait olduğu üst linkin Id'si
         public int CurrentDrawingId { get; set; } // Linkin mevcut çiziminin Id'si
+        public string Hierarchy { get; set; }
     }
 }

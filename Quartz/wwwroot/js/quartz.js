@@ -298,7 +298,8 @@
                         CreatedDate: getDate(),
                         CreatedBy: "Görkem", // [TAMAMLANMADI]
                         MainQuartzLinkId: currentQuartzLink.Id,
-                        CurrentDrawingId: 0
+                        CurrentDrawingId: 0,
+                        Hierarchy: currentQuartzLink.Hierarchy + ',' + currentQuartzLink.Id
                     };
 
                     $.ajax({
@@ -315,6 +316,7 @@
                             evt.feature.setProperties({ 'Id': lastCreatedLink.Id });
                             evt.feature.setProperties({ 'Name': lastCreatedLink.TagNo });
                             evt.feature.setProperties({ 'Type': "link" });
+                            evt.feature.setProperties({ 'Hierarchy': currentQuartzLink.Hierarchy + ',' + currentQuartzLink.Id });
 
                             setTimeout(addDrawingFeaturesJSON, 100);
 
@@ -476,32 +478,32 @@
 
     }
 
-    function updateDrawingFeatures() {
-        var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-        });
+    //function updateDrawingFeatures() {
+    //    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+    //        dataProjection: 'EPSG:4326',
+    //        featureProjection: 'EPSG:3857'
+    //    });
 
-        var drawingFeaturesModel = {
-            Id: currentDrawingFeatures.Id,
-            Features: json,
-            QuartzLinkId: currentQuartzLink.Id
-        };
+    //    var drawingFeaturesModel = {
+    //        Id: currentDrawingFeatures.Id,
+    //        Features: json,
+    //        QuartzLinkId: currentQuartzLink.Id
+    //    };
 
-        $.ajax({
-            type: "POST",
-            url: linkController.DrawingFeatures.Update,
-            data: { model: drawingFeaturesModel },
-            success: function (response) {
-                rModel = jQuery.parseJSON(response);
-                getVectorSource();
-            },
-            error: function (error) {
-                alert("error!");
-                console.log(error.responseText);
-            }
-        });
-    }
+    //    $.ajax({
+    //        type: "POST",
+    //        url: linkController.DrawingFeatures.Update,
+    //        data: { model: drawingFeaturesModel },
+    //        success: function (response) {
+    //            rModel = jQuery.parseJSON(response);
+    //            getVectorSource();
+    //        },
+    //        error: function (error) {
+    //            alert("error!");
+    //            console.log(error.responseText);
+    //        }
+    //    });
+    //}
 
     // #region Handle tpyeSelect Change Event
     typeSelect.onchange = function () {

@@ -73,6 +73,17 @@ namespace Quartz.Controllers.Project.Link
         }
 
         [HttpGet]
+        public IActionResult GetAllLinksWithoutMainLinkId()
+        {
+            var model = _linkService.GetAllLinksWithoutMainLinkId();
+            var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
         public IActionResult GetLinkDetailJSON(int linkId)
         {
             var model = _linkService.GetLinkDetail(linkId);

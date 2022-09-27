@@ -710,55 +710,88 @@ function getVectorSource() {
 function deleteThis(objectType, objectId) {
     switch (objectType) {
         case "link":
-            var linkDeleteModel = { Id: objectId };
             $.ajax({
-                type: "DELETE",
-                url: linkController.Link.Delete,
-                data: { model: linkDeleteModel },
+                type: "GET",
+                url: "QuartzLink/GetAllLinksWithoutMainLinkId",
+                data: { mainLinkId: objectId },
                 success: function (response) {
-                    $("#linkModal").modal("hide");
-                    createList();
-                    source.getFeatures().forEach(function (feature) {
-                        if (feature.get("Id") == linkDeleteModel.Id && feature.get("Type") == "link") {
-                            source.removeFeature(feature);
+                    var rLinkList = jQuery.parseJSON(response);
 
-                            var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
-                                dataProjection: 'EPSG:4326',
-                                featureProjection: 'EPSG:3857'
-                            });
-
-                            var drawingFeaturesModel = {
-                                Id: currentDrawingFeatures.Id,
-                                Features: json,
-                                QuartzLinkId: currentQuartzLink.Id
-                            };
-
-                            $.ajax({
-                                type: "POST",
-                                url: linkController.DrawingFeatures.Update,
-                                data: { model: drawingFeaturesModel },
-                                success: function (response) {
-                                    rModel = jQuery.parseJSON(response);
-                                    getVectorSource();
-                                },
-                                error: function (error) {
-                                    alert("error!");
-                                    console.log(error.responseText);
-                                }
-                            });
-
-                            objectTypeToBeDeleted = "";
-                            objectIdToBeDeleted = "";
-
-                            toast("Link Deleted Successful");
+                    rLinkList.forEach(function (link) {
+                        var hierarchy = link.Hierarchy.split(',');
+                        for (let id in hierarchy) {
+                            if (hierarchy[id] == objectId) {
+                                var linkDeleteModel = { Id: link.Id };
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: linkController.Link.Delete,
+                                    data: { model: linkDeleteModel },
+                                    success: function (response) {
+                                    },
+                                    error: function (error) {
+                                        alert("error");
+                                        console.log(error.responseText);
+                                    }
+                                });
+                                break;
+                            }
                         }
                     });
-                },
-                error: function (error) {
-                    alert("error");
-                    console.log(error.responseText);
+
+                    var linkDeleteModel = { Id: objectId };
+                    $.ajax({
+                        type: "DELETE",
+                        url: linkController.Link.Delete,
+                        data: { model: linkDeleteModel },
+                        success: function (response) {
+                            $("#linkModal").modal("hide");
+                            createList();
+
+                            source.getFeatures().forEach(function (feature) {
+                                if (feature.get("Id") == linkDeleteModel.Id && feature.get("Type") == "link") {
+                                    source.removeFeature(feature);
+
+                                    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+                                        dataProjection: 'EPSG:4326',
+                                        featureProjection: 'EPSG:3857'
+                                    });
+
+                                    var drawingFeaturesModel = {
+                                        Id: currentDrawingFeatures.Id,
+                                        Features: json,
+                                        QuartzLinkId: currentQuartzLink.Id
+                                    };
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: linkController.DrawingFeatures.Update,
+                                        data: { model: drawingFeaturesModel },
+                                        success: function (response) {
+                                            rModel = jQuery.parseJSON(response);
+                                            getVectorSource();
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+
+                                    objectTypeToBeDeleted = "";
+                                    objectIdToBeDeleted = "";
+
+                                    toast("Link Deleted Successful");
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error");
+                            console.log(error.responseText);
+                        }
+                    });
                 }
             });
+
+           
             break;
 
         case "attachment":
@@ -1359,6 +1392,33 @@ function deleteThis(objectType, objectId) {
 
         default:
     }
+}
+
+function updateDrawingFeatures() {
+    var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:3857'
+    });
+
+    var drawingFeaturesModel = {
+        Id: currentDrawingFeatures.Id,
+        Features: json,
+        QuartzLinkId: currentQuartzLink.Id
+    };
+
+    $.ajax({
+        type: "POST",
+        url: linkController.DrawingFeatures.Update,
+        data: { model: drawingFeaturesModel },
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+            getVectorSource();
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
 }
 
 // TTTTTTTTTTTTTTTTTTTTTTTTTTRIAL AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

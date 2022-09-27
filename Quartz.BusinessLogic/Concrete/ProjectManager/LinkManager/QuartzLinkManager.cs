@@ -29,7 +29,8 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
                 CreatedDate = model.CreatedDate,
                 CreatedBy = model.CreatedBy,
                 MainQuartzLinkId = model.MainQuartzLinkId,
-                CurrentDrawingId = model.CurrentDrawingId
+                CurrentDrawingId = model.CurrentDrawingId,
+                Hierarchy = model.Hierarchy
             };
 
             context.QuartzLinks.Add(link);
@@ -48,6 +49,11 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.LinkManager
         public List<QuartzLinkListViewModel> GetAllLinks(int mainLinkId)
         {
             return _mapper.Map<List<QuartzLinkListViewModel>>(GetAll(I => I.MainQuartzLinkId == mainLinkId));
+        }
+
+        public List<QuartzLinkListViewModel> GetAllLinksWithoutMainLinkId()
+        {
+            return _mapper.Map<List<QuartzLinkListViewModel>>(GetAll());
         }
 
         public QuartzLinkUpdateViewModel GetLinkDetail(int linkId)
