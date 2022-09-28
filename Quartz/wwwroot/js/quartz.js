@@ -63,7 +63,7 @@
         //extent: [-1200, -778, 3120, 2134]
     });
 
-    imageUrl = "http://localhost:5001/home/get?path=";
+    imageUrl = "http://quartz.portalacbi.com/home/get?path=";
     imageUrl = imageUrl + currentDrawing.Path;
 
     imageLayer = new ol.layer.Image({

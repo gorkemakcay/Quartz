@@ -387,7 +387,7 @@ function loadDrawingSettingsAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                            "<a href='http://quartz.portalacbi.com/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                             "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 drawingSettingsDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
                                     ),
@@ -436,7 +436,7 @@ function loadDrawingSettingsAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                "<a href='http://localhost:5001/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
+                                                "<a href='http://quartz.portalacbi.com/FileUpload/DownloadFile?fileId= + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                                 "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 drawingSettingsDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
                                         ),

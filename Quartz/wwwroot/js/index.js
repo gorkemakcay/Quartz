@@ -371,7 +371,7 @@ $(function () {
     $.ajax({
         type: "GET",
         url: linkController.Link.Detail,
-        data: { linkId: 1 },
+        data: { linkId: 2 },
         success: function (response) {
             currentQuartzLink = jQuery.parseJSON(response);
 
