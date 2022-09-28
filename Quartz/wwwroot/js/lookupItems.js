@@ -517,7 +517,7 @@ function addPlantSystem() {
 
         $.ajax({
             type: "POST",
-            url: lookupItemController.PlantSystem.PartialView,
+            url: lookupItemController.PlantSystem.Add,
             data: { model: plantSystemModel },
             success: function (data) {
                 rModel = jQuery.parseJSON(data);
