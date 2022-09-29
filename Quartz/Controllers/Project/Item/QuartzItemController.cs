@@ -317,6 +317,17 @@ namespace Quartz.Controllers.Project.Item
             return Json(jSonModel);
         }
 
+        [HttpPost]
+        public IActionResult FilterValveMaintenances(QuartzItemsValveMaintenanceFilterViewModel model)
+        {
+            var rModel = _quartzItemsValveMaintenanceService.FilterValveMaintenances(model);
+            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
         [HttpDelete]
         public IActionResult DeleteValveMaintenance(QuartzItemsValveMaintenanceDeleteViewModel model)
         {
@@ -408,6 +419,18 @@ namespace Quartz.Controllers.Project.Item
                 _quartzItemsThicknessMeasurementService.DeleteThicknessMeasurement(model);
             }
             return Json(null);
+        }
+
+
+        [HttpPost]
+        public IActionResult FilterThicknessMeasurements(QuartzItemsThicknessMeasurementFilterViewModel model)
+        {
+            var rModel = _quartzItemsThicknessMeasurementService.FilterThicknessMeasurements(model);
+            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
         }
 
         [HttpGet]

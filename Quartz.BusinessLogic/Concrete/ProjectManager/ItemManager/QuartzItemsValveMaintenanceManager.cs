@@ -5,6 +5,7 @@ using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.Project.Item;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
 {
@@ -48,6 +49,34 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
         {
             Delete(_mapper.Map<QuartzItemsValveMaintenance>(model));
             _uow.SaveChange();
+        }
+
+        public List<QuartzItemsValveMaintenanceFilterViewModel> FilterValveMaintenances(QuartzItemsValveMaintenanceFilterViewModel model)
+        {
+            var filteredValveMaintenances = _mapper.Map<List<QuartzItemsValveMaintenanceFilterViewModel>>(GetAll());
+
+            if (model.KKSNo != null)
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.KKSNo.Contains(model.KKSNo)).ToList();
+
+            if (model.SerialNo != null)
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.SerialNo.Contains(model.SerialNo)).ToList();
+
+            if (model.SupplierManufacturare != null)
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.SupplierManufacturare.Contains(model.SupplierManufacturare)).ToList();
+
+            if (model.Designation != null)
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.Designation.Contains(model.Designation)).ToList();
+
+            if (model.Remarks != null)
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.Remarks.Contains(model.Remarks)).ToList();
+
+            if (model.TestDate.ToString() != "1.01.0001 00:00:00")
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.TestDate == model.TestDate).ToList();
+
+            if (model.PlantArea != "value")
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.PlantArea == model.PlantArea).ToList();
+
+            return filteredValveMaintenances;
         }
 
         public List<QuartzItemsValveMaintenanceListViewModel> GetAllValveMaintenances(int quartzItemId)

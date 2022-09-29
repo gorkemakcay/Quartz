@@ -11,5 +11,6 @@ namespace Quartz.BusinessLogic.Interface.IProjectService.IItemService
         void DeleteThicknessMeasurement(QuartzItemsThicknessMeasurementDeleteViewModel model);
         QuartzItemsThicknessMeasurementUpdateViewModel GetThicknessMeasurementDetail(int thicknessMeasurementId);
         List<QuartzItemsThicknessMeasurementListViewModel> GetAllThicknessMeasurements(int quartzItemId);
+        List<QuartzItemsThicknessMeasurementFilterViewModel> FilterThicknessMeasurements(QuartzItemsThicknessMeasurementFilterViewModel model);
     }
 }

@@ -104,6 +104,7 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementListViewModel>().ReverseMap();
             CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementUpdateViewModel>().ReverseMap();
             CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementDeleteViewModel>().ReverseMap();
+            CreateMap<QuartzItemsThicknessMeasurement, QuartzItemsThicknessMeasurementFilterViewModel>().ReverseMap();
             #endregion
 
             #region QuartzItemsValveMaintenance
@@ -111,6 +112,7 @@ namespace Quartz.Common.Mapping.AutoMapperProfile
             CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceListViewModel>().ReverseMap();
             CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceUpdateViewModel>().ReverseMap();
             CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceDeleteViewModel>().ReverseMap();
+            CreateMap<QuartzItemsValveMaintenance, QuartzItemsValveMaintenanceFilterViewModel>().ReverseMap();
 
             #endregion
 
