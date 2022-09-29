@@ -21,23 +21,23 @@ namespace Quartz.BusinessLogic.Concrete.SearchManager
         {
             var filteredTags = _mapper.Map<List<SearchTagListViewModel>>(GetAll());
 
-            if (model.TagNo != null)
-                filteredTags = filteredTags.Where(I => I.TagNo.ToLower().Contains(model.TagNo.ToLower())).ToList();
+            if (model.ItemTagNo != null)
+                filteredTags = filteredTags.Where(I => I.ItemTagNo != null && I.ItemTagNo.ToLower().Contains(model.ItemTagNo.ToLower())).ToList();
 
             if (model.Description != null)
-                filteredTags = filteredTags.Where(I => I.Description.ToLower().Contains(model.Description.ToLower())).ToList();
+                filteredTags = filteredTags.Where(I => I.Description != null && I.Description.ToLower().Contains(model.Description.ToLower())).ToList();
 
             if (model.FittingType != "value")
-                filteredTags = filteredTags.Where(I => I.FittingType == model.FittingType).ToList();
+                filteredTags = filteredTags.Where(I => I.FittingType != null && I.FittingType == model.FittingType).ToList();
 
             if (model.WeldType != "value")
-                filteredTags = filteredTags.Where(I => I.WeldType == model.WeldType).ToList();
+                filteredTags = filteredTags.Where(I => I.WeldType != null && I.WeldType == model.WeldType).ToList();
 
             if (model.PlantArea != "value")
-                filteredTags = filteredTags.Where(I => I.PlantArea == model.PlantArea).ToList();
+                filteredTags = filteredTags.Where(I => I.PlantArea != null && I.PlantArea == model.PlantArea).ToList();
 
             if (model.PlantSystem != "value")
-                filteredTags = filteredTags.Where(I => I.PlantSystem == model.PlantSystem).ToList();
+                filteredTags = filteredTags.Where(I => I.PlantArea != null && I.PlantSystem == model.PlantSystem).ToList();
 
             return filteredTags;
         }

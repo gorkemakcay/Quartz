@@ -52,22 +52,22 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             var filteredThicknessMeasurements = _mapper.Map<List<QuartzItemsThicknessMeasurementFilterViewModel>>(GetAll());
 
             if (model.NominalThickness != 0)
-                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.NominalThickness == model.NominalThickness).ToList();
+                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.NominalThickness != 0 && I.NominalThickness == model.NominalThickness).ToList();
 
             if (model.MeasuredThickness != 0)
-                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.MeasuredThickness == model.MeasuredThickness).ToList();
+                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.MeasuredThickness != 0 && I.MeasuredThickness == model.MeasuredThickness).ToList();
 
             if (model.Description != null)
-                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.Description.Contains(model.Description)).ToList();
+                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.Description != null && I.Description.Contains(model.Description)).ToList();
 
             if (model.Specification != "value")
-                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.Specification == model.Specification).ToList();
+                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.Specification != null && I.Specification == model.Specification).ToList();
 
             if (model.PlantArea != "value")
-                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.PlantArea == model.PlantArea).ToList();
+                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.PlantArea != null && I.PlantArea == model.PlantArea).ToList();
 
             if (model.PlantSystem != "value")
-                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.PlantSystem == model.PlantSystem).ToList();
+                filteredThicknessMeasurements = filteredThicknessMeasurements.Where(I => I.PlantSystem != null && I.PlantSystem == model.PlantSystem).ToList();
 
             return filteredThicknessMeasurements;
         }

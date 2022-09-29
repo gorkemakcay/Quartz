@@ -10,8 +10,8 @@ using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 namespace Quartz.DataAccess.Migrations
 {
     [DbContext(typeof(QuartzContext))]
-    [Migration("20220923111155_SearchTag_Sql_View")]
-    partial class SearchTag_Sql_View
+    [Migration("20220929112413_vw_SearchTag_Create")]
+    partial class vw_SearchTag_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -486,6 +486,9 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<int>("CurrentDrawingId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Hierarchy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MainQuartzLinkId")
                         .HasColumnType("int");
 
@@ -655,6 +658,52 @@ namespace Quartz.DataAccess.Migrations
                     b.HasIndex("QuartzItemId");
 
                     b.ToTable("QuartzItemsInspections");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Search.SearchDrawing", b =>
+                {
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LinkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlantArea")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlantSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("vw_SearchDrawing");
+                });
+
+            modelBuilder.Entity("Quartz.Entities.Concrete.Search.SearchTag", b =>
+                {
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FittingType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlantArea")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlantSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeldType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("vw_SearchTag");
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.Users.AppRole", b =>

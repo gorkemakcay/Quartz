@@ -1,7 +1,7 @@
 ﻿function filterDrawing() {
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetSearchPanelsInspectionPartialView",
+        url: "Search/GetSearchPanelsDrawingPartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
 
@@ -18,85 +18,41 @@
                 data: { model: filterDrawingModel },
                 success: function (response) {
                     var filteredDrawings = jQuery.parseJSON(response);
-                    console.log(filteredDrawings);
 
-                    //$("#searchPanelInspectionTable").children('tbody').children('tr').remove();
+                    $("#searchPanelDrawingTable").children('tbody').children('tr').remove();
 
-                    //if (filteredInspections != "") {
-                    //    var inspectionCount = filteredInspections.length;
-                    //    var inspectionNumber = 0;
-                    //    $("#totalSearchPanelInspectionCount").html("Total Inspection Count: " + inspectionCount);
+                    if (filteredDrawings != "") {
+                        var drawingCount = filteredDrawings.length;
+                        $("#totalSearchPanelDrawingCount").html("Total Tag Count: " + drawingCount);
 
-                    //    filteredInspections.forEach(function (inspection) {
-                    //        var date = inspection.Date.split('T')[0];
-                    //        var itemDetail;
-                    //        var linkDetail;
-                    //        $.ajax({
-                    //            type: "GET",
-                    //            url: "QuartzItem/GetItemDetailJSON",
-                    //            data: { itemId: inspection.QuartzItemId },
-                    //            success: function (response) {
-                    //                itemDetail = jQuery.parseJSON(response);
+                        filteredDrawings.forEach(function (drawing) {
 
-                    //                $.ajax({
-                    //                    type: "GET",
-                    //                    url: "QuartzLink/GetLinkDetailJSON",
-                    //                    data: { linkId: itemDetail.QuartzLinkId },
-                    //                    success: function (response) {
-                    //                        linkDetail = jQuery.parseJSON(response);
+                            $("#searchPanelDrawingTable").children('tbody').append(
+                                $('<tr>').append(
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;'>" + drawing.TagNo + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + drawing.Description + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;' class='plantIdent'>" + drawing.PlantArea + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + drawing.PlantSystem + "</p>"
+                                    )
+                                )
+                            );
 
-                    //                        $("#searchPanelInspectionTable").children('tbody').append(
-                    //                            $('<tr>').append(
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.ReportNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + linkDetail.TagNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong style='color: blue;' id=" + linkDetail.Id + " class='plantIdent'>" + itemDetail.TagNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + date + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.Method + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.Status + "</strong>"
-                    //                                ),
-                    //                            )
-                    //                        );
-                    //                    },
-                    //                    error: function (error) {
-                    //                        alert("error!");
-                    //                        console.log(error.responseText);
-                    //                    }
-                    //                });
-                    //            },
-                    //            error: function (error) {
-                    //                alert("error!");
-                    //                console.log(error.responseText);
-                    //            }
-                    //        });
-
-                    //        inspectionNumber++;
-                    //    });
-
-                    //    //if (inspectionCount >= inspectionNumber) {
-                    //    //    alert(inspectionNumber);
-                    //    //    $(".plantIdent").on('click', function () {
-                    //    //        alert($(this).attr("id"));
-                    //    //    });
-                    //    //}
-                    //}
-                    //else {
-                    //    $("#searchPanelInspectionTable").children('tbody').append(
-                    //        $('<tr>').append(
-                    //            $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
-                    //        )
-                    //    );
-                    //}
+                        });
+                    }
+                    else {
+                        $("#searchPanelDrawingTable").children('tbody').append(
+                            $('<tr>').append(
+                                $('<td>', { colspan: "4", class: "text-center" }).append("No data available to show!")
+                            )
+                        );
+                    }
                 },
                 error: function (error) {
                     alert("error!");
@@ -114,12 +70,12 @@
 function filterTag() {
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetSearchPanelsTagPartialView",
+        url: "Search/GetSearchPanelsTagPartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
 
             var filterTagModel = {
-                TagNo: $("#itemFilterTagNo").val(),
+                ItemTagNo: $("#itemFilterTagNo").val(),
                 FittingType: $("#itemFilterFittingType").val(),
                 WeldType: $("#itemFilterWeldType").val(),
                 plantArea: $("#itemFilterPlantArea").val(),
@@ -133,77 +89,42 @@ function filterTag() {
                 data: { model: filterTagModel },
                 success: function (response) {
                     var filteredTags = jQuery.parseJSON(response);
-                    console.log(filteredTags);
 
                     $("#searchPanelTagTable").children('tbody').children('tr').remove();
 
                     if (filteredTags != "") {
-                        var TagCount = filteredTags.length;
-                        $("#totalSearchPanelTagCount").html("Total Tag Count: " + TagCount);
+                        var tagCount = filteredTags.length;
+                        $("#totalSearchPanelTagCount").html("Total Tag Count: " + tagCount);
 
                         filteredTags.forEach(function (tag) {
-                            var informationDetail;
-                            var linkDetail;
 
-                            $.ajax({
-                                type: "GET",
-                                url: "QuartzItem/GetInformationDetailJSON",
-                                data: { quartzItemId: tag.QuartzItemId },
-                                success: function (response) {
-                                    informationDetail = jQuery.parseJSON(response);
-
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "QuartzLink/GetLinkDetailJSON",
-                                        data: { linkId: itemDetail.QuartzLinkId },
-                                        success: function (response) {
-                                            linkDetail = jQuery.parseJSON(response);
-
-                                            $("#searchPanelInspectionTable").children('tbody').append(
-                                                $('<tr>').append(
-                                                    $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + inspection.ReportNo + "</p>"
-                                                    ),
-                                                    $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + linkDetail.TagNo + "</p>"
-                                                    ),
-                                                    $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;' class='plantIdent'>" + itemDetail.TagNo + "</p>"
-                                                    ),
-                                                    $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + date + "</p>"
-                                                    ),
-                                                    $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + inspection.Method + "</p>"
-                                                    ),
-                                                    $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + inspection.Status + "</p>"
-                                                    ),
-                                                )
-                                            );
-
-                                            //$(".plantIdent").on('click', function () {
-                                            //    alert("hi");
-                                            //});
-                                        },
-                                        error: function (error) {
-                                            alert("error!");
-                                            console.log(error.responseText);
-                                        }
-                                    });
-                                },
-                                error: function (error) {
-                                    alert("error!");
-                                    console.log(error.responseText);
-                                }
-                            });
+                            $("#searchPanelTagTable").children('tbody').append(
+                                $('<tr>').append(
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.ItemTagNo + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.SerialNo + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;' class='plantIdent'>" + tag.LinkTagNo + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.FittingType + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.Specification + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'> YES/NO </p>"
+                                    ),
+                                )
+                            );
 
                         });
-
-
                     }
                     else {
-                        $("#searchPanelInspectionTable").children('tbody').append(
+                        $("#searchPanelTagTable").children('tbody').append(
                             $('<tr>').append(
                                 $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
                             )
@@ -355,7 +276,7 @@ function filterInspection() {
 function filterValveMaintenance() {
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetSearchPanelsInspectionPartialView",
+        url: "QuartzItem/GetSearchPanelsValveMaintenancePartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
 
@@ -369,7 +290,7 @@ function filterValveMaintenance() {
             var filterValveMaintenanceModel = {
                 KKSNo: $("#valveMaintenanceFilterKKSNo").val(),
                 SerialNo: $("#valveMaintenanceFilterSerialNo").val(),
-                SupplierManufacturare: $("#valveMaintenanceSupplierManufacturare").val(),
+                SupplierManufacturare: $("#valveMaintenanceFilterSupplierManufacturare").val(),
                 Designation: $("#valveMaintenanceFilterDesignation").val(),
                 Remarks: $("#valveMaintenanceFilterRemarks").val(),
                 TestDate: testDate,
@@ -384,83 +305,49 @@ function filterValveMaintenance() {
                     var filteredValveMaintenances = jQuery.parseJSON(response);
                     console.log(filteredValveMaintenances);
 
-                    $("#searchPanelInspectionTable").children('tbody').children('tr').remove();
+                    $("#searchPanelValveMaintenanceTable").children('tbody').children('tr').remove();
 
-                    //if (filteredInspections != "") {
-                    //    var inspectionCount = filteredInspections.length;
-                    //    var inspectionNumber = 0;
-                    //    $("#totalSearchPanelInspectionCount").html("Total Inspection Count: " + inspectionCount);
+                    if (filteredValveMaintenances != "") {
+                        var valveMaintenanceCount = filteredValveMaintenances.length;
+                        $("#totalSearchPanelValveMaintenanceCount").html("Total Tag Count: " + valveMaintenanceCount);
 
-                    //    filteredInspections.forEach(function (inspection) {
-                    //        var date = inspection.Date.split('T')[0];
-                    //        var itemDetail;
-                    //        var linkDetail;
-                    //        $.ajax({
-                    //            type: "GET",
-                    //            url: "QuartzItem/GetItemDetailJSON",
-                    //            data: { itemId: inspection.QuartzItemId },
-                    //            success: function (response) {
-                    //                itemDetail = jQuery.parseJSON(response);
+                        filteredValveMaintenances.forEach(function (valveMaintenance) {
 
-                    //                $.ajax({
-                    //                    type: "GET",
-                    //                    url: "QuartzLink/GetLinkDetailJSON",
-                    //                    data: { linkId: itemDetail.QuartzLinkId },
-                    //                    success: function (response) {
-                    //                        linkDetail = jQuery.parseJSON(response);
+                            $("#searchPanelValveMaintenanceTable").children('tbody').append(
+                                $('<tr>').append(
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;'>" + valveMaintenance.KKSNo + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.SerialNo + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;' class='plantIdent'>" + valveMaintenance.SupplierManufacturare + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.Designation + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.Remarks + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.TestDate + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.PlantArea + "</p>"
+                                    )
+                                )
+                            );
 
-                    //                        $("#searchPanelInspectionTable").children('tbody').append(
-                    //                            $('<tr>').append(
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.ReportNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + linkDetail.TagNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong style='color: blue;' id=" + linkDetail.Id + " class='plantIdent'>" + itemDetail.TagNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + date + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.Method + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.Status + "</strong>"
-                    //                                ),
-                    //                            )
-                    //                        );
-                    //                    },
-                    //                    error: function (error) {
-                    //                        alert("error!");
-                    //                        console.log(error.responseText);
-                    //                    }
-                    //                });
-                    //            },
-                    //            error: function (error) {
-                    //                alert("error!");
-                    //                console.log(error.responseText);
-                    //            }
-                    //        });
-
-                    //        inspectionNumber++;
-                    //    });
-
-                    //    //if (inspectionCount >= inspectionNumber) {
-                    //    //    alert(inspectionNumber);
-                    //    //    $(".plantIdent").on('click', function () {
-                    //    //        alert($(this).attr("id"));
-                    //    //    });
-                    //    //}
-                    //}
-                    //else {
-                    //    $("#searchPanelInspectionTable").children('tbody').append(
-                    //        $('<tr>').append(
-                    //            $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
-                    //        )
-                    //    );
-                    //}
+                        });
+                    }
+                    else {
+                        $("#searchPanelValveMaintenanceTable").children('tbody').append(
+                            $('<tr>').append(
+                                $('<td>', { colspan: "7", class: "text-center" }).append("No data available to show!")
+                            )
+                        );
+                    }
                 },
                 error: function (error) {
                     alert("error!");
@@ -478,7 +365,7 @@ function filterValveMaintenance() {
 function filterThicknessMeasurement() {
     $.ajax({
         type: "GET",
-        url: "QuartzItem/GetSearchPanelsInspectionPartialView",
+        url: "QuartzItem/GetSearchPanelsThicknessMeasurementPartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
 
@@ -495,88 +382,51 @@ function filterThicknessMeasurement() {
             $.ajax({
                 type: "POST",
                 url: "QuartzItem/FilterThicknessMeasurements", // AJAX URL ROUTER'A EKLE
-                data: { model: filterThicknessMeasurementModel},
+                data: { model: filterThicknessMeasurementModel },
                 success: function (response) {
                     var filteredThicknessMeasurements = jQuery.parseJSON(response);
                     console.log(filteredThicknessMeasurements);
 
-                    //$("#searchPanelInspectionTable").children('tbody').children('tr').remove();
+                    $("#searchPanelThicknessMeasurementTable").children('tbody').children('tr').remove();
 
-                    //if (filteredInspections != "") {
-                    //    var inspectionCount = filteredInspections.length;
-                    //    var inspectionNumber = 0;
-                    //    $("#totalSearchPanelInspectionCount").html("Total Inspection Count: " + inspectionCount);
+                    if (filteredThicknessMeasurements != "") {
+                        var thicknessMeasurementCount = filteredThicknessMeasurements.length;
+                        $("#totalSearchPanelThicknessMeasurementCount").html("Total Tag Count: " + thicknessMeasurementCount);
 
-                    //    filteredInspections.forEach(function (inspection) {
-                    //        var date = inspection.Date.split('T')[0];
-                    //        var itemDetail;
-                    //        var linkDetail;
-                    //        $.ajax({
-                    //            type: "GET",
-                    //            url: "QuartzItem/GetItemDetailJSON",
-                    //            data: { itemId: inspection.QuartzItemId },
-                    //            success: function (response) {
-                    //                itemDetail = jQuery.parseJSON(response);
+                        filteredThicknessMeasurements.forEach(function (thicknessMeasurement) {
 
-                    //                $.ajax({
-                    //                    type: "GET",
-                    //                    url: "QuartzLink/GetLinkDetailJSON",
-                    //                    data: { linkId: itemDetail.QuartzLinkId },
-                    //                    success: function (response) {
-                    //                        linkDetail = jQuery.parseJSON(response);
+                            $("#searchPanelThicknessMeasurementTable").children('tbody').append(
+                                $('<tr>').append(
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;'>" + thicknessMeasurement.NominalThickness + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.MeasuredThickness + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;' class='plantIdent'>" + thicknessMeasurement.Description + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.Specification + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.PlantArea + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.PlantSystem + "</p>"
+                                    )
+                                )
+                            );
 
-                    //                        $("#searchPanelInspectionTable").children('tbody').append(
-                    //                            $('<tr>').append(
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.ReportNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + linkDetail.TagNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong style='color: blue;' id=" + linkDetail.Id + " class='plantIdent'>" + itemDetail.TagNo + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + date + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.Method + "</strong>"
-                    //                                ),
-                    //                                $('<td>', { align: "center" }).append(
-                    //                                    "<strong>" + inspection.Status + "</strong>"
-                    //                                ),
-                    //                            )
-                    //                        );
-                    //                    },
-                    //                    error: function (error) {
-                    //                        alert("error!");
-                    //                        console.log(error.responseText);
-                    //                    }
-                    //                });
-                    //            },
-                    //            error: function (error) {
-                    //                alert("error!");
-                    //                console.log(error.responseText);
-                    //            }
-                    //        });
-
-                    //        inspectionNumber++;
-                    //    });
-
-                    //    //if (inspectionCount >= inspectionNumber) {
-                    //    //    alert(inspectionNumber);
-                    //    //    $(".plantIdent").on('click', function () {
-                    //    //        alert($(this).attr("id"));
-                    //    //    });
-                    //    //}
-                    //}
-                    //else {
-                    //    $("#searchPanelInspectionTable").children('tbody').append(
-                    //        $('<tr>').append(
-                    //            $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
-                    //        )
-                    //    );
-                    //}
+                        });
+                    }
+                    else {
+                        $("#searchPanelThicknessMeasurementTable").children('tbody').append(
+                            $('<tr>').append(
+                                $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
+                            )
+                        );
+                    }
                 },
                 error: function (error) {
                     alert("error!");

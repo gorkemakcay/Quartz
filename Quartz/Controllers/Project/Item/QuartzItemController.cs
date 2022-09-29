@@ -210,17 +210,6 @@ namespace Quartz.Controllers.Project.Item
             return Json(jSonModel);
         }
 
-        [HttpPost]
-        public IActionResult FilterInspections(QuartzItemsInspectionFilterViewModel model)
-        {
-            var rModel = _inspectionService.FilterInspections(model);
-            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-            return Json(jSonModel);
-        }
-
         [HttpDelete]
         public IActionResult DeleteInspection(QuartzItemsInspectionDeleteViewModel model)
         {
@@ -249,11 +238,6 @@ namespace Quartz.Controllers.Project.Item
             return PartialView("QuartzItemsInspectionsAttachmentPartial");
         }
 
-        [HttpGet]
-        public IActionResult GetSearchPanelsInspectionPartialView()
-        {
-            return PartialView("SearchPanelsInspectionPartial");
-        }
         #endregion
 
         #region Attachment
@@ -279,7 +263,7 @@ namespace Quartz.Controllers.Project.Item
             }
             return Json(null);
         }
-
+        
         [HttpPost]
         public IActionResult UpdateValveMaintenanceJSON(QuartzItemsValveMaintenanceUpdateViewModel model)
         {
@@ -311,17 +295,6 @@ namespace Quartz.Controllers.Project.Item
         {
             var model = _quartzItemsValveMaintenanceService.GetAllValveMaintenances(quartzItemId);
             var jSonModel = JsonConvert.SerializeObject(model, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-            return Json(jSonModel);
-        }
-
-        [HttpPost]
-        public IActionResult FilterValveMaintenances(QuartzItemsValveMaintenanceFilterViewModel model)
-        {
-            var rModel = _quartzItemsValveMaintenanceService.FilterValveMaintenances(model);
-            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
@@ -421,18 +394,6 @@ namespace Quartz.Controllers.Project.Item
             return Json(null);
         }
 
-
-        [HttpPost]
-        public IActionResult FilterThicknessMeasurements(QuartzItemsThicknessMeasurementFilterViewModel model)
-        {
-            var rModel = _quartzItemsThicknessMeasurementService.FilterThicknessMeasurements(model);
-            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-            return Json(jSonModel);
-        }
-
         [HttpGet]
         public IActionResult GetThicknessMeasurementPartialView()
         {
@@ -450,6 +411,73 @@ namespace Quartz.Controllers.Project.Item
         {
             return PartialView("QuartzItemsThicknessMeasurementsAttachmentPartial");
         }
+        #endregion
+
+        #region Search
+
+            #region Inspection
+
+        [HttpPost]
+        public IActionResult FilterInspections(QuartzItemsInspectionFilterViewModel model)
+        {
+            var rModel = _inspectionService.FilterInspections(model);
+            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetSearchPanelsInspectionPartialView()
+        {
+            return PartialView("SearchPanelsInspectionPartial");
+        }
+
+        #endregion
+
+            #region Valve Maintenance
+
+        [HttpPost]
+        public IActionResult FilterValveMaintenances(QuartzItemsValveMaintenanceFilterViewModel model)
+        {
+            var rModel = _quartzItemsValveMaintenanceService.FilterValveMaintenances(model);
+            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetSearchPanelsValveMaintenancePartialView()
+        {
+            return PartialView("SearchPanelsValveMaintenancePartial");
+        }
+
+        #endregion
+
+        #region Thickness Measurement
+
+        [HttpPost]
+        public IActionResult FilterThicknessMeasurements(QuartzItemsThicknessMeasurementFilterViewModel model)
+        {
+            var rModel = _quartzItemsThicknessMeasurementService.FilterThicknessMeasurements(model);
+            var jSonModel = JsonConvert.SerializeObject(rModel, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetSearchPanelsThicknessMeasurementPartialView()
+        {
+            return PartialView("SearchPanelsThicknessMeasurementPartial");
+        }
+
+        #endregion
+
         #endregion
     }
 }

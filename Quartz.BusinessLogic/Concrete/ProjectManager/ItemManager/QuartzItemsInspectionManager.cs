@@ -56,10 +56,10 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             var inspections = _mapper.Map<List<QuartzItemsInspectionFilterViewModel>>(GetAll());
 
             if (model.ReportNo != null)
-                inspections = inspections.Where(I => I.ReportNo.ToLower().Contains(model.ReportNo.ToLower())).ToList();
+                inspections = inspections.Where(I => I.ReportNo != null && I.ReportNo.ToLower().Contains(model.ReportNo.ToLower())).ToList();
 
             if (model.Details != null)
-                inspections = inspections.Where(I => I.Details.ToLower().Contains(model.Details.ToLower())).ToList();
+                inspections = inspections.Where(I => I.Details != null && I.Details.ToLower().Contains(model.Details.ToLower())).ToList();
 
             if (model.Date.ToString() != "1.01.0001 00:00:00")
                 inspections = inspections.Where(I => I.Date == model.Date).ToList();
@@ -68,16 +68,16 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
                 inspections = inspections.Where(I => I.DueDate == model.DueDate).ToList();
 
             if (model.Status != "select")
-                inspections = inspections.Where(I => I.Status == model.Status).ToList();
+                inspections = inspections.Where(I => I.Status != null && I.Status == model.Status).ToList();
 
             if (model.Technique != "select")
-                inspections = inspections.Where(I => I.Technique == model.Technique).ToList();
+                inspections = inspections.Where(I => I.Technique != null && I.Technique == model.Technique).ToList();
 
             if (model.Method != "select")
-                inspections = inspections.Where(I => I.Method == model.Method).ToList();
+                inspections = inspections.Where(I => I.Method != null && I.Method == model.Method).ToList();
 
             if (model.Procedure != "select")
-                inspections = inspections.Where(I => I.Procedure == model.Procedure).ToList();
+                inspections = inspections.Where(I => I.Procedure != null && I.Procedure == model.Procedure).ToList();
 
             return inspections;
         }

@@ -27,6 +27,12 @@ namespace Quartz.Controllers.Search
             return Json(jSonModel);
         }
 
+        [HttpGet]
+        public IActionResult GetSearchPanelsTagPartialView()
+        {
+            return PartialView("SearchPanelsTagPartial");
+        }
+
         [HttpPost]
         public IActionResult FilterDrawing(SearchDrawingListViewModel model)
         {
@@ -36,6 +42,12 @@ namespace Quartz.Controllers.Search
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
             return Json(jSonModel);
+        }
+
+        [HttpGet]
+        public IActionResult GetSearchPanelsDrawingPartialView()
+        {
+            return PartialView("SearchPanelsDrawingPartial");
         }
     }
 }

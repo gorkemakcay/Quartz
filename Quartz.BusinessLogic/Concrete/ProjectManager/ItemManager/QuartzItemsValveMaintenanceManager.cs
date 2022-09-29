@@ -56,25 +56,25 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             var filteredValveMaintenances = _mapper.Map<List<QuartzItemsValveMaintenanceFilterViewModel>>(GetAll());
 
             if (model.KKSNo != null)
-                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.KKSNo.Contains(model.KKSNo)).ToList();
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.KKSNo != null && I.KKSNo.Contains(model.KKSNo)).ToList();
 
             if (model.SerialNo != null)
-                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.SerialNo.Contains(model.SerialNo)).ToList();
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.SerialNo != null && I.SerialNo.Contains(model.SerialNo)).ToList();
 
             if (model.SupplierManufacturare != null)
-                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.SupplierManufacturare.Contains(model.SupplierManufacturare)).ToList();
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.SupplierManufacturare != null && I.SupplierManufacturare.Contains(model.SupplierManufacturare)).ToList();
 
             if (model.Designation != null)
-                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.Designation.Contains(model.Designation)).ToList();
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.Designation != null && I.Designation.Contains(model.Designation)).ToList();
 
             if (model.Remarks != null)
-                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.Remarks.Contains(model.Remarks)).ToList();
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.Remarks != null && I.Remarks.Contains(model.Remarks)).ToList();
 
             if (model.TestDate.ToString() != "1.01.0001 00:00:00")
-                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.TestDate == model.TestDate).ToList();
+                filteredValveMaintenances = filteredValveMaintenances.Where(I =>I.TestDate == model.TestDate).ToList();
 
             if (model.PlantArea != "value")
-                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.PlantArea == model.PlantArea).ToList();
+                filteredValveMaintenances = filteredValveMaintenances.Where(I => I.PlantArea != null && I.PlantArea == model.PlantArea).ToList();
 
             return filteredValveMaintenances;
         }

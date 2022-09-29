@@ -23,16 +23,16 @@ namespace Quartz.BusinessLogic.Concrete.SearchManager
             var filteredDrawings = _mapper.Map<List<SearchDrawingListViewModel>>(GetAll());
 
             if (model.TagNo != null)
-                filteredDrawings = filteredDrawings.Where(I => I.TagNo.ToLower().Contains(model.TagNo.ToLower())).ToList();
+                filteredDrawings = filteredDrawings.Where(I => I.TagNo != null && I.TagNo.ToLower().Contains(model.TagNo.ToLower())).ToList();
 
             if (model.Description != null)
-                filteredDrawings = filteredDrawings.Where(I => I.Description.ToLower().Contains(model.Description.ToLower())).ToList();
+                filteredDrawings = filteredDrawings.Where(I => I.Description != null && I.Description.ToLower().Contains(model.Description.ToLower())).ToList();
 
             if (model.PlantArea != "value")
-                filteredDrawings = filteredDrawings.Where(I => I.PlantArea == model.PlantArea).ToList();
+                filteredDrawings = filteredDrawings.Where(I => I.PlantArea != null && I.PlantArea == model.PlantArea).ToList();
 
             if (model.PlantSystem != "value")
-                filteredDrawings = filteredDrawings.Where(I => I.PlantSystem == model.PlantSystem).ToList();
+                filteredDrawings = filteredDrawings.Where(I => I.PlantSystem != null && I.PlantSystem == model.PlantSystem).ToList();
 
             return filteredDrawings;
         }
