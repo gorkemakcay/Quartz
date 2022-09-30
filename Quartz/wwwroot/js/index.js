@@ -413,6 +413,497 @@ $(function () {
     })
     // #endregion
 
+    // #region Search Panel's Select Options
+
+    // #region Search Drawing
+    // Plant Area
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.PlantArea.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#drawingFilterPlantArea").children().remove();
+
+            $("#drawingFilterPlantArea").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant Area",
+                    id: "selectDrawingFilterPlantArea"
+                })
+            );
+            $("#selectDrawingFilterPlantArea").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#drawingFilterPlantArea").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Plant System
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.PlantSystem.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#drawingFilterPlantSystem").children().remove();
+
+            $("#drawingFilterPlantSystem").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant System",
+                    id: "selectDrawingFilterPlantSystem"
+                })
+            );
+            $("#selectDrawingFilterPlantSystem").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#drawingFilterPlantSystem").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+    // #endregion
+
+    // #region Search Tag
+    // Fitting Type
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.FittingType.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#itemFilterFittingType").children().remove();
+
+            $("#itemFilterFittingType").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Fitting Type",
+                    id: "selectItemFilterFittingType"
+                })
+            );
+            $("#selectItemFilterFittingType").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#itemFilterFittingType").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Weld Type
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.WeldType.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#itemFilterWeldType").children().remove();
+
+            $("#itemFilterWeldType").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Weld Type",
+                    id: "selectItemFilterWeldType"
+                })
+            );
+            $("#selectItemFilterWeldType").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#itemFilterWeldType").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Plant Area
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.PlantArea.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#itemFilterPlantArea").children().remove();
+
+            $("#itemFilterPlantArea").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant Area",
+                    id: "selectItemFilterPlantArea"
+                })
+            );
+            $("#selectItemFilterPlantArea").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#itemFilterPlantArea").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Plant System
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.PlantSystem.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#itemFilterPlantSystem").children().remove();
+
+            $("#itemFilterPlantSystem").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant System",
+                    id: "selectItemFilterPlantSystem"
+                })
+            );
+            $("#selectItemFilterPlantSystem").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#itemFilterPlantSystem").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+    // #endregion
+
+    // #region Search Inspection
+    // Status
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.Status.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#inspectionFilterStatus").children().remove();
+
+            $("#inspectionFilterStatus").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Status",
+                    id: "selectInspectionFilterStatus"
+                })
+            );
+            $("#selectInspectionFilterStatus").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#inspectionFilterStatus").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Technique
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.Technique.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#inspectionFilterTechnique").children().remove();
+
+            $("#inspectionFilterTechnique").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Technique",
+                    id: "selectInspectionFilterTechnique"
+                })
+            );
+            $("#selectInspectionFilterTechnique").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#inspectionFilterTechnique").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Method
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.Method.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#inspectionFilterMethod").children().remove();
+
+            $("#inspectionFilterMethod").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Method",
+                    id: "selectInspectionFilterMethod"
+                })
+            );
+            $("#selectInspectionFilterMethod").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#inspectionFilterMethod").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Procedure
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.Procedure.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#inspectionFilterProcedure").children().remove();
+
+            $("#inspectionFilterProcedure").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Procedure",
+                    id: "selectInspectionFilterProcedure"
+                })
+            );
+            $("#selectInspectionFilterProcedure").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#inspectionFilterProcedure").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // #endregion
+
+    // #region Valve Maintenance
+    // Plant Area
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.PlantArea.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#valveMaintenanceFilterPlantArea").children().remove();
+
+            $("#valveMaintenanceFilterPlantArea").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant Area",
+                    id: "selectValveMaintenanceFilterPlantArea"
+                })
+            );
+            $("#selectValveMaintenanceFilterPlantArea").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#valveMaintenanceFilterPlantArea").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+    // #endregion
+
+    // #region Thickness Measurement
+    // Specification
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.Specification.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#thicknessMeasurementFilterSpecification").children().remove();
+
+            $("#thicknessMeasurementFilterSpecification").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant Area",
+                    id: "selectThicknessMeasurementFilterSpecification"
+                })
+            );
+            $("#selectThicknessMeasurementFilterSpecification").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#thicknessMeasurementFilterSpecification").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Plant Area
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.PlantArea.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#thicknessMeasurementFilterPlantArea").children().remove();
+
+            $("#thicknessMeasurementFilterPlantArea").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant Area",
+                    id: "selectThicknessMeasurementFilterPlantArea"
+                })
+            );
+            $("#selectThicknessMeasurementFilterPlantArea").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#thicknessMeasurementFilterPlantArea").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+
+    // Plant System
+    $.ajax({
+        type: "GET",
+        url: lookupItemController.PlantSystem.List,
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+
+            // #region Create & Configure Select > Option
+            $("#thicknessMeasurementFilterPlantSystem").children().remove();
+
+            $("#thicknessMeasurementFilterPlantSystem").append(
+                $('<option>', {
+                    value: "value",
+                    text: "Select Plant System",
+                    id: "selectThicknessMeasurementFilterPlantSystem"
+                })
+            );
+            $("#selectThicknessMeasurementFilterPlantSystem").attr("hidden", "");
+
+            for (var i = 0; i < rModel.length; i++) {
+                $("#thicknessMeasurementFilterPlantSystem").append(
+                    $('<option>', {
+                        value: rModel[i].Name,
+                        text: rModel[i].Name
+                    })
+                );
+            }
+            // #endregion
+        },
+        error: function (error) {
+
+        }
+    });
+    // #endregion
+
+    // #endregion
+
     // [CODE SNIPPET TRIAL AREA]
     //$('.button').click(function () {
     //    var buttonId = $(this).attr('id');
