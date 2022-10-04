@@ -1,0 +1,194 @@
+﻿@model UserSignUpViewModel 
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Quartz - Sign Up</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/fontawesome-free-6.1.2-web/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        .input {
+            height: 50px;
+            border: 0px;
+            border-radius: 25px;
+            padding: 20px;
+            width: 100%;
+            margin-bottom: 25px;
+            color: white;
+            background-color: #373a3e;
+        }
+
+        .passwordContainer {
+            position: relative;
+        }
+
+        .confirmPasswordContainer {
+            position: relative;
+        }
+
+        #toggleSignUpPassword {
+            position: absolute;
+            top: 15%;
+            right: 3%;
+        }
+
+        #toggleSignUpConfirmPassword {
+            position: absolute;
+            top: 15%;
+            right: 3%;
+        }
+
+        #signUpButton {
+            background-color: #c67610;
+            width: 100%;
+            border: none;
+            height: 50px;
+            border-radius: 25px;
+            color: #212529;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+            #signUpButton:hover {
+                color: white;
+                background-color: #10c676;
+            }
+    </style>
+
+</head>
+<body style="background-color: #212529; height: 100vh;">
+
+    <div class="container" style="height: 100vh;">
+        <div class="row" style="height: 25vh;">
+
+        </div>
+
+        <form role="form" asp-action="Index" asp-controller="SignUpUser">
+            <div class="row justify-content-center align-items-center" style="height: 50vh;">
+                <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12">
+
+                    <div class="text-center w-100 mb-5" style="color: white; font-size: 28px;">
+                        <h2>QUARTZ SIGN UP</h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="input text-center" placeholder="Name" required id="sigUpFirstName" asp-for="@Model.FirstName">
+                        </div>
+
+                        <div class="col-6">
+                            <input type="text" class="input text-center" placeholder="Surname" required id="signUpLastName" asp-for="@Model.LastName">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="email" class="input text-center" placeholder="Email" required id="signUpEmail" asp-for="@Model.Email">
+                        </div>
+
+                        <div class="col-6">
+                            <input type="text" class="input text-center" placeholder="Username" required id="signUpUsername" asp-for="@Model.UserName">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="passwordContainer">
+                                <input id="signUpPassword" type="password" class="input text-center" placeholder="Password" required asp-for="@Model.Password">
+                                <button style="background-color: #c67610; border: none; border-radius: 50px;" id="toggleSignUpPassword"><i id="signUpPasswordEye" class="fa-solid fa-eye" onclick="showSignUpPassword('password')"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="confirmPasswordContainer">
+                                <input id="signUpConfirmPassword" type="password" class="input text-center" placeholder="Confirm Password" required asp-for="@Model.ConfirmPassword">
+                                <button style="background-color: #c67610; border: none; border-radius: 50px;" id="toggleSignUpConfirmPassword"><i id="signUpConfirmPasswordEye" class="fa-solid fa-eye" onclick="showSignUpPassword('confirmPassword')"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="signUpButton" class="btn">Sign Up</button>
+
+                </div>
+            </div>
+        </form>
+
+        <div class="row" style="height: 25vh;">
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/libman/jQuery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            //$("#signUpButton").on('click', function () {
+            //    var signUpModel = {
+            //        FirstName: $("#sigUpFirstName").val(),
+            //        LastName: $("#signUpLastName").val(),
+            //        FullName: $("#sigUpFirstName").val() + " " + $("#signUpLastName").val(),
+            //        Email: $("#signUpEmail").val(),
+            //        UserName: $("#signUpUsername").val(),
+            //        Password: $("#signUpPassword").val(),
+            //        ConfirmPassword: $("#signUpConfirmPassword").val()
+            //    };
+
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "SignUpUser/Index",
+            //        data: { model: signUpModel },
+            //        success: function (response) {
+
+            //        },
+            //        error: function (error) {
+            //            alert("error!");
+            //            console.log(error.responseText);
+            //        }
+            //    });
+            //});
+        });
+
+        function showSignUpPassword(type) {
+            switch (type) {
+                case "password":
+                    var password = $("#signUpPassword");
+                    if (password.attr("type") == "password") {
+                        password.attr("type", "text");
+                        $("#signUpPasswordEye").removeClass("fa-eye").addClass("fa-eye-slash");
+                    }
+                    else {
+                        password.attr("type", "password");
+                        $("#signUpPasswordEye").removeClass("fa-eye-slash").addClass("fa-eye");
+                    }
+                    break;
+
+                case "confirmPassword":
+                    var password = $("#signUpConfirmPassword");
+                    if (password.attr("type") == "password") {
+                        password.attr("type", "text");
+                        $("#signUpConfirmPasswordEye").removeClass("fa-eye").addClass("fa-eye-slash");
+                    }
+                    else {
+                        password.attr("type", "password");
+                        $("#signUpConfirmPasswordEye").removeClass("fa-eye-slash").addClass("fa-eye");
+                    }
+                    break;
+
+                default:
+            }
+
+        }
+    </script>
+
+</body>
+</html>

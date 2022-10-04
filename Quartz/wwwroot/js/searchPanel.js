@@ -23,7 +23,7 @@
 
                     if (filteredDrawings != "") {
                         var drawingCount = filteredDrawings.length;
-                        $("#totalSearchPanelDrawingCount").html("Total Tag Count: " + drawingCount);
+                        $("#totalSearchPanelDrawingCount").html("Total Drawing Count: " + drawingCount);
 
                         filteredDrawings.forEach(function (drawing) {
 
@@ -309,7 +309,7 @@ function filterValveMaintenance() {
 
                     if (filteredValveMaintenances != "") {
                         var valveMaintenanceCount = filteredValveMaintenances.length;
-                        $("#totalSearchPanelValveMaintenanceCount").html("Total Tag Count: " + valveMaintenanceCount);
+                        $("#totalSearchPanelValveMaintenanceCount").html("Total Valve Maintenance Count: " + valveMaintenanceCount);
 
                         filteredValveMaintenances.forEach(function (valveMaintenance) {
 
@@ -391,7 +391,7 @@ function filterThicknessMeasurement() {
 
                     if (filteredThicknessMeasurements != "") {
                         var thicknessMeasurementCount = filteredThicknessMeasurements.length;
-                        $("#totalSearchPanelThicknessMeasurementCount").html("Total Tag Count: " + thicknessMeasurementCount);
+                        $("#totalSearchPanelThicknessMeasurementCount").html("Total Thickness Measurement Count: " + thicknessMeasurementCount);
 
                         filteredThicknessMeasurements.forEach(function (thicknessMeasurement) {
 

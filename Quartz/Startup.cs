@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz.BusinessLogic.DIContainer;
@@ -25,7 +27,12 @@ namespace Quartz
             services.AddCustomIdentity(); // Identity configuration.
             services.AddAutoMapper(typeof(MapProfile));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddMvc();
+            services.AddSession();
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
             services.AddNodeServices();
         }
 
@@ -41,9 +48,10 @@ namespace Quartz
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/SignInUser/Index");
             }
             app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
+            app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -59,7 +67,7 @@ namespace Quartz
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=SignInUser}/{action=Index}/{id?}");
             });
         }
     }

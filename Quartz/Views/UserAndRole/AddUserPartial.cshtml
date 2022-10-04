@@ -1,0 +1,39 @@
+﻿<div class="card-body" style="display:block;">
+
+    <div class="row">
+        <div class="col-6">
+            <input type="text" class="input text-center" placeholder="Name" required id="sigUpFirstName">
+        </div>
+
+        <div class="col-6">
+            <input type="text" class="input text-center" placeholder="Surname" required id="signUpLastName">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <input type="email" class="input text-center" placeholder="Email" required id="signUpEmail">
+        </div>
+
+        <div class="col-6">
+            <input type="text" class="input text-center" placeholder="Username" required id="signUpUsername">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="passwordContainer">
+                <input id="signUpPassword" type="password" class="input text-center" placeholder="Password" required>
+                <button style="background-color: #c67610; border: none; border-radius: 50px;" id="toggleSignUpPassword"><i id="signUpPasswordEye" class="fa-solid fa-eye" onclick="showSignUpPassword('password')"></i></button>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="confirmPasswordContainer">
+                <input id="signUpConfirmPassword" type="password" class="input text-center" placeholder="Confirm Password" required>
+                <button style="background-color: #c67610; border: none; border-radius: 50px;" id="toggleSignUpConfirmPassword"><i id="signUpConfirmPasswordEye" class="fa-solid fa-eye" onclick="showSignUpPassword('confirmPassword')"></i></button>
+            </div>
+        </div>
+    </div>
+
+</div>

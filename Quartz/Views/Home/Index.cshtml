@@ -252,6 +252,35 @@
     </div>
 </div>
 <!-- #endregion -->
+<!-- #region Inspection Add (Button) Modal -->
+<div class="modal fade" id="AddUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content minHeight">
+
+            <div class="modal-header" style="background-color: #F3F5F7;">
+                <h4 class="modal-title" id="UserAddModalTitle">Add User</h4>
+                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close" onclick="$('#userListModal').modal('toggle');"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <div class="row">
+
+                </div>
+
+                <div class="row" id="userAddModalPartialArea">
+
+                </div>
+            </div>
+
+            <div class="modal-footer" style="background-color: #F3F5F7;">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;" onclick="$('#userListModal').modal('toggle');">Close</button>
+                <button type="button" class="btn btn-dark" style="border:none; border-radius: 0px;" id="inspectionAddSaveButton" data-bs-dismiss="modal" onclick="$('#userListModal').modal('toggle');">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
 <!-- #region Valve Maintenance Add (Button) Modal -->
 <div class="modal fade" id="AddValveMaintenanceData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -360,6 +389,35 @@
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border-radius: 0px;">Close</button>
                 <button type="button" class="btn btn-dark" id="btnDsmSave" data-bs-dismiss="modal" style="border-radius: 0px;">Save</button>
+            </div>
+            <!-- #endregion -->
+
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region User List Modal (#ULM) -->
+<div class="modal fade" id="userListModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" , aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content minHeight">
+            <div class="modal-header" style="background-color: #F3F5F7;">
+                <h4 class="modal-title" id="ulmTitle">User List</h4>
+                <button type="button" class="btn-close float-end mx-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <div class="row">
+
+                </div>
+
+                <div class="row" id="ulmPartialArea">
+
+                </div>
+            </div>
+
+            <!-- #region Footer -->
+            <div class="modal-footer" style="background-color: #F3F5F7;">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border-radius: 0px;">Close</button>
             </div>
             <!-- #endregion -->
 
@@ -854,5 +912,6 @@
     <script src="~/js/lookupItems.js"></script>
     <script src="~/js/listPanel.js"></script>
     <script src="~/js/searchPanel.js"></script>
+    <script src="~/js/userList.js"></script>
     <!-- #endregion -->
 }

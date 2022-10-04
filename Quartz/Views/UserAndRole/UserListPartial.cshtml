@@ -1,0 +1,21 @@
+﻿<div class="card-body p-0" style="display:block;">
+
+    <table id="userListTable" class="table table-hover text-sm table-responsive-sm table-sm">
+        <thead class="no-border" style="background-color:#C9D6DF;color:#1B262C;font-weight:600">
+            <tr>
+                <th class="text-sm text-center" style="font-weight:500">Username</th>
+                <th class="text-sm text-center" style="font-weight:500">Name Surname</th>
+                <th class="text-sm text-center" style="font-weight:500">Email</th>
+                <th class="text-sm text-center" style="font-weight:500">Edit</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-md-12" style="text-align: center;">
+            <button type="button" id="addUserButton" data-bs-toggle="modal" data-bs-target="#AddUser" style="border: none; background: none;" onclick="$('#userListModal').modal('toggle');"><img src="~/lib/bootstrap-icons-1.9.1/plus-circle.svg" style="position: absolute; width: 32px; display: block; margin-top: -20px; margin-left: -16px;" /></button>
+        </div>
+    </div>
+</div>

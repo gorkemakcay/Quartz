@@ -83,6 +83,7 @@
     border-radius: 0px;
     width: 100%;
     background: #dadcde;
+    /*background: #373A3E;*/
     text-align: left;
     white-space: nowrap;
 }
@@ -924,7 +925,7 @@ ul {
 }
 
 [id*="open-accordion"], [id*="close-accordion"] {
-    background: #808080;
+    background: #373A3E;
     border-bottom: 2px solid #fff;
     line-height: 40px;
     height: 40px;

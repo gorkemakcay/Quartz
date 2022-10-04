@@ -1001,6 +1001,10 @@ $("#cancelDeleteButton").on('click', function () {
             $("#itemModal").modal("show");
             break;
 
+        case "user":
+            $("#userListModal").modal("show");
+            break;
+
         default:
     }
 });
@@ -1282,7 +1286,7 @@ function deleteThis(objectType, objectId) {
                 }
             });
 
-           
+
             break;
 
         case "attachment":
@@ -1873,6 +1877,29 @@ function deleteThis(objectType, objectId) {
                     $("#itemModal").modal("show");
 
                     toast("Thickness Measurement Deleted Successful");
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+            break;
+
+        case "user":
+            var userDeleteModel = { Id: objectId };
+            $.ajax({
+                type: "DELETE",
+                url: "UserAndRole/DeleteUser",
+                data: { model: userDeleteModel },
+                success: function (response) {
+                    loadUserListPage();
+
+                    objectTypeToBeDeleted = "";
+                    objectIdToBeDeleted = "";
+
+                    $("#userListModal").modal("show");
+
+                    toast("User Deleted Successful");
                 },
                 error: function (error) {
                     alert("error!");

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Quartz.Entities.Concrete.Users;
 using Quartz.Models;
 using System.Diagnostics;
 
@@ -9,19 +10,18 @@ namespace Quartz.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
             _logger = logger;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult LogIn()
         {
             return View();
         }

@@ -1,11 +1,13 @@
-﻿@{
+﻿@model UserSignInViewModel
+
+@{
     Layout = null;
 }
 
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Login 10</title>
+    <title>Quartz - Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -61,19 +63,20 @@
 
         <div class="row justify-content-center align-items-center" style="height: 50vh;">
             <div class="col-xl-4 col-lg-6 col-md-8 col-sm-12">
+                    <div class="text-center w-100 mb-5" style="color: white; font-size: 28px;">
+                        <h2>QUARTZ LOGIN</h2>
+                    </div>
 
-                <div class="text-center w-100 mb-5" style="color: white; font-size: 28px;">
-                    <h2>QUARTZ LOGIN</h2>
-                </div>
+                <form method="post">
+                    <input type="text" class="input text-center" placeholder="Username" required id="username" asp-for="@Model.Username">
 
-                <input type="text" class="input text-center" placeholder="Username" required>
-                <div class="password-container">
-                    <input id="password-field" type="password" class="input text-center" placeholder="Password" required>
-                    <button style="background-color: #c67610; border: none; border-radius: 50px;" id="togglePSW"><i id="pswEye" class="fa-solid fa-eye" onclick="showPSW()"></i></button>
-                </div>
+                    <div class="password-container">
+                        <input id="password-field" type="password" class="input text-center" placeholder="Password" required asp-for="@Model.Password">
+                        <button type="button" style="background-color: #c67610; border: none; border-radius: 50px;" id="togglePSW"><i id="pswEye" class="fa-solid fa-eye" onclick="showPSW()"></i></button>
+                    </div>
 
-                <button type="button" id="sign-in" class="btn">Sign In</button>
-
+                    <button type="submit" id="sign-in" class="btn">Sign In</button>
+                </form>
             </div>
         </div>
 
@@ -89,7 +92,25 @@
 
     <script>
         $(function () {
+            //$("#sign-in").on('click', function () {
+            //    var signInModel = {
+            //        Username: $("#username").val(),
+            //        Password: $("#password-field").val()
+            //    };
 
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "Home/SignInUser",
+            //        data: { model: signInModel },
+            //        success: function (response) {
+
+            //        },
+            //        error: function (error) {
+            //            alert("error!");
+            //            console.log(error.responseText);
+            //        }
+            //    });
+            //});
         });
 
         function showPSW() {

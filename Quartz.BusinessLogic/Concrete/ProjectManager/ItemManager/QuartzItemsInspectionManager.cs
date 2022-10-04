@@ -67,16 +67,16 @@ namespace Quartz.BusinessLogic.Concrete.ProjectManager.ItemManager
             if (model.DueDate.ToString() != "1.01.0001 00:00:00")
                 inspections = inspections.Where(I => I.DueDate == model.DueDate).ToList();
 
-            if (model.Status != "select")
+            if (model.Status != "value")
                 inspections = inspections.Where(I => I.Status != null && I.Status == model.Status).ToList();
 
-            if (model.Technique != "select")
+            if (model.Technique != "value")
                 inspections = inspections.Where(I => I.Technique != null && I.Technique == model.Technique).ToList();
 
-            if (model.Method != "select")
+            if (model.Method != "value")
                 inspections = inspections.Where(I => I.Method != null && I.Method == model.Method).ToList();
 
-            if (model.Procedure != "select")
+            if (model.Procedure != "value")
                 inspections = inspections.Where(I => I.Procedure != null && I.Procedure == model.Procedure).ToList();
 
             return inspections;
