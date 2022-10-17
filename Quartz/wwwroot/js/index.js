@@ -1886,26 +1886,39 @@ function deleteThis(objectType, objectId) {
             break;
 
         case "user":
-            var userDeleteModel = { Id: objectId };
             $.ajax({
-                type: "DELETE",
-                url: "UserAndRole/DeleteUser",
-                data: { model: userDeleteModel },
+                type: "GET",
+                url: "UserAndRole/GetAppUserDetail",
+                data: { userId: objectId },
                 success: function (response) {
-                    loadUserListPage();
+                    var userDeleteModel = jQuery.parseJSON(response);
+                    //userDeleteModel = userDeleteModel[0];
+                    $.ajax({
+                        type: "POST",
+                        url: "UserAndRole/DeleteUser",
+                        data: { model: userDeleteModel },
+                        success: function (response) {
+                            loadUserListPage();
 
-                    objectTypeToBeDeleted = "";
-                    objectIdToBeDeleted = "";
+                            objectTypeToBeDeleted = "";
+                            objectIdToBeDeleted = "";
 
-                    $("#userListModal").modal("show");
+                            $("#userListModal").modal("show");
 
-                    toast("User Deleted Successful");
+                            toast("User Deleted Successful");
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
                 },
                 error: function (error) {
                     alert("error!");
                     console.log(error.responseText);
                 }
-            });
+            }); 
+
             break;
 
         default:

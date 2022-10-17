@@ -33,5 +33,7 @@ namespace Quartz.Models
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Didn't match!")]
         public string ConfirmPassword { get; set; }
+        public bool AdminRole { get; set; }
+        public bool OperatorRole { get; set; }
     }
 }

@@ -14,7 +14,7 @@ function createList() {
 
             // #region Create Link Buttons
             allLinks.forEach(function (link) {
-                var linkButton = $("<button id=" + link.Id + " type='button' class='btn text-dark listPanelButtons linkButton'><strong><i class='fa fa-link'></i></strong>&nbsp;" + link.TagNo + "</button>");
+                var linkButton = $("<button id=" + link.Id + " name='link' type='button' class='btn text-dark listPanelButtons linkButton'><strong><i class='fa fa-link'></i></strong>&nbsp;" + link.TagNo + "</button>");
 
                 $("#shapeArea").append(linkButton);
             })
@@ -37,7 +37,7 @@ function createList() {
 
             // #region Create Item Buttons
             allItems.forEach(function (item) {
-                var itemButton = $("<button id=" + item.Id + " type='button' class='btn text-dark listPanelButtons itemButton'><strong><i class='fa fa-tags'></i></strong>&nbsp;" + item.TagNo + "</button>");
+                var itemButton = $("<button id=" + item.Id + " name='item' type='button' class='btn text-dark listPanelButtons itemButton'><strong><i class='fa fa-tags'></i></strong>&nbsp;" + item.TagNo + "</button>");
 
                 $("#shapeArea").append(itemButton);
             });
@@ -76,7 +76,8 @@ function createList() {
 
                             view.animate({
                                 center: new ol.proj.fromLonLat(feature.get("LonLat")),
-                                zoom: 4
+                                zoom: 4,
+                                duration: 500
                             });
                         }
                     });
@@ -129,7 +130,8 @@ function createList() {
 
                             view.animate({
                                 center: new ol.proj.fromLonLat(feature.get("LonLat")),
-                                zoom: 4
+                                zoom: 4,
+                                duration: 500
                             });
                         }
                     });

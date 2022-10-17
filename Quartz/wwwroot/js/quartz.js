@@ -196,14 +196,29 @@
 
     // #region Tıklanan Feature'a ait buton'un işaretlenmesi
     map.on('click', function (evt) {
-
-
         this.forEachFeatureAtPixel(evt.pixel, function (f) {
             selectedFeature = f;
-            $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
+
             var buttonId = selectedFeature.get('Id');
+            var buttonType = selectedFeature.get('Type');
+
+            $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
             lastClickedButtonId = buttonId;
-            $("#" + buttonId + "").attr('style', 'background: #808080');
+
+            if (buttonType == "item") {
+                var buttons = $("[name='item']");
+            }
+
+            if (buttonType == "link") {
+                var buttons = $("[name='link']");
+            }
+
+            for (var i = 0; i < buttons.length; i++) {
+                if (buttons[i].getAttribute('Id') == buttonId) {
+                    buttons[i].setAttribute('style', 'background: #808080');
+                    return;
+                }
+            }
         });
     });
     // #endregion

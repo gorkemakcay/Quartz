@@ -53,5 +53,42 @@ namespace Quartz.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SignUpJSON(UserSignUpViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.FullName = model.FirstName + " " + model.LastName;
+                AppUser user = new()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    FullName = model.FullName
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    if (model.AdminRole)
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    if (model.OperatorRole)
+                        await _userManager.AddToRoleAsync(user, "Operator");
+
+                    return Json(user);
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+            return Json(null);
+        }
     }
 }
