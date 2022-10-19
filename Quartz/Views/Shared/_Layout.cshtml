@@ -76,11 +76,17 @@
                             <li class="nav-item">
                                 <button type="button" id="btnDrawingSettings" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#drawingSettingsModal" style="border: none; border-radius: 20px;"><strong>Drawing Settings</strong></button>
                             </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <button type="button" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#lookupItemsModal" style="border: none; border-radius: 20px;"><strong>Lookup Items</strong></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" id="btnUserList" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#userListModal" style="border: none; border-radius: 20px;"><strong>User List</strong></button>
+                                </li>
+                            }
                             <li class="nav-item">
-                                <button type="button" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#lookupItemsModal" style="border: none; border-radius: 20px;"><strong>Lookup Items</strong></button>
-                            </li>
-                            <li class="nav-item">
-                                <button type="button" id="btnUserList" class="nav-link text-light btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#userListModal" style="border: none; border-radius: 20px;"><strong>User List</strong></button>
+                                <a asp-action="LogOut" asp-controller="SignInUser" class="nav-link text-light btn btn-outline-danger" style="border: none; border-radius: 20px;"><strong><i class="fa-solid fa-right-from-bracket"></i></strong></a>
                             </li>
                         </ul>
                     </div>

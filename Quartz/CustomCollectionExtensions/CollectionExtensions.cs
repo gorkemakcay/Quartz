@@ -45,7 +45,8 @@ namespace Quartz.CustomCollectionExtensions
                 opt.Cookie.SameSite = SameSiteMode.Strict;
                 opt.Cookie.HttpOnly = true;
                 opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-                opt.ExpireTimeSpan = DateTime.Now.Subtract(DateTime.UtcNow).Add(TimeSpan.FromMinutes(1));
+                //opt.ExpireTimeSpan = DateTime.Now.Subtract(DateTime.UtcNow).Add(TimeSpan.FromMinutes(1));
+                opt.ExpireTimeSpan = TimeSpan.FromMinutes(15);
                 opt.LoginPath = "/SignInUser/Index";
                 opt.LogoutPath = "/SignInUser/Index";
             });

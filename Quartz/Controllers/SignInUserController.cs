@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Quartz.Entities.Concrete.Users;
 using Quartz.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Quartz.Controllers
@@ -11,9 +13,13 @@ namespace Quartz.Controllers
     public class SignInUserController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
-        public SignInUserController(SignInManager<AppUser> signInManager)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
+        public SignInUserController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -29,11 +35,18 @@ namespace Quartz.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, true);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByNameAsync(model.Username);
+                    var roles = await _userManager.GetRolesAsync(user);
                     return RedirectToAction("Index", "Home");
                 }
-                else return View();
             }
             return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
         }
     }
 }
