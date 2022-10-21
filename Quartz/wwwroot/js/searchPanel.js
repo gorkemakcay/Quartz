@@ -18,38 +18,62 @@
                 data: { model: filterDrawingModel },
                 success: function (response) {
                     var filteredDrawings = jQuery.parseJSON(response);
-
                     $("#searchPanelDrawingTable").children('tbody').children('tr').remove();
 
                     if (filteredDrawings != "") {
                         var drawingCount = filteredDrawings.length;
+
                         $("#totalSearchPanelDrawingCount").html("Total Drawing Count: " + drawingCount);
 
                         filteredDrawings.forEach(function (drawing) {
-
-                            $("#searchPanelDrawingTable").children('tbody').append(
-                                $('<tr>').append(
-                                    $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;'>" + drawing.TagNo + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + drawing.Description + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;' class='plantIdent'>" + drawing.PlantArea + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + drawing.PlantSystem + "</p>"
+                            if (drawing.CurrentDrawingId != 0) {
+                                $("#searchPanelDrawingTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedLink(" + drawing.LinkId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.TagNo + "'>" + drawing.TagNo + "</p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.Description + "'>" + drawing.Description + "</p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.PlantArea + "'>" + drawing.PlantArea + "</p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.PlantSystem + "'>" + drawing.PlantSystem + "</p>"
+                                        )
                                     )
-                                )
-                            );
-
+                                );
+                            }
+                            else {
+                                $("#searchPanelDrawingTable").children('tbody').append(
+                                    $('<tr>').append(
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' style='color: gray;' data-bs-toggle='tooltip' data-bs-placement='right' title='Drawing does not exist!'><i class='fas fa-link'></i></p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.TagNo + "'>" + drawing.TagNo + "</p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.Description + "'>" + drawing.Description + "</p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.PlantArea + "'>" + drawing.PlantArea + "</p>"
+                                        ),
+                                        $('<td>', { align: "center" }).append(
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + drawing.PlantSystem + "'>" + drawing.PlantSystem + "</p>"
+                                        )
+                                    )
+                                );
+                            }
                         });
                     }
                     else {
                         $("#searchPanelDrawingTable").children('tbody').append(
                             $('<tr>').append(
-                                $('<td>', { colspan: "4", class: "text-center" }).append("No data available to show!")
+                                $('<td>', { colspan: "5", class: "text-center" }).append("No data available to show!")
                             )
                         );
                     }
@@ -94,29 +118,32 @@ function filterTag() {
 
                     if (filteredTags != "") {
                         var tagCount = filteredTags.length;
+
                         $("#totalSearchPanelTagCount").html("Total Tag Count: " + tagCount);
 
                         filteredTags.forEach(function (tag) {
-
                             $("#searchPanelTagTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.ItemTagNo + "</p>"
+                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedTag(" + tag.ItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.SerialNo + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + tag.ItemTagNo + "'>" + tag.ItemTagNo + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;' class='plantIdent'>" + tag.LinkTagNo + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + tag.SerialNo + "'>" + tag.SerialNo + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.FittingType + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + tag.LinkTagNo + "'>" + tag.LinkTagNo + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + tag.Specification + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + tag.FittingType + "'>" + tag.FittingType + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'> YES/NO </p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + tag.Specification + "'>" + tag.Specification + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='YES/NO'> YES/NO </p>"
                                     ),
                                 )
                             );
@@ -126,7 +153,7 @@ function filterTag() {
                     else {
                         $("#searchPanelTagTable").children('tbody').append(
                             $('<tr>').append(
-                                $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
+                                $('<td>', { colspan: "7", class: "text-center" }).append("No data available to show!")
                             )
                         );
                     }
@@ -212,29 +239,28 @@ function filterInspection() {
                                             $("#searchPanelInspectionTable").children('tbody').append(
                                                 $('<tr>').append(
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + inspection.ReportNo + "</p>"
+                                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedInspection(" + inspection.QuartzItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + linkDetail.TagNo + "</p>"
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.ReportNo + "'>" + inspection.ReportNo + "</p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;' class='plantIdent'>" + itemDetail.TagNo + "</p>"
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + linkDetail.TagNo + "'>" + linkDetail.TagNo + "</p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + date + "</p>"
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + itemDetail.TagNo + "'>" + itemDetail.TagNo + "</p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + inspection.Method + "</p>"
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + date + "'>" + date + "</p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + inspection.Status + "</p>"
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.Method + "'>" + inspection.Method + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.Status + "'>" + inspection.Status + "</p>"
                                                     ),
                                                 )
                                             );
-
-                                            //$(".plantIdent").on('click', function () {
-                                            //    alert("hi");
-                                            //});
                                         },
                                         error: function (error) {
                                             alert("error!");
@@ -255,7 +281,7 @@ function filterInspection() {
                     else {
                         $("#searchPanelInspectionTable").children('tbody').append(
                             $('<tr>').append(
-                                $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
+                                $('<td>', { colspan: "7", class: "text-center" }).append("No data available to show!")
                             )
                         );
                     }
@@ -303,7 +329,6 @@ function filterValveMaintenance() {
                 data: { model: filterValveMaintenanceModel },
                 success: function (response) {
                     var filteredValveMaintenances = jQuery.parseJSON(response);
-                    console.log(filteredValveMaintenances);
 
                     $("#searchPanelValveMaintenanceTable").children('tbody').children('tr').remove();
 
@@ -312,29 +337,33 @@ function filterValveMaintenance() {
                         $("#totalSearchPanelValveMaintenanceCount").html("Total Valve Maintenance Count: " + valveMaintenanceCount);
 
                         filteredValveMaintenances.forEach(function (valveMaintenance) {
+                            var date = valveMaintenance.TestDate.split('T')[0];
 
                             $("#searchPanelValveMaintenanceTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;'>" + valveMaintenance.KKSNo + "</p>"
+                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedValveMaintenance(" + valveMaintenance.QuartzItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.SerialNo + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.KKSNo + "'>" + valveMaintenance.KKSNo + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;' class='plantIdent'>" + valveMaintenance.SupplierManufacturare + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.SerialNo + "'>" + valveMaintenance.SerialNo + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.Designation + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.SupplierManufacturare + "'>" + valveMaintenance.SupplierManufacturare + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.Remarks + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.Designation + "'>" + valveMaintenance.Designation + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.TestDate + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.Remarks + "'>" + valveMaintenance.Remarks + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + valveMaintenance.PlantArea + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + date + "'>" + date + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.PlantArea + "'>" + valveMaintenance.PlantArea + "</p>"
                                     )
                                 )
                             );
@@ -385,35 +414,37 @@ function filterThicknessMeasurement() {
                 data: { model: filterThicknessMeasurementModel },
                 success: function (response) {
                     var filteredThicknessMeasurements = jQuery.parseJSON(response);
-                    console.log(filteredThicknessMeasurements);
 
                     $("#searchPanelThicknessMeasurementTable").children('tbody').children('tr').remove();
 
                     if (filteredThicknessMeasurements != "") {
                         var thicknessMeasurementCount = filteredThicknessMeasurements.length;
+
                         $("#totalSearchPanelThicknessMeasurementCount").html("Total Thickness Measurement Count: " + thicknessMeasurementCount);
 
                         filteredThicknessMeasurements.forEach(function (thicknessMeasurement) {
-
                             $("#searchPanelThicknessMeasurementTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px; color: blue;'>" + thicknessMeasurement.NominalThickness + "</p>"
+                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedThicknessMeasurement(" + thicknessMeasurement.QuartzItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.MeasuredThickness + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.NominalThickness + "'>" + thicknessMeasurement.NominalThickness + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;' class='plantIdent'>" + thicknessMeasurement.Description + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.MeasuredThickness + "'>" + thicknessMeasurement.MeasuredThickness + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.Specification + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Description + "'>" + thicknessMeasurement.Description + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.PlantArea + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Specification + "'>" + thicknessMeasurement.Specification + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p style='margin-top: 0px; margin-bottom: 0px;'>" + thicknessMeasurement.PlantSystem + "</p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantArea + "'>" + thicknessMeasurement.PlantArea + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantSystem + "'>" + thicknessMeasurement.PlantSystem + "</p>"
                                     )
                                 )
                             );
@@ -423,7 +454,7 @@ function filterThicknessMeasurement() {
                     else {
                         $("#searchPanelThicknessMeasurementTable").children('tbody').append(
                             $('<tr>').append(
-                                $('<td>', { colspan: "6", class: "text-center" }).append("No data available to show!")
+                                $('<td>', { colspan: "7", class: "text-center" }).append("No data available to show!")
                             )
                         );
                     }
@@ -440,3 +471,537 @@ function filterThicknessMeasurement() {
         }
     });
 }
+
+$("#clearSearchButton").on('click', function () {
+    $(".searchInput").val("");
+    loadSearchPanelsSelectOptions();
+});
+
+function goSelectedLink(linkId) {
+    $.ajax({
+        type: "GET",
+        url: linkController.Link.Detail,
+        data: { linkId: linkId },
+        success: function (response) {
+            lastClickedLink = jQuery.parseJSON(response);
+            clickedOrCreated = "clicked";
+            currentQuartzLink = lastClickedLink;
+
+            $.ajax({
+                type: "GET",
+                url: linkController.DrawingFeatures.GetVectorSource,
+                data: { quartzLinkId: currentQuartzLink.Id },
+                success: function (response) {
+                    currentDrawingFeatures = jQuery.parseJSON(response);
+
+                    $.ajax({
+                        type: "GET",
+                        url: fileController.Detail,
+                        data: { fileId: currentQuartzLink.CurrentDrawingId },
+                        success: function (response) {
+                            currentDrawing = jQuery.parseJSON(response);
+                            if (currentDrawing != null) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: linkController.QuartzPartialView,
+                                    success: function (html) {
+                                        $("#main").children().remove();
+                                        $("#main").html(html);
+
+                                        loadQuartz();
+
+                                        crumbCount++;
+                                        $(".breadCrumb").append(
+                                            $('<li>', {
+                                                text: currentQuartzLink.TagNo,
+                                                value: crumbCount,
+                                                onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
+                                                class: "crumb"
+                                            })
+                                        );
+                                    },
+                                    error: function (error) {
+                                        alert("error!");
+                                        console.log(error.responseText);
+                                    }
+                                });
+                            }
+                            else {
+                                alert("Drawing Is Not Exist!");
+                            }
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
+    });
+}
+
+function goSelectedTag(itemId) {
+    $.ajax({
+        type: "GET",
+        url: itemController.Item.Detail,
+        data: { itemId: itemId },
+        success: function (response) {
+            lastClickedItem = jQuery.parseJSON(response);
+            clickedOrCreated = "clicked";
+            $.ajax({
+                type: "GET",
+                url: linkController.Link.Detail,
+                data: { linkId: lastClickedItem.QuartzLinkId },
+                success: function (response) {
+                    currentQuartzLink = jQuery.parseJSON(response);
+
+                    $.ajax({
+                        type: "GET",
+                        url: linkController.DrawingFeatures.GetVectorSource,
+                        data: { quartzLinkId: currentQuartzLink.Id },
+                        success: function (response) {
+                            currentDrawingFeatures = jQuery.parseJSON(response);
+
+                            $.ajax({
+                                type: "GET",
+                                url: fileController.Detail,
+                                data: { fileId: currentQuartzLink.CurrentDrawingId },
+                                success: function (response) {
+                                    currentDrawing = jQuery.parseJSON(response);
+                                    if (currentDrawing != null) {
+                                        $.ajax({
+                                            type: "GET",
+                                            url: linkController.QuartzPartialView,
+                                            success: function (html) {
+                                                $("#main").children().remove();
+                                                $("#main").html(html);
+
+                                                loadQuartz();
+
+                                                function wait() {
+                                                    source.getFeatures().forEach(function (feature) {
+                                                        if (feature.get("Id") == lastClickedItem.Id && feature.get("Type") == "item") {
+                                                            select.getFeatures().clear();
+                                                            select.getFeatures().push(feature);
+                                                            selectedFeature = select.getFeatures().item(0);
+
+                                                            view.animate({
+                                                                center: new ol.proj.fromLonLat(feature.get("LonLat")),
+                                                                zoom: 3,
+                                                                duration: 800
+                                                            });
+                                                            return;
+                                                        }
+                                                    });
+
+                                                    // Select Button from List Panel
+                                                    var buttonId = selectedFeature.get('Id');
+
+                                                    $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
+                                                    lastClickedButtonId = buttonId;
+
+                                                    var buttons = $("[name='item']");
+                                                    console.log(buttons);
+                                                    for (var i = 0; i < buttons.length; i++) {
+                                                        if (buttons[i].getAttribute('Id') == buttonId) {
+                                                            buttons[i].setAttribute('style', 'background: #808080');
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                                setTimeout(wait, 200);
+
+                                                crumbCount++;
+                                                $(".breadCrumb").append(
+                                                    $('<li>', {
+                                                        text: currentQuartzLink.TagNo,
+                                                        value: crumbCount,
+                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
+                                                        class: "crumb"
+                                                    })
+                                                );
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        alert("Drawing Is Not Exist!");
+                                    }
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
+    });
+}
+
+function goSelectedInspection(itemId) {
+    $.ajax({
+        type: "GET",
+        url: itemController.Item.Detail,
+        data: { itemId: itemId },
+        success: function (response) {
+            var inspectionsItem = jQuery.parseJSON(response);
+
+            $.ajax({
+                type: "GET",
+                url: linkController.Link.Detail,
+                data: { linkId: inspectionsItem.QuartzLinkId },
+                success: function (response) {
+                    currentQuartzLink = jQuery.parseJSON(response);
+
+                    $.ajax({
+                        type: "GET",
+                        url: linkController.DrawingFeatures.GetVectorSource,
+                        data: { quartzLinkId: currentQuartzLink.Id },
+                        success: function (response) {
+                            currentDrawingFeatures = jQuery.parseJSON(response);
+
+                            $.ajax({
+                                type: "GET",
+                                url: fileController.Detail,
+                                data: { fileId: currentQuartzLink.CurrentDrawingId },
+                                success: function (response) {
+                                    currentDrawing = jQuery.parseJSON(response);
+                                    if (currentDrawing != null) {
+                                        $.ajax({
+                                            type: "GET",
+                                            url: linkController.QuartzPartialView,
+                                            success: function (html) {
+                                                $("#main").children().remove();
+                                                $("#main").html(html);
+
+                                                loadQuartz();
+
+                                                function wait() {
+                                                    source.getFeatures().forEach(function (feature) {
+                                                        if (feature.get("Id") == inspectionsItem.Id && feature.get("Type") == "item") {
+                                                            select.getFeatures().clear();
+                                                            select.getFeatures().push(feature);
+                                                            selectedFeature = select.getFeatures().item(0);
+
+                                                            view.animate({
+                                                                center: new ol.proj.fromLonLat(feature.get("LonLat")),
+                                                                zoom: 3,
+                                                                duration: 800
+                                                            });
+                                                            return;
+                                                        }
+                                                    });
+
+                                                    // Select Button from List Panel
+                                                    var buttonId = selectedFeature.get('Id');
+
+                                                    $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
+                                                    lastClickedButtonId = buttonId;
+
+                                                    var buttons = $("[name='item']");
+                                                    console.log(buttons);
+                                                    for (var i = 0; i < buttons.length; i++) {
+                                                        if (buttons[i].getAttribute('Id') == buttonId) {
+                                                            buttons[i].setAttribute('style', 'background: #808080');
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                                setTimeout(wait, 200);
+
+                                                crumbCount++;
+                                                $(".breadCrumb").append(
+                                                    $('<li>', {
+                                                        text: currentQuartzLink.TagNo,
+                                                        value: crumbCount,
+                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
+                                                        class: "crumb"
+                                                    })
+                                                );
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        alert("Drawing Is Not Exist!");
+                                    }
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
+    });
+}
+
+function goSelectedValveMaintenance(itemId) {
+    $.ajax({
+        type: "GET",
+        url: itemController.Item.Detail,
+        data: { itemId: itemId },
+        success: function (response) {
+            var valveMaintenancesItem = jQuery.parseJSON(response);
+            $.ajax({
+                type: "GET",
+                url: linkController.Link.Detail,
+                data: { linkId: valveMaintenancesItem.QuartzLinkId },
+                success: function (response) {
+                    currentQuartzLink = jQuery.parseJSON(response);
+
+                    $.ajax({
+                        type: "GET",
+                        url: linkController.DrawingFeatures.GetVectorSource,
+                        data: { quartzLinkId: currentQuartzLink.Id },
+                        success: function (response) {
+                            currentDrawingFeatures = jQuery.parseJSON(response);
+
+                            $.ajax({
+                                type: "GET",
+                                url: fileController.Detail,
+                                data: { fileId: currentQuartzLink.CurrentDrawingId },
+                                success: function (response) {
+                                    currentDrawing = jQuery.parseJSON(response);
+                                    if (currentDrawing != null) {
+                                        $.ajax({
+                                            type: "GET",
+                                            url: linkController.QuartzPartialView,
+                                            success: function (html) {
+                                                $("#main").children().remove();
+                                                $("#main").html(html);
+
+                                                loadQuartz();
+
+                                                function wait() {
+                                                    source.getFeatures().forEach(function (feature) {
+                                                        if (feature.get("Id") == valveMaintenancesItem.Id && feature.get("Type") == "item") {
+                                                            select.getFeatures().clear();
+                                                            select.getFeatures().push(feature);
+                                                            selectedFeature = select.getFeatures().item(0);
+
+                                                            view.animate({
+                                                                center: new ol.proj.fromLonLat(feature.get("LonLat")),
+                                                                zoom: 3,
+                                                                duration: 800
+                                                            });
+                                                            return;
+                                                        }
+                                                    });
+
+                                                    // Select Button from List Panel
+                                                    var buttonId = selectedFeature.get('Id');
+
+                                                    $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
+                                                    lastClickedButtonId = buttonId;
+
+                                                    var buttons = $("[name='item']");
+                                                    console.log(buttons);
+                                                    for (var i = 0; i < buttons.length; i++) {
+                                                        if (buttons[i].getAttribute('Id') == buttonId) {
+                                                            buttons[i].setAttribute('style', 'background: #808080');
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                                setTimeout(wait, 200);
+
+                                                crumbCount++;
+                                                $(".breadCrumb").append(
+                                                    $('<li>', {
+                                                        text: currentQuartzLink.TagNo,
+                                                        value: crumbCount,
+                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
+                                                        class: "crumb"
+                                                    })
+                                                );
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        alert("Drawing Is Not Exist!");
+                                    }
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
+    });
+}
+
+function goSelectedThicknessMeasurement(itemId) {
+    $.ajax({
+        type: "GET",
+        url: itemController.Item.Detail,
+        data: { itemId: itemId },
+        success: function (response) {
+            var thicknessMeasurementsItem = jQuery.parseJSON(response);
+
+            $.ajax({
+                type: "GET",
+                url: linkController.Link.Detail,
+                data: { linkId: thicknessMeasurementsItem.QuartzLinkId },
+                success: function (response) {
+                    currentQuartzLink = jQuery.parseJSON(response);
+
+                    $.ajax({
+                        type: "GET",
+                        url: linkController.DrawingFeatures.GetVectorSource,
+                        data: { quartzLinkId: currentQuartzLink.Id },
+                        success: function (response) {
+                            currentDrawingFeatures = jQuery.parseJSON(response);
+
+                            $.ajax({
+                                type: "GET",
+                                url: fileController.Detail,
+                                data: { fileId: currentQuartzLink.CurrentDrawingId },
+                                success: function (response) {
+                                    currentDrawing = jQuery.parseJSON(response);
+                                    if (currentDrawing != null) {
+                                        $.ajax({
+                                            type: "GET",
+                                            url: linkController.QuartzPartialView,
+                                            success: function (html) {
+                                                $("#main").children().remove();
+                                                $("#main").html(html);
+                                                loadQuartz();
+
+                                                function wait() {
+                                                    source.getFeatures().forEach(function (feature) {
+                                                        if (feature.get("Id") == thicknessMeasurementsItem.Id && feature.get("Type") == "item") {
+                                                            select.getFeatures().clear();
+                                                            select.getFeatures().push(feature);
+                                                            selectedFeature = select.getFeatures().item(0);
+
+                                                            view.animate({
+                                                                center: new ol.proj.fromLonLat(feature.get("LonLat")),
+                                                                zoom: 3,
+                                                                duration: 800
+                                                            });
+                                                            return;
+                                                        }
+                                                    });
+
+                                                    // Select Button from List Panel
+                                                    var buttonId = selectedFeature.get('Id');
+
+                                                    $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
+                                                    lastClickedButtonId = buttonId;
+
+                                                    var buttons = $("[name='item']");
+                                                    console.log(buttons);
+                                                    for (var i = 0; i < buttons.length; i++) {
+                                                        if (buttons[i].getAttribute('Id') == buttonId) {
+                                                            buttons[i].setAttribute('style', 'background: #808080');
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                                setTimeout(wait, 200);
+
+                                                crumbCount++;
+                                                $(".breadCrumb").append(
+                                                    $('<li>', {
+                                                        text: currentQuartzLink.TagNo,
+                                                        value: crumbCount,
+                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
+                                                        class: "crumb"
+                                                    })
+                                                );
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        alert("Drawing Is Not Exist!");
+                                    }
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
+    });
+}
+
+function callbackFunction(callback) {
+    setTimeout(x2, 5000);
+    setTimeout(callback, 2000);
+}
+
+function x1() {
+    alert(1);
+}
+
+function x2() {
+    alert(0);
+}
+
+setTimeout(() => callbackFunction(x1), 200);

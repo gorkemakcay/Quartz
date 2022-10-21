@@ -689,13 +689,25 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ItemTagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LinkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LinkTagNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PlantArea")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlantSystem")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TagNo")
+                    b.Property<string>("SerialNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Specification")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WeldType")

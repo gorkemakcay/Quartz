@@ -413,8 +413,23 @@ $(function () {
     })
     // #endregion
 
-    // #region Search Panel's Select Options
+    loadSearchPanelsSelectOptions();
 
+    // [CODE SNIPPET TRIAL AREA]
+    //$('.button').click(function () {
+    //    var buttonId = $(this).attr('id');
+    //    $('#modal-container').removeAttr('class').addClass(buttonId);
+    //    $('body').addClass('modal-active');
+    //})
+
+    //$('#modal-container').click(function () {
+    //    $(this).addClass('out');
+    //    $('body').removeClass('modal-active');
+    //});
+});
+
+// #region Search Panel's Select Options
+function loadSearchPanelsSelectOptions() {
     // #region Search Drawing
     // Plant Area
     $.ajax({
@@ -901,21 +916,8 @@ $(function () {
         }
     });
     // #endregion
-
+}
     // #endregion
-
-    // [CODE SNIPPET TRIAL AREA]
-    //$('.button').click(function () {
-    //    var buttonId = $(this).attr('id');
-    //    $('#modal-container').removeAttr('class').addClass(buttonId);
-    //    $('body').addClass('modal-active');
-    //})
-
-    //$('#modal-container').click(function () {
-    //    $(this).addClass('out');
-    //    $('body').removeClass('modal-active');
-    //});
-});
 
 // #region getDate()
 function getDate() {
@@ -1917,7 +1919,7 @@ function deleteThis(objectType, objectId) {
                     alert("error!");
                     console.log(error.responseText);
                 }
-            }); 
+            });
 
             break;
 

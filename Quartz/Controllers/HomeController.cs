@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quartz.Entities.Concrete.Users;
 using Quartz.Models;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Quartz.Controllers
 {
@@ -23,6 +25,8 @@ namespace Quartz.Controllers
         //[Authorize]
         public IActionResult Index()
         {
+            var user = HttpContext.Session.GetString("user");
+            //TempData["user"] = JsonSerializer.Deserialize<AppUser>(user);
             return View();
         }
 

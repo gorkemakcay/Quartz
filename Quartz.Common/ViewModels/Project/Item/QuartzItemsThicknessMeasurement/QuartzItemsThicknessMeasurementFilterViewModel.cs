@@ -8,5 +8,6 @@
         public float NominalThickness { get; set; }
         public float MeasuredThickness { get; set; }
         public string Description { get; set; }
+        public int QuartzItemId { get; set; }
     }
 }

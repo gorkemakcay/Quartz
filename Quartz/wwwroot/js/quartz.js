@@ -212,7 +212,7 @@
             if (buttonType == "link") {
                 var buttons = $("[name='link']");
             }
-
+            console.log(buttons);
             for (var i = 0; i < buttons.length; i++) {
                 if (buttons[i].getAttribute('Id') == buttonId) {
                     buttons[i].setAttribute('style', 'background: #808080');
@@ -554,4 +554,5 @@
         updateDrawingFeatures();
     });
     // #endregion
+
 }

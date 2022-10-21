@@ -34,22 +34,30 @@
             position: absolute;
             top: 15%;
             right: 3%;
+            background-color: #c67610;
+            border: none;
+            border-radius: 50px;
         }
 
-        #sign-in {
-            background-color: #c67610;
-            width: 100%;
-            border: none;
-            height: 50px;
-            border-radius: 25px;
-            color: #212529;
-            font-weight: 600;
-            font-size: 20px;
-        }
+            #togglePSW:hover {
+                color: white;
+                background-color: #9e5e0c;
+            }
+
+            #sign-in {
+                background-color: #c67610;
+                width: 100%;
+                border: none;
+                height: 50px;
+                border-radius: 25px;
+                color: #212529;
+                font-weight: 600;
+                font-size: 20px;
+            }
 
             #sign-in:hover {
                 color: white;
-                background-color: #10c676;
+                background-color: #9e5e0c;
             }
     </style>
 
@@ -64,15 +72,16 @@
         <div class="row justify-content-center align-items-center" style="height: 50vh;">
             <div class="col-xl-4 col-lg-6 col-md-8 col-sm-12">
                     <div class="text-center w-100 mb-5" style="color: white; font-size: 28px;">
-                        <h2>QUARTZ LOGIN</h2>
+                        @*<h2><strong>ＱＵＡＲＴＺ ＬＯＧＩＮ</strong></h2>*@
+                        <h3>ＱＵＡＲＴＺ ＬＯＧＩＮ</h3>
                     </div>
 
                 <form method="post">
                     <input type="text" class="input text-center" placeholder="Username" required id="username" asp-for="@Model.Username">
 
-                    <div class="password-container">
+                    <div class="password-container" onclick="showPSW()">
                         <input id="password-field" type="password" class="input text-center" placeholder="Password" required asp-for="@Model.Password">
-                        <button type="button" style="background-color: #c67610; border: none; border-radius: 50px;" id="togglePSW"><i id="pswEye" class="fa-solid fa-eye" onclick="showPSW()"></i></button>
+                        <button type="button" id="togglePSW"><i id="pswEye" class="fa-solid fa-eye"></i></button>
                     </div>
 
                     <button type="submit" id="sign-in" class="btn"><i class="fa-solid fa-right-to-bracket"></i></button>

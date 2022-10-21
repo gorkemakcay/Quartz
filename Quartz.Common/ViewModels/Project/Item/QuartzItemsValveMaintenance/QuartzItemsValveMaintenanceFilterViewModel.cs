@@ -11,5 +11,6 @@ namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsValveMaintenance
         public string Designation { get; set; }
         public string Remarks { get; set; }
         public DateTime TestDate { get; set; }
+        public int QuartzItemId { get; set; }
     }
 }

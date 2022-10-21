@@ -10,8 +10,8 @@ using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 namespace Quartz.DataAccess.Migrations
 {
     [DbContext(typeof(QuartzContext))]
-    [Migration("20220923135528_vw_SearchTag_configuration")]
-    partial class vw_SearchTag_configuration
+    [Migration("20221020084531_SearchDrawing_add_CurrentDrawingId_column")]
+    partial class SearchDrawing_add_CurrentDrawingId_column
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -486,6 +486,9 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<int>("CurrentDrawingId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Hierarchy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MainQuartzLinkId")
                         .HasColumnType("int");
 
@@ -657,6 +660,26 @@ namespace Quartz.DataAccess.Migrations
                     b.ToTable("QuartzItemsInspections");
                 });
 
+            modelBuilder.Entity("Quartz.Entities.Concrete.Search.SearchDrawing", b =>
+                {
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LinkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlantArea")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlantSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("vw_SearchDrawing");
+                });
+
             modelBuilder.Entity("Quartz.Entities.Concrete.Search.SearchTag", b =>
                 {
                     b.Property<string>("Description")
@@ -668,13 +691,25 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ItemTagNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LinkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LinkTagNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PlantArea")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlantSystem")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TagNo")
+                    b.Property<string>("SerialNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Specification")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WeldType")
