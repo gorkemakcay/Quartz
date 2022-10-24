@@ -348,9 +348,15 @@ var rasterLayer;
 var source;
 var vectorLayer;
 var view;
-var imageUrl;
 var imageLayer;
 var map;
+// #endregion
+
+// #region quartz.portalacbi.com Variables
+var downloadFile = "http://localhost:5001/FileUpload/DownloadFile?fileId=";
+var imageUrl = "http://localhost:5001/home/get?path=";
+var resetImageUrl = imageUrl;
+//var imageUrl;
 // #endregion
 
 // #endregion
@@ -977,6 +983,10 @@ $("#cancelDeleteButton").on('click', function () {
 
                 case "thicknessMeasurement":
                     $("#AddThicknessMeasurementData").modal("show");
+                    break;
+
+                case "drawingSettings":
+                    $("#drawingSettingsModal").modal("show");
                     break;
 
                 default:
@@ -2262,3 +2272,24 @@ function updateMap() {
 }
 
 // #endregion
+
+function showFileModal(path, type) {
+    path = path.replace("wwwroot", "");
+    $("#showFileModalPartialArea").children().remove();
+    $("#showFileModal").modal("show");
+    switch (type) {
+        case "image/jpeg":
+            $("#showFileModalPartialArea").append(
+                '<img src="' + path + '" style="max-height: 900px;">'
+            );
+            break;
+
+        case "application/pdf":
+            $("#showFileModalPartialArea").append(
+                '<iframe src="' + path + '" height="800"></iframe>'
+            );
+            break;
+
+        default:
+    }
+}

@@ -63,7 +63,8 @@
         //extent: [-1200, -778, 3120, 2134]
     });
 
-    imageUrl = "http://localhost:5001/home/get?path=";
+    //imageUrl = "http://localhost:5001/home/get?path=";
+    imageUrl = resetImageUrl;
     imageUrl = imageUrl + currentDrawing.Path;
 
     imageLayer = new ol.layer.Image({
@@ -212,7 +213,7 @@
             if (buttonType == "link") {
                 var buttons = $("[name='link']");
             }
-            console.log(buttons);
+
             for (var i = 0; i < buttons.length; i++) {
                 if (buttons[i].getAttribute('Id') == buttonId) {
                     buttons[i].setAttribute('style', 'background: #808080');
@@ -226,34 +227,37 @@
     // #region Get Features From Db & Print Screen
     // db'deki "QuartzLinkDrawingFeature" tablosunun "Features" sütununun değerlerini aldım ve bu bilgilerle feature'ları oluşturdum
     if (currentDrawingFeatures != 0) {
-        var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
-        featureCollection[''] = featuresFromDb;
-        featureCollection[''].features.forEach(function (featureJson) {
+        function wait() {
+            var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
+            featureCollection[''] = featuresFromDb;
+            featureCollection[''].features.forEach(function (featureJson) {
 
-            var feature = new ol.Feature({
-                geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857')
-            });
+                var feature = new ol.Feature({
+                    geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857')
+                });
 
-            feature.setProperties({ 'LonLat': featureJson.properties.LonLat });
-            feature.setProperties({ 'Id': featureJson.properties.Id });
-            feature.setProperties({ 'Name': featureJson.properties.Name });
-            feature.setProperties({ 'Type': featureJson.properties.Type });
+                feature.setProperties({ 'LonLat': featureJson.properties.LonLat });
+                feature.setProperties({ 'Id': featureJson.properties.Id });
+                feature.setProperties({ 'Name': featureJson.properties.Name });
+                feature.setProperties({ 'Type': featureJson.properties.Type });
 
-            var printStyle = new ol.style.Style({
-                text: new ol.style.Text({
-                    text: 'Hello',
-                    scale: 1.3,
-                    fill: new ol.style.Fill({
-                        color: '#000000'
-                    }),
-                    overflow: true
+                var printStyle = new ol.style.Style({
+                    text: new ol.style.Text({
+                        text: 'Hello',
+                        scale: 1.3,
+                        fill: new ol.style.Fill({
+                            color: '#000000'
+                        }),
+                        overflow: true
+                    })
                 })
-            })
 
-            //feature.setStyle(printStyle);
-            // Add feature to the vector source
-            source.addFeature(feature);
-        });
+                //feature.setStyle(printStyle);
+                // Add feature to the vector source
+                source.addFeature(feature);
+            });
+        }
+        setTimeout(wait, 200);
     }
     // #endregion
 

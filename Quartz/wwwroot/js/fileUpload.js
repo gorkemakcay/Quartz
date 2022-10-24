@@ -37,7 +37,8 @@
                     contentType: false,
                     success: function (response) {
                         uploadedFile = jQuery.parseJSON(response);
-                        var fileUpdate = uploadedFile.Result;
+                        //var fileUpdate = uploadedFile.Result;
+                        var fileUpdate = uploadedFile;
                         fileUpdate.CreatedDate = getDate();
 
                         // update last uploaded file for add createdDate
@@ -145,7 +146,8 @@
                     contentType: false,
                     success: function (response) {
                         uploadedFile = jQuery.parseJSON(response);
-                        var fileUpdate = uploadedFile.Result;
+                        //var fileUpdate = uploadedFile.Result;
+                        var fileUpdate = uploadedFile;
                         fileUpdate.CreatedDate = getDate();
 
                         // update last uploaded file for add createdDate
@@ -218,7 +220,8 @@
                     contentType: false,
                     success: function (response) {
                         uploadedFile = jQuery.parseJSON(response);
-                        var fileUpdate = uploadedFile.Result;
+                        //var fileUpdate = uploadedFile.Result;
+                        var fileUpdate = uploadedFile;
                         fileUpdate.CreatedDate = getDate();
 
                         // update last uploaded file for add createdDate
@@ -288,7 +291,8 @@
                     contentType: false,
                     success: function (response) {
                         uploadedFile = jQuery.parseJSON(response);
-                        var fileUpdate = uploadedFile.Result;
+                        //var fileUpdate = uploadedFile.Result;
+                        var fileUpdate = uploadedFile;
                         fileUpdate.CreatedDate = getDate();
 
                         // Yüklenen dosyayı currenDrawing'e atadım ve Ekrana bastırdım
@@ -383,7 +387,9 @@
                     contentType: false,
                     success: function (response) {
                         uploadedFile = jQuery.parseJSON(response);
-                        var fileUpdate = uploadedFile.Result;
+                        //var fileUpdate = uploadedFile.Result;
+                        var fileUpdate = uploadedFile;
+                        console.log(uploadedFile);
                         fileUpdate.CreatedDate = getDate();
 
                         // update last uploaded file for add createdDate
@@ -454,7 +460,8 @@
                     contentType: false,
                     success: function (response) {
                         uploadedFile = jQuery.parseJSON(response);
-                        var fileUpdate = uploadedFile.Result;
+                        //var fileUpdate = uploadedFile.Result;
+                        var fileUpdate = uploadedFile;
                         fileUpdate.CreatedDate = getDate();
 
                         // update last uploaded file for add createdDate
@@ -524,7 +531,8 @@
                     contentType: false,
                     success: function (response) {
                         uploadedFile = jQuery.parseJSON(response);
-                        var fileUpdate = uploadedFile.Result;
+                        //var fileUpdate = uploadedFile.Result;
+                        var fileUpdate = uploadedFile;
                         fileUpdate.CreatedDate = getDate();
 
                         // update last uploaded file for add createdDate

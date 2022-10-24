@@ -606,7 +606,7 @@ function goSelectedTag(itemId) {
                                                     lastClickedButtonId = buttonId;
 
                                                     var buttons = $("[name='item']");
-                                                    console.log(buttons);
+
                                                     for (var i = 0; i < buttons.length; i++) {
                                                         if (buttons[i].getAttribute('Id') == buttonId) {
                                                             buttons[i].setAttribute('style', 'background: #808080');
@@ -718,7 +718,7 @@ function goSelectedInspection(itemId) {
                                                     lastClickedButtonId = buttonId;
 
                                                     var buttons = $("[name='item']");
-                                                    console.log(buttons);
+
                                                     for (var i = 0; i < buttons.length; i++) {
                                                         if (buttons[i].getAttribute('Id') == buttonId) {
                                                             buttons[i].setAttribute('style', 'background: #808080');
@@ -829,7 +829,7 @@ function goSelectedValveMaintenance(itemId) {
                                                     lastClickedButtonId = buttonId;
 
                                                     var buttons = $("[name='item']");
-                                                    console.log(buttons);
+
                                                     for (var i = 0; i < buttons.length; i++) {
                                                         if (buttons[i].getAttribute('Id') == buttonId) {
                                                             buttons[i].setAttribute('style', 'background: #808080');
@@ -940,7 +940,7 @@ function goSelectedThicknessMeasurement(itemId) {
                                                     lastClickedButtonId = buttonId;
 
                                                     var buttons = $("[name='item']");
-                                                    console.log(buttons);
+
                                                     for (var i = 0; i < buttons.length; i++) {
                                                         if (buttons[i].getAttribute('Id') == buttonId) {
                                                             buttons[i].setAttribute('style', 'background: #808080');
@@ -990,18 +990,3 @@ function goSelectedThicknessMeasurement(itemId) {
         }
     });
 }
-
-function callbackFunction(callback) {
-    setTimeout(x2, 5000);
-    setTimeout(callback, 2000);
-}
-
-function x1() {
-    alert(1);
-}
-
-function x2() {
-    alert(0);
-}
-
-setTimeout(() => callbackFunction(x1), 200);

@@ -19,7 +19,7 @@ namespace Quartz.Controllers.FileUpload
         public async Task<IActionResult> UploadFile()
         {
             var files = Request.Form.Files;
-            var fileModel = _fileUploadService.UploadFile(files);
+            var fileModel = await _fileUploadService.UploadFile(files);
 
             var jSonModel = JsonConvert.SerializeObject(fileModel, new JsonSerializerSettings()
             {

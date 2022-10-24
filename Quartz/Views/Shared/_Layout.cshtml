@@ -61,10 +61,14 @@
                         @*<label for="type">Choose:</label>*@
                         <select class="form-select-sm" id="type" style="border-radius: 15px;">
                             <option value="None">Move (select before drag)</option>
-                            <option value="PolygonItem">Polygon Item</option>
-                            <option value="BoxItem">Box Item</option>
-                            <option value="PolygonLink">Polygon Link</option>
-                            <option value="BoxLink">Box Link</option>
+                            <optgroup label="Add Item">
+                                <option value="BoxItem">→ Box</option>
+                                <option value="PolygonItem">→ Polygon</option>
+                            </optgroup>
+                            <optgroup label="Add Link">
+                                <option value="BoxLink">→ Box</option>
+                                <option value="PolygonLink">→ Polygon</option>
+                            </optgroup>
                             @*<option value="Delete">Delete</option>*@
                         </select>
                     </div>

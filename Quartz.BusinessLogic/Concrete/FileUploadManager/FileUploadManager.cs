@@ -35,15 +35,17 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
 
         public async Task<FileUpload> UploadFile(IFormFileCollection files)
         {
+            var date = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
             foreach (IFormFile file in files)
             {
+                file.FileName.Replace(" ", "_");
                 // eski hali: var basePath = $"wwwroot/Files";
                 var basePath = @"wwwroot\\Files\\";
                 bool basePathIsExists = Directory.Exists(basePath);
                 if (!basePathIsExists)
                     Directory.CreateDirectory(basePath);
                 var fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                var filePath = Path.Combine(basePath, file.FileName);
+                var filePath = Path.Combine(basePath, date + "_" + file.FileName);
                 var extension = Path.GetExtension(file.FileName);
                 if (!File.Exists(filePath))
                 {

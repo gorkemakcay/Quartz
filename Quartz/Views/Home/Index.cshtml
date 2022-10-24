@@ -758,7 +758,7 @@
 <!-- #endregion -->
 <!-- #endregion -->
 <!-- #region Are You Sure Modal -->
-<div class="modal animate__animated animate__jackInTheBox" id="areYouSureModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal animate__animated animate__jackInTheBox" id="areYouSureModal" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <div class="modal-header border-0" style="max-height: 20px; ">
@@ -833,6 +833,22 @@
             </div>
             <div class="modal-footer" style="background-color: #F3F5F7;">
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="border:none; border-radius:0px;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region Show File Modal -->
+<div class="modal fade" id="showFileModal" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="border-radius: 20px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close float-end closeButton" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+            <div class="row" id="showFileModalPartialArea">
+
             </div>
         </div>
     </div>
