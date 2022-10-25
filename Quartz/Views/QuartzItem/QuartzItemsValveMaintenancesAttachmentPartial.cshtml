@@ -18,7 +18,7 @@
         <div class="text-center">
             <div class="col-lg-12">
                 <label for="valveMaintenanceUploadFile" style="border-radius: 20px;" class="btn btn-dark"><i class="fa fa-folder"></i>&nbsp; Choose File</label>
-                <input id="valveMaintenanceUploadFile" type="file" hidden>
+                <input id="valveMaintenanceUploadFile" type="file" oninput="if (this.files[0].type == 'image/jpeg') { valveMaintenanceSelectedImage.src = window.URL.createObjectURL(this.files[0]); $('#valveMaintenanceSelectedImage').removeAttr('hidden'); }" hidden>
                 <button type="button" class="btn btn-dark" style="border-radius: 20px; color: white;" onclick="uploadFile('valveMaintenance')"><i class="fa fa-upload"></i>&nbsp; Upload</button>
                 <br />
             </div>
@@ -29,5 +29,6 @@
 
     <div class="row text-center">
         <p id="valveMaintenanceSelectedFile"></p>
+        <img class="mx-auto" id="valveMaintenanceSelectedImage" style="width: 150px; height: 100px;" hidden />
     </div>
 </div>

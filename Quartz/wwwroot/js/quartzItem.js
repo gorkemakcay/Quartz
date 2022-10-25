@@ -1225,6 +1225,7 @@ function loadInspectionsAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
+                                            "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                             "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                             "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 inspectionDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
@@ -1281,6 +1282,7 @@ function loadInspectionsAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
+                                                "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                                 "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                                 "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 inspectionDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
@@ -1535,6 +1537,7 @@ function loadValveMaintenancesAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
+                                            "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                             "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                             "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 valveMaintenanceAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
@@ -1584,6 +1587,7 @@ function loadValveMaintenancesAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
+                                                "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                                 "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                                 "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 valveMaintenanceAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
@@ -1929,6 +1933,7 @@ function loadThicknessMeasurementAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
+                                            "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                             "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                             "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 thicknessMeasurementDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
@@ -1978,6 +1983,7 @@ function loadThicknessMeasurementAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
+                                                "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                                 "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border:0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                                 "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 thicknessMeasurementDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )
@@ -2081,6 +2087,7 @@ function loadAttachmentPage() {
                                             uploadedDate
                                         ),
                                         $('<td>', { align: "center" }).append(
+                                            "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                             "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                             "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 itemAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                         )
@@ -2137,6 +2144,7 @@ function loadAttachmentPage() {
                                                 uploadedDate
                                             ),
                                             $('<td>', { align: "center" }).append(
+                                                "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
                                                 "<a href='" + downloadFile + " + " + attachmentModel.Id + "' class='btn btn-dark' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-download' style='display: block; margin-top: -4px; margin-left: -7.5px;'></i></button>",
                                                 "<button type='button' id='" + attachmentModel.Id + "' class='btn btn-dark p-0 itemAttachmentDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
                                             )

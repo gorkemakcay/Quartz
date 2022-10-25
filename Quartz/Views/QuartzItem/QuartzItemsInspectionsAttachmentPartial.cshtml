@@ -18,7 +18,7 @@
         <div class="text-center">
             <div class="col-lg-12">
                 <label for="inspectionAddUploadFile" style="border-radius: 20px;" class="btn btn-dark"><i class="fa fa-folder"></i>&nbsp; Choose File</label>
-                <input id="inspectionAddUploadFile" type="file" hidden>
+                <input id="inspectionAddUploadFile" type="file" oninput="if (this.files[0].type == 'image/jpeg') { inspectionAddSelectedImage.src = window.URL.createObjectURL(this.files[0]); $('#inspectionAddSelectedImage').removeAttr('hidden'); }" hidden>
                 <button type="button" class="btn btn-dark" style="border-radius: 20px; color: white;" onclick="uploadFile('inspection')"><i class="fa fa-upload"></i>&nbsp; Upload</button>
                 <br />
             </div>
@@ -29,6 +29,7 @@
 
     <div class="row text-center">
         <p id="inspectionAddSelectedFile"></p>
+        <img class="mx-auto" id="inspectionAddSelectedImage" style="width: 150px; height: 100px;" hidden />
     </div>
 
 </div>
