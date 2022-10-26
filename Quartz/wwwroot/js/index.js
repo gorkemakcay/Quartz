@@ -927,9 +927,24 @@ function getDate() {
 };
 // #endregion
 
+function getDrawingCenter() {
+    view.animate({
+        center: ol.extent.getCenter(extent),
+        zoom: 2,
+        duration: 1000
+    });
+}
+
 function breadCrumb() {
     $(".breadCrumb").children().remove();
     $(".breadCrumb").append(
+        $('<li>,').prepend(
+            $('<i>', {
+                onclick: "getDrawingCenter()",
+                class: "fa-solid fa-arrows-to-circle",
+                style: "cursor: pointer;"
+            })
+        ),
         $('<li>', {
             text: " " + currentDrawingSettings.DrawingNo,
             value: crumbCount,
@@ -1961,13 +1976,13 @@ function updateDrawingFeatures() {
 
 // TTTTTTTTTTTTTTTTTTTTTTTTTTRIAL AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-document.onclick = hideMenu;
-document.oncontextmenu = rightClick;
+//document.onclick = hideMenu;
+//document.oncontextmenu = rightClick;
 
-function hideMenu() {
-    document.getElementById("inspectionMenu")
-        .style.display = "none"
-}
+//function hideMenu() {
+//    document.getElementById("inspectionMenu")
+//        .style.display = "none"
+//}
 
 function rightClick(e) {
     e.preventDefault();
@@ -2288,3 +2303,4 @@ function showFileModal(path, type) {
         default:
     }
 }
+

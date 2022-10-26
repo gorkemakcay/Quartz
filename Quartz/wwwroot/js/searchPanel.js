@@ -218,6 +218,7 @@ function filterInspection() {
                         $("#totalSearchPanelInspectionCount").html("Total Inspection Count: " + inspectionCount);
 
                         filteredInspections.forEach(function (inspection) {
+                            console.log(inspection);
                             var date = inspection.Date.split('T')[0];
                             var itemDetail;
                             var linkDetail;
@@ -258,6 +259,9 @@ function filterInspection() {
                                                     ),
                                                     $('<td>', { align: "center" }).append(
                                                         "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.Status + "'>" + inspection.Status + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.Details + "'>" + inspection.Details + "</p>"
                                                     ),
                                                 )
                                             );
