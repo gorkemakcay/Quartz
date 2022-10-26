@@ -559,4 +559,5 @@
     });
     // #endregion
 
+    loadQuartzSuccess = true;
 }

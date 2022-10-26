@@ -339,6 +339,7 @@ var linkId = "link" + linkIdCount;
 var featureCollection = [];
 var extent = [0, 0, 1920, 1356]; // left > bottom > right > top
 var viewExtent = [-1200, -778, 3120, 2134]; // left > bottom > right > top
+var loadQuartzSuccess = false;
 
 // #region Open Layers Variables
 var select;
@@ -420,19 +421,13 @@ $(function () {
     // #endregion
 
     loadSearchPanelsSelectOptions();
-
-    // [CODE SNIPPET TRIAL AREA]
-    //$('.button').click(function () {
-    //    var buttonId = $(this).attr('id');
-    //    $('#modal-container').removeAttr('class').addClass(buttonId);
-    //    $('body').addClass('modal-active');
-    //})
-
-    //$('#modal-container').click(function () {
-    //    $(this).addClass('out');
-    //    $('body').removeClass('modal-active');
-    //});
 });
+
+//function fetchFunc() {
+//    fetch('https://www.boredapi.com/api/activity')
+//        .then((response) => response.json())
+//        .then((data) => console.log(data.activity));
+//}
 
 // #region Search Panel's Select Options
 function loadSearchPanelsSelectOptions() {
@@ -923,7 +918,7 @@ function loadSearchPanelsSelectOptions() {
     });
     // #endregion
 }
-    // #endregion
+// #endregion
 
 // #region getDate()
 function getDate() {

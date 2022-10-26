@@ -915,6 +915,48 @@ function goSelectedThicknessMeasurement(itemId) {
                                             success: function (html) {
                                                 $("#main").children().remove();
                                                 $("#main").html(html);
+
+                                                //var goSelectedThicknessMeasurementPromise = new Promise((resolve, reject) => {
+                                                //    loadQuartz();
+                                                //    if (loadQuartzSuccess) {
+                                                //        resolve('loadQuartz function succesfully worked');
+                                                //    }
+                                                //});
+
+                                                //goSelectedThicknessMeasurementPromise.then((message) => {
+                                                //    loadQuartzSuccess = false;
+                                                //    console.log(message);
+                                                //    source.getFeatures().forEach(function (feature) {
+                                                //        if (feature.get("Id") == thicknessMeasurementsItem.Id && feature.get("Type") == "item") {
+                                                //            select.getFeatures().clear();
+                                                //            select.getFeatures().push(feature);
+                                                //            selectedFeature = select.getFeatures().item(0);
+
+                                                //            view.animate({
+                                                //                center: new ol.proj.fromLonLat(feature.get("LonLat")),
+                                                //                zoom: 3,
+                                                //                duration: 800
+                                                //            });
+                                                //            return;
+                                                //        }
+                                                //    });
+
+                                                //    // Select Button from List Panel
+                                                //    var buttonId = selectedFeature.get('Id');
+
+                                                //    $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
+                                                //    lastClickedButtonId = buttonId;
+
+                                                //    var buttons = $("[name='item']");
+
+                                                //    for (var i = 0; i < buttons.length; i++) {
+                                                //        if (buttons[i].getAttribute('Id') == buttonId) {
+                                                //            buttons[i].setAttribute('style', 'background: #808080');
+                                                //            return;
+                                                //        }
+                                                //    }
+                                                //});
+
                                                 loadQuartz();
 
                                                 function wait() {
@@ -948,7 +990,7 @@ function goSelectedThicknessMeasurement(itemId) {
                                                         }
                                                     }
                                                 }
-                                                setTimeout(wait, 200);
+                                                setTimeout(wait, 200); // [TAMAMLANMADI]
 
                                                 crumbCount++;
                                                 $(".breadCrumb").append(
