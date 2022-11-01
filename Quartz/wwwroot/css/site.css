@@ -1007,3 +1007,39 @@ ul {
 }
 
 /*******************************************************************/
+
+.a4page {
+    background: rgb(204,204,204);
+}
+
+page {
+    background: white;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+
+    page[size="A4"] {
+        width: 21cm;
+        /*height: 29.7cm;*/
+    }
+
+
+.min {
+    width: 20%;
+}
+
+page {
+    padding: 30px;
+}
+
+/*PDF'de tabloların düzgün çıkması için*/
+table {
+    page-break-inside: auto
+}
+
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto
+}

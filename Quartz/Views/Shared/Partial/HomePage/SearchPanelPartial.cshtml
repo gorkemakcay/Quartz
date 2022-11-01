@@ -1,4 +1,4 @@
-﻿<div style="background-color: #F3F5F7; height: 100%; position: relative;">
+﻿<div style="background-color: #F3F5F7; height: 100%; position: relative;" id="231423g">
     <div class="row" style="height: 3px;"></div>
     <div class="accordion">
         <span class="target-fix" id="accordion"></span>
@@ -7,9 +7,9 @@
         <div>
             <span class="target-fix" id="accordion1"></span>
 
-            <a href="#accordion1" id="open-accordion1" title="open">Search Drawing</a>
+            <a href="#accordion1" id="open-accordion1" title="open"><i class="fas fa-search">&nbsp;&nbsp;</i>Drawing</a>
 
-            <a href="#accordion" id="close-accordion1" title="close">Search Drawing</a>
+            <a href="#accordion" id="close-accordion1" title="close"><i class="fas fa-search">&nbsp;&nbsp;</i>Drawing</a>
 
             <div class="accordion-content">
                 <input id="drawingFilterTagNo" class="form-control searchInput" type="text" placeholder="Tag No" style="margin-bottom: 10px;" />
@@ -17,11 +17,9 @@
                 <input id="drawingFilterDescription" class="form-control searchInput" type="text" placeholder="Description" style="margin-bottom: 10px; border: none;" />
 
                 <select id="drawingFilterPlantArea" class="form-select" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select id="drawingFilterPlantSystem" class="form-select" style="margin-bottom: 10px;">
-
                 </select>
 
                 <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #373A3E;" onclick="filterDrawing()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
@@ -31,8 +29,8 @@
         <!-- 2. Search Tag Option -->
         <div>
             <span class="target-fix" id="accordion2"></span>
-            <a href="#accordion2" id="open-accordion2" title="open">Search Tag</a>
-            <a href="#accordion" id="close-accordion2" title="close">Search Tag</a>
+            <a href="#accordion2" id="open-accordion2" title="open"><i class="fas fa-search">&nbsp;&nbsp;</i>Item</a>
+            <a href="#accordion" id="close-accordion2" title="close"><i class="fas fa-search">&nbsp;&nbsp;</i>Item</a>
             <div class="accordion-content">
                 <input class="form-control searchInput" id="itemFilterTagNo" type="text" placeholder="Plant Ident/Tag No" style="margin-bottom: 10px;" />
 
@@ -41,19 +39,15 @@
                 <input class="form-control searchInput" id="itemFilterDrawingDescription" type="text" placeholder="Drawing Description" style="margin-bottom: 10px;" />
 
                 <select class="form-select" id="itemFilterFittingType" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="itemFilterWeldType" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="itemFilterPlantArea" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="itemFilterPlantSystem" style="margin-bottom: 10px;">
-
                 </select>
 
                 <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #373A3E;" onclick="filterTag()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
@@ -63,8 +57,8 @@
         <!-- 3. Search Inspection Option -->
         <div>
             <span class="target-fix" id="accordion3"></span>
-            <a href="#accordion3" id="open-accordion3" title="open">Search Inspection</a>
-            <a href="#accordion" id="close-accordion3" title="close">Search Inspection</a>
+            <a href="#accordion3" id="open-accordion3" title="open"><i class="fas fa-search">&nbsp;&nbsp;</i>Inspection</a>
+            <a href="#accordion" id="close-accordion3" title="close"><i class="fas fa-search">&nbsp;&nbsp;</i>Inspection</a>
             <div class="accordion-content">
                 <input class="form-control searchInput" id="inspectionFilterReportNo" type="text" placeholder="Report No" style="margin-bottom: 10px;" />
 
@@ -75,19 +69,15 @@
                 <input class="form-control searchInput" id="inspectionFilterDueDate" type="text" onfocus="(this.type='date')" placeholder="Date To" style="margin-bottom: 10px;" />
 
                 <select class="form-select" id="inspectionFilterStatus" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="inspectionFilterTechnique" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="inspectionFilterMethod" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="inspectionFilterProcedure" style="margin-bottom: 10px;">
-
                 </select>
 
                 <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #373A3E;" onclick="filterInspection()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
@@ -97,8 +87,8 @@
         <!-- 4. Search Valve Maintenance Option -->
         <div>
             <span class="target-fix" id="accordion4"></span>
-            <a href="#accordion4" id="open-accordion4" title="open">Search Valve Maintenance</a>
-            <a href="#accordion" id="close-accordion4" title="close">Search Valve Maintenance</a>
+            <a href="#accordion4" id="open-accordion4" title="open"><i class="fas fa-search">&nbsp;&nbsp;</i>Valve Maintenance</a>
+            <a href="#accordion" id="close-accordion4" title="close"><i class="fas fa-search">&nbsp;&nbsp;</i>Valve Maintenance</a>
             <div class="accordion-content">
                 <input class="form-control searchInput" id="valveMaintenanceFilterKKSNo" type="text" placeholder="KKS No" style="margin-bottom: 10px;" />
 
@@ -113,7 +103,6 @@
                 <input class="form-control searchInput" id="valveMaintenanceFilterTestDate" type="text" onfocus="(this.type='date')" placeholder="Test Date" style="margin-bottom: 10px;" />
 
                 <select class="form-select" id="valveMaintenanceFilterPlantArea" style="margin-bottom: 10px;">
-
                 </select>
 
                 <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #373A3E;" onclick="filterValveMaintenance()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
@@ -123,8 +112,8 @@
         <!-- 5. Search Thickness Measurement Option -->
         <div>
             <span class="target-fix" id="accordion5"></span>
-            <a href="#accordion5" id="open-accordion5" title="open">Search Thickness Measurement</a>
-            <a href="#accordion" id="close-accordion5" title="close">Search Thickness Measurement</a>
+            <a href="#accordion5" id="open-accordion5" title="open"><i class="fas fa-search">&nbsp;&nbsp;</i>Thickness Measurement</a>
+            <a href="#accordion" id="close-accordion5" title="close"><i class="fas fa-search">&nbsp;&nbsp;</i>Thickness Measurement</a>
             <div class="accordion-content">
                 <input class="form-control searchInput" id="thicknessMeasurementFilterNominalThickness" type="text" placeholder="Nominal Thickness" style="margin-bottom: 10px;" />
 
@@ -133,15 +122,12 @@
                 <input class="form-control searchInput" id="thicknessMeasurementFilterDescription" type="text" placeholder="Description" style="margin-bottom: 10px;" />
 
                 <select class="form-select" id="thicknessMeasurementFilterSpecification" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="thicknessMeasurementFilterPlantArea" style="margin-bottom: 10px;">
-
                 </select>
 
                 <select class="form-select" id="thicknessMeasurementFilterPlantSystem" style="margin-bottom: 10px;">
-
                 </select>
 
                 <button class="btn btn-primary" style="width: 100%; border: none; border-radius: 5px; background: #373A3E;" onclick="filterThicknessMeasurement()" data-bs-toggle="modal" data-bs-target="#searchPanelsModal">Search</button>
@@ -150,9 +136,7 @@
     </div>
 
     <div class="text-center mx-3 mb-3" style="position: absolute; bottom: 0; left: 0; right: 0;">
-        <button class="btn bg-primary text-white" style="width: 100%;" id="pdf"><strong>PDF</strong></button>
-        <br />
-        <br />
         <button class="btn bg-danger text-white" style="width: 100%;" id="clearSearchButton"><strong>Clear Search</strong></button>
     </div>
 </div>
+

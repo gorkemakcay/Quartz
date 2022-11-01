@@ -360,6 +360,11 @@ var resetImageUrl = imageUrl;
 //var imageUrl;
 // #endregion
 
+// #region Search Panel's Variables
+var activeSearch = null;
+var printInspectionModelsArray = [];
+// #endregion
+
 // #endregion
 
 // #endregion

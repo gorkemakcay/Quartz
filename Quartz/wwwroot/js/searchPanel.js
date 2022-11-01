@@ -1,4 +1,6 @@
 ﻿function filterDrawing() {
+    activeSearch = "drawing";
+
     $.ajax({
         type: "GET",
         url: "Search/GetSearchPanelsDrawingPartialView",
@@ -92,6 +94,8 @@
 }
 
 function filterTag() {
+    activeSearch = "item";
+
     $.ajax({
         type: "GET",
         url: "Search/GetSearchPanelsTagPartialView",
@@ -172,6 +176,8 @@ function filterTag() {
 }
 
 function filterInspection() {
+    activeSearch = "inspection";
+
     $.ajax({
         type: "GET",
         url: "QuartzItem/GetSearchPanelsInspectionPartialView",
@@ -210,32 +216,83 @@ function filterInspection() {
                 data: { model: filterInspectionModel },
                 success: function (response) {
                     var filteredInspections = jQuery.parseJSON(response);
+                    //var filteredInspectionsItemDetail;
+                    var filteredInspectionsLinkDetail;
+                    var filteredInspectionsInspectionDetail;
+                    var filteredInspectionsDrawingSettingsDetail;
+
+                    printInspectionModelsArray = [];
+
+                    var printInspectionModel = {
+                        PlantArea: "",
+                        DrawingRef: "",
+                        PlantIdent: "",
+                        InspDate: "",
+                        Procedure: "",
+                        ReportNo: "",
+                        Details: "",
+                        Status: ""
+                    }
 
                     $("#searchPanelInspectionTable").children('tbody').children('tr').remove();
 
                     if (filteredInspections != "") {
                         var inspectionCount = filteredInspections.length;
-                        $("#totalSearchPanelInspectionCount").html("Total Inspection Count: " + inspectionCount);
+                        $("#totalSearchPanelInspectionCount").html("Number of Inspections shown: " + inspectionCount);
 
                         filteredInspections.forEach(function (inspection) {
-                            console.log(inspection);
+                            filteredInspectionsInspectionDetail = inspection;
                             var date = inspection.Date.split('T')[0];
-                            var itemDetail;
-                            var linkDetail;
 
                             $.ajax({
                                 type: "GET",
                                 url: "QuartzItem/GetItemDetailJSON",
                                 data: { itemId: inspection.QuartzItemId },
                                 success: function (response) {
-                                    itemDetail = jQuery.parseJSON(response);
+                                    var filteredInspectionsItemDetail = jQuery.parseJSON(response);
 
                                     $.ajax({
                                         type: "GET",
                                         url: "QuartzLink/GetLinkDetailJSON",
-                                        data: { linkId: itemDetail.QuartzLinkId },
+                                        data: { linkId: filteredInspectionsItemDetail.QuartzLinkId },
                                         success: function (response) {
-                                            linkDetail = jQuery.parseJSON(response);
+                                            filteredInspectionsLinkDetail = jQuery.parseJSON(response);
+
+                                            $.ajax({
+                                                type: "GET",
+                                                url: linkController.DrawingSettings.Detail,
+                                                data: { quartzLinkId: filteredInspectionsLinkDetail.Id },
+                                                success: function (response) {
+                                                    filteredInspectionsDrawingSettingsDetail = jQuery.parseJSON(response);
+
+                                                    printInspectionModel.PlantArea = filteredInspectionsDrawingSettingsDetail.PlantArea;
+                                                    printInspectionModel.DrawingRef = filteredInspectionsDrawingSettingsDetail.DrawingNo;
+                                                    printInspectionModel.PlantIdent = filteredInspectionsItemDetail.TagNo;
+                                                    printInspectionModel.InspDate = date.toString();
+                                                    printInspectionModel.Procedure = inspection.Procedure;
+                                                    printInspectionModel.ReportNo = inspection.ReportNo;
+                                                    printInspectionModel.Details = inspection.Details;
+                                                    printInspectionModel.Status = inspection.Status;
+
+                                                    printInspectionModelsArray.push(printInspectionModel);
+
+                                                    printInspectionModel = {
+                                                        PlantArea: "", 
+                                                        DrawingRef: "",
+                                                        PlantIdent: "",
+                                                        InspDate: "",  
+                                                        Procedure: "", 
+                                                        ReportNo: "",  
+                                                        Details: "",   
+                                                        Status: ""     
+                                                    }
+
+                                                },
+                                                error: function (error) {
+                                                    alert("error!");
+                                                    console.log(error.responseText);
+                                                }
+                                            });
 
                                             $("#searchPanelInspectionTable").children('tbody').append(
                                                 $('<tr>').append(
@@ -246,10 +303,10 @@ function filterInspection() {
                                                         "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.ReportNo + "'>" + inspection.ReportNo + "</p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + linkDetail.TagNo + "'>" + linkDetail.TagNo + "</p>"
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + filteredInspectionsLinkDetail.TagNo + "'>" + filteredInspectionsLinkDetail.TagNo + "</p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + itemDetail.TagNo + "'>" + itemDetail.TagNo + "</p>"
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + filteredInspectionsItemDetail.TagNo + "'>" + filteredInspectionsItemDetail.TagNo + "</p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
                                                         "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + date + "'>" + date + "</p>"
@@ -304,6 +361,8 @@ function filterInspection() {
 }
 
 function filterValveMaintenance() {
+    activeSearch = "valveMaintenance";
+
     $.ajax({
         type: "GET",
         url: "QuartzItem/GetSearchPanelsValveMaintenancePartialView",
@@ -396,6 +455,8 @@ function filterValveMaintenance() {
 }
 
 function filterThicknessMeasurement() {
+    activeSearch = "thicknessMeasurement";
+
     $.ajax({
         type: "GET",
         url: "QuartzItem/GetSearchPanelsThicknessMeasurementPartialView",
