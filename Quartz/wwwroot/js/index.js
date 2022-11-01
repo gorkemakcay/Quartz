@@ -324,6 +324,8 @@ var editThisWhichLookupItem;
 
 var cancelThisWhichLookupItem;
 
+var loginUserInfo;
+
 // #endregion
 
 // #region Quartz Variables
@@ -424,6 +426,18 @@ $(function () {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
     // #endregion
+
+    $.ajax({
+        type: "GET",
+        url: "Home/GetLoginUserInfo",
+        success: function (response) {
+            loginUserInfo = jQuery.parseJSON(response);
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
 
     loadSearchPanelsSelectOptions();
 });

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Quartz.BusinessLogic.Interface.IFileUploadService;
 using Quartz.Common.ViewModels.FileUpload.FileUploadViewModels;
+using Quartz.Entities.Concrete.Users;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -18,8 +20,10 @@ namespace Quartz.Controllers.FileUpload
         [HttpPost]
         public async Task<IActionResult> UploadFile()
         {
+            var user = HttpContext.Session.GetString("user");
+            AppUser loginUser = System.Text.Json.JsonSerializer.Deserialize<AppUser>(user);
             var files = Request.Form.Files;
-            var fileModel = await _fileUploadService.UploadFile(files);
+            var fileModel = await _fileUploadService.UploadFile(files, loginUser.FullName);
 
             var jSonModel = JsonConvert.SerializeObject(fileModel, new JsonSerializerSettings()
             {

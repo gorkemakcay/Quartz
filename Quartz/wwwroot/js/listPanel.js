@@ -14,7 +14,7 @@ function createList() {
 
             // #region Create Link Buttons
             allLinks.forEach(function (link) {
-                var linkButton = $("<button id=" + link.Id + " name='link' type='button' class='btn text-dark listPanelButtons linkButton'><strong><i class='fa fa-link'></i></strong>&nbsp;" + link.TagNo + "</button>");
+                var linkButton = $("<button id=" + link.Id + " name='link' type='button' class='btn text-dark listPanelButtons linkButton'><strong><i class='fa fa-link'></i>&nbsp;" + link.TagNo + "</strong></button>");
 
                 $("#shapeArea").append(linkButton);
             })
@@ -37,7 +37,7 @@ function createList() {
 
             // #region Create Item Buttons
             allItems.forEach(function (item) {
-                var itemButton = $("<button id=" + item.Id + " name='item' type='button' class='btn text-dark listPanelButtons itemButton'><strong><i class='fa fa-tags'></i></strong>&nbsp;" + item.TagNo + "</button>");
+                var itemButton = $("<button id=" + item.Id + " name='item' type='button' class='btn text-dark listPanelButtons itemButton'><strong><i class='fa fa-tags'></i>&nbsp;" + item.TagNo + "</strong></button>");
 
                 $("#shapeArea").append(itemButton);
             });

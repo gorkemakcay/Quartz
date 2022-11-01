@@ -47,6 +47,14 @@
 
     ////////////////////////////////////////////////// trial area
 
+    const snap = new ol.interaction.Snap({
+        source: source,
+    });
+
+    const modify = new ol.interaction.Modify({
+        features: select.getFeatures(),
+    });
+
     ////////////////////////////////////////////////// trial area
 
     vectorLayer = new ol.layer.Vector({
@@ -76,7 +84,7 @@
     });
 
     map = new ol.Map({
-        interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([select, selectPM, translate]),
+        interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([select, selectPM]),
         layers: [imageLayer, rasterLayer, vectorLayer],
         target: 'map',
         view: view
@@ -267,9 +275,10 @@
 
     function addInteraction() {
         if (typeSelect.value !== 'None') {
-            document.getElementById('main').style.cursor = 'crosshair';
             if (typeSelect.value === 'BoxItem' || typeSelect.value === 'BoxLink') {
+                document.getElementById('main').style.cursor = 'crosshair';
                 map.removeInteraction(draw);
+                map.removeInteraction(modify);
 
                 draw = new ol.interaction.Draw({
                     source: source,
@@ -278,14 +287,25 @@
                 });
                 map.addInteraction(draw);
             }
+
             if (typeSelect.value === 'PolygonItem' || typeSelect.value === 'PolygonLink') {
+                document.getElementById('main').style.cursor = 'crosshair';
                 map.removeInteraction(draw);
+                map.removeInteraction(modify);
 
                 draw = new ol.interaction.Draw({
                     source: source,
                     type: 'Polygon'
                 });
                 map.addInteraction(draw);
+            }
+
+            if (typeSelect.value === 'MoveAndModify') {
+                document.getElementById('main').style.cursor = 'pointer';
+                map.removeInteraction(draw);
+                map.removeInteraction(selectPM);
+                map.addInteraction(translate);
+                map.addInteraction(modify);
             }
 
             // #region Feature "drawend" Function   
@@ -315,7 +335,7 @@
                         TagNo: shapeId,
                         ShowLabel: true,
                         CreatedDate: getDate(),
-                        CreatedBy: "Görkem", // [TAMAMLANMADI]
+                        CreatedBy: loginUserInfo.FullName,
                         MainQuartzLinkId: currentQuartzLink.Id,
                         CurrentDrawingId: 0,
                         Hierarchy: currentQuartzLink.Hierarchy + ',' + currentQuartzLink.Id
@@ -393,7 +413,7 @@
                     var itemModel = {
                         TagNo: shapeId,
                         CreatedDate: getDate(),
-                        CreatedBy: "Görkem", // [TAMAMLANMADI]
+                        CreatedBy: loginUserInfo.FullName,
                         QuartzLinkId: currentQuartzLink.Id
                     };
 
@@ -462,8 +482,12 @@
         else {
             document.getElementById('main').style.cursor = 'grab';
             map.removeInteraction(draw);
+            map.removeInteraction(modify);
+            map.removeInteraction(translate);
+            map.addInteraction(selectPM);
         }
     }
+
 
     function addDrawingFeaturesJSON() {
         // list all current features's details (geoJSON format)
@@ -558,6 +582,15 @@
         updateDrawingFeatures();
     });
     // #endregion
+
+    modify.on('modifyend', function (evt) {
+        var featuresExtent = selectedFeature.getGeometry().getExtent();
+        var featuresGetCenter = ol.extent.getCenter(featuresExtent);
+        featuresLonLat = ol.proj.toLonLat(featuresGetCenter);
+        selectedFeature.setProperties({ 'LonLat': featuresLonLat });
+
+        updateDrawingFeatures();
+    });
 
     loadQuartzSuccess = true;
 }

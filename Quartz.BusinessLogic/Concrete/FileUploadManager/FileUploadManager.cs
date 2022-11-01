@@ -5,9 +5,11 @@ using Quartz.BusinessLogic.Interface.IFileUploadService;
 using Quartz.Common.ViewModels.FileUpload.FileUploadViewModels;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.FileUploads;
+using Quartz.Entities.Concrete.Users;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Quartz.BusinessLogic.Concrete.FileUploadManager
@@ -33,7 +35,7 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
             _uow.SaveChange();
         }
 
-        public async Task<FileUpload> UploadFile(IFormFileCollection files)
+        public async Task<FileUpload> UploadFile(IFormFileCollection files, string user)
         {
             var date = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
             foreach (IFormFile file in files)
@@ -53,7 +55,6 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
 
                     await file.CopyToAsync(stream);
 
-
                     var fileModel = new FileUpload
                     {
                         CreatedDate = DateTime.Now,
@@ -61,7 +62,7 @@ namespace Quartz.BusinessLogic.Concrete.FileUploadManager
                         Path = filePath,
                         Type = file.ContentType,
                         Name = fileName,
-                        UploadedBy = "Görkem"
+                        UploadedBy = user
                     };
 
                     Add(_mapper.Map<FileUpload>(fileModel));

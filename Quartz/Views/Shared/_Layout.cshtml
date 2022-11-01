@@ -59,15 +59,16 @@
                 <div class="col-lg-2 px-0">
                     <div class="form text-center">
                         @*<label for="type">Choose:</label>*@
-                        <select class="form-select-sm" id="type" style="border-radius: 15px;">
-                            <option value="None">Move (select before drag)</option>
+                        <select class="form-select-sm" id="type" style="border-radius: 15px; width: 200px;">
+                            <option value="None">&#128070; Select</option>
+                            <option value="MoveAndModify">Move & Modify</option>
                             <optgroup label="Add Item">
-                                <option value="BoxItem">→ Box</option>
-                                <option value="PolygonItem">→ Polygon</option>
+                                <option value="BoxItem">&#10148; Box</option>
+                                <option value="PolygonItem">&#10148; Polygon</option>
                             </optgroup>
                             <optgroup label="Add Link">
-                                <option value="BoxLink">→ Box</option>
-                                <option value="PolygonLink">→ Polygon</option>
+                                <option value="BoxLink">&#10148; Box</option>
+                                <option value="PolygonLink">&#10148; Polygon</option>
                             </optgroup>
                             @*<option value="Delete">Delete</option>*@
                         </select>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,12 +23,17 @@ namespace Quartz.Controllers
             _userManager = userManager;
         }
 
-        //[Authorize]
+        [Authorize]
         public IActionResult Index()
         {
-            var user = HttpContext.Session.GetString("user");
             //TempData["user"] = JsonSerializer.Deserialize<AppUser>(user);
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetLoginUserInfo()
+        {
+            return Json(HttpContext.Session.GetString("user"));
         }
 
         [HttpGet]
