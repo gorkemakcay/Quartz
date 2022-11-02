@@ -184,6 +184,7 @@ function linkModalSaveButton() {
         link = lastCreatedLink;
 
     link.TagNo = $("#addLinkTagNo").val();
+    link.ShowLabel = $('#linkShowLabel').prop('checked');
 
     if ($("#addLinkSelectDrawing").val() != "select")
         link.CurrentDrawingId = $("#addLinkSelectDrawing").val();

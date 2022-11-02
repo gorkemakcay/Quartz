@@ -326,6 +326,10 @@ var cancelThisWhichLookupItem;
 
 var loginUserInfo;
 
+var currentLinkList;
+
+var currentItemList;
+
 // #endregion
 
 // #region Quartz Variables
@@ -345,6 +349,7 @@ var loadQuartzSuccess = false;
 
 // #region Open Layers Variables
 var select;
+var selectPM;
 var translate;
 var projection;
 var rasterLayer;
@@ -353,6 +358,7 @@ var vectorLayer;
 var view;
 var imageLayer;
 var map;
+var modify;
 // #endregion
 
 // #region quartz.portalacbi.com Variables
