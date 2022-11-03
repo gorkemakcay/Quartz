@@ -11,7 +11,7 @@
                 width: 2
             }),
             text: new ol.style.Text({
-                text: '!',
+                text: 'Selected!',
                 scale: 1.3,
                 overflow: true
             })
@@ -353,6 +353,7 @@
 
         if (typeSelect.value == 'BoxItem' || typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonItem' || typeSelect.value == 'PolygonLink') {
             map.removeInteraction(selectPM);
+            map.removeInteraction(select);
             map.removeInteraction(translate);
             map.removeInteraction(modify);
             map.removeInteraction(draw);
@@ -376,6 +377,8 @@
 
             // #region Feature "drawend" Function   
             draw.on("drawend", function (evt) {
+                map.addInteraction(select);
+
                 // #region Create LonLat For Feature's Set LonLat Property
                 selectedFeature = evt.feature;
                 var featuresExtent = selectedFeature.getGeometry().getExtent();
@@ -549,7 +552,7 @@
                     map.addInteraction(select);
                     map.addInteraction(selectPM);
 
-                    $("#shapeArea").children().remove();
+                    //$("#shapeArea").children().remove();
                     createList();
                     // Load Spinner Yap! [TAMAMLANMADI]
                 }
@@ -568,223 +571,6 @@
             map.addInteraction(modify);
         }
     }
-
-    //function addInteraction() {
-    //    if (typeSelect.value != 'None') {
-    //        map.removeInteraction(modify);
-    //        map.removeInteraction(selectPM);
-
-    //        if (typeSelect.value == 'BoxItem' || typeSelect.value == 'BoxLink') {
-    //            document.getElementById('main').style.cursor = 'crosshair';
-    //            map.removeInteraction(draw);
-
-
-    //            draw = new ol.interaction.Draw({
-    //                source: source,
-    //                type: 'Circle',
-    //                geometryFunction: ol.interaction.Draw.createBox()
-    //            });
-    //            map.addInteraction(draw);
-    //        }
-
-    //        if (typeSelect.value == 'PolygonItem' || typeSelect.value == 'PolygonLink') {
-    //            document.getElementById('main').style.cursor = 'crosshair';
-    //            map.removeInteraction(draw);
-
-    //            draw = new ol.interaction.Draw({
-    //                source: source,
-    //                type: 'Polygon'
-    //            });
-    //            map.addInteraction(draw);
-    //        }
-
-    //        if (typeSelect.value == 'MoveAndModify') {
-    //            document.getElementById('main').style.cursor = 'pointer';
-    //            map.removeInteraction(draw);
-    //            map.addInteraction(translate);
-    //            map.addInteraction(modify);
-    //        }
-
-    //        // #region Feature "drawend" Function   
-    //        draw.on("drawend", function (evt) {
-    //            // #region Create LonLat For Feature's Set LonLat Property
-    //            selectedFeature = evt.feature;
-    //            var featuresExtent = selectedFeature.getGeometry().getExtent();
-    //            var featuresGetCenter = ol.extent.getCenter(featuresExtent);
-    //            featuresLonLat = ol.proj.toLonLat(featuresGetCenter);
-    //            // #endregion
-
-    //            // #region Button'a shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra "typeSelect.value" atanması için
-    //            function timeOut() {
-    //                typeSelect.value = 'None';
-    //                map.removeInteraction(draw);
-    //            }
-    //            setTimeout(timeOut, 100);
-    //            // #endregion
-
-    //            // #region Add QuartzLink to DB
-    //            if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
-    //                linkIdCount++;
-    //                linkId = "LINK" + Math.floor(Math.random() * 1000);
-    //                shapeId = linkId;
-
-    //                var linkModel = {
-    //                    TagNo: shapeId,
-    //                    ShowLabel: false,
-    //                    CreatedDate: getDate(),
-    //                    CreatedBy: loginUserInfo.FullName,
-    //                    MainQuartzLinkId: currentQuartzLink.Id,
-    //                    CurrentDrawingId: 0,
-    //                    Hierarchy: currentQuartzLink.Hierarchy + ',' + currentQuartzLink.Id
-    //                };
-
-    //                $.ajax({
-    //                    type: "POST",
-    //                    url: linkController.Link.Add,
-    //                    data: { model: linkModel },
-    //                    success: function (response) {
-    //                        lastCreatedLink = jQuery.parseJSON(response);
-    //                        clickedOrCreated = "created";
-    //                        getVectorSource();
-
-    //                        // #region Feature Set Properties
-    //                        evt.feature.setProperties({ 'LonLat': featuresLonLat });
-    //                        evt.feature.setProperties({ 'Id': lastCreatedLink.Id });
-    //                        evt.feature.setProperties({ 'Name': lastCreatedLink.TagNo });
-    //                        evt.feature.setProperties({ 'Type': "link" });
-    //                        evt.feature.setProperties({ 'Hierarchy': currentQuartzLink.Hierarchy + ',' + currentQuartzLink.Id });
-    //                        evt.feature.setProperties({ 'ShowLabel': lastCreatedLink.ShowLabel });
-
-    //                        setTimeout(addDrawingFeaturesJSON, 100);
-
-    //                        // #endregion
-
-    //                        // #region Link Modal Settings
-    //                        $("#clickedLinkMode").attr("hidden", "");
-    //                        $("#createdLinkMode").removeAttr("hidden");
-    //                        addLinkUploadDrawingAreaCreatedMode = false;
-    //                        document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
-    //                        document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
-    //                        $("#addLinkSelectDrawing").removeAttr("disabled");
-
-    //                        $("#linkModal").modal('show');
-    //                        $("#addLinkTagNo").val(lastCreatedLink.TagNo);
-    //                        $("#linkShowLabel").prop('checked', false);
-
-    //                        loadLinkModal();
-    //                        // #endregion
-
-    //                        // #region Create Drawing Settings
-    //                        var drawingSettingsAddModel = {
-    //                            DrawingNo: lastCreatedLink.TagNo,
-    //                            QuartzLinkId: lastCreatedLink.Id
-    //                        }
-    //                        $.ajax({
-    //                            type: "POST",
-    //                            url: linkController.DrawingSettings.Add,
-    //                            data: { model: drawingSettingsAddModel },
-    //                            success: function (response) {
-    //                                rModel = jQuery.parseJSON(response);
-    //                            },
-    //                            error: function (error) {
-    //                                alert("error!");
-    //                                console.log(error.responseText);
-    //                            }
-    //                        });
-    //                        // #endregion
-
-    //                        toast("Link Add Successful!");
-    //                    },
-    //                    error: function (error) {
-    //                        alert("error: link doesn't saved!");
-    //                    }
-    //                });
-    //            }
-    //            // #endregion
-
-    //            // #region Add QuartzItem to DB
-    //            if (typeSelect.value == 'BoxItem' || typeSelect.value == 'PolygonItem') {
-    //                itemIdCount++;
-    //                itemId = "ITEM" + Math.floor(Math.random() * 1000);
-    //                shapeId = itemId;
-
-    //                var itemModel = {
-    //                    TagNo: shapeId,
-    //                    CreatedDate: getDate(),
-    //                    CreatedBy: loginUserInfo.FullName,
-    //                    QuartzLinkId: currentQuartzLink.Id
-    //                };
-
-    //                $.ajax({
-    //                    type: "POST",
-    //                    url: itemController.Item.Add,
-    //                    data: { model: itemModel },
-    //                    success: function (response) {
-    //                        lastCreatedItem = jQuery.parseJSON(response);
-    //                        clickedOrCreated = "created";
-    //                        //isInformationCreated = false;
-
-    //                        var itemInformationAddModel = {
-    //                            TagNo: lastCreatedItem.TagNo,
-    //                            QuartzItemId: lastCreatedItem.Id
-    //                        }
-    //                        $.ajax({
-    //                            type: "POST",
-    //                            url: itemController.Information.Add,
-    //                            data: { model: itemInformationAddModel },
-    //                            success: function (response) {
-    //                                rModel = jQuery.parseJSON(response);
-    //                            },
-    //                            error: function (error) {
-    //                                alert("error!");
-    //                                console.log(error.responseText);
-    //                            }
-    //                        });
-    //                        isInformationCreated = true;
-    //                        getVectorSource();
-
-    //                        // #region Feature Set Properties
-    //                        evt.feature.setProperties({ 'LonLat': featuresLonLat });
-    //                        evt.feature.setProperties({ 'Id': lastCreatedItem.Id });
-    //                        evt.feature.setProperties({ 'Name': lastCreatedItem.TagNo });
-    //                        evt.feature.setProperties({ 'Type': "item" });
-
-    //                        setTimeout(addDrawingFeaturesJSON, 100);
-    //                        // #endregion
-
-    //                        // #region Item Modal Settings
-    //                        $("#itemModal").modal('show');
-    //                        loadItemModalHomePage();
-    //                        // #endregion
-
-    //                        toast("Item Add Successful!");
-    //                    },
-    //                    error: function (error) {
-    //                        alert("error: item doesn't saved!");
-    //                    }
-    //                });
-    //            }
-    //            // #endregion
-
-    //            function waitFunc() {
-    //                $("#shapeArea").children().remove();
-    //                createList();
-    //                // Load Spinner Yap! [TAMAMLANMADI]
-    //            }
-    //            setTimeout(waitFunc, 100);
-    //            document.getElementById('main').style.cursor = 'grab';
-    //        });
-    //        // #endregion
-
-    //    }
-    //    else {
-    //        document.getElementById('main').style.cursor = 'grab';
-    //        map.removeInteraction(draw);
-    //        map.removeInteraction(modify);
-    //        map.removeInteraction(translate);
-    //        map.addInteraction(selectPM);
-    //    }
-    //}
 
     function addDrawingFeaturesJSON() {
         // list all current features's details (geoJSON format)
@@ -818,13 +604,6 @@
 
     }
 
-    // #region Handle tpyeSelect Change Event
-    //typeSelect.onchange = function () {
-
-    //};
-    // #endregion
-
-    // #region Feature "translateend" Event Function
     translate.on('translateend', function (evt) {
         var featuresExtent = selectedFeature.getGeometry().getExtent();
         var featuresGetCenter = ol.extent.getCenter(featuresExtent);
@@ -833,7 +612,6 @@
 
         updateDrawingFeatures();
     });
-    // #endregion
 
     modify.on('modifyend', function (evt) {
         var featuresExtent = selectedFeature.getGeometry().getExtent();
@@ -845,51 +623,26 @@
     });
 
     $("#type").on('change', function () {
-        //addInteraction();
-        //map.removeInteraction(select);
-        //if (typeSelect.value != 'MoveAndModify') {
-        //    select = new ol.interaction.Select({
-        //        condition: ol.events.condition.click,
-        //        style: new ol.style.Style({
-        //            fill: new ol.style.Fill({
-        //                color: 'rgb(0, 152, 254, 0.5)'
-        //            }),
-        //            stroke: new ol.style.Stroke({
-        //                color: '#0098FE',
-        //                width: 2
-        //            }),
-        //            text: new ol.style.Text({
-        //                text: 'not MoveAndModify',
-        //                scale: 1.3,
-        //                overflow: true
-        //            })
-        //        })
-        //    });
-        //    map.addInteraction(select);
-        //}
-        //else {
-        //    select = new ol.interaction.Select({
-        //        condition: ol.events.condition.click,
-        //        style: new ol.style.Style({
-        //            fill: new ol.style.Fill({
-        //                color: 'rgb(0, 152, 254, 0.5)'
-        //            }),
-        //            stroke: new ol.style.Stroke({
-        //                color: '#0098FE',
-        //                width: 2
-        //            }),
-        //            text: new ol.style.Text({
-        //                text: 'MoveAndModify',
-        //                scale: 1.3,
-        //                overflow: true
-        //            })
-        //        })
-        //    });
-        //    map.addInteraction(select);
-        //}
-
         interactionSettings();
     });
 
     loadQuartzSuccess = true;
+}
+
+function refreshQuartz() {
+    $.ajax({
+        type: "GET",
+        url: linkController.QuartzPartialView,
+        success: function (html) {
+            createList();
+
+            //$("#main").children().remove();
+            //$("#main").html(html);
+            //loadQuartz();
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
 }

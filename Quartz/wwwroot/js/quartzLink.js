@@ -224,6 +224,7 @@ function linkModalSaveButton() {
                 url: linkController.DrawingSettings.Update,
                 data: { model: linksDrawingSettings },
                 success: function (response) {
+                    //refreshQuartz();
                 },
                 error: function (error) {
                     alert("error!");
@@ -237,7 +238,7 @@ function linkModalSaveButton() {
         }
     });
 
-    selectedFeature.setProperties({ 'Name': $("#addLinkTagNo").val() });
+    selectedFeature.setProperties({ 'Name': link.TagNo });
 
     updateDrawingFeatures();
 

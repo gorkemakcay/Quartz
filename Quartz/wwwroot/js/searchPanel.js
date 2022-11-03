@@ -6,6 +6,7 @@
         url: "Search/GetSearchPanelsDrawingPartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
+            $("#searchPanelsModalTitle").html("Search Drawing");
 
             var filterDrawingModel = {
                 TagNo: $("#drawingFilterTagNo").val(),
@@ -101,6 +102,7 @@ function filterTag() {
         url: "Search/GetSearchPanelsTagPartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
+            $("#searchPanelsModalTitle").html("Search Item");
 
             var filterTagModel = {
                 ItemTagNo: $("#itemFilterTagNo").val(),
@@ -342,7 +344,7 @@ function filterInspection() {
                     else {
                         $("#searchPanelInspectionTable").children('tbody').append(
                             $('<tr>').append(
-                                $('<td>', { colspan: "7", class: "text-center" }).append("No data available to show!")
+                                $('<td>', { colspan: "8", class: "text-center" }).append("No data available to show!")
                             )
                         );
                     }
@@ -368,6 +370,7 @@ function filterValveMaintenance() {
         url: "QuartzItem/GetSearchPanelsValveMaintenancePartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
+            $("#searchPanelsModalTitle").html("Search Valve Maintenance");
 
             var testDate;
 
@@ -436,7 +439,7 @@ function filterValveMaintenance() {
                     else {
                         $("#searchPanelValveMaintenanceTable").children('tbody').append(
                             $('<tr>').append(
-                                $('<td>', { colspan: "7", class: "text-center" }).append("No data available to show!")
+                                $('<td>', { colspan: "8", class: "text-center" }).append("No data available to show!")
                             )
                         );
                     }
@@ -462,6 +465,7 @@ function filterThicknessMeasurement() {
         url: "QuartzItem/GetSearchPanelsThicknessMeasurementPartialView",
         success: function (html) {
             $("#searchPanelsModalPartialArea").html(html);
+            $("#searchPanelsModalTitle").html("Search Thickness Measurement");
 
             var filterThicknessMeasurementModel = {
                 NominalThickness: $("#thicknessMeasurementFilterNominalThickness").val(),
