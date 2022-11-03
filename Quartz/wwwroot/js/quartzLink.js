@@ -239,8 +239,12 @@ function linkModalSaveButton() {
     });
 
     selectedFeature.setProperties({ 'Name': link.TagNo });
-
     updateDrawingFeatures();
+
+    //vectorLayer.getSource().removeFeature(selectedFeature);
+    //setTimeout(() => { source.addFeature(selectedFeature); }, 750);
+    source.clear();
+    addFeatureToSource();
 
     document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
     document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");

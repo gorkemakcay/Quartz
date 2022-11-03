@@ -2329,3 +2329,92 @@ function showFileModal(path, type) {
     }
 }
 
+// #region Get Features From Db & Print Screen
+// db'deki "QuartzLinkDrawingFeature" tablosunun "Features" sütununun değerlerini aldım ve bu bilgilerle feature'ları oluşturdum
+function addFeatureToSource() {
+    if (currentDrawingFeatures != 0) {
+        $.ajax({
+            type: "GET",
+            url: linkController.Link.List,
+            data: { mainLinkId: currentQuartzLink.Id },
+            success: function (response) {
+                currentLinkList = jQuery.parseJSON(response);
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: itemController.Item.List,
+            data: { linkId: currentQuartzLink.Id },
+            success: function (response) {
+                currentItemList = jQuery.parseJSON(response);
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
+
+        function wait() {
+            var featuresFromDb = jQuery.parseJSON(currentDrawingFeatures.Features);
+            featureCollection[''] = featuresFromDb;
+            featureCollection[''].features.forEach(function (featureJson) {
+
+                var feature = new ol.Feature({
+                    geometry: (new ol.geom.Polygon(featureJson.geometry.coordinates)).transform('EPSG:4326', 'EPSG:3857')
+                });
+
+                var TextContext;
+                if (featureJson.properties.Type == 'link') {
+                    let link = currentLinkList.find(link => link.Id == featureJson.properties.Id);
+                    if (link.ShowLabel) {
+                        TextContext = featureJson.properties.Name;
+                    }
+                    else TextContext = '';
+                }
+
+                // [TAMAMLANMADI]
+                //if (featureJson.properties.Type == 'item') {
+                //    let item = currentItemList.find(item => item.Id == featureJson.properties.Id);
+                //    if (item.ShowLabel) {
+                //        TextContext = featureJson.properties.Name;
+                //    }
+                //    else TextContext = '';
+                //}
+
+                feature.setProperties({ 'LonLat': featureJson.properties.LonLat });
+                feature.setProperties({ 'Id': featureJson.properties.Id });
+                feature.setProperties({ 'Name': featureJson.properties.Name });
+                feature.setProperties({ 'Type': featureJson.properties.Type });
+                feature.setProperties({ 'Hierarchy': featureJson.properties.Hierarchy });
+                feature.setProperties({ 'ShowLabel': featureJson.properties.ShowLabel });
+
+                var exampleFeatureStyle = new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        color: 'rgba(255,255,255,0.4)'
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: '#3399CC',
+                        width: 1.25
+                    }),
+                    text: new ol.style.Text({
+                        text: TextContext,
+                        font: 'bold 10px sans-serif',
+                        scale: 1.3,
+                        overflow: true
+                    })
+                });
+                feature.setStyle(exampleFeatureStyle);
+
+                // Add feature to the vector source
+                source.addFeature(feature);
+            });
+        }
+        setTimeout(wait, 200);
+    }
+}
+    // #endregion
