@@ -11,7 +11,7 @@
                 width: 2
             }),
             text: new ol.style.Text({
-                text: 'Selected!',
+                text: '',
                 scale: 1.3,
                 overflow: true
             })
@@ -29,7 +29,7 @@
                 width: 1
             }),
             text: new ol.style.Text({
-                text: 'Double Click* to open!',
+                text: '',
                 scale: 1.3,
                 overflow: true
             })
@@ -300,19 +300,6 @@
                 featuresLonLat = ol.proj.toLonLat(featuresGetCenter);
                 // #endregion
 
-                // #region Button'a shapeButton.setAttribute('data-bs-target', '#itemModal/linkModal'); çalıştıktan sonra "typeSelect.value" atanması için
-                //function timeOut() {
-                //    typeSelect.value = 'None';
-                //    map.removeInteraction(draw);
-                //    map.removeInteraction(translate);
-                //    map.removeInteraction(modify);
-
-                //    map.addInteraction(select);
-                //    map.addInteraction(selectPM);
-                //}
-                //setTimeout(timeOut, 100);
-                // #endregion
-
                 // #region Add QuartzLink to DB
                 if (typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonLink') {
                     linkIdCount++;
@@ -403,6 +390,7 @@
                         TagNo: shapeId,
                         CreatedDate: getDate(),
                         CreatedBy: loginUserInfo.FullName,
+                        ShowLabel: false,
                         QuartzLinkId: currentQuartzLink.Id
                     };
 
@@ -439,6 +427,7 @@
                             evt.feature.setProperties({ 'Id': lastCreatedItem.Id });
                             evt.feature.setProperties({ 'Name': lastCreatedItem.TagNo });
                             evt.feature.setProperties({ 'Type': "item" });
+                            evt.feature.setProperties({ 'ShowLabel': lastCreatedItem.ShowLabel });
 
                             setTimeout(addDrawingFeaturesJSON, 100);
                             // #endregion

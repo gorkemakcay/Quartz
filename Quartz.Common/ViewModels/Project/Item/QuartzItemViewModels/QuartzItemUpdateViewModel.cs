@@ -9,6 +9,7 @@ namespace Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels
         public string AttachmentIds { get; set; } // Bu Item'a ait olan dosyalar
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
+        public bool ShowLabel { get; set; }
         public int QuartzLinkId { get; set; }
 
     }

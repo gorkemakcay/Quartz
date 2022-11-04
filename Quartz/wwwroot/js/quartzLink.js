@@ -197,6 +197,10 @@ function linkModalSaveButton() {
             rModel = jQuery.parseJSON(response);
             clickedOrCreated = "null";
             function wait() {
+                selectedFeature.setProperties({ 'Name': link.TagNo });
+                updateDrawingFeatures();
+                source.clear();
+                addFeatureToSource();
                 $("#shapeArea").children().remove();
                 createList();
                 // Load Spinner Yap! [TAMAMLANMADI]
@@ -224,7 +228,15 @@ function linkModalSaveButton() {
                 url: linkController.DrawingSettings.Update,
                 data: { model: linksDrawingSettings },
                 success: function (response) {
-                    //refreshQuartz();
+                    function wait() {
+                        selectedFeature.setProperties({ 'Name': link.TagNo });
+                        updateDrawingFeatures();
+                        //vectorLayer.getSource().removeFeature(selectedFeature);
+                        //setTimeout(() => { source.addFeature(selectedFeature); }, 750);
+                        source.clear();
+                        addFeatureToSource();
+                    }
+                    //setTimeout(wait, 200);
                 },
                 error: function (error) {
                     alert("error!");
@@ -238,13 +250,7 @@ function linkModalSaveButton() {
         }
     });
 
-    selectedFeature.setProperties({ 'Name': link.TagNo });
-    updateDrawingFeatures();
 
-    //vectorLayer.getSource().removeFeature(selectedFeature);
-    //setTimeout(() => { source.addFeature(selectedFeature); }, 750);
-    source.clear();
-    addFeatureToSource();
 
     document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
     document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");

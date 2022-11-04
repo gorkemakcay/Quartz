@@ -2377,14 +2377,13 @@ function addFeatureToSource() {
                     else TextContext = '';
                 }
 
-                // [TAMAMLANMADI]
-                //if (featureJson.properties.Type == 'item') {
-                //    let item = currentItemList.find(item => item.Id == featureJson.properties.Id);
-                //    if (item.ShowLabel) {
-                //        TextContext = featureJson.properties.Name;
-                //    }
-                //    else TextContext = '';
-                //}
+                if (featureJson.properties.Type == 'item') {
+                    let item = currentItemList.find(item => item.Id == featureJson.properties.Id);
+                    if (item.ShowLabel) {
+                        TextContext = featureJson.properties.Name;
+                    }
+                    else TextContext = '';
+                }
 
                 feature.setProperties({ 'LonLat': featureJson.properties.LonLat });
                 feature.setProperties({ 'Id': featureJson.properties.Id });
@@ -2418,3 +2417,4 @@ function addFeatureToSource() {
     }
 }
     // #endregion
+

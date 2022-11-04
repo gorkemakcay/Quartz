@@ -40,8 +40,8 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
                     data: { itemId: item.Id },
                     success: function (response) {
                         var model = jQuery.parseJSON(response);
-                        model.TagNo = $("#informationTagNo").val();
 
+                        model.TagNo = $("#informationTagNo").val();
                         if (clickedOrCreated == "created") {
                             lastCreatedItem = model;
                             item = lastCreatedItem;
@@ -632,6 +632,10 @@ function loadItemModalHomePage() {
                 case "clicked":
                     $("#itemModalTitle").html(lastClickedItem.TagNo);
 
+                    if (lastClickedItem.ShowLabel == 1)
+                        $('#itemShowLabel').prop('checked', true);
+                    else $('#itemShowLabel').prop('checked', false);
+
                     // #region Information Count
                     $.ajax({
                         type: "GET",
@@ -850,7 +854,7 @@ function loadInformationPage() {
                                 $("#informationPipeThickness").val(lastInformationsResponseModel.PipeThicknessMm);
                                 $("#informationOperatingTemp").val(lastInformationsResponseModel.OperatingTempC);
                                 $("#informationOperatingPressute").val(lastInformationsResponseModel.OperatingPressureBar);
-                                $("#itemShowLabel").val(lastInformationsResponseModel.ShowLabel);
+                                //$("#itemShowLabel").val(lastInformationsResponseModel.ShowLabel);
                                 isInformationCreated = true;
                             }
                             else if (lastInformationsResponseModel == null) {
@@ -2618,4 +2622,128 @@ function openEditThicknessMeasurementModal(thicknessMeasurementId) {
         }
     });
 }
+
+
+function linkModalSaveButton() {
+
+    var link;
+    if (clickedOrCreated == "clicked")
+        link = lastClickedLink;
+    if (clickedOrCreated == "created")
+        link = lastCreatedLink;
+
+    link.TagNo = $("#addLinkTagNo").val();
+    link.ShowLabel = $('#linkShowLabel').prop('checked');
+
+    if ($("#addLinkSelectDrawing").val() != "select")
+        link.CurrentDrawingId = $("#addLinkSelectDrawing").val();
+
+    $.ajax({
+        type: "POST",
+        url: linkController.Link.Update,
+        data: { model: link },
+        success: function (response) {
+            rModel = jQuery.parseJSON(response);
+            //clickedOrCreated = "null";
+            function wait() {
+                $("#shapeArea").children().remove();
+                createList();
+                // Load Spinner Yap! [TAMAMLANMADI]
+            }
+            setTimeout(wait, 100);
+            toast("Link Update Successful!");
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    $.ajax({
+        type: "GET",
+        url: linkController.DrawingSettings.Detail,
+        data: { quartzLinkId: link.Id },
+        success: function (response) {
+            linksDrawingSettings = jQuery.parseJSON(response);
+            linksDrawingSettings.DrawingNo = link.TagNo;
+            linksDrawingSettings.File = link.CurrentDrawingId;
+
+            $.ajax({
+                type: "POST",
+                url: linkController.DrawingSettings.Update,
+                data: { model: linksDrawingSettings },
+                success: function (response) {
+                    //refreshQuartz();
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    selectedFeature.setProperties({ 'Name': link.TagNo });
+    updateDrawingFeatures();
+
+    //vectorLayer.getSource().removeFeature(selectedFeature);
+    //setTimeout(() => { source.addFeature(selectedFeature); }, 750);
+    source.clear();
+    addFeatureToSource();
+
+    document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
+    document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
+
+    if (clickedOrCreated == "clicked")
+        lastClickedLink = link;
+    if (clickedOrCreated == "created")
+        lastCreatedLink = link;
+}
+
+
+// Show Label
+$("#itemShowLabel").on('change', function () {
+    var item;
+    if (clickedOrCreated == 'clicked')
+        item = lastClickedItem;
+    if (clickedOrCreated == 'created')
+        item = lastCreatedItem;
+
+    item.ShowLabel = $("#itemShowLabel").prop('checked');
+    console.log(item.ShowLabel);
+
+    $.ajax({
+        type: "POST",
+        url: itemController.Item.Update,
+        data: { model: item },
+        success: function (response) {
+            //clickedOrCreated = "null";
+            function wait() {
+                //$("#shapeArea").children().remove();
+                //createList();
+                // Load Spinner Yap! [TAMAMLANMADI]
+
+                //selectedFeature.setProperties({ 'ShowLabel': item.ShowLabel });
+                updateDrawingFeatures();
+                source.clear();
+                addFeatureToSource();
+            }
+            setTimeout(wait, 100);
+            toast("Item Update Successful!");
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
+
+    if (clickedOrCreated == "clicked")
+        lastClickedItem = item;
+    if (clickedOrCreated == "created")
+        lastCreatedItem = item;
+});
 // #endregion
