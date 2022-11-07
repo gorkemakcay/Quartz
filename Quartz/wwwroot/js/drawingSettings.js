@@ -49,10 +49,12 @@ $("#btnDsmSave").on('click', function () {
                             type: "GET",
                             url: linkController.QuartzPartialView,
                             success: function (html) {
-                                $("#main").children().remove();
-                                $("#main").html(html);
+                                refreshQuartz();
 
-                                loadQuartz();
+                                //$("#main").children().remove();
+                                //$("#main").html(html);
+
+                                //loadQuartz();
                             },
                             error: function (error) {
                                 alert("error!");
@@ -76,6 +78,38 @@ $("#btnDsmSave").on('click', function () {
 
     if (currentDrawingSettings.DrawingNo != $("#dsmDrawingNo").val()) {
         currentQuartzLink.TagNo = $("#dsmDrawingNo").val();
+
+        $.ajax({
+            type: "GET",
+            url: linkController.DrawingFeatures.GetVectorSource,
+            data: { quartzLinkId: currentQuartzLink.MainQuartzLinkId },
+            success: function (response) {
+                var drawingFeatures = jQuery.parseJSON(response);
+                var drawingFeaturesParse = jQuery.parseJSON(drawingFeatures.Features);
+
+                drawingFeaturesParse.features.forEach(function (feature) {
+                    if (feature.properties.Id == currentQuartzLink.Id) {
+                        feature.properties.Name = currentQuartzLink.TagNo;
+                        drawingFeatures.Features = JSON.stringify(drawingFeaturesParse);
+                        $.ajax({
+                            type: "POST",
+                            url: linkController.DrawingFeatures.Update,
+                            data: { model: drawingFeatures },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                        return;
+                    }
+                });
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: linkController.Link.Update,
@@ -83,7 +117,30 @@ $("#btnDsmSave").on('click', function () {
             success: function (response) {
                 rModel = jQuery.parseJSON(response);
 
-                toast("Drawing Upload Successful!");
+                $.ajax({
+                    type: "POST",
+                    url: linkController.DrawingSettings.Update,
+                    data: { model: drawingSettingsModel },
+                    success: function (response) {
+                        currentDrawingSettings = jQuery.parseJSON(response);
+                        function wait() {
+                            //selectedFeature.setProperties({ 'Name': link.TagNo });
+                            updateDrawingFeatures();
+                            source.clear();
+                            addFeatureToSource();
+                            $("#shapeArea").children().remove();
+                            createList();
+                            // Load Spinner Yap! [TAMAMLANMADI]
+                        }
+                        setTimeout(wait, 100);
+                        toast("Drawing Settings Updated!");
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
+                    }
+                });
+
             },
             error: function (error) {
                 alert("error!");
@@ -92,19 +149,7 @@ $("#btnDsmSave").on('click', function () {
         });
     }
 
-    $.ajax({
-        type: "POST",
-        url: linkController.DrawingSettings.Update,
-        data: { model: drawingSettingsModel },
-        success: function (response) {
-            currentDrawingSettings = jQuery.parseJSON(response);
-            toast("Drawing Settings Updated!");
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
+
 });
 // #endregion
 
@@ -325,9 +370,6 @@ function loadDrawingSettingsDataPage() {
             console.log(error.responseText);
         }
     });
-
-
-
 
     // #endregion
     // #endregion

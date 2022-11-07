@@ -33,42 +33,34 @@ function itemModalSaveButton() { // [TAMAMLANMADI]
             url: itemController.Information.Update,
             data: { model: itemInformationUpdateModel },
             success: function (response) {
-                rModel = jQuery.parseJSON(response);
+                item.TagNo = $("#informationTagNo").val();
+                if (clickedOrCreated == "created") {
+                    lastCreatedItem = item;
+                }
+                if (clickedOrCreated == "clicked") {
+                    lastClickedItem = item;
+                }
+                $("#itemModalTitle").html(item.TagNo + " | Information");
 
-                $.get({
-                    url: itemController.Item.Detail,
-                    data: { itemId: item.Id },
-                    success: function (response) {
-                        var model = jQuery.parseJSON(response);
-
-                        model.TagNo = $("#informationTagNo").val();
-                        if (clickedOrCreated == "created") {
-                            lastCreatedItem = model;
-                            item = lastCreatedItem;
+                $.post({
+                    url: itemController.Item.Update,
+                    data: { model: item },
+                    success: function () {
+                        function waitFunc() {
+                            selectedFeature.setProperties({ 'Name': item.TagNo });
+                            updateDrawingFeatures();
+                            source.clear();
+                            addFeatureToSource();
+                            $("#shapeArea").children().remove();
+                            createList();
+                            // Load Spinner Yap! [TAMAMLANMADI]
                         }
-                        if (clickedOrCreated == "clicked") {
-                            lastClickedItem = model;
-                            item = lastClickedItem;
-                        }
-                        $("#itemModalTitle").html(item.TagNo + " | Information");
-
-                        $.post({
-                            url: itemController.Item.Update,
-                            data: { model: item },
-                            success: function () {
-                                function waitFunc() {
-                                    $("#shapeArea").children().remove();
-                                    createList();
-                                    // Load Spinner Yap! [TAMAMLANMADI]
-                                }
-                                setTimeout(waitFunc, 100);
-                                toast("Item Update Successful!");
-                            },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
+                        setTimeout(waitFunc, 100);
+                        toast("Item Update Successful!");
+                    },
+                    error: function (error) {
+                        alert("error!");
+                        console.log(error.responseText);
                     }
                 });
             },
@@ -2622,88 +2614,6 @@ function openEditThicknessMeasurementModal(thicknessMeasurementId) {
         }
     });
 }
-
-
-function linkModalSaveButton() {
-
-    var link;
-    if (clickedOrCreated == "clicked")
-        link = lastClickedLink;
-    if (clickedOrCreated == "created")
-        link = lastCreatedLink;
-
-    link.TagNo = $("#addLinkTagNo").val();
-    link.ShowLabel = $('#linkShowLabel').prop('checked');
-
-    if ($("#addLinkSelectDrawing").val() != "select")
-        link.CurrentDrawingId = $("#addLinkSelectDrawing").val();
-
-    $.ajax({
-        type: "POST",
-        url: linkController.Link.Update,
-        data: { model: link },
-        success: function (response) {
-            rModel = jQuery.parseJSON(response);
-            //clickedOrCreated = "null";
-            function wait() {
-                $("#shapeArea").children().remove();
-                createList();
-                // Load Spinner Yap! [TAMAMLANMADI]
-            }
-            setTimeout(wait, 100);
-            toast("Link Update Successful!");
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
-
-    $.ajax({
-        type: "GET",
-        url: linkController.DrawingSettings.Detail,
-        data: { quartzLinkId: link.Id },
-        success: function (response) {
-            linksDrawingSettings = jQuery.parseJSON(response);
-            linksDrawingSettings.DrawingNo = link.TagNo;
-            linksDrawingSettings.File = link.CurrentDrawingId;
-
-            $.ajax({
-                type: "POST",
-                url: linkController.DrawingSettings.Update,
-                data: { model: linksDrawingSettings },
-                success: function (response) {
-                    //refreshQuartz();
-                },
-                error: function (error) {
-                    alert("error!");
-                    console.log(error.responseText);
-                }
-            });
-        },
-        error: function (error) {
-            alert("error!");
-            console.log(error.responseText);
-        }
-    });
-
-    selectedFeature.setProperties({ 'Name': link.TagNo });
-    updateDrawingFeatures();
-
-    //vectorLayer.getSource().removeFeature(selectedFeature);
-    //setTimeout(() => { source.addFeature(selectedFeature); }, 750);
-    source.clear();
-    addFeatureToSource();
-
-    document.getElementById("AddLinkUploadDrawingArea").setAttribute("hidden", "");
-    document.getElementById("AddLinkUploadDrawingAreaCreatedMode").setAttribute("hidden", "");
-
-    if (clickedOrCreated == "clicked")
-        lastClickedLink = link;
-    if (clickedOrCreated == "created")
-        lastCreatedLink = link;
-}
-
 
 // Show Label
 $("#itemShowLabel").on('change', function () {

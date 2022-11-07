@@ -176,7 +176,6 @@
 }
 
 function linkModalSaveButton() {
-
     var link;
     if (clickedOrCreated == "clicked")
         link = lastClickedLink;

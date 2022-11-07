@@ -21,6 +21,19 @@
                 data: { model: filterDrawingModel },
                 success: function (response) {
                     var filteredDrawings = jQuery.parseJSON(response);
+                    console.log(filteredDrawings);
+                    printDrawingModelsArray = [];
+
+                    var printDrawingModel = {
+                        DrawingNo: "",
+                        PlantArea: "",
+                        PlantSystem: "",
+                        Description: "",
+                        CreatedDate: "",
+                        CreatedBy: "",
+                        MainLink: ""
+                    }
+
                     $("#searchPanelDrawingTable").children('tbody').children('tr').remove();
 
                     if (filteredDrawings != "") {

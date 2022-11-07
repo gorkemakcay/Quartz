@@ -371,6 +371,10 @@ var resetImageUrl = imageUrl;
 // #region Search Panel's Variables
 var activeSearch = null;
 var printInspectionModelsArray = [];
+var printDrawingModelsArray = [];
+var printItemModelsArray = [];
+var printValveMaintenanceModelsArray = [];
+var printThicknessMeasurementModelsArray = [];
 // #endregion
 
 // #endregion

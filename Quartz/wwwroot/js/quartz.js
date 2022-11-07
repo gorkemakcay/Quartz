@@ -257,6 +257,7 @@
 
     function interactionSettings() {
         if (typeSelect.value == 'None') {
+            document.getElementById('main').style.cursor = 'grab';
             map.removeInteraction(draw);
             map.removeInteraction(translate);
             map.removeInteraction(modify);
@@ -266,6 +267,7 @@
         }
 
         if (typeSelect.value == 'BoxItem' || typeSelect.value == 'BoxLink' || typeSelect.value == 'PolygonItem' || typeSelect.value == 'PolygonLink') {
+            document.getElementById('main').style.cursor = 'crosshair';
             map.removeInteraction(selectPM);
             map.removeInteraction(select);
             map.removeInteraction(translate);
@@ -466,6 +468,7 @@
         }
 
         if (typeSelect.value == 'MoveAndModify') {
+            document.getElementById('main').style.cursor = 'grab';
             map.removeInteraction(draw);
             map.removeInteraction(selectPM);
 
@@ -537,11 +540,12 @@ function refreshQuartz() {
         type: "GET",
         url: linkController.QuartzPartialView,
         success: function (html) {
+            $("#shapeArea").children().remove();
             createList();
 
-            //$("#main").children().remove();
-            //$("#main").html(html);
-            //loadQuartz();
+            $("#main").children().remove();
+            $("#main").html(html);
+            loadQuartz();
         },
         error: function (error) {
             alert("error!");

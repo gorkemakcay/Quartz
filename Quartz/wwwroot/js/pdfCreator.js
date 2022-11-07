@@ -5,7 +5,73 @@
 function createPDF() {
     switch (activeSearch) {
         case "drawing":
-            alert("under construction");
+            //$("#showPdfeModal").modal("toggle");
+            $("#showPdfModalPartialArea").children().remove();
+            $("#showPdfModalPartialArea").html(
+                `
+                    <div id="drawingPDF" style="font-size: 12px;">
+                        <page size="A4">
+                            <br />
+                            <h5><strong>QUARTZ Search Report - Drawing Details</strong></h5>
+                            <br />
+                            <h6 style="color: gray;">Project: GORKEM'S PROJECT</h6>
+                            <h6 style="color: gray;">Date: `+ getDate().split('T')[0] + `</h6>
+                            <br />
+                            <div id="drawingArea">
+                            </div>
+                        </page>
+                    </div>
+                `
+            );
+
+            // inspection'ın yapıldığı çizimlerin isimlerinin tutulduğu dizi
+            var allDrawingReferences = [];
+            var drawingsPlantAreas = [];
+            printInspectionModelsArray.forEach(function (inspection) {
+                if (!allDrawingReferences.includes(inspection.DrawingRef)) {
+                    allDrawingReferences.push(inspection.DrawingRef);
+                    drawingsPlantAreas.push(inspection.PlantArea);
+                }
+            });
+
+            for (var i = 0; i < allDrawingReferences.length; i++) {
+                $("#drawingArea").append(
+                    `
+                        
+
+                        <br />
+                        <br />
+                    `
+                );
+
+                printInspectionModelsArray.forEach(function (inspection) {
+                    if (allDrawingReferences[i] == inspection.DrawingRef) {
+                        $("." + allDrawingReferences[i] + "sBody").append(
+                            $('<tr>').append(
+                                $('<td>', { align: "center" }).append(
+                                    inspection.PlantIdent
+                                ),
+                                $('<td>', { align: "center" }).append(
+                                    inspection.InspDate
+                                ),
+                                $('<td>', { align: "center" }).append(
+                                    inspection.Procedure
+                                ),
+                                $('<td>', { align: "center" }).append(
+                                    inspection.ReportNo
+                                ),
+                                $('<td>', { class: "min" }).append(
+                                    inspection.Details
+                                ),
+                                $('<td>', { align: "center" }).append(
+                                    inspection.Status
+                                )
+                            )
+                        );
+                    }
+                });
+            }
+            createDrawingPDF();
             break;
 
         case "item":
@@ -23,7 +89,7 @@ function createPDF() {
                             <h5><strong>QUARTZ Search Report - Inspection Details</strong></h5>
                             <br />
                             <h6 style="color: gray;">Project: GORKEM'S PROJECT</h6>
-                            <h6 style="color: gray;">Date: `+ getDate().split('T')[0] +`</h6>
+                            <h6 style="color: gray;">Date: `+ getDate().split('T')[0] + `</h6>
                             <br />
                             <div id="tableArea">
                             </div>
@@ -139,7 +205,6 @@ function createItemPDF() {
 
 function createInspectionPDF() {
     var pdf = document.getElementById("inspectionPDF");
-    console.log(pdf);
     var opt = {
         filename: 'Filtered_Inspections.pdf',
         image: { type: 'jpeg', quality: 1 },
