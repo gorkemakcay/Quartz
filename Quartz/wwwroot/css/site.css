@@ -1018,6 +1018,7 @@ page {
     margin: 0 auto;
     margin-bottom: 0.5cm;
     box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+    padding: 30px;
 }
 
     page[size="A4"] {
@@ -1026,13 +1027,13 @@ page {
     }
 
 
-.min {
+/*.min {
     width: 20%;
-}
+}*/
 
-page {
+/*page {
     padding: 30px;
-}
+}*/
 
 /*PDF'de tabloların düzgün çıkması için*/
 table {
@@ -1042,4 +1043,9 @@ table {
 tr {
     page-break-inside: avoid;
     page-break-after: auto
+}
+
+.pageBreak {
+    page-break-inside: avoid;
+    page-break-before: auto,
 }

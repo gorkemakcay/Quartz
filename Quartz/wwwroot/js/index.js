@@ -370,11 +370,16 @@ var resetImageUrl = imageUrl;
 
 // #region Search Panel's Variables
 var activeSearch = null;
-var printInspectionModelsArray = [];
+
 var printDrawingModelsArray = [];
 var printItemModelsArray = [];
+var printInspectionModelsArray = [];
 var printValveMaintenanceModelsArray = [];
 var printThicknessMeasurementModelsArray = [];
+
+var allDrawingReferences = [];
+var drawingsPlantAreas = [];
+var mainDrawingModel;
 // #endregion
 
 // #endregion
@@ -857,7 +862,7 @@ function loadSearchPanelsSelectOptions() {
             $("#thicknessMeasurementFilterSpecification").append(
                 $('<option>', {
                     value: "value",
-                    text: "Select Plant Area",
+                    text: "Select Specification",
                     id: "selectThicknessMeasurementFilterSpecification"
                 })
             );

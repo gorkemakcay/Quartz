@@ -1,4 +1,6 @@
-﻿namespace Quartz.Common.ViewModels.Search.SearchDrawing
+﻿using System;
+
+namespace Quartz.Common.ViewModels.Search.SearchDrawing
 {
     public class SearchDrawingListViewModel
     {
@@ -8,5 +10,8 @@
         public string PlantArea { get; set; }
         public string PlantSystem { get; set; }
         public int CurrentDrawingId { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public int MainLinkId { get; set; }
     }
 }

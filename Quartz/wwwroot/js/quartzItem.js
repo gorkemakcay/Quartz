@@ -2624,7 +2624,6 @@ $("#itemShowLabel").on('change', function () {
         item = lastCreatedItem;
 
     item.ShowLabel = $("#itemShowLabel").prop('checked');
-    console.log(item.ShowLabel);
 
     $.ajax({
         type: "POST",

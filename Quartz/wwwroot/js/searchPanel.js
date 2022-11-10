@@ -21,27 +21,115 @@
                 data: { model: filterDrawingModel },
                 success: function (response) {
                     var filteredDrawings = jQuery.parseJSON(response);
-                    console.log(filteredDrawings);
+
                     printDrawingModelsArray = [];
 
                     var printDrawingModel = {
-                        DrawingNo: "",
-                        PlantArea: "",
-                        PlantSystem: "",
-                        Description: "",
+                        MainLinkName: "",
+                        TagNo: "",
                         CreatedDate: "",
                         CreatedBy: "",
-                        MainLink: ""
+                        Description: "",
+                        PlantSystem: "",
+                        PlantArea: "",
+                        MainLinkPlantArea: ""
                     }
 
                     $("#searchPanelDrawingTable").children('tbody').children('tr').remove();
 
                     if (filteredDrawings != "") {
                         var drawingCount = filteredDrawings.length;
-
                         $("#totalSearchPanelDrawingCount").html("Total Drawing Count: " + drawingCount);
 
                         filteredDrawings.forEach(function (drawing) {
+
+                            if (drawing.MainLinkId != 0) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: linkController.Link.Detail,
+                                    data: { linkId: drawing.MainLinkId },
+                                    success: function (response) {
+                                        var mainLink = jQuery.parseJSON(response);
+
+                                        $.ajax({
+                                            type: "GET",
+                                            url: linkController.DrawingSettings.Detail,
+                                            data: { quartzLinkId: mainLink.Id },
+                                            success: function (response) {
+                                                var mainLinksDrawingSettings = jQuery.parseJSON(response);
+
+                                                printDrawingModel.MainLinkName = mainLinksDrawingSettings.DrawingNo;
+                                                printDrawingModel.MainLinkPlantArea = mainLinksDrawingSettings.PlantArea;
+                                                printDrawingModel.CreatedBy = drawing.CreatedBy;
+                                                printDrawingModel.CreatedDate = drawing.CreatedDate;
+                                                printDrawingModel.Description = drawing.Description;
+                                                printDrawingModel.PlantArea = drawing.PlantArea;
+                                                printDrawingModel.PlantSystem = drawing.PlantSystem;
+                                                printDrawingModel.TagNo = drawing.TagNo;
+
+                                                printDrawingModelsArray.push(printDrawingModel);
+
+                                                printDrawingModel = {
+                                                    MainLinkName: "",
+                                                    TagNo: "",
+                                                    CreatedDate: "",
+                                                    CreatedBy: "",
+                                                    Description: "",
+                                                    PlantSystem: "",
+                                                    PlantArea: "",
+                                                    MainLinkPlantArea: ""
+                                                }
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
+                                    },
+                                    error: function (error) {
+                                        alert("error!");
+                                        console.log(error.responseText);
+                                    }
+                                });
+                            }
+                            else {
+                                $.ajax({
+                                    type: "GET",
+                                    url: linkController.DrawingSettings.Detail,
+                                    data: { quartzLinkId: drawing.LinkId },
+                                    success: function (response) {
+                                        var mainLinksDrawingSettings = jQuery.parseJSON(response);
+
+                                        printDrawingModel.MainLinkName = "(this link is Main Link)";
+                                        printDrawingModel.MainLinkPlantArea = mainLinksDrawingSettings.PlantArea;
+                                        printDrawingModel.CreatedBy = drawing.CreatedBy;
+                                        printDrawingModel.CreatedDate = drawing.CreatedDate;
+                                        printDrawingModel.Description = drawing.Description;
+                                        printDrawingModel.PlantArea = drawing.PlantArea;
+                                        printDrawingModel.PlantSystem = drawing.PlantSystem;
+                                        printDrawingModel.TagNo = drawing.TagNo;
+
+                                        //printDrawingModelsArray.push(printDrawingModel);
+                                        mainDrawingModel = printDrawingModel;
+
+                                        printDrawingModel = {
+                                            MainLinkName: "",
+                                            TagNo: "",
+                                            CreatedDate: "",
+                                            CreatedBy: "",
+                                            Description: "",
+                                            PlantSystem: "",
+                                            PlantArea: "",
+                                            MainLinkPlantArea: ""
+                                        }
+                                    },
+                                    error: function (error) {
+                                        alert("error!");
+                                        console.log(error.responseText);
+                                    }
+                                });
+                            }
+
                             if (drawing.CurrentDrawingId != 0) {
                                 $("#searchPanelDrawingTable").children('tbody').append(
                                     $('<tr>').append(
@@ -133,6 +221,18 @@ function filterTag() {
                 success: function (response) {
                     var filteredTags = jQuery.parseJSON(response);
 
+                    printItemModelsArray = [];
+
+                    var printItemModel = {
+                        MainLinkName: "",
+                        MainLinkPlantArea: "",
+                        TagNo: "",
+                        SerialNo: "",
+                        FittingType: "",
+                        Specification: "",
+                        InspectionHistory: ""
+                    }
+
                     $("#searchPanelTagTable").children('tbody').children('tr').remove();
 
                     if (filteredTags != "") {
@@ -141,6 +241,27 @@ function filterTag() {
                         $("#totalSearchPanelTagCount").html("Total Tag Count: " + tagCount);
 
                         filteredTags.forEach(function (tag) {
+
+                            printItemModel.MainLinkName = tag.LinkTagNo;
+                            printItemModel.MainLinkPlantArea = tag.PlantArea;
+                            printItemModel.TagNo = tag.ItemTagNo;
+                            printItemModel.SerialNo = tag.SerialNo;
+                            printItemModel.FittingType = tag.FittingType;
+                            printItemModel.Specification = tag.Specification;
+                            printItemModel.InspectionHistory = "Yes/No";
+
+                            printItemModelsArray.push(printItemModel);
+
+                            printItemModel = {
+                                MainLinkName: "",
+                                MainLinkPlantArea: "",
+                                TagNo: "",
+                                SerialNo: "",
+                                FittingType: "",
+                                Specification: "",
+                                InspectionHistory: ""
+                            }
+
                             $("#searchPanelTagTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
@@ -292,14 +413,14 @@ function filterInspection() {
                                                     printInspectionModelsArray.push(printInspectionModel);
 
                                                     printInspectionModel = {
-                                                        PlantArea: "", 
+                                                        PlantArea: "",
                                                         DrawingRef: "",
                                                         PlantIdent: "",
-                                                        InspDate: "",  
-                                                        Procedure: "", 
-                                                        ReportNo: "",  
-                                                        Details: "",   
-                                                        Status: ""     
+                                                        InspDate: "",
+                                                        Procedure: "",
+                                                        ReportNo: "",
+                                                        Details: "",
+                                                        Status: ""
                                                     }
 
                                                 },
@@ -409,13 +530,84 @@ function filterValveMaintenance() {
                 success: function (response) {
                     var filteredValveMaintenances = jQuery.parseJSON(response);
 
+                    printValveMaintenanceModelsArray = [];
+
+                    var printValveMaintenanceModel = {
+                        MainLinkName: "",
+                        MainLinkPlantArea: "",
+                        KKSNo: "",
+                        SerialNo: "",
+                        PlantArea: "",
+                        SupplierManufacturare: "",
+                        Designation: "",
+                        IdealBarg: "",
+                        OpeningPressureBarg: "",
+                        TestDate: "",
+                        Remarks: ""
+                    }
+
                     $("#searchPanelValveMaintenanceTable").children('tbody').children('tr').remove();
 
                     if (filteredValveMaintenances != "") {
                         var valveMaintenanceCount = filteredValveMaintenances.length;
                         $("#totalSearchPanelValveMaintenanceCount").html("Total Valve Maintenance Count: " + valveMaintenanceCount);
-
                         filteredValveMaintenances.forEach(function (valveMaintenance) {
+
+                            $.ajax({
+                                type: "GET",
+                                url: itemController.Item.Detail,
+                                data: { itemId: valveMaintenance.QuartzItemId },
+                                success: function (response) {
+                                    var itemDetail = jQuery.parseJSON(response);
+
+                                    $.ajax({
+                                        type: "GET",
+                                        url: linkController.DrawingSettings.Detail,
+                                        data: { quartzLinkId: itemDetail.QuartzLinkId },
+                                        success: function (response) {
+                                            var drawingSettingsDetail = jQuery.parseJSON(response);
+
+                                            printValveMaintenanceModel.MainLinkName = drawingSettingsDetail.DrawingNo;
+                                            printValveMaintenanceModel.MainLinkPlantArea = drawingSettingsDetail.PlantArea;
+                                            printValveMaintenanceModel.KKSNo = valveMaintenance.KKSNo;
+                                            printValveMaintenanceModel.SerialNo = valveMaintenance.SerialNo;
+                                            printValveMaintenanceModel.PlantArea = valveMaintenance.PlantArea;
+                                            printValveMaintenanceModel.SupplierManufacturare = valveMaintenance.SupplierManufacturare;
+                                            printValveMaintenanceModel.Designation = valveMaintenance.Designation;
+                                            printValveMaintenanceModel.IdealBarg = valveMaintenance.IdealBarg;
+                                            printValveMaintenanceModel.OpeningPressureBarg = valveMaintenance.OpeningPressureBarg;
+                                            printValveMaintenanceModel.TestDate = valveMaintenance.TestDate.split('T')[0];
+                                            printValveMaintenanceModel.Remarks = valveMaintenance.Remarks;
+
+                                            printValveMaintenanceModelsArray.push(printValveMaintenanceModel);
+
+                                            printValveMaintenanceModel = {
+                                                MainLinkName: "",
+                                                MainLinkPlantArea: "",
+                                                KKSNo: "",
+                                                SerialNo: "",
+                                                PlantArea: "",
+                                                SupplierManufacturare: "",
+                                                Designation: "",
+                                                IdealBarg: "",
+                                                OpeningPressureBarg: "",
+                                                TestDate: "",
+                                                Remarks: ""
+                                            }
+
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+
                             var date = valveMaintenance.TestDate.split('T')[0];
 
                             $("#searchPanelValveMaintenanceTable").children('tbody').append(
@@ -497,6 +689,20 @@ function filterThicknessMeasurement() {
                 success: function (response) {
                     var filteredThicknessMeasurements = jQuery.parseJSON(response);
 
+                    printThicknessMeasurementModelsArray = [];
+
+                    var printThicknessMeasurementModel = {
+                        MainLinkName: "",
+                        MainLinkPlantArea: "",
+                        PlantArea: "",
+                        PlantSystem: "",
+                        Specification: "",
+                        NominalThickness: "",
+                        MeasuredThickness: "",
+                        Description: "",
+                        CreatedDate: ""
+                    }
+
                     $("#searchPanelThicknessMeasurementTable").children('tbody').children('tr').remove();
 
                     if (filteredThicknessMeasurements != "") {
@@ -505,6 +711,57 @@ function filterThicknessMeasurement() {
                         $("#totalSearchPanelThicknessMeasurementCount").html("Total Thickness Measurement Count: " + thicknessMeasurementCount);
 
                         filteredThicknessMeasurements.forEach(function (thicknessMeasurement) {
+
+                            $.ajax({
+                                type: "GET",
+                                url: itemController.Item.Detail,
+                                data: { itemId: thicknessMeasurement.QuartzItemId },
+                                success: function (response) {
+                                    var itemDetail = jQuery.parseJSON(response);
+
+                                    $.ajax({
+                                        type: "GET",
+                                        url: linkController.DrawingSettings.Detail,
+                                        data: { quartzLinkId: itemDetail.QuartzLinkId },
+                                        success: function (response) {
+                                            var drawingSettingsDetail = jQuery.parseJSON(response);
+
+                                            printThicknessMeasurementModel.MainLinkName = drawingSettingsDetail.DrawingNo;
+                                            printThicknessMeasurementModel.MainLinkPlantArea = drawingSettingsDetail.PlantArea;
+                                            printThicknessMeasurementModel.PlantArea = thicknessMeasurement.PlantArea;
+                                            printThicknessMeasurementModel.PlantSystem = thicknessMeasurement.PlantSystem;
+                                            printThicknessMeasurementModel.Specification = thicknessMeasurement.Specification;
+                                            printThicknessMeasurementModel.NominalThickness = thicknessMeasurement.NominalThickness;
+                                            printThicknessMeasurementModel.MeasuredThickness = thicknessMeasurement.MeasuredThickness;
+                                            printThicknessMeasurementModel.CreatedDate = thicknessMeasurement.CreatedDate;
+                                            printThicknessMeasurementModel.Description = thicknessMeasurement.Description;
+
+                                            printThicknessMeasurementModelsArray.push(printThicknessMeasurementModel);
+
+                                            printThicknessMeasurementModel = {
+                                                MainLinkName: "",
+                                                MainLinkPlantArea: "",
+                                                PlantArea: "",
+                                                PlantSystem: "",
+                                                Specification: "",
+                                                NominalThickness: "",
+                                                MeasuredThickness: "",
+                                                Description: "",
+                                                CreatedDate: ""
+                                            }
+                                        },
+                                        error: function (error) {
+                                            alert("error!");
+                                            console.log(error.responseText);
+                                        }
+                                    });
+                                },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+
                             $("#searchPanelThicknessMeasurementTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(

@@ -1,4 +1,6 @@
-﻿namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsThicknessMeasurement
+﻿using System;
+
+namespace Quartz.Common.ViewModels.Project.Item.QuartzItemsThicknessMeasurement
 {
     public class QuartzItemsThicknessMeasurementFilterViewModel
     {
@@ -8,6 +10,7 @@
         public float NominalThickness { get; set; }
         public float MeasuredThickness { get; set; }
         public string Description { get; set; }
+        public DateTime CreatedDate { get; set; }
         public int QuartzItemId { get; set; }
     }
 }

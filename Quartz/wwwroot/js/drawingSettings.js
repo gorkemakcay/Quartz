@@ -116,31 +116,6 @@ $("#btnDsmSave").on('click', function () {
             data: { model: currentQuartzLink },
             success: function (response) {
                 rModel = jQuery.parseJSON(response);
-
-                $.ajax({
-                    type: "POST",
-                    url: linkController.DrawingSettings.Update,
-                    data: { model: drawingSettingsModel },
-                    success: function (response) {
-                        currentDrawingSettings = jQuery.parseJSON(response);
-                        function wait() {
-                            //selectedFeature.setProperties({ 'Name': link.TagNo });
-                            updateDrawingFeatures();
-                            source.clear();
-                            addFeatureToSource();
-                            $("#shapeArea").children().remove();
-                            createList();
-                            // Load Spinner Yap! [TAMAMLANMADI]
-                        }
-                        setTimeout(wait, 100);
-                        toast("Drawing Settings Updated!");
-                    },
-                    error: function (error) {
-                        alert("error!");
-                        console.log(error.responseText);
-                    }
-                });
-
             },
             error: function (error) {
                 alert("error!");
@@ -149,6 +124,29 @@ $("#btnDsmSave").on('click', function () {
         });
     }
 
+    $.ajax({
+        type: "POST",
+        url: linkController.DrawingSettings.Update,
+        data: { model: drawingSettingsModel },
+        success: function (response) {
+            currentDrawingSettings = jQuery.parseJSON(response);
+            function wait() {
+                //selectedFeature.setProperties({ 'Name': link.TagNo });
+                updateDrawingFeatures();
+                source.clear();
+                addFeatureToSource();
+                $("#shapeArea").children().remove();
+                createList();
+                // Load Spinner Yap! [TAMAMLANMADI]
+            }
+            setTimeout(wait, 100);
+            toast("Drawing Settings Updated!");
+        },
+        error: function (error) {
+            alert("error!");
+            console.log(error.responseText);
+        }
+    });
 
 });
 // #endregion
