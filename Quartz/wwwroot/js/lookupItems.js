@@ -804,7 +804,7 @@ function componentTypePartial() {
                     $("#componentTypeTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + componentType.Id + "gg").addClass("col-6").append(
-                                "<strong>" + componentType.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + componentType.Name + "'>" + componentType.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + componentType.Id + "ggg").addClass("col-6").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editComponentType" id="' + componentType.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -877,7 +877,7 @@ function fittingTypePartial() {
                     $("#fittingTypeTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + fittingType.Id + "gg").addClass("col-6").append(
-                                "<strong>" + fittingType.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + fittingType.Name + "'>" + fittingType.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + fittingType.Id + "ggg").addClass("col-6").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editFittingType" id="' + fittingType.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -951,10 +951,10 @@ function methodPartial() {
                     $("#methodTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + method.Id + "gg").addClass("col-4").append(
-                                "<strong>" + method.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + method.Name + "'>" + method.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + method.Id + "ggg").addClass("col-4").append(
-                                "<strong>" + method.Code + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + method.Code + "'>" + method.Code + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + method.Id + "gggg").addClass("col-4").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editMethod" id="' + method.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1034,7 +1034,7 @@ function operatorPartial() {
                     $("#operatorTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + operator.Id + "gg").addClass("col-6").append(
-                                "<strong>" + operator.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + operator.Name + "'>" + operator.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + operator.Id + "ggg").addClass("col-6").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editOperator" id="' + operator.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1108,10 +1108,10 @@ function plantAreaPartial() {
                     $("#plantAreaTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + plantArea.Id + "gg").addClass("col-4").append(
-                                "<strong>" + plantArea.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + plantArea.Name + "'>" + plantArea.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + plantArea.Id + "ggg").addClass("col-4").append(
-                                "<strong>" + plantArea.Code + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + plantArea.Code + "'>" + plantArea.Code + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + plantArea.Id + "gggg").addClass("col-4").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editPlantArea" id="' + plantArea.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"><i class="fa fa-pencil fa-sm"></i></button>'
@@ -1191,10 +1191,10 @@ function plantSystemPartial() {
                     $("#plantSystemTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + plantSystem.Id + "gg").addClass("col-4").append(
-                                "<strong>" + plantSystem.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + plantSystem.Name + "'>" + plantSystem.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + plantSystem.Id + "ggg").addClass("col-4").append(
-                                "<strong>" + plantSystem.LookUpItemsPlantAreas + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + plantSystem.LookUpItemsPlantAreas + "'>" + plantSystem.LookUpItemsPlantAreas + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + plantSystem.Id + "gggg").addClass("col-4").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editPlantSystem" id="' + plantSystem.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1313,10 +1313,10 @@ function procedurePartial() {
                     $("#procedureTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + procedure.Id + "gg").addClass("col-4").append(
-                                "<strong>" + procedure.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + procedure.Name + "'>" + procedure.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + procedure.Id + "ggg").addClass("col-4").append(
-                                "<strong>" + procedure.LookUpItemsMethod + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + procedure.LookUpItemsMethod + "'>" + procedure.LookUpItemsMethod + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + procedure.Id + "gggg").addClass("col-4").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editProcedure" id="' + procedure.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1427,7 +1427,7 @@ function specificationPartial() {
                     $("#specificationTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + specification.Id + "gg").addClass("col-6").append(
-                                "<strong>" + specification.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + specification.Name + "'>" + specification.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + specification.Id + "ggg").addClass("col-6").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editSpecification" id="' + specification.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1500,7 +1500,7 @@ function standardStatementPartial() {
                     $("#standardStatementTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + standardStatement.Id + "gg").addClass("col-6").append(
-                                "<strong>" + standardStatement.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + standardStatement.Name + "'>" + standardStatement.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + standardStatement.Id + "ggg").addClass("col-6").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editStandardStatement" id="' + standardStatement.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1573,7 +1573,7 @@ function statusPartial() {
                     $("#statusTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + status.Id + "gg").addClass("col-6").append(
-                                "<strong>" + status.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + status.Name + "'>" + status.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + status.Id + "ggg").addClass("col-6").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editStatus" id="' + status.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1649,10 +1649,10 @@ function techniquePartial() {
                     $("#techniqueTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + technique.Id + "gg").addClass("col-4").append(
-                                "<strong>" + technique.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + technique.Name + "'>" + technique.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + technique.Id + "ggg").addClass("col-4").append(
-                                "<strong>" + technique.LookUpItemsProcedure + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + technique.LookUpItemsProcedure + "'>" + technique.LookUpItemsProcedure + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + technique.Id + "gggg").addClass("col-4").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editTechnique" id="' + technique.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'
@@ -1763,7 +1763,7 @@ function weldTypePartial() {
                     $("#weldTypeTable").children('tbody').append(
                         $('<tr>').append(
                             $('<td>', { align: "center" }).attr("Id", "" + weldType.Id + "gg").addClass("col-6").append(
-                                "<strong>" + weldType.Name + "</strong>"
+                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + weldType.Name + "'>" + weldType.Name + "</p>"
                             ),
                             $('<td>', { align: "center" }).attr("Id", "" + weldType.Id + "ggg").addClass("col-6").append(
                                 '<button type="button" class="btn btn-dark p-0 editButton editWeldType" id="' + weldType.Id + 'g" style="border: 0px; border-radius: 50%; width: 25px; height: 25px;"><i class="fa fa-pencil fa-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"></i></button>'

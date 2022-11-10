@@ -219,18 +219,15 @@ function loadUserListPage() {
                         users.forEach(function (user) {
                             $("#userListTable").children('tbody').append(
                                 $('<tr>').append(
-                                    $('<td>', {
-                                        align: "center",
-                                        text: user.UserName
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: user.FirstName + " " + user.LastName
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: user.Email
-                                    }),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + user.UserName + "'>" + user.UserName + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + user.FirstName + " " + user.LastName + "'>" + user.FirstName + " " + user.LastName + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + user.Email + "'>" + user.Email + "</p>"
+                                    ),
                                     $('<td>', { align: "center" }).append(
                                         "<button type='button' class='btn btn-dark p-0 userEditButton' data-bs-toggle='modal' data-bs-target='#AddUser' onclick='loadEditUserPage(" + user.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
                                         "<button type='button' id='" + user.Id + "' class='btn btn-dark p-0 userDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"

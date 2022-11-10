@@ -934,20 +934,17 @@ function loadInspectionPage() {
                             $("#inspectionTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
-                                        "<strong>" + inspection.ReportNo + "</strong>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.ReportNo + "'>" + inspection.ReportNo + "</p>"
                                     ),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: date
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: inspection.Method
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: inspection.Status
-                                    }),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + date + "'>" + date + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.Method + "'>" + inspection.Method + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.Status + "'>" + inspection.Status + "</p>"
+                                    ),
                                     $('<td>', { align: "center" }).append(
                                         "<button type='button' class='btn btn-dark p-0 inspectionEditButton' data-bs-toggle='modal' data-bs-target='#AddInspectionData' onclick='openEditInspectionModal(" + inspection.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
                                         "<button type='button' id='" + inspection.Id + "' class='btn btn-dark p-0 inspectionDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa fa-trash-can'></i></button>"
@@ -1209,16 +1206,16 @@ function loadInspectionsAttachmentPage() {
                                 $("#inspectionsAttachmentTable").children('tbody').append(
                                     $('<tr>').append(
                                         $('<td>', { align: "center" }).append(
-                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.Type
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.UploadedBy
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            uploadedDate
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
                                             "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -1266,16 +1263,16 @@ function loadInspectionsAttachmentPage() {
                                     $("#inspectionsAttachmentTable").children('tbody').append(
                                         $('<tr>').append(
                                             $('<td>', { align: "center" }).append(
-                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.Type
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.UploadedBy
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                uploadedDate
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
                                                 "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -1350,20 +1347,17 @@ function loadValveMaintenancePage() {
                             $("#valveMaintenanceTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
-                                        "<strong>" + valveMaintenance.KKSNo + "</strong>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.KKSNo + "'>" + valveMaintenance.KKSNo + "</p>"
                                     ),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: valveMaintenance.SerialNo
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: valveMaintenance.OpeningPressureBarg
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: date
-                                    }),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.SerialNo + "'>" + valveMaintenance.SerialNo + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.OpeningPressureBarg + "'>" + valveMaintenance.OpeningPressureBarg + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + date + "'>" + date + "</p>"
+                                    ),
                                     $('<td>', { align: "center" }).append(
                                         "<button type='button' class='btn btn-dark p-0 valveMaintenanceEditButton' data-bs-toggle='modal' data-bs-target='#AddValveMaintenanceData' onclick='openEditValveMaintenanceModal(" + valveMaintenance.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
                                         "<button type='button' id='" + valveMaintenance.Id + "' class='btn btn-dark p-0 valveMaintenanceDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa-solid fa-trash-can'></i></button>"
@@ -1521,16 +1515,16 @@ function loadValveMaintenancesAttachmentPage() {
                                 $("#valveMaintenancesAttachmentTable").children('tbody').append(
                                     $('<tr>').append(
                                         $('<td>', { align: "center" }).append(
-                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.Type
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.UploadedBy
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            uploadedDate
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
                                             "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -1571,16 +1565,16 @@ function loadValveMaintenancesAttachmentPage() {
                                     $("#valveMaintenancesAttachmentTable").children('tbody').append(
                                         $('<tr>').append(
                                             $('<td>', { align: "center" }).append(
-                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.Type
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.UploadedBy
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                uploadedDate
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
                                                 "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -1670,28 +1664,23 @@ function loadThicknessMeasurementPage() {
                             $("#thicknessMeasurementTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
-                                        "<strong>" + thicknessMeasurement.PlantArea + "</strong>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantArea + "'>" + thicknessMeasurement.PlantArea + "</p>"
                                     ),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: thicknessMeasurement.PlantSystem
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: thicknessMeasurement.Specification
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: thicknessMeasurement.NominalThickness
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: thicknessMeasurement.MeasuredThickness
-                                    }),
-                                    $('<td>', {
-                                        align: "center",
-                                        text: thicknessMeasurement.Description
-                                    }),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantSystem + "'>" + thicknessMeasurement.PlantSystem + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Specification + "'>" + thicknessMeasurement.Specification + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.NominalThickness + "'>" + thicknessMeasurement.NominalThickness + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.MeasuredThickness + "'>" + thicknessMeasurement.MeasuredThickness + "</p>"
+                                    ),
+                                    $('<td>', { align: "center" }).append(
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Description + "'>" + thicknessMeasurement.Description + "</p>"
+                                    ),
                                     $('<td>', { align: "center" }).append(
                                         "<button type='button' class='btn btn-dark p-0 thicknessMeasurementEditButton' data-bs-toggle='modal' data-bs-target='#AddThicknessMeasurementData' onclick='openEditThicknessMeasurementModal(" + thicknessMeasurement.Id + ")' style='border: 0px; border-radius: 50%; width: 25px; height: 25px;'><i class='fa fa-pencil fa-sm'></i></button>",
                                         "<button type='button' id='" + thicknessMeasurement.Id + "' class='btn btn-dark p-0 thicknessMeasurementDeleteButton' data-bs-toggle='modal' data-bs-target='#areYouSureModal' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-left: 1px;'><i class='fa-solid fa-trash-can'></i></button>"
@@ -1917,16 +1906,16 @@ function loadThicknessMeasurementAttachmentPage() {
                                 $("#thicknessMeasurementAttachmentTable").children('tbody').append(
                                     $('<tr>').append(
                                         $('<td>', { align: "center" }).append(
-                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.Type
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.UploadedBy
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            uploadedDate
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
                                             "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -1967,16 +1956,16 @@ function loadThicknessMeasurementAttachmentPage() {
                                     $("#thicknessMeasurementAttachmentTable").children('tbody').append(
                                         $('<tr>').append(
                                             $('<td>', { align: "center" }).append(
-                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.Type
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.UploadedBy
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                uploadedDate
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
                                                 "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -2071,16 +2060,16 @@ function loadAttachmentPage() {
                                 $("#itemAttachmentsTable").children('tbody').append(
                                     $('<tr>').append(
                                         $('<td>', { align: "center" }).append(
-                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.Type
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.UploadedBy
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            uploadedDate
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
                                             "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -2128,16 +2117,16 @@ function loadAttachmentPage() {
                                     $("#itemAttachmentsTable").children('tbody').append(
                                         $('<tr>').append(
                                             $('<td>', { align: "center" }).append(
-                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.Type
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.UploadedBy
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                uploadedDate
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
                                                 "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",

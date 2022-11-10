@@ -415,16 +415,16 @@ function loadDrawingSettingsAttachmentPage() {
                                 $("#dsmAttachmentTable").children('tbody').append(
                                     $('<tr>').append(
                                         $('<td>', { align: "center" }).append(
-                                            "<strong>" + attachmentModel.Name + "</strong>"
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.Type
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            attachmentModel.UploadedBy
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
-                                            uploadedDate
+                                            "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                         ),
                                         $('<td>', { align: "center" }).append(
                                             "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
@@ -466,16 +466,16 @@ function loadDrawingSettingsAttachmentPage() {
                                     $("#dsmAttachmentTable").children('tbody').append(
                                         $('<tr>').append(
                                             $('<td>', { align: "center" }).append(
-                                                "<strong>" + attachmentModel.Name + "</strong>"
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Name + "'>" + attachmentModel.Name + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.Type
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.Type + "'>" + attachmentModel.Type + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                attachmentModel.UploadedBy
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + attachmentModel.UploadedBy + "'>" + attachmentModel.UploadedBy + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
-                                                uploadedDate
+                                                "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + uploadedDate + "'>" + uploadedDate + "</p>"
                                             ),
                                             $('<td>', { align: "center" }).append(
                                                 "<button type='button' onclick='showFileModal(\"" + attachmentModel.Path + "\" , \"" + attachmentModel.Type + "\")' class='btn btn-dark p-0' style='border: 0px; border-radius: 50%; width: 25px; height: 25px; margin-right: 1px;'><i class='fa fa-eye'></i></button>",
