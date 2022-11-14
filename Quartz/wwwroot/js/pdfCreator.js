@@ -595,7 +595,6 @@ function createDrawingPDF() {
 
 function createItemPDF() {
     var pdf = document.getElementById("itemPDF");
-    console.log(pdf);
     var opt = {
         filename: 'Item_Report.pdf',
         image: { type: 'jpeg', quality: 1 },
@@ -618,7 +617,6 @@ function createInspectionPDF() {
 
 function createValveMaintenancePDF() {
     var pdf = document.getElementById("valveMaintenancePDF");
-    console.log(pdf);
     var opt = {
         filename: 'Valve_Maintenance_Report.pdf',
         image: { type: 'jpeg', quality: 1 },
@@ -630,7 +628,6 @@ function createValveMaintenancePDF() {
 
 function createThicknessMeasurementPDF() {
     var pdf = document.getElementById("thicknessMeasurementPDF");
-    console.log(pdf);
     var opt = {
         filename: 'Thickness_Measurement_Report.pdf',
         image: { type: 'jpeg', quality: 1 },

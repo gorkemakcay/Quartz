@@ -1,5 +1,7 @@
 ﻿// #region General Variables
 
+//const { set } = require("ol/transform");
+
 // #region currentDrawingSettings
 //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -386,6 +388,8 @@ var mainDrawingModel;
 
 // #endregion
 
+var xxx;
+
 $(function () {
     // #region [GET Quartz's Partial View from QuartzLink Controller]
     $.get({
@@ -455,13 +459,9 @@ $(function () {
     });
 
     loadSearchPanelsSelectOptions();
-});
 
-//function fetchFunc() {
-//    fetch('https://www.boredapi.com/api/activity')
-//        .then((response) => response.json())
-//        .then((data) => console.log(data.activity));
-//}
+    //$("#map").getContext('2d', { willReadFrequently: true });
+});
 
 // #region Search Panel's Select Options
 function loadSearchPanelsSelectOptions() {
@@ -2425,5 +2425,74 @@ function addFeatureToSource() {
         setTimeout(wait, 200);
     }
 }
-    // #endregion
+// #endregion
+
+var p1;
+
+$("#sjgfsg").on('click', function () {
+    //asyncTest1();
+    //asyncTest2();
+    //asyncTest3();
+});
+
+// #region async await func örnek - 1
+async function asyncTest1() {
+    console.log('birinci');
+
+    await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log('ikinci');
+            resolve();
+        }, 2000);
+    });
+
+    console.log('üçüncü');
+}
+// #endregion
+
+// #region async await func örnek - 2
+function later(delay) {
+    delay = delay * 1000;
+    return new Promise(function (resolve) {
+        console.log("1.5");
+        setTimeout(resolve, delay);
+    });
+}
+
+async function asyncTest2() {
+    console.log("1");
+    await later(1);
+    console.log("2");
+    console.log("3");
+}
+// #endregion
+
+// #region async await func örnek - 3
+async function asyncTest3() {
+
+    let promise = new Promise((resolve, reject) => {
+        setTimeout(() => resolve("done!"), 1000)
+    });
+
+    let result = await promise; // wait until the promise resolves (*)
+
+    console.log(result); // "done!"
+}
+// #endregion
+
+function fetchBoredApi() {
+    fetch('https://www.boredapi.com/api/activity')
+        .then((response) => response.json())
+        .then((data) => console.log(data.activity));
+}
+
+function ajaxGetBoredApi() {
+    $.ajax({
+        type: "GET",
+        url: 'https://www.boredapi.com/api/activity',
+        success: (response) => {
+            console.log(response.activity);
+        }
+    });
+}
 

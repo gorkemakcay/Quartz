@@ -51,9 +51,9 @@
         extent: extent,
     });
 
-    rasterLayer = new ol.layer.Tile({
-        source: new ol.source.OSM(),
-    });
+    //rasterLayer = new ol.layer.Tile({
+    //    source: new ol.source.OSM(),
+    //});
 
     source = new ol.source.Vector({
         format: new ol.format.GeoJSON()
@@ -87,7 +87,7 @@
 
     map = new ol.Map({
         interactions: ol.interaction.defaults({ doubleClickZoom: false }).extend([]),
-        layers: [imageLayer, rasterLayer, vectorLayer],
+        layers: [imageLayer, vectorLayer],
         target: 'map',
         view: view
     });

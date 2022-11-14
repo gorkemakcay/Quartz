@@ -919,7 +919,7 @@ function goSelectedTag(itemId) {
                                             success: function (html) {
                                                 $("#main").children().remove();
                                                 $("#main").html(html);
-
+                                                
                                                 loadQuartz();
 
                                                 function wait() {
