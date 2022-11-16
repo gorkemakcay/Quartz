@@ -295,43 +295,24 @@ var itemModalActivePartial = "Informations";
 // #endregion
 
 var crumbCount = 1;
-
 var featuresLonLat;
-
 var selectedFeature;
-
 var currentValveMaintenance;
-
 var currentThicknessMeasurement;
-
 var isValveMaintenanceExist = false;
-
 var isThicknessMeasurementExist = false;
-
 var lastClickedButtonId;
-
 var listPanelIsOpen = true;
-
 var searchPanelIsOpen = true;
-
 var objectIdToBeDeleted;
-
 var objectTypeToBeDeleted;
-
 var deleteThisWhichAttachment;
-
 var deleteThisWhichLookupItem;
-
 var editThisWhichLookupItem;
-
 var cancelThisWhichLookupItem;
-
 var loginUserInfo;
-
 var currentLinkList;
-
 var currentItemList;
-
 // #endregion
 
 // #region Quartz Variables
@@ -348,6 +329,7 @@ var featureCollection = [];
 var extent = [0, 0, 1920, 1356]; // left > bottom > right > top
 var viewExtent = [-1200, -778, 3120, 2134]; // left > bottom > right > top
 var loadQuartzSuccess = false;
+// #endregion
 
 // #region Open Layers Variables
 var select;
@@ -364,10 +346,9 @@ var modify;
 // #endregion
 
 // #region quartz.portalacbi.com Variables
-var downloadFile = "http://localhost:5001/FileUpload/DownloadFile?fileId=";
-var imageUrl = "http://localhost:5001/home/get?path=";
+var downloadFile = "/FileUpload/DownloadFile?fileId=";
+var imageUrl = "/home/get?path=";
 var resetImageUrl = imageUrl;
-//var imageUrl;
 // #endregion
 
 // #region Search Panel's Variables
@@ -384,12 +365,7 @@ var drawingsPlantAreas = [];
 var mainDrawingModel;
 // #endregion
 
-// #endregion
-
-// #endregion
-
-var xxx;
-
+// Document Ready Function
 $(function () {
     // #region [GET Quartz's Partial View from QuartzLink Controller]
     $.get({
@@ -446,6 +422,7 @@ $(function () {
     })
     // #endregion
 
+    // #region Get User Login Info
     $.ajax({
         type: "GET",
         url: "Home/GetLoginUserInfo",
@@ -457,13 +434,12 @@ $(function () {
             console.log(error.responseText);
         }
     });
+    // #endregion
 
     loadSearchPanelsSelectOptions();
-
-    //$("#map").getContext('2d', { willReadFrequently: true });
 });
 
-// #region Search Panel's Select Options
+// Get Search Panel's Select Options
 function loadSearchPanelsSelectOptions() {
     // #region Search Drawing
     // Plant Area
@@ -952,8 +928,8 @@ function loadSearchPanelsSelectOptions() {
     });
     // #endregion
 }
-// #endregion
 
+// Get Date (Format: yyyy/mm/dd hh:mm:ss:msmsms)
 // #region getDate()
 function getDate() {
     var dt = new Date();
@@ -961,6 +937,7 @@ function getDate() {
 };
 // #endregion
 
+// Get Drawing Center
 function getDrawingCenter() {
     view.animate({
         center: ol.extent.getCenter(extent),
@@ -969,6 +946,7 @@ function getDrawingCenter() {
     });
 }
 
+// Bread Crumb [TAMAMLANMADI]
 function breadCrumb() {
     $(".breadCrumb").children().remove();
     $(".breadCrumb").append(
@@ -992,6 +970,7 @@ function breadCrumb() {
     );
 }
 
+// Close Button
 $(".closeButton").on('click', function () {
     clickedOrCreated = "null";
     createList();
@@ -1003,6 +982,7 @@ $(".closeButton").on('click', function () {
     $("#dsmSelectDrawing").removeAttr("disabled");
 });
 
+// Are you sure > Cancel Button
 $("#cancelDeleteButton").on('click', function () {
     switch (objectTypeToBeDeleted) {
 
@@ -1065,6 +1045,7 @@ $("#cancelDeleteButton").on('click', function () {
     }
 });
 
+// Lookup Items > Cancel Button
 function limCancelButton(type) {
     $(".clear").val('');
 
@@ -1170,6 +1151,7 @@ function limCancelButton(type) {
     }
 }
 
+// Go Drawing
 function goDrawing(linkId, drawingId, thisValue) {
     //alert(" you clicked breadcrumb, gorkem() function is working ^.^ | id: " + id);
     //alert("link ID: " + linkId + " - " + "link's current drawing ID: " + drawingId);
@@ -1238,6 +1220,7 @@ function goDrawing(linkId, drawingId, thisValue) {
 
 }
 
+// Get Vector Source
 function getVectorSource() {
     $.get({
         url: linkController.DrawingFeatures.GetVectorSource,
@@ -1258,6 +1241,7 @@ function getVectorSource() {
     });
 }
 
+// Delete: Link, Item, Inspection, Valve Maintenance, Thickness Measurement, Attachment, LookupItem, User
 function deleteThis(objectType, objectId) {
     switch (objectType) {
         case "link":
@@ -1981,6 +1965,7 @@ function deleteThis(objectType, objectId) {
     }
 }
 
+// Update Drawing Features
 function updateDrawingFeatures() {
     var json = new ol.format.GeoJSON().writeFeatures(vectorLayer.getSource().getFeatures(), {
         dataProjection: 'EPSG:4326',
@@ -2008,32 +1993,9 @@ function updateDrawingFeatures() {
     });
 }
 
-// TTTTTTTTTTTTTTTTTTTTTTTTTTRIAL AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-//document.onclick = hideMenu;
-//document.oncontextmenu = rightClick;
-
-//function hideMenu() {
-//    document.getElementById("inspectionMenu")
-//        .style.display = "none"
-//}
-
-function rightClick(e) {
-    e.preventDefault();
-
-    if (document.getElementById("inspectionMenu").style.display == "block") {
-        hideMenu();
-    } else {
-        var menu = document.getElementById("inspectionMenu")
-        menu.style.display = 'block';
-        menu.style.left = e.pageX + "px";
-        menu.style.top = e.pageY + "px";
-    }
-}
-// TTTTTTTTTTTTTTTTTTTTTTTTTTRIAL AREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
 // #region List Panel | Main Panel | Search Panel
 
+// #region List Panel's & Search Panel's Icon
 $("#showListPanelIcon").on('click', function () {
     $.ajax({
         type: "GET",
@@ -2317,12 +2279,19 @@ function updateMap() {
 
 // #endregion
 
+// File Modal Show Image & Pdf
 function showFileModal(path, type) {
     path = path.replace("wwwroot", "");
     $("#showFileModalPartialArea").children().remove();
     $("#showFileModal").modal("show");
     switch (type) {
         case "image/jpeg":
+            $("#showFileModalPartialArea").append(
+                '<img src="' + path + '" style="max-height: 900px;">'
+            );
+            break;
+
+        case "image/png":
             $("#showFileModalPartialArea").append(
                 '<img src="' + path + '" style="max-height: 900px;">'
             );
@@ -2427,8 +2396,7 @@ function addFeatureToSource() {
 }
 // #endregion
 
-var p1;
-
+// #region Örnek Fonksiyonlar
 $("#sjgfsg").on('click', function () {
     //asyncTest1();
     //asyncTest2();
@@ -2495,4 +2463,4 @@ function ajaxGetBoredApi() {
         }
     });
 }
-
+// #endregion

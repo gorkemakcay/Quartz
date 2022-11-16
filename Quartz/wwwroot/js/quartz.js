@@ -533,6 +533,7 @@
     });
 
     loadQuartzSuccess = true;
+    return 1;
 }
 
 function refreshQuartz() {

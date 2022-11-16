@@ -911,7 +911,7 @@
     </ul>
 </div>
 <!-- #endregion -->
-
+<!-- #region Right Click Menu -->
 <div id="contextMenu" class="context-menu" style="display: none">
     <ul class="menu">
         <li class="share"><a href="#"><i class="fa fa-share" aria-hidden="true"></i> Share</a></li>
@@ -923,6 +923,7 @@
         <li class="trash"><a href="#"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
     </ul>
 </div>
+<!-- #endregion -->
 
 <input value="@ViewBag.UserRoles" id="userRoles" hidden />
 
@@ -934,7 +935,8 @@
 
     @* jsPDF *@
     @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>*@
+    <script src="~/lib/html2pdf/html2pdf.bundle.min.js"></script>
 
     <script type="text/javascript" src="~/lib/jsPDF-1.3.2/libs/html2canvas/dist/html2canvas.js"></script>
     <script type="text/javascript" src="~/lib/jsPDF-1.3.2/dist/jspdf.min.js"></script>
