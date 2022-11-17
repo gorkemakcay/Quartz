@@ -13,5 +13,6 @@
         public string PlantArea { get; set; }
         public string PlantSystem { get; set; }
         public string Description { get; set; }
+        public bool IsInspected { get; set; }
     }
 }

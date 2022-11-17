@@ -393,6 +393,7 @@
                         CreatedDate: getDate(),
                         CreatedBy: loginUserInfo.FullName,
                         ShowLabel: false,
+                        IsInspected: false,
                         QuartzLinkId: currentQuartzLink.Id
                     };
 
@@ -413,8 +414,7 @@
                                 type: "POST",
                                 url: itemController.Information.Add,
                                 data: { model: itemInformationAddModel },
-                                success: function (response) {
-                                    rModel = jQuery.parseJSON(response);
+                                success: function () {
                                 },
                                 error: function (error) {
                                     alert("error!");

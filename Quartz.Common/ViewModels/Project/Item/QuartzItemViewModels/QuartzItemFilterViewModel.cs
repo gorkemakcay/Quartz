@@ -9,6 +9,7 @@ namespace Quartz.Common.ViewModels.Project.Item.QuartzItemViewModels
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string AttachmentIds { get; set; }
+        public bool IsInspected { get; set; }
         public int QuartzLinkId { get; set; }
     }
 }

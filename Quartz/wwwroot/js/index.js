@@ -379,37 +379,50 @@ $(function () {
     // #region [GET Link Details from QuartzLink Controller]
     $.ajax({
         type: "GET",
-        url: linkController.Link.Detail,
-        data: { linkId: 1 },
+        url: linkController.Link.List,
+        data: { mainLinkId: 0 },
         success: function (response) {
-            currentQuartzLink = jQuery.parseJSON(response);
-
-            $.get({
-                url: linkController.DrawingSettings.Detail,
-                data: { quartzLinkId: currentQuartzLink.Id },
+            mainLink = jQuery.parseJSON(response);
+            mainLink = mainLink[0];
+            $.ajax({
+                type: "GET",
+                url: linkController.Link.Detail,
+                data: { linkId: mainLink.Id },
                 success: function (response) {
-                    currentDrawingSettings = jQuery.parseJSON(response);
-                    breadCrumb();
+                    currentQuartzLink = jQuery.parseJSON(response);
+
+                    $.get({
+                        url: linkController.DrawingSettings.Detail,
+                        data: { quartzLinkId: currentQuartzLink.Id },
+                        success: function (response) {
+                            currentDrawingSettings = jQuery.parseJSON(response);
+                            breadCrumb();
+                        }
+                    });
+
+                    getVectorSource();
+
+                    function wait() {
+                        $.ajax({
+                            type: "GET",
+                            url: fileController.Detail,
+                            data: { fileId: currentQuartzLink.CurrentDrawingId },
+                            success: function (result) {
+                                currentDrawing = jQuery.parseJSON(result);
+                                loadQuartz();
+                            }
+                        });
+                    }
+                    setTimeout(wait, 100);
+                },
+                error: function (error) {
+                    alert("error");
+                    console.log(error.responseText);
                 }
             });
-
-            getVectorSource();
-
-            function wait() {
-                $.ajax({
-                    type: "GET",
-                    url: fileController.Detail,
-                    data: { fileId: currentQuartzLink.CurrentDrawingId },
-                    success: function (result) {
-                        currentDrawing = jQuery.parseJSON(result);
-                        loadQuartz();
-                    }
-                });
-            }
-            setTimeout(wait, 100);
         },
         error: function (error) {
-            alert("error");
+            alert("error!");
             console.log(error.responseText);
         }
     });
@@ -1563,12 +1576,47 @@ function deleteThis(objectType, objectId) {
             break;
 
         case "inspection":
+            var item;
+            if (clickedOrCreated == "clicked")
+                item = lastClickedItem;
+            if (clickedOrCreated == "created")
+                item = lastCreatedItem;
+
             var inspectionDeleteModel = { Id: objectId };
             $.ajax({
                 type: "DELETE",
                 url: itemController.Inspection.Delete,
                 data: { model: inspectionDeleteModel },
-                success: function (response) {
+                success: function () {
+
+                    $.ajax({
+                        type: "GET",
+                        url: itemController.Inspection.List,
+                        data: { quartzItemId: item.Id },
+                        success: function (response) {
+                            inspectionList = jQuery.parseJSON(response);
+                            if (inspectionList.length == 0) {
+                                item.IsInspected = false;
+                                $.ajax({
+                                    type: "POST",
+                                    url: itemController.Item.Update,
+                                    data: { model: item },
+                                    success: function () {
+                                        if (clickedOrCreated == "clicked")
+                                            lastClickedItem = item;
+                                        if (clickedOrCreated == "created")
+                                            lastCreatedItem = item;
+
+                                        refreshQuartz();
+                                    },
+                                    error: function (error) {
+                                        alert("error!");
+                                        console.log(error.responseText);
+                                    }
+                                });
+                            }
+                        }
+                    });
                     loadInspectionPage();
 
                     objectTypeToBeDeleted = "";
@@ -2347,6 +2395,8 @@ function addFeatureToSource() {
                 });
 
                 var TextContext;
+                var fillColor = 'rgba(255,255,255,0.4)';
+
                 if (featureJson.properties.Type == 'link') {
                     let link = currentLinkList.find(link => link.Id == featureJson.properties.Id);
                     if (link.ShowLabel) {
@@ -2361,6 +2411,10 @@ function addFeatureToSource() {
                         TextContext = featureJson.properties.Name;
                     }
                     else TextContext = '';
+
+                    if (item.IsInspected) {
+                        fillColor = 'rgba(0,255,0,0.5)';
+                    }
                 }
 
                 feature.setProperties({ 'LonLat': featureJson.properties.LonLat });
@@ -2372,7 +2426,7 @@ function addFeatureToSource() {
 
                 var exampleFeatureStyle = new ol.style.Style({
                     fill: new ol.style.Fill({
-                        color: 'rgba(255,255,255,0.4)'
+                        color: fillColor
                     }),
                     stroke: new ol.style.Stroke({
                         color: '#3399CC',

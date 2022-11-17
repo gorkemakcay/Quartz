@@ -258,6 +258,26 @@ $("#inspectionAddSaveButton").on('click', function () {
             currentInspection = jQuery.parseJSON(response);
             loadInspectionPage();
             toast(toastContext);
+
+            item.IsInspected = true;
+
+            $.ajax({
+                type: "POST",
+                url: itemController.Item.Update,
+                data: { model: item },
+                success: function () {
+                    if (clickedOrCreated == "clicked")
+                        lastClickedItem = item;
+                    if (clickedOrCreated == "created")
+                        lastCreatedItem = item;
+
+                    refreshQuartz();
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
         },
         error: function (error) {
             alert("error!");

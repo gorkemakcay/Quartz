@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Quartz.BusinessLogic.Interface.ISearch;
 using Quartz.Common.ViewModels.Search.SearchTag;
+using Quartz.DataAccess.Concrete.EntityFramworkCore.Context;
 using Quartz.DataAccess.UnitOfWorks.Interface;
 using Quartz.Entities.Concrete.Search;
 using System.Collections.Generic;
@@ -19,7 +21,13 @@ namespace Quartz.BusinessLogic.Concrete.SearchManager
         }
         public List<SearchTagListViewModel> FilterTags(SearchTagListViewModel model)
         {
-            var filteredTags = _mapper.Map<List<SearchTagListViewModel>>(GetAll());
+
+            //using (var ctx = new QuartzContext())
+            //{
+            //    var xxx = ctx.vw_SearchTag.FromSqlRaw("SELECT * FROM vw_SearchTag").ToList();
+            //}
+
+            var filteredTags = _mapper.Map<List<SearchTagListViewModel>>(GetAll().AsNoTracking());
 
             if (model.ItemTagNo != null)
                 filteredTags = filteredTags.Where(I => I.ItemTagNo != null && I.ItemTagNo.ToLower().Contains(model.ItemTagNo.ToLower())).ToList();

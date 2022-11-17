@@ -220,7 +220,7 @@ function filterTag() {
                 data: { model: filterTagModel },
                 success: function (response) {
                     var filteredTags = jQuery.parseJSON(response);
-
+                    console.log(filteredTags);
                     printItemModelsArray = [];
 
                     var printItemModel = {
@@ -241,26 +241,18 @@ function filterTag() {
                         $("#totalSearchPanelTagCount").html("Total Tag Count: " + tagCount);
 
                         filteredTags.forEach(function (tag) {
-
                             printItemModel.MainLinkName = tag.LinkTagNo;
                             printItemModel.MainLinkPlantArea = tag.PlantArea;
                             printItemModel.TagNo = tag.ItemTagNo;
                             printItemModel.SerialNo = tag.SerialNo;
                             printItemModel.FittingType = tag.FittingType;
                             printItemModel.Specification = tag.Specification;
-                            printItemModel.InspectionHistory = "Yes/No";
+                            if (tag.IsInspected)
+                                printItemModel.InspectionHistory = "YES";
+                            else
+                                printItemModel.InspectionHistory = "NO";
 
                             printItemModelsArray.push(printItemModel);
-
-                            printItemModel = {
-                                MainLinkName: "",
-                                MainLinkPlantArea: "",
-                                TagNo: "",
-                                SerialNo: "",
-                                FittingType: "",
-                                Specification: "",
-                                InspectionHistory: ""
-                            }
 
                             $("#searchPanelTagTable").children('tbody').append(
                                 $('<tr>').append(
@@ -283,10 +275,20 @@ function filterTag() {
                                         "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + tag.Specification + "'>" + tag.Specification + "</p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='YES/NO'> YES/NO </p>"
+                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + printItemModel.InspectionHistory + "'>" + printItemModel.InspectionHistory + "</p>"
                                     ),
                                 )
                             );
+
+                            printItemModel = {
+                                MainLinkName: "",
+                                MainLinkPlantArea: "",
+                                TagNo: "",
+                                SerialNo: "",
+                                FittingType: "",
+                                Specification: "",
+                                InspectionHistory: ""
+                            }
 
                         });
                     }
@@ -919,7 +921,7 @@ function goSelectedTag(itemId) {
                                             success: function (html) {
                                                 $("#main").children().remove();
                                                 $("#main").html(html);
-                                                
+
                                                 loadQuartz();
 
                                                 function wait() {
@@ -1254,47 +1256,6 @@ function goSelectedThicknessMeasurement(itemId) {
                                             success: function (html) {
                                                 $("#main").children().remove();
                                                 $("#main").html(html);
-
-                                                //var goSelectedThicknessMeasurementPromise = new Promise((resolve, reject) => {
-                                                //    loadQuartz();
-                                                //    if (loadQuartzSuccess) {
-                                                //        resolve('loadQuartz function succesfully worked');
-                                                //    }
-                                                //});
-
-                                                //goSelectedThicknessMeasurementPromise.then((message) => {
-                                                //    loadQuartzSuccess = false;
-                                                //    console.log(message);
-                                                //    source.getFeatures().forEach(function (feature) {
-                                                //        if (feature.get("Id") == thicknessMeasurementsItem.Id && feature.get("Type") == "item") {
-                                                //            select.getFeatures().clear();
-                                                //            select.getFeatures().push(feature);
-                                                //            selectedFeature = select.getFeatures().item(0);
-
-                                                //            view.animate({
-                                                //                center: new ol.proj.fromLonLat(feature.get("LonLat")),
-                                                //                zoom: 3,
-                                                //                duration: 800
-                                                //            });
-                                                //            return;
-                                                //        }
-                                                //    });
-
-                                                //    // Select Button from List Panel
-                                                //    var buttonId = selectedFeature.get('Id');
-
-                                                //    $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
-                                                //    lastClickedButtonId = buttonId;
-
-                                                //    var buttons = $("[name='item']");
-
-                                                //    for (var i = 0; i < buttons.length; i++) {
-                                                //        if (buttons[i].getAttribute('Id') == buttonId) {
-                                                //            buttons[i].setAttribute('style', 'background: #808080');
-                                                //            return;
-                                                //        }
-                                                //    }
-                                                //});
 
                                                 loadQuartz();
 

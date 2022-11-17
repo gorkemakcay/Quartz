@@ -17,7 +17,7 @@ namespace Quartz.DataAccess.Concrete.EntityFramworkCore.Context
         {
             optionsBuilder.LogTo(Console.WriteLine).EnableSensitiveDataLogging();
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-P12SOIP\SQLEXPRESS;Database=Quartz4;uid=umutd;pwd=Ud4583!");
-            //optionsBuilder.UseSqlServer(@"Server=94.73.144.17;Database=u0406106_Quartz;uid=u0406106_quartz;pwd=ArlentusControl2022**");
+            //optionsBuilder.UseSqlServer(@"Server=94.73.144.17;Database=u0406106_Quartz;uid=u0406106_quartz;pwd=ArlentusControl2013**");
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             base.OnConfiguring(optionsBuilder);
         }
