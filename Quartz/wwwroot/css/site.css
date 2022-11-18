@@ -153,10 +153,6 @@
     list-style: none;
 }
 
-.breadCrumb {
-    list-style: none;
-}
-
     .breadCrumb li {
         display: inline;
         font-size: 15px;

@@ -79,43 +79,46 @@ $("#btnDsmSave").on('click', function () {
     if (currentDrawingSettings.DrawingNo != $("#dsmDrawingNo").val()) {
         currentQuartzLink.TagNo = $("#dsmDrawingNo").val();
 
-        $.ajax({
-            type: "GET",
-            url: linkController.DrawingFeatures.GetVectorSource,
-            data: { quartzLinkId: currentQuartzLink.MainQuartzLinkId },
-            success: function (response) {
-                var drawingFeatures = jQuery.parseJSON(response);
-                var drawingFeaturesParse = jQuery.parseJSON(drawingFeatures.Features);
+        if (currentQuartzLink.MainQuartzLinkId != 0) {
+            $.ajax({
+                type: "GET",
+                url: linkController.DrawingFeatures.GetVectorSource,
+                data: { quartzLinkId: currentQuartzLink.MainQuartzLinkId },
+                success: function (response) {
+                    var drawingFeatures = jQuery.parseJSON(response);
+                    var drawingFeaturesParse = jQuery.parseJSON(drawingFeatures.Features);
 
-                drawingFeaturesParse.features.forEach(function (feature) {
-                    if (feature.properties.Id == currentQuartzLink.Id) {
-                        feature.properties.Name = currentQuartzLink.TagNo;
-                        drawingFeatures.Features = JSON.stringify(drawingFeaturesParse);
-                        $.ajax({
-                            type: "POST",
-                            url: linkController.DrawingFeatures.Update,
-                            data: { model: drawingFeatures },
-                            error: function (error) {
-                                alert("error!");
-                                console.log(error.responseText);
-                            }
-                        });
-                        return;
-                    }
-                });
-            },
-            error: function (error) {
-                alert("error!");
-                console.log(error.responseText);
-            }
-        });
+                    drawingFeaturesParse.features.forEach(function (feature) {
+                        if (feature.properties.Id == currentQuartzLink.Id) {
+                            feature.properties.Name = currentQuartzLink.TagNo;
+                            drawingFeatures.Features = JSON.stringify(drawingFeaturesParse);
+                            $.ajax({
+                                type: "POST",
+                                url: linkController.DrawingFeatures.Update,
+                                data: { model: drawingFeatures },
+                                error: function (error) {
+                                    alert("error!");
+                                    console.log(error.responseText);
+                                }
+                            });
+                            return;
+                        }
+                    });
+                },
+                error: function (error) {
+                    alert("error!");
+                    console.log(error.responseText);
+                }
+            });
+        }
 
         $.ajax({
             type: "POST",
             url: linkController.Link.Update,
             data: { model: currentQuartzLink },
             success: function (response) {
-                rModel = jQuery.parseJSON(response);
+                linkDetail = jQuery.parseJSON(response);
+                goDrawingFromSearch(linkDetail.Id);
             },
             error: function (error) {
                 alert("error!");

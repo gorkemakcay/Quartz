@@ -259,23 +259,45 @@ $("#inspectionAddSaveButton").on('click', function () {
             loadInspectionPage();
             toast(toastContext);
 
-            item.IsInspected = true;
-
             $.ajax({
-                type: "POST",
-                url: itemController.Item.Update,
-                data: { model: item },
-                success: function () {
-                    if (clickedOrCreated == "clicked")
-                        lastClickedItem = item;
-                    if (clickedOrCreated == "created")
-                        lastCreatedItem = item;
+                type: "GET",
+                url: itemController.Inspection.List,
+                data: { quartzItemId: item.Id },
+                success: function (response) {
+                    inspectionList = jQuery.parseJSON(response);
+                    if (inspectionList.length == 1) {
+                        item.IsInspected = true;
 
-                    refreshQuartz();
-                },
-                error: function (error) {
-                    alert("error!");
-                    console.log(error.responseText);
+                        $.ajax({
+                            type: "POST",
+                            url: itemController.Item.Update,
+                            data: { model: item },
+                            success: function () {
+                                if (clickedOrCreated == "clicked")
+                                    lastClickedItem = item;
+                                if (clickedOrCreated == "created")
+                                    lastCreatedItem = item;
+
+                                $.ajax({
+                                    type: "GET",
+                                    url: linkController.QuartzPartialView,
+                                    success: function (html) {
+                                        $("#main").children().remove();
+                                        $("#main").html(html);
+                                        loadQuartz();
+                                    },
+                                    error: function (error) {
+                                        alert("error!");
+                                        console.log(error.responseText);
+                                    }
+                                });
+                            },
+                            error: function (error) {
+                                alert("error!");
+                                console.log(error.responseText);
+                            }
+                        });
+                    }
                 }
             });
         },

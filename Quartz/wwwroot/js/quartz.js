@@ -541,7 +541,7 @@ function refreshQuartz() {
         type: "GET",
         url: linkController.QuartzPartialView,
         success: function (html) {
-            $("#shapeArea").children().remove();
+            //$("#shapeArea").children().remove();
             createList();
 
             $("#main").children().remove();

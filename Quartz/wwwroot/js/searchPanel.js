@@ -257,7 +257,7 @@ function filterTag() {
                             $("#searchPanelTagTable").children('tbody').append(
                                 $('<tr>').append(
                                     $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedTag(" + tag.ItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
+                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedTag(" + tag.ItemId + ", " + tag.LinkId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
                                     ),
                                     $('<td>', { align: "center" }).append(
                                         "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + tag.ItemTagNo + "'>" + tag.ItemTagNo + "</p>"
@@ -435,7 +435,7 @@ function filterInspection() {
                                             $("#searchPanelInspectionTable").children('tbody').append(
                                                 $('<tr>').append(
                                                     $('<td>', { align: "center" }).append(
-                                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedInspection(" + inspection.QuartzItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
+                                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedInspection(" + inspection.QuartzItemId + ", " + filteredInspectionsItemDetail.QuartzLinkId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
                                                     ),
                                                     $('<td>', { align: "center" }).append(
                                                         "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + inspection.ReportNo + "'>" + inspection.ReportNo + "</p>"
@@ -597,6 +597,36 @@ function filterValveMaintenance() {
                                                 Remarks: ""
                                             }
 
+                                            var date = valveMaintenance.TestDate.split('T')[0];
+
+                                            $("#searchPanelValveMaintenanceTable").children('tbody').append(
+                                                $('<tr>').append(
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedValveMaintenance(" + valveMaintenance.QuartzItemId + ", " + itemDetail.QuartzLinkId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.KKSNo + "'>" + valveMaintenance.KKSNo + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.SerialNo + "'>" + valveMaintenance.SerialNo + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.SupplierManufacturare + "'>" + valveMaintenance.SupplierManufacturare + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.Designation + "'>" + valveMaintenance.Designation + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.Remarks + "'>" + valveMaintenance.Remarks + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + date + "'>" + date + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.PlantArea + "'>" + valveMaintenance.PlantArea + "</p>"
+                                                    )
+                                                )
+                                            );
                                         },
                                         error: function (error) {
                                             alert("error!");
@@ -609,38 +639,6 @@ function filterValveMaintenance() {
                                     console.log(error.responseText);
                                 }
                             });
-
-                            var date = valveMaintenance.TestDate.split('T')[0];
-
-                            $("#searchPanelValveMaintenanceTable").children('tbody').append(
-                                $('<tr>').append(
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedValveMaintenance(" + valveMaintenance.QuartzItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.KKSNo + "'>" + valveMaintenance.KKSNo + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.SerialNo + "'>" + valveMaintenance.SerialNo + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.SupplierManufacturare + "'>" + valveMaintenance.SupplierManufacturare + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.Designation + "'>" + valveMaintenance.Designation + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.Remarks + "'>" + valveMaintenance.Remarks + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + date + "'>" + date + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + valveMaintenance.PlantArea + "'>" + valveMaintenance.PlantArea + "</p>"
-                                    )
-                                )
-                            );
-
                         });
                     }
                     else {
@@ -713,7 +711,6 @@ function filterThicknessMeasurement() {
                         $("#totalSearchPanelThicknessMeasurementCount").html("Total Thickness Measurement Count: " + thicknessMeasurementCount);
 
                         filteredThicknessMeasurements.forEach(function (thicknessMeasurement) {
-
                             $.ajax({
                                 type: "GET",
                                 url: itemController.Item.Detail,
@@ -751,6 +748,32 @@ function filterThicknessMeasurement() {
                                                 Description: "",
                                                 CreatedDate: ""
                                             }
+
+                                            $("#searchPanelThicknessMeasurementTable").children('tbody').append(
+                                                $('<tr>').append(
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedThicknessMeasurement(" + thicknessMeasurement.QuartzItemId + ", " + itemDetail.QuartzLinkId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.NominalThickness + "'>" + thicknessMeasurement.NominalThickness + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.MeasuredThickness + "'>" + thicknessMeasurement.MeasuredThickness + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Description + "'>" + thicknessMeasurement.Description + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Specification + "'>" + thicknessMeasurement.Specification + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantArea + "'>" + thicknessMeasurement.PlantArea + "</p>"
+                                                    ),
+                                                    $('<td>', { align: "center" }).append(
+                                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantSystem + "'>" + thicknessMeasurement.PlantSystem + "</p>"
+                                                    )
+                                                )
+                                            );
                                         },
                                         error: function (error) {
                                             alert("error!");
@@ -763,33 +786,6 @@ function filterThicknessMeasurement() {
                                     console.log(error.responseText);
                                 }
                             });
-
-                            $("#searchPanelThicknessMeasurementTable").children('tbody').append(
-                                $('<tr>').append(
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' style='color: blue; cursor: pointer;' onclick='goSelectedThicknessMeasurement(" + thicknessMeasurement.QuartzItemId + ")' data-bs-dismiss='modal' data-bs-toggle='tooltip' data-bs-placement='right' title='Go link'><i class='fas fa-link'></i></p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.NominalThickness + "'>" + thicknessMeasurement.NominalThickness + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.MeasuredThickness + "'>" + thicknessMeasurement.MeasuredThickness + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Description + "'>" + thicknessMeasurement.Description + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.Specification + "'>" + thicknessMeasurement.Specification + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantArea + "'>" + thicknessMeasurement.PlantArea + "</p>"
-                                    ),
-                                    $('<td>', { align: "center" }).append(
-                                        "<p class='tableColumn' data-bs-toggle='tooltip' data-bs-placement='right' title='" + thicknessMeasurement.PlantSystem + "'>" + thicknessMeasurement.PlantSystem + "</p>"
-                                    )
-                                )
-                            );
-
                         });
                     }
                     else {
@@ -819,6 +815,8 @@ $("#clearSearchButton").on('click', function () {
 });
 
 function goSelectedLink(linkId) {
+    goDrawingFromSearch(linkId);
+
     $.ajax({
         type: "GET",
         url: linkController.Link.Detail,
@@ -850,16 +848,6 @@ function goSelectedLink(linkId) {
                                         $("#main").html(html);
 
                                         loadQuartz();
-
-                                        crumbCount++;
-                                        $(".breadCrumb").append(
-                                            $('<li>', {
-                                                text: currentQuartzLink.TagNo,
-                                                value: crumbCount,
-                                                onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
-                                                class: "crumb"
-                                            })
-                                        );
                                     },
                                     error: function (error) {
                                         alert("error!");
@@ -886,7 +874,9 @@ function goSelectedLink(linkId) {
     });
 }
 
-function goSelectedTag(itemId) {
+function goSelectedTag(itemId, linkId) {
+    goDrawingFromSearch(linkId);
+
     $.ajax({
         type: "GET",
         url: itemController.Item.Detail,
@@ -956,16 +946,6 @@ function goSelectedTag(itemId) {
                                                     }
                                                 }
                                                 setTimeout(wait, 200);
-
-                                                crumbCount++;
-                                                $(".breadCrumb").append(
-                                                    $('<li>', {
-                                                        text: currentQuartzLink.TagNo,
-                                                        value: crumbCount,
-                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
-                                                        class: "crumb"
-                                                    })
-                                                );
                                             },
                                             error: function (error) {
                                                 alert("error!");
@@ -998,7 +978,9 @@ function goSelectedTag(itemId) {
     });
 }
 
-function goSelectedInspection(itemId) {
+function goSelectedInspection(itemId, linkId) {
+    goDrawingFromSearch(linkId);
+
     $.ajax({
         type: "GET",
         url: itemController.Item.Detail,
@@ -1068,16 +1050,6 @@ function goSelectedInspection(itemId) {
                                                     }
                                                 }
                                                 setTimeout(wait, 200);
-
-                                                crumbCount++;
-                                                $(".breadCrumb").append(
-                                                    $('<li>', {
-                                                        text: currentQuartzLink.TagNo,
-                                                        value: crumbCount,
-                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
-                                                        class: "crumb"
-                                                    })
-                                                );
                                             },
                                             error: function (error) {
                                                 alert("error!");
@@ -1110,7 +1082,9 @@ function goSelectedInspection(itemId) {
     });
 }
 
-function goSelectedValveMaintenance(itemId) {
+function goSelectedValveMaintenance(itemId, linkId) {
+    goDrawingFromSearch(linkId);
+
     $.ajax({
         type: "GET",
         url: itemController.Item.Detail,
@@ -1179,16 +1153,6 @@ function goSelectedValveMaintenance(itemId) {
                                                     }
                                                 }
                                                 setTimeout(wait, 200);
-
-                                                crumbCount++;
-                                                $(".breadCrumb").append(
-                                                    $('<li>', {
-                                                        text: currentQuartzLink.TagNo,
-                                                        value: crumbCount,
-                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
-                                                        class: "crumb"
-                                                    })
-                                                );
                                             },
                                             error: function (error) {
                                                 alert("error!");
@@ -1221,7 +1185,9 @@ function goSelectedValveMaintenance(itemId) {
     });
 }
 
-function goSelectedThicknessMeasurement(itemId) {
+function goSelectedThicknessMeasurement(itemId, linkId) {
+    goDrawingFromSearch(linkId);
+
     $.ajax({
         type: "GET",
         url: itemController.Item.Detail,
@@ -1291,16 +1257,6 @@ function goSelectedThicknessMeasurement(itemId) {
                                                     }
                                                 }
                                                 setTimeout(wait, 200); // [TAMAMLANMADI]
-
-                                                crumbCount++;
-                                                $(".breadCrumb").append(
-                                                    $('<li>', {
-                                                        text: currentQuartzLink.TagNo,
-                                                        value: crumbCount,
-                                                        onclick: "goDrawing(" + currentQuartzLink.Id + " , " + currentQuartzLink.CurrentDrawingId + " ," + crumbCount + ")",
-                                                        class: "crumb"
-                                                    })
-                                                );
                                             },
                                             error: function (error) {
                                                 alert("error!");

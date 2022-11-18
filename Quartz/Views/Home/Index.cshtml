@@ -3,7 +3,7 @@
 
 <!-- #region Home Page -->
 <div class="container-fluid">
-    <!-- #region Breadcrumbs -->
+    <!-- #region List Panel | Quartz Panel | Search Panel -->
     <div class="row text-light" style="background: #373a3e; height: 25px;">
         <div id="listPanelHeader" class="col-lg-2" style="border-right: 1px solid #212529; height: 100%;">
             <div class="row">
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="col-lg-10">
-                    <ul class="breadCrumb px-0">
+                    <ul class="breadCrumb p-0 m-0">
                     </ul>
                 </div>
 
@@ -56,7 +56,7 @@
         </div>
     </div>
     <!-- #endregion -->
-    <!-- #region List Panel | Quartz Panel | Search Panel -->
+    <!-- #region List Panel | Quartz Panel | Search Panel : Partail Views -->
     <div class="row">
         <div class="col-lg-2 px-0" id="listPanel" style="border: none; max-height: 85vh; overflow-x: hidden;">
             @await Html.PartialAsync("/Views/Shared/Partial/HomePage/ListPanelPartial.cshtml")

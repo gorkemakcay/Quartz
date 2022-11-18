@@ -313,6 +313,7 @@ var cancelThisWhichLookupItem;
 var loginUserInfo;
 var currentLinkList;
 var currentItemList;
+var mainLink;
 // #endregion
 
 // #region Quartz Variables
@@ -390,6 +391,7 @@ $(function () {
                 data: { linkId: mainLink.Id },
                 success: function (response) {
                     currentQuartzLink = jQuery.parseJSON(response);
+                    mainLink = currentQuartzLink;
 
                     $.get({
                         url: linkController.DrawingSettings.Detail,
@@ -1233,6 +1235,99 @@ function goDrawing(linkId, drawingId, thisValue) {
 
 }
 
+// Go Drawing From Search
+function goDrawingFromSearch(linkId) {
+    $(".breadCrumb").children().remove();
+
+    if (linkId == mainLink.Id) {
+        $(".breadCrumb").append(
+            $('<li>,').prepend(
+                $('<i>', {
+                    onclick: "getDrawingCenter()",
+                    class: "fa-solid fa-arrows-to-circle",
+                    style: "cursor: pointer;"
+                })
+            ),
+            $('<li>', {
+                text: " " + mainLink.TagNo,
+                value: 1,
+                onclick: "goDrawing(" + mainLink.Id + " , " + mainLink.CurrentDrawingId + " , " + 1 + ")",
+                class: "crumb"
+            }).prepend(
+                $('<i>', {
+                    class: "fa fa-house"
+                })
+            )
+        );
+    }
+    else {
+        $.ajax({
+            type: "GET",
+            url: linkController.Link.Detail,
+            data: { linkId: linkId },
+            success: function (response) {
+                linkDetail = jQuery.parseJSON(response);
+
+                var hierarchies = linkDetail.Hierarchy.split(',');
+                hierarchies.shift();
+                hierarchies.shift();
+                hierarchies.push(linkDetail.Id.toString());
+
+                var value = 1;
+                $(".breadCrumb").append(
+                    $('<li>,').prepend(
+                        $('<i>', {
+                            onclick: "getDrawingCenter()",
+                            class: "fa-solid fa-arrows-to-circle",
+                            style: "cursor: pointer;"
+                        })
+                    ),
+                    $('<li>', {
+                        text: " " + mainLink.TagNo,
+                        value: value,
+                        onclick: "goDrawing(" + mainLink.Id + " , " + mainLink.CurrentDrawingId + " , " + value + ")",
+                        class: "crumb"
+                    }).prepend(
+                        $('<i>', {
+                            class: "fa fa-house"
+                        })
+                    )
+                );
+                value++;
+
+                for (var i = 0; i < hierarchies.length; i++) {
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: linkController.Link.Detail,
+                        data: { linkId: hierarchies[i] },
+                        success: function (response) {
+                            var breadCrumbLinkDetail = jQuery.parseJSON(response);
+                            $(".breadCrumb").append(
+                                $('<li>', {
+                                    text: breadCrumbLinkDetail.TagNo,
+                                    value: value,
+                                    onclick: "goDrawing(" + breadCrumbLinkDetail.Id + " , " + breadCrumbLinkDetail.CurrentDrawingId + " ," + value + ")",
+                                    class: "crumb"
+                                })
+                            );
+                            value++;
+                        },
+                        error: function (error) {
+                            alert("error!");
+                            console.log(error.responseText);
+                        }
+                    });
+                }
+            },
+            error: function (error) {
+                alert("error!");
+                console.log(error.responseText);
+            }
+        });
+    }
+}
+
 // Get Vector Source
 function getVectorSource() {
     $.get({
@@ -1597,6 +1692,7 @@ function deleteThis(objectType, objectId) {
                             inspectionList = jQuery.parseJSON(response);
                             if (inspectionList.length == 0) {
                                 item.IsInspected = false;
+
                                 $.ajax({
                                     type: "POST",
                                     url: itemController.Item.Update,
@@ -1607,7 +1703,19 @@ function deleteThis(objectType, objectId) {
                                         if (clickedOrCreated == "created")
                                             lastCreatedItem = item;
 
-                                        refreshQuartz();
+                                        $.ajax({
+                                            type: "GET",
+                                            url: linkController.QuartzPartialView,
+                                            success: function (html) {
+                                                $("#main").children().remove();
+                                                $("#main").html(html);
+                                                loadQuartz();
+                                            },
+                                            error: function (error) {
+                                                alert("error!");
+                                                console.log(error.responseText);
+                                            }
+                                        });
                                     },
                                     error: function (error) {
                                         alert("error!");
