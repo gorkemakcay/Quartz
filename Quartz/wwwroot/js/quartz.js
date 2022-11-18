@@ -217,6 +217,18 @@
         this.forEachFeatureAtPixel(evt.pixel, function (f) {
             selectedFeature = f;
 
+            var linkButtons = $("[name='link']");
+            var itemButtons = $("[name='item']");
+
+            for (var i = 0; i < linkButtons.length; i++) {
+                linkButtons[i].setAttribute('style', 'background: #dadcde');
+            }
+
+            for (var i = 0; i < itemButtons.length; i++) {
+                itemButtons[i].setAttribute('style', 'background: #dadcde');
+            }
+
+
             var buttonId = selectedFeature.get('Id');
             var buttonType = selectedFeature.get('Type');
 
@@ -224,13 +236,13 @@
 
                 $("#" + lastClickedButtonId + "").removeAttr('style', 'background: #808080');
                 lastClickedButtonId = buttonId;
-
+                var buttons;
                 if (buttonType == "item") {
-                    var buttons = $("[name='item']");
+                    buttons = $("[name='item']");
                 }
 
                 if (buttonType == "link") {
-                    var buttons = $("[name='link']");
+                    buttons = $("[name='link']");
                 }
 
                 function wait() {
