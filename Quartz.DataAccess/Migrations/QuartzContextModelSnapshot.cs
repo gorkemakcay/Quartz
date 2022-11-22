@@ -99,6 +99,13 @@ namespace Quartz.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -148,6 +155,18 @@ namespace Quartz.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FileUploads");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2022, 11, 21, 15, 20, 29, 705, DateTimeKind.Local).AddTicks(6581),
+                            Extension = ".jpg",
+                            Name = "MainDrawing",
+                            Path = "wwwroot\\Files\\MainDrawing.jpg",
+                            Type = "image/jpeg",
+                            UploadedBy = "QUARTZ"
+                        });
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.LookUpItems.LookUpItemsComponentType", b =>
@@ -505,6 +524,19 @@ namespace Quartz.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("QuartzLinks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "QUARTZ",
+                            CreatedDate = new DateTime(2022, 11, 21, 15, 20, 29, 704, DateTimeKind.Local).AddTicks(874),
+                            CurrentDrawingId = 1,
+                            Hierarchy = "0",
+                            MainQuartzLinkId = 0,
+                            ShowLabel = true,
+                            TagNo = "Main"
+                        });
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.Project.Link.QuartzLinksDrawingFeatures", b =>
@@ -561,6 +593,17 @@ namespace Quartz.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("QuartzLinksDrawingSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DrawingNo = "Main",
+                            File = "1",
+                            PlantArea = "select",
+                            PlantSystem = "select",
+                            QuartzLinkId = 1
+                        });
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.Projects.Item.QuartzItemsInformation", b =>
@@ -704,7 +747,7 @@ namespace Quartz.DataAccess.Migrations
                     b.Property<string>("FittingType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsInspection")
+                    b.Property<bool>("IsInspected")
                         .HasColumnType("bit");
 
                     b.Property<int>("ItemId")
@@ -764,6 +807,22 @@ namespace Quartz.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "e7d7c5f4-0ce5-4257-af9d-c73a46248fb6",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "7cf8b3a0-50a6-44ea-9597-85780c2c48c4",
+                            Name = "Operator",
+                            NormalizedName = "OPERATOR"
+                        });
                 });
 
             modelBuilder.Entity("Quartz.Entities.Concrete.Users.AppUser", b =>
@@ -840,6 +899,27 @@ namespace Quartz.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a4b5dffb-a36c-4278-99e2-8a1365b14980",
+                            Email = "admin@quartz.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            FullName = "Admin Quartz",
+                            LastName = "Quartz",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@QUARTZ.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPobgxnycHlVFer472HrsgpWNNrAJYNnC8fB4g2Hac5cA+ZTdkLmSJwfkJ+drH8r1Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6f891b0c-d54f-4ce2-ab58-05ebe0cb65f4",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
